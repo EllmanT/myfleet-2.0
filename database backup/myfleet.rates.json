@@ -1,0 +1,207 @@
+[{
+  "_id": {
+    "$oid": "6565950c8827f7f34b114a56"
+  },
+  "contractor": {
+    "$oid": "6565950c8827f7f34b114a52"
+  },
+  "deliverer": {
+    "$oid": "654f669091e232eb07068b57"
+  },
+  "rateTypes": [
+    {
+      "rateType": "local",
+      "smallVehicle": 1.65,
+      "largeVehicle": 3,
+      "mediumVehicle": 2.95,
+      "horse": 0,
+      "_id": {
+        "$oid": "65aea711c461048f0f5b0843"
+      }
+    },
+    {
+      "rateType": "express",
+      "smallVehicle": 1,
+      "largeVehicle": 3,
+      "mediumVehicle": 1.5,
+      "horse": 0,
+      "_id": {
+        "$oid": "65aea711c461048f0f5b0844"
+      }
+    }
+  ],
+  "__v": 1,
+  "updatedAt": {
+    "$date": "2024-01-22T17:34:09.276Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6565958e8827f7f34b114a7f"
+  },
+  "contractor": {
+    "$oid": "6565958e8827f7f34b114a79"
+  },
+  "deliverer": {
+    "$oid": "654f669091e232eb07068b57"
+  },
+  "rateTypes": [
+    {
+      "rateType": "local",
+      "smallVehicle": 1.65,
+      "largeVehicle": 0,
+      "mediumVehicle": 2.95,
+      "horse": 0,
+      "_id": {
+        "$oid": "65e0c1d3baa9e8584fea7693"
+      }
+    },
+    {
+      "rateType": "express",
+      "smallVehicle": 1,
+      "largeVehicle": 0,
+      "mediumVehicle": 1.9,
+      "horse": 0,
+      "_id": {
+        "$oid": "65e0c1d3baa9e8584fea7694"
+      }
+    }
+  ],
+  "__v": 3,
+  "updatedAt": {
+    "$date": "2024-02-29T17:41:39.309Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "656595d18827f7f34b114a92"
+  },
+  "contractor": {
+    "$oid": "656595d18827f7f34b114a89"
+  },
+  "deliverer": {
+    "$oid": "654f669091e232eb07068b57"
+  },
+  "rateTypes": [
+    {
+      "rateType": "local",
+      "smallVehicle": 1.65,
+      "largeVehicle": 3.5,
+      "mediumVehicle": 2.95,
+      "horse": 0,
+      "_id": {
+        "$oid": "65daf312528a676b83a2b393"
+      }
+    },
+    {
+      "rateType": "express",
+      "smallVehicle": 1,
+      "largeVehicle": 3,
+      "mediumVehicle": 1.5,
+      "horse": 0,
+      "_id": {
+        "$oid": "65daf312528a676b83a2b394"
+      }
+    }
+  ],
+  "__v": 3,
+  "updatedAt": {
+    "$date": "2024-02-25T07:58:10.572Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "656596518827f7f34b114ac0"
+  },
+  "contractor": {
+    "$oid": "656596518827f7f34b114ab7"
+  },
+  "deliverer": {
+    "$oid": "654f669091e232eb07068b57"
+  },
+  "rateTypes": [
+    {
+      "rateType": "local",
+      "smallVehicle": 3,
+      "largeVehicle": 0,
+      "mediumVehicle": 4,
+      "horse": 0,
+      "_id": {
+        "$oid": "656596518827f7f34b114ac1"
+      }
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6565969b8827f7f34b114add"
+  },
+  "contractor": {
+    "$oid": "6565969b8827f7f34b114ad4"
+  },
+  "deliverer": {
+    "$oid": "654f669091e232eb07068b57"
+  },
+  "rateTypes": [
+    {
+      "rateType": "local",
+      "smallVehicle": 2,
+      "largeVehicle": 0,
+      "mediumVehicle": 4,
+      "horse": 0,
+      "_id": {
+        "$oid": "6565969b8827f7f34b114ade"
+      }
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656598478827f7f34b114b2c"
+  },
+  "contractor": {
+    "$oid": "656598478827f7f34b114b28"
+  },
+  "deliverer": {
+    "$oid": "654f669091e232eb07068b57"
+  },
+  "rateTypes": [
+    {
+      "rateType": "local",
+      "smallVehicle": 0,
+      "largeVehicle": 4,
+      "mediumVehicle": 2,
+      "horse": 0,
+      "_id": {
+        "$oid": "656598478827f7f34b114b2d"
+      }
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "657ac2edfc044cca2c2b98ec"
+  },
+  "contractor": {
+    "$oid": "657ac2edfc044cca2c2b98e8"
+  },
+  "deliverer": {
+    "$oid": "654f669091e232eb07068b57"
+  },
+  "rateTypes": [
+    {
+      "rateType": "local",
+      "smallVehicle": 3,
+      "largeVehicle": 0,
+      "mediumVehicle": 5,
+      "horse": 0,
+      "_id": {
+        "$oid": "657ac2edfc044cca2c2b98ed"
+      }
+    }
+  ],
+  "__v": 0
+}]

@@ -1,0 +1,525 @@
+[{
+  "_id": {
+    "$oid": "657ac1f18dbb7401935c47ab"
+  },
+  "companyId": {
+    "$oid": "654f669091e232eb07068b57"
+  },
+  "year": 2023,
+  "dailyData": [
+    {
+      "date": "Wed Jul 05 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 180,
+      "totalRevenue": 720,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65802fb0c455242ae5e422f8"
+      }
+    },
+    {
+      "date": "Tue Sep 05 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 244,
+      "totalRevenue": 732,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65802f7ec455242ae5e4220d"
+      }
+    },
+    {
+      "date": "Mon Nov 13 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 3215,
+      "totalRevenue": 6430,
+      "totalJobs": 15,
+      "_id": {
+        "$oid": "657d61e8fe57875f80d5b487"
+      }
+    },
+    {
+      "date": "Fri Dec 01 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 6849,
+      "totalRevenue": 30795,
+      "totalJobs": 51,
+      "_id": {
+        "$oid": "657ac3a6fc044cca2c2b992c"
+      }
+    },
+    {
+      "date": "Sat Dec 02 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 886,
+      "totalRevenue": 3544,
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "657ac1f1bdd620dc0ea9b26f"
+      }
+    },
+    {
+      "date": "Mon Dec 04 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 5446,
+      "totalRevenue": 27230,
+      "totalJobs": 28,
+      "_id": {
+        "$oid": "657ae28d3456d0004dc12bff"
+      }
+    },
+    {
+      "date": "Tue Dec 26 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 466,
+      "totalRevenue": 1354,
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "658a7602ea4305d784dbc072"
+      }
+    }
+  ],
+  "jobsByContractor": {
+    "Lammel": 86,
+    "Romeo Kitchens": 17,
+    "Besthule": 4,
+    "contr 4": 2
+  },
+  "monthlyData": [
+    {
+      "month": "July",
+      "totalMileage": 180,
+      "totalRevenue": 720,
+      "totalProfit": 720,
+      "totalExpenses": 0,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65802fb0c455242ae5e422f7"
+      }
+    },
+    {
+      "month": "September",
+      "totalMileage": 244,
+      "totalRevenue": 732,
+      "totalProfit": 732,
+      "totalExpenses": 0,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65802f7ec455242ae5e4220c"
+      }
+    },
+    {
+      "month": "November",
+      "totalMileage": 3215,
+      "totalRevenue": 6430,
+      "totalProfit": 6430,
+      "totalExpenses": 455,
+      "totalJobs": 15,
+      "_id": {
+        "$oid": "657d61e8fe57875f80d5b486"
+      }
+    },
+    {
+      "month": "December",
+      "totalMileage": 13647,
+      "totalRevenue": 62923,
+      "totalProfit": 59701,
+      "totalExpenses": 3222,
+      "totalJobs": 88,
+      "_id": {
+        "$oid": "657ac1f1bdd620dc0ea9b26e"
+      }
+    }
+  ],
+  "revenueByContractor": {
+    "Lammel": 61591,
+    "Romeo Kitchens": 7150,
+    "Besthule": 732,
+    "contr 4": 1332
+  },
+  "totalCustomers": 8,
+  "yearlyExpenses": 3222,
+  "yearlyJobs": 106,
+  "yearlyMileage": 17286,
+  "yearlyProfit": 67583,
+  "yearlyRevenue": 70805,
+  "totalContractors": 5,
+  "__v": 141,
+  "updatedAt": {
+    "$date": "2024-02-29T17:52:11.106Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65aea9bcfefcc474dde3c9ba"
+  },
+  "companyId": {
+    "$oid": "654f669091e232eb07068b57"
+  },
+  "year": 2024,
+  "createdAt": {
+    "$date": "2024-01-22T17:45:32.034Z"
+  },
+  "dailyData": [
+    {
+      "date": "Wed Jan 31 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 33,
+      "totalRevenue": 54.45,
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "65ba946274de7b22c9e6a921"
+      }
+    },
+    {
+      "date": "Wed Jan 24 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 2,
+      "totalRevenue": 3.3,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65b95c772c682a136e2d5915"
+      }
+    },
+    {
+      "date": "Wed Jan 17 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 8,
+      "totalRevenue": 21.000000000000004,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65b94c422c682a136e2d509d"
+      }
+    },
+    {
+      "date": "Wed Jan 10 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 19,
+      "totalRevenue": 14.449999999999982,
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "65aeab69c461048f0f5b0ba8"
+      }
+    },
+    {
+      "date": "Wed Feb 28 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 75,
+      "totalRevenue": 123.75000000000001,
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "65df779acb46d674e5111e0e"
+      }
+    },
+    {
+      "date": "Wed Feb 14 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 99,
+      "totalRevenue": 163.34999999999997,
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "65db0020528a676b83a2bfd9"
+      }
+    },
+    {
+      "date": "Wed Feb 07 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 81,
+      "totalRevenue": 159.65,
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "65d96beef9f586086110c14a"
+      }
+    },
+    {
+      "date": "Tue Jan 30 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 68,
+      "totalRevenue": 112.19999999999999,
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "65ba93c274de7b22c9e6a864"
+      }
+    },
+    {
+      "date": "Tue Jan 23 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 60,
+      "totalRevenue": 99,
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "65b95b712c682a136e2d580f"
+      }
+    },
+    {
+      "date": "Tue Jan 16 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 138,
+      "totalRevenue": 227.7,
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "65b9463e2c682a136e2d4d8f"
+      }
+    },
+    {
+      "date": "Tue Jan 09 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 46,
+      "totalRevenue": 135.70000000000002,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65aeab0bc461048f0f5b0b3c"
+      }
+    },
+    {
+      "date": "Tue Feb 27 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 65,
+      "totalRevenue": 138.45000000000002,
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "65df76a6cb46d674e5111c32"
+      }
+    },
+    {
+      "date": "Tue Feb 20 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 32,
+      "totalRevenue": 52.8,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65df704fcb46d674e5111632"
+      }
+    },
+    {
+      "date": "Tue Feb 13 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 25,
+      "totalRevenue": 73.75,
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "65dafb62528a676b83a2bca3"
+      }
+    },
+    {
+      "date": "Tue Feb 06 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 41,
+      "totalRevenue": 120.95000000000002,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65daf471528a676b83a2b538"
+      }
+    },
+    {
+      "date": "Thu Jan 25 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 87,
+      "totalRevenue": 143.54999999999998,
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "65b95a332c682a136e2d56b1"
+      }
+    },
+    {
+      "date": "Thu Jan 18 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 178,
+      "totalRevenue": 345.7,
+      "totalJobs": 15,
+      "_id": {
+        "$oid": "65b94cdf2c682a136e2d5113"
+      }
+    },
+    {
+      "date": "Thu Jan 11 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 86,
+      "totalRevenue": 191.29999999999998,
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "65aeacbfc461048f0f5b0c87"
+      }
+    },
+    {
+      "date": "Thu Feb 29 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 60,
+      "totalRevenue": 177,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65e0c44bbaa9e8584fea7912"
+      }
+    },
+    {
+      "date": "Thu Feb 22 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 61,
+      "totalRevenue": 131.85000000000002,
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "65df7284cb46d674e511190f"
+      }
+    },
+    {
+      "date": "Thu Feb 15 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 65,
+      "totalRevenue": 107.25,
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "65db0140528a676b83a2c129"
+      }
+    },
+    {
+      "date": "Thu Feb 08 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 123,
+      "totalRevenue": 258.85,
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "65d965c5f9f586086110bad7"
+      }
+    },
+    {
+      "date": "Thu Feb 01 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 154,
+      "totalRevenue": 332.1,
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "65d96a69f9f586086110bf0f"
+      }
+    },
+    {
+      "date": "Sat Feb 10 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 32,
+      "totalRevenue": 52.8,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65d96918f9f586086110bde0"
+      }
+    },
+    {
+      "date": "Mon Jan 29 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 48,
+      "totalRevenue": 97.39999999999999,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65ba932474de7b22c9e6a7fb"
+      }
+    },
+    {
+      "date": "Mon Jan 22 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 36,
+      "totalRevenue": 59.4,
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "65b9590b2c682a136e2d55af"
+      }
+    },
+    {
+      "date": "Mon Jan 15 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 25,
+      "totalRevenue": 41.25,
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "65b9451e2c682a136e2d4bd5"
+      }
+    },
+    {
+      "date": "Mon Jan 08 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 14,
+      "totalRevenue": 28.299999999999997,
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "65aea9bcc461048f0f5b0a6d"
+      }
+    },
+    {
+      "date": "Mon Feb 26 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 213,
+      "totalRevenue": 390.69999999999993,
+      "totalJobs": 9,
+      "_id": {
+        "$oid": "65df72efcb46d674e5111a0d"
+      }
+    },
+    {
+      "date": "Mon Feb 12 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 9,
+      "totalRevenue": 26.55,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65dafab8528a676b83a2bbfa"
+      }
+    },
+    {
+      "date": "Mon Feb 05 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 88,
+      "totalRevenue": 193.30000000000004,
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "65daf414528a676b83a2b4c7"
+      }
+    },
+    {
+      "date": "Fri Jan 26 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 34,
+      "totalRevenue": 62.599999999999994,
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "65b95af32c682a136e2d5749"
+      }
+    },
+    {
+      "date": "Fri Feb 23 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 42,
+      "totalRevenue": 123.9,
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "65df6f8acb46d674e511151e"
+      }
+    },
+    {
+      "date": "Fri Feb 16 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 34,
+      "totalRevenue": 100.30000000000001,
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "65db0326528a676b83a2c392"
+      }
+    },
+    {
+      "date": "Fri Feb 09 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 211,
+      "totalRevenue": 414.44999999999993,
+      "totalJobs": 19,
+      "_id": {
+        "$oid": "65d96819f9f586086110bd28"
+      }
+    },
+    {
+      "date": "Fri Feb 02 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 69,
+      "totalRevenue": 113.85,
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "65d96abcf9f586086110bf74"
+      }
+    }
+  ],
+  "jobsByContractor": {
+    "Lammel": 88,
+    "Romeo Kitchens": 70,
+    "Besthule": 97
+  },
+  "monthlyData": [
+    {
+      "month": "January",
+      "totalMileage": 882,
+      "totalRevenue": 1637.3000000000002,
+      "totalProfit": 1637.3000000000002,
+      "totalExpenses": 0,
+      "totalJobs": 105,
+      "_id": {
+        "$oid": "65aea9bcc461048f0f5b0a6c"
+      }
+    },
+    {
+      "month": "February",
+      "totalMileage": 1579,
+      "totalRevenue": 3255.5999999999985,
+      "totalProfit": 3255.5999999999985,
+      "totalExpenses": 0,
+      "totalJobs": 150,
+      "_id": {
+        "$oid": "65d965c5f9f586086110bad6"
+      }
+    }
+  ],
+  "revenueByContractor": {
+    "Lammel": 1166.15,
+    "Romeo Kitchens": 1566.0499999999997,
+    "Besthule": 2160.7000000000003
+  },
+  "totalCustomers": 70,
+  "updatedAt": {
+    "$date": "2024-02-29T17:52:11.080Z"
+  },
+  "yearlyExpenses": 0,
+  "yearlyJobs": 254,
+  "yearlyMileage": 2461,
+  "yearlyProfit": 4892.899999999996,
+  "yearlyRevenue": 4892.899999999996,
+  "totalContractors": 5
+}]

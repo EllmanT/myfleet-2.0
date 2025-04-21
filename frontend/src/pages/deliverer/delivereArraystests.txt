@@ -1,0 +1,160 @@
+ const dDrivers = [
+    { _id: "6172a9a08464a8e6b4d7e8cb", name: "John Doe" },
+    { _id: "6172a9a08464a8e6b4d7e8cv", name: "Jane Smith" },
+    { _id: "6172a9a08464a8e6b4d7e8ca", name: "David Johnson" },
+    { _id: "6172a9a08464a8e6b4d7e8ce", name: "Emily Davis" },
+    { _id: "6172a9a08464a8e6b4d7e8cs", name: "Michael Wilson" },
+  ];
+
+  const dVehicles = [
+    {
+      _id: "1172a9a08464a8e6b4d7e8cb",
+      make: "Toyota",
+      regNumber: "ABC123",
+      model: "Camry",
+      size: "small",
+    },
+    {
+      _id: "2172a9a08464a8e6b4d7e8cb",
+      make: "Honda",
+      regNumber: "XYZ789",
+      model: "Civic",
+      size: "medium",
+    },
+    {
+      _id: "3172a9a08464a8e6b4d7e8cb",
+      make: "Ford",
+      regNumber: "DEF456",
+      model: "Mustang",
+      size: "large",
+    },
+    {
+      _id: "4172a9a08464a8e6b4d7e8cb",
+      make: "Chevrolet",
+      regNumber: "GHI789",
+      model: "Silverado",
+      size: "large",
+    },
+    { _id: "5172a9a08464a8e6b4d7e8cb", make: "BMW", regNumber: "JKL012", model: "X5", size: "medium" },
+  ];
+
+  const dCustomers = [
+    { _id: "6172a9a08464a8e6b4d7e8dd", name: "Alice Johnson", address: "123 Main St" },
+    { _id: "6172a9a08464a8e6b4d7e8dr", name: "Bob Smith", address: "456 Elm St" },
+    { _id: "6172a9a08464a8e6b4d7e8dg", name: "Eve Davis", address: "789 Oak St" },
+    { _id: "6172a9a08464a8e6b4d7e8dh", name: "Grace Wilson", address: "234 Pine St" },
+    { _id: "6172a9a08464a8e6b4d7e8di", name: "Tom Brown", address: "567 Maple St" },
+  ];
+
+  const dContractors = [
+    {
+      _id: "6172a9a08464a8e6b4d7e4cb",
+      companyName: "ABC Construction",
+      name: "John Doe",
+      prefix: "AC",
+      lastOrder: 23,
+      rates: [
+        {
+          rateType: "express",
+          small: 10, // Price for small vehicle
+          medium: 15, // Price for medium vehicle
+          large: 20, // Price for large vehicle
+        },
+        {
+          rateType: "local",
+          small: 5, // Price for small vehicle
+          medium: 8, // Price for medium vehicle
+          large: 12, // Price for large vehicle
+        },
+        // Add more rate objects as needed
+      ],
+    },
+    {
+      _id: "6172a9a08464a8e6b4d7e3cb",
+      companyName: "XYZ Plumbing",
+      name: "Jane Smith",
+      prefix: "XP",
+      lastOrder: 236,
+      rates: [
+        {
+          rateType: "express",
+          small: 11, // Price for small vehicle
+          medium: 13, // Price for medium vehicle
+          large: 22, // Price for large vehicle
+        },
+        {
+          rateType: "local",
+          small: 1, // Price for small vehicle
+          medium: 3, // Price for medium vehicle
+          large: 5, // Price for large vehicle
+        },
+        // Add more rate objects as needed
+      ],
+    },
+    {
+      _id: "6172a9a08464a8e6b4d7e2cb",
+      companyName: "DEF Electrical",
+      name: "David Johnson",
+      prefix: "DE",
+      lastOrder: 2,
+      rates: [
+        {
+          rateType: "express",
+          small: 3, // Price for small vehicle
+          medium: 12, // Price for medium vehicle
+          large: 1, // Price for large vehicle
+        },
+        {
+          rateType: "local",
+          small: 2, // Price for small vehicle
+          medium: 4, // Price for medium vehicle
+          large: 11, // Price for large vehicle
+        },
+        // Add more rate objects as needed
+      ],
+    },
+    {
+      _id: "6172a9a08464a8e6b4d7e1cb",
+      companyName: "GHI Landscaping",
+      prefix: "GL",
+      name: "Emily Davis",
+      lastOrder: 3,
+      rates: [
+        {
+          rateType: "express",
+          small: 14, // Price for small vehicle
+          medium: 15, // Price for medium vehicle
+          large: 28, // Price for large vehicle
+        },
+        {
+          rateType: "local",
+          small: 6, // Price for small vehicle
+          medium: 7, // Price for medium vehicle
+          large: 2, // Price for large vehicle
+        },
+        // Add more rate objects as needed
+      ],
+    },
+    {
+      _id: "6172a9a08464a8e6b4d7e0cb",
+      companyName: "JKL Painting",
+      prefix: "JP",
+      name: "Michael Wilson",
+      lastOrder: 57,
+      rates: [
+        {
+          rateType: "express",
+          small: 10, // Price for small vehicle
+          medium: 5, // Price for medium vehicle
+          large: 2, // Price for large vehicle
+        },
+        {
+          rateType: "local",
+          small: 5, // Price for small vehicle
+          medium: 5, // Price for medium vehicle
+          large: 6, // Price for large vehicle
+        },
+        // Add more rate objects as needed
+      ],
+    },
+  ];

@@ -1,0 +1,17 @@
+
+export default function DateProvider({ title, date, onChange, disabled , defaultDate}) {
+  const convertedDate = dayjs(defaultDate, 'YYYY-MM-DD').format('YYYY-MM-DD');
+  
+  return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DatePicker
+        defaultValue={dayjs('2022-04-17')}
+        views={['year', 'month', 'day']}
+        label={title}
+        value={date}
+        onChange={onChange}
+        disabled={disabled}
+      />
+    </LocalizationProvider>
+  );
+}

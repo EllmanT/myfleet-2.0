@@ -1,0 +1,56 @@
+[{
+  "_id": {
+    "$oid": "657909b6c79f0015bd382c3d"
+  },
+  "employeeId": "656a0a47d2f4e82074ac793b",
+  "companyId": "654f669091e232eb07068b57",
+  "expenseData": [
+    {
+      "date": "Tue Nov 07 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "description": "d dssd ",
+      "cost": 134,
+      "_id": {
+        "$oid": "657909dec79f0015bd382c62"
+      }
+    },
+    {
+      "date": "Tue Nov 07 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "description": "d dssd ",
+      "cost": 134,
+      "_id": {
+        "$oid": "65790a69c79f0015bd382c79"
+      }
+    },
+    {
+      "date": "Tue Nov 07 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "description": "d dssd ",
+      "cost": 134,
+      "_id": {
+        "$oid": "65790b09470536e62c583e7d"
+      }
+    },
+    {
+      "date": "Fri Dec 01 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "description": "d dssd ",
+      "cost": 134,
+      "_id": {
+        "$oid": "657909b6c79f0015bd382c3e"
+      }
+    },
+    {
+      "date": "Fri Dec 01 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "description": "d dssd ",
+      "cost": 134,
+      "_id": {
+        "$oid": "657909cfc79f0015bd382c50"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2023-12-13T01:32:38.497Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-13T01:38:17.101Z"
+  },
+  "__v": 9
+}]

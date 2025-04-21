@@ -1,0 +1,15 @@
+{
+    "name": "myfleet-2.0",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "dev": "nodemon backend/server.js",
+      "start": "node backend/server.js",
+      "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+    },
+    "author": "Tapiwa Muranda",
+    "license": "ISC"
+  
+  }

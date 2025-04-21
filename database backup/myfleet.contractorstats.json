@@ -1,0 +1,1749 @@
+[{
+  "_id": {
+    "$oid": "657ae3928dbb7401935c5fa5"
+  },
+  "contractorId": "6565950c8827f7f34b114a52",
+  "delivererId": "654f669091e232eb07068b57",
+  "year": 2023,
+  "dailyData": [
+    {
+      "date": "Tue Dec 26 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 22,
+      "totalRevenue": 22,
+      "totalJobs": 1,
+      "_id": {
+        "$oid": "658a7602ea4305d784dbc075"
+      }
+    },
+    {
+      "date": "Mon Dec 04 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 3112,
+      "totalRevenue": 15560,
+      "totalJobs": 16,
+      "_id": {
+        "$oid": "657ae39219c06edc2e96ddfd"
+      }
+    },
+    {
+      "date": "Fri Dec 01 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 3399,
+      "totalRevenue": 16995,
+      "totalJobs": 33,
+      "_id": {
+        "$oid": "657aeaec4116e76a44e8965c"
+      }
+    }
+  ],
+  "job_ids": [
+    {
+      "$oid": "657aec4592ccb123a417ac20"
+    },
+    {
+      "$oid": "657aec4592ccb123a417ac22"
+    },
+    {
+      "$oid": "657aec4592ccb123a417ac24"
+    },
+    {
+      "$oid": "657aec5192ccb123a417ac66"
+    },
+    {
+      "$oid": "657aec5192ccb123a417ac68"
+    },
+    {
+      "$oid": "657aec5192ccb123a417ac6a"
+    },
+    {
+      "$oid": "658a7602ea4305d784dbc069"
+    },
+    {
+      "$oid": "65aea9bbc461048f0f5b0a5e"
+    },
+    {
+      "$oid": "65aea9bbc461048f0f5b0a60"
+    },
+    {
+      "$oid": "65aeab69c461048f0f5b0b99"
+    },
+    {
+      "$oid": "65aeab69c461048f0f5b0b9b"
+    },
+    {
+      "$oid": "65aeac23c461048f0f5b0be0"
+    },
+    {
+      "$oid": "65aeac23c461048f0f5b0be2"
+    },
+    {
+      "$oid": "65aeac74c461048f0f5b0c27"
+    },
+    {
+      "$oid": "65aeac74c461048f0f5b0c29"
+    },
+    {
+      "$oid": "65aeac74c461048f0f5b0c2b"
+    },
+    {
+      "$oid": "65aeacbfc461048f0f5b0c78"
+    },
+    {
+      "$oid": "65aeacbfc461048f0f5b0c7a"
+    },
+    {
+      "$oid": "65aead58c461048f0f5b0d72"
+    },
+    {
+      "$oid": "65aead58c461048f0f5b0d74"
+    },
+    {
+      "$oid": "65b9345d03cc325cb2881de4"
+    },
+    {
+      "$oid": "65b9345d03cc325cb2881de6"
+    },
+    {
+      "$oid": "65b943582c682a136e2d4a7d"
+    },
+    {
+      "$oid": "65b943582c682a136e2d4a7f"
+    },
+    {
+      "$oid": "65b9465e2c682a136e2d4dc9"
+    },
+    {
+      "$oid": "65b946cd2c682a136e2d4e0b"
+    },
+    {
+      "$oid": "65b946cd2c682a136e2d4e0d"
+    },
+    {
+      "$oid": "65b94c422c682a136e2d508e"
+    },
+    {
+      "$oid": "65b94c422c682a136e2d5090"
+    },
+    {
+      "$oid": "65b954782c682a136e2d523f"
+    },
+    {
+      "$oid": "65b954782c682a136e2d5241"
+    },
+    {
+      "$oid": "65b954cc2c682a136e2d528b"
+    },
+    {
+      "$oid": "65b954cc2c682a136e2d528d"
+    },
+    {
+      "$oid": "65b955102c682a136e2d52d9"
+    },
+    {
+      "$oid": "65b955102c682a136e2d52db"
+    },
+    {
+      "$oid": "65b956582c682a136e2d5407"
+    },
+    {
+      "$oid": "65b956582c682a136e2d5409"
+    },
+    {
+      "$oid": "65b956582c682a136e2d540b"
+    },
+    {
+      "$oid": "65b9571b2c682a136e2d5460"
+    },
+    {
+      "$oid": "65b9571b2c682a136e2d5462"
+    },
+    {
+      "$oid": "65b95af32c682a136e2d5734"
+    },
+    {
+      "$oid": "65b95af32c682a136e2d5736"
+    },
+    {
+      "$oid": "65b95af32c682a136e2d5738"
+    },
+    {
+      "$oid": "65b95c772c682a136e2d5906"
+    },
+    {
+      "$oid": "65b95c772c682a136e2d5908"
+    },
+    {
+      "$oid": "65ba932474de7b22c9e6a7ec"
+    },
+    {
+      "$oid": "65ba932474de7b22c9e6a7ee"
+    },
+    {
+      "$oid": "65ba93c274de7b22c9e6a849"
+    },
+    {
+      "$oid": "65ba93c274de7b22c9e6a84b"
+    },
+    {
+      "$oid": "65ba93c274de7b22c9e6a84d"
+    },
+    {
+      "$oid": "65ba93c274de7b22c9e6a84f"
+    },
+    {
+      "$oid": "65ba957e74de7b22c9e6aa02"
+    },
+    {
+      "$oid": "65ba957e74de7b22c9e6aa04"
+    },
+    {
+      "$oid": "65ba96be74de7b22c9e6aba3"
+    },
+    {
+      "$oid": "65ba96be74de7b22c9e6aba5"
+    },
+    {
+      "$oid": "65d96819f9f586086110bcfb"
+    },
+    {
+      "$oid": "65d96819f9f586086110bcfd"
+    },
+    {
+      "$oid": "65d96819f9f586086110bcff"
+    },
+    {
+      "$oid": "65d96819f9f586086110bd01"
+    },
+    {
+      "$oid": "65d96819f9f586086110bd03"
+    },
+    {
+      "$oid": "65d96819f9f586086110bd05"
+    },
+    {
+      "$oid": "65d96819f9f586086110bd07"
+    },
+    {
+      "$oid": "65d96b1ef9f586086110c035"
+    },
+    {
+      "$oid": "65d96b1ef9f586086110c037"
+    },
+    {
+      "$oid": "65d96beef9f586086110c13b"
+    },
+    {
+      "$oid": "65d96beef9f586086110c13d"
+    },
+    {
+      "$oid": "65daf5d9528a676b83a2b63f"
+    },
+    {
+      "$oid": "65daf5d9528a676b83a2b641"
+    },
+    {
+      "$oid": "65daf6b6528a676b83a2b77d"
+    },
+    {
+      "$oid": "65daf6b6528a676b83a2b77f"
+    },
+    {
+      "$oid": "65daf730528a676b83a2b84d"
+    },
+    {
+      "$oid": "65daf730528a676b83a2b84f"
+    },
+    {
+      "$oid": "65daf782528a676b83a2b8bd"
+    },
+    {
+      "$oid": "65daf782528a676b83a2b8bf"
+    },
+    {
+      "$oid": "65daf7dd528a676b83a2b92e"
+    },
+    {
+      "$oid": "65daf7dd528a676b83a2b930"
+    },
+    {
+      "$oid": "65daf957528a676b83a2ba2e"
+    },
+    {
+      "$oid": "65daf957528a676b83a2ba30"
+    },
+    {
+      "$oid": "65daf957528a676b83a2ba32"
+    },
+    {
+      "$oid": "65dafb62528a676b83a2bc8e"
+    },
+    {
+      "$oid": "65dafb62528a676b83a2bc90"
+    },
+    {
+      "$oid": "65dafb62528a676b83a2bc92"
+    },
+    {
+      "$oid": "65db016b528a676b83a2c189"
+    },
+    {
+      "$oid": "65db016b528a676b83a2c18b"
+    },
+    {
+      "$oid": "65db0881528a676b83a2c5db"
+    },
+    {
+      "$oid": "65db0881528a676b83a2c5dd"
+    },
+    {
+      "$oid": "65db08c9528a676b83a2c651"
+    },
+    {
+      "$oid": "65db08c9528a676b83a2c653"
+    },
+    {
+      "$oid": "65df76a6cb46d674e5111c23"
+    },
+    {
+      "$oid": "65df76a6cb46d674e5111c25"
+    },
+    {
+      "$oid": "65e0c011baa9e8584fea7508"
+    },
+    {
+      "$oid": "65e0c011baa9e8584fea750a"
+    },
+    {
+      "$oid": "65e0c011baa9e8584fea750c"
+    },
+    {
+      "$oid": "65e0c053baa9e8584fea7594"
+    },
+    {
+      "$oid": "65e0c053baa9e8584fea7596"
+    }
+  ],
+  "monthlyData": [
+    {
+      "month": "December",
+      "totalMileage": 6533,
+      "totalRevenue": 32577,
+      "totalJobs": 50,
+      "_id": {
+        "$oid": "657ae39219c06edc2e96ddfc"
+      }
+    }
+  ],
+  "yearlyJobs": 50,
+  "yearlyMileage": 6533,
+  "yearlyRevenue": 32577,
+  "__v": 41,
+  "updatedAt": {
+    "$date": "2024-02-29T17:35:15.364Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "657d61e80fd95fd637a9756b"
+  },
+  "contractorId": "6565958e8827f7f34b114a79",
+  "year": 2023,
+  "delivererId": "654f669091e232eb07068b57",
+  "dailyData": [
+    {
+      "date": "Wed Jul 05 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 180,
+      "totalRevenue": 720,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65802fb0c455242ae5e422fb"
+      }
+    },
+    {
+      "date": "Mon Nov 13 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 3215,
+      "totalRevenue": 6430,
+      "totalJobs": 15,
+      "_id": {
+        "$oid": "657d61e8fe57875f80d5b48e"
+      }
+    }
+  ],
+  "job_ids": [
+    {
+      "$oid": "657d61e8fe57875f80d5b472"
+    },
+    {
+      "$oid": "657d61e8fe57875f80d5b474"
+    },
+    {
+      "$oid": "657d61e8fe57875f80d5b476"
+    },
+    {
+      "$oid": "657d61eafe57875f80d5b4bd"
+    },
+    {
+      "$oid": "657d61eafe57875f80d5b4bf"
+    },
+    {
+      "$oid": "657d61eafe57875f80d5b4c1"
+    },
+    {
+      "$oid": "657d61eafe57875f80d5b508"
+    },
+    {
+      "$oid": "657d61eafe57875f80d5b50a"
+    },
+    {
+      "$oid": "657d61eafe57875f80d5b50c"
+    },
+    {
+      "$oid": "657d61ebfe57875f80d5b553"
+    },
+    {
+      "$oid": "657d61ebfe57875f80d5b555"
+    },
+    {
+      "$oid": "657d61ebfe57875f80d5b557"
+    },
+    {
+      "$oid": "657d61ebfe57875f80d5b59e"
+    },
+    {
+      "$oid": "657d61ebfe57875f80d5b5a0"
+    },
+    {
+      "$oid": "657d61ebfe57875f80d5b5a2"
+    },
+    {
+      "$oid": "65802fb0c455242ae5e422ef"
+    },
+    {
+      "$oid": "65802fb1c455242ae5e42332"
+    },
+    {
+      "$oid": "65aeab0bc461048f0f5b0b2d"
+    },
+    {
+      "$oid": "65aeab0bc461048f0f5b0b2f"
+    },
+    {
+      "$oid": "65b94cdf2c682a136e2d50fe"
+    },
+    {
+      "$oid": "65b94cdf2c682a136e2d5100"
+    },
+    {
+      "$oid": "65b94cdf2c682a136e2d5102"
+    },
+    {
+      "$oid": "65b94d412c682a136e2d5151"
+    },
+    {
+      "$oid": "65b94d412c682a136e2d5153"
+    },
+    {
+      "$oid": "65b94d412c682a136e2d5155"
+    },
+    {
+      "$oid": "65b94d412c682a136e2d5157"
+    },
+    {
+      "$oid": "65b94d8d2c682a136e2d51ae"
+    },
+    {
+      "$oid": "65b94d8d2c682a136e2d51b0"
+    },
+    {
+      "$oid": "65b94d8d2c682a136e2d51b2"
+    },
+    {
+      "$oid": "65b955ae2c682a136e2d537d"
+    },
+    {
+      "$oid": "65b955ae2c682a136e2d537f"
+    },
+    {
+      "$oid": "65b9590b2c682a136e2d55a6"
+    },
+    {
+      "$oid": "65b9595d2c682a136e2d55ea"
+    },
+    {
+      "$oid": "65b9595d2c682a136e2d55ec"
+    },
+    {
+      "$oid": "65b95cfd2c682a136e2d5996"
+    },
+    {
+      "$oid": "65b95cfd2c682a136e2d5998"
+    },
+    {
+      "$oid": "65ba942574de7b22c9e6a8bd"
+    },
+    {
+      "$oid": "65ba942574de7b22c9e6a8bf"
+    },
+    {
+      "$oid": "65ba946274de7b22c9e6a918"
+    },
+    {
+      "$oid": "65ba95d374de7b22c9e6aa61"
+    },
+    {
+      "$oid": "65ba95d374de7b22c9e6aa63"
+    },
+    {
+      "$oid": "65d965c5f9f586086110babc"
+    },
+    {
+      "$oid": "65d965c5f9f586086110babe"
+    },
+    {
+      "$oid": "65d965c5f9f586086110bac0"
+    },
+    {
+      "$oid": "65d965c5f9f586086110bac2"
+    },
+    {
+      "$oid": "65d96673f9f586086110bbb3"
+    },
+    {
+      "$oid": "65d96673f9f586086110bbb5"
+    },
+    {
+      "$oid": "65d9669ff9f586086110bc13"
+    },
+    {
+      "$oid": "65d9669ff9f586086110bc15"
+    },
+    {
+      "$oid": "65d96918f9f586086110bdd1"
+    },
+    {
+      "$oid": "65d96918f9f586086110bdd3"
+    },
+    {
+      "$oid": "65d96a69f9f586086110bf00"
+    },
+    {
+      "$oid": "65d96a69f9f586086110bf02"
+    },
+    {
+      "$oid": "65d96abcf9f586086110bf65"
+    },
+    {
+      "$oid": "65d96abcf9f586086110bf67"
+    },
+    {
+      "$oid": "65d96ae7f9f586086110bfcd"
+    },
+    {
+      "$oid": "65d96ae7f9f586086110bfcf"
+    },
+    {
+      "$oid": "65d96b88f9f586086110c09e"
+    },
+    {
+      "$oid": "65d96b88f9f586086110c0a0"
+    },
+    {
+      "$oid": "65d96b89f9f586086110c0a2"
+    },
+    {
+      "$oid": "65d96b89f9f586086110c0a4"
+    },
+    {
+      "$oid": "65d96c46f9f586086110c1a7"
+    },
+    {
+      "$oid": "65d96c46f9f586086110c1a9"
+    },
+    {
+      "$oid": "65d96c46f9f586086110c1ab"
+    },
+    {
+      "$oid": "65daf55b528a676b83a2b5b6"
+    },
+    {
+      "$oid": "65daf55b528a676b83a2b5b8"
+    },
+    {
+      "$oid": "65daf657528a676b83a2b712"
+    },
+    {
+      "$oid": "65daf657528a676b83a2b714"
+    },
+    {
+      "$oid": "65dafd41528a676b83a2bede"
+    },
+    {
+      "$oid": "65dafd41528a676b83a2bee0"
+    },
+    {
+      "$oid": "65db00f9528a676b83a2c0ae"
+    },
+    {
+      "$oid": "65db00f9528a676b83a2c0b0"
+    },
+    {
+      "$oid": "65db0326528a676b83a2c389"
+    },
+    {
+      "$oid": "65df70dbcb46d674e511169b"
+    },
+    {
+      "$oid": "65df7284cb46d674e5111900"
+    },
+    {
+      "$oid": "65df7284cb46d674e5111902"
+    },
+    {
+      "$oid": "65df72b1cb46d674e511197f"
+    },
+    {
+      "$oid": "65df72b1cb46d674e5111981"
+    },
+    {
+      "$oid": "65df72efcb46d674e51119fe"
+    },
+    {
+      "$oid": "65df72efcb46d674e5111a00"
+    },
+    {
+      "$oid": "65df745fcb46d674e5111b3a"
+    },
+    {
+      "$oid": "65df745fcb46d674e5111b3c"
+    },
+    {
+      "$oid": "65df7717cb46d674e5111d22"
+    },
+    {
+      "$oid": "65df7717cb46d674e5111d24"
+    },
+    {
+      "$oid": "65df77cccb46d674e5111e86"
+    },
+    {
+      "$oid": "65e0c252baa9e8584fea771c"
+    },
+    {
+      "$oid": "65e0c252baa9e8584fea771e"
+    }
+  ],
+  "monthlyData": [
+    {
+      "month": "November",
+      "totalMileage": 3215,
+      "totalRevenue": 6430,
+      "totalJobs": 15,
+      "_id": {
+        "$oid": "657d61e8fe57875f80d5b48d"
+      }
+    },
+    {
+      "month": "July",
+      "totalMileage": 180,
+      "totalRevenue": 720,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65802fb0c455242ae5e422fa"
+      }
+    }
+  ],
+  "yearlyJobs": 16,
+  "yearlyMileage": 3395,
+  "yearlyRevenue": 7150,
+  "__v": 40,
+  "updatedAt": {
+    "$date": "2024-02-29T17:43:46.351Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65802f7edc1d6447b024c765"
+  },
+  "year": 2023,
+  "contractorId": "656595d18827f7f34b114a89",
+  "delivererId": "654f669091e232eb07068b57",
+  "dailyData": [
+    {
+      "date": "Tue Sep 05 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 244,
+      "totalRevenue": 732,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65802f7ec455242ae5e42212"
+      }
+    }
+  ],
+  "job_ids": [
+    {
+      "$oid": "65802f7ec455242ae5e421fe"
+    },
+    {
+      "$oid": "65802f7ec455242ae5e42200"
+    },
+    {
+      "$oid": "65802f7fc455242ae5e42243"
+    },
+    {
+      "$oid": "65802f7fc455242ae5e42245"
+    },
+    {
+      "$oid": "65b944242c682a136e2d4b37"
+    },
+    {
+      "$oid": "65b944242c682a136e2d4b39"
+    },
+    {
+      "$oid": "65b9451e2c682a136e2d4bc0"
+    },
+    {
+      "$oid": "65b9451e2c682a136e2d4bc2"
+    },
+    {
+      "$oid": "65b9451e2c682a136e2d4bc4"
+    },
+    {
+      "$oid": "65b9463e2c682a136e2d4d80"
+    },
+    {
+      "$oid": "65b9463e2c682a136e2d4d82"
+    },
+    {
+      "$oid": "65b949872c682a136e2d4f02"
+    },
+    {
+      "$oid": "65b949b92c682a136e2d4f43"
+    },
+    {
+      "$oid": "65b949b92c682a136e2d4f45"
+    },
+    {
+      "$oid": "65b949fb2c682a136e2d4f8e"
+    },
+    {
+      "$oid": "65b949fb2c682a136e2d4f90"
+    },
+    {
+      "$oid": "65b9556b2c682a136e2d5328"
+    },
+    {
+      "$oid": "65b9556b2c682a136e2d532a"
+    },
+    {
+      "$oid": "65b9556c2c682a136e2d532c"
+    },
+    {
+      "$oid": "65b957cb2c682a136e2d54e4"
+    },
+    {
+      "$oid": "65b957cb2c682a136e2d54e6"
+    },
+    {
+      "$oid": "65b957cb2c682a136e2d54e8"
+    },
+    {
+      "$oid": "65b958322c682a136e2d553b"
+    },
+    {
+      "$oid": "65b958322c682a136e2d553d"
+    },
+    {
+      "$oid": "65b95a332c682a136e2d56a2"
+    },
+    {
+      "$oid": "65b95a332c682a136e2d56a4"
+    },
+    {
+      "$oid": "65b95b712c682a136e2d5806"
+    },
+    {
+      "$oid": "65b95bc42c682a136e2d584e"
+    },
+    {
+      "$oid": "65b95bc42c682a136e2d5850"
+    },
+    {
+      "$oid": "65b95bc42c682a136e2d5852"
+    },
+    {
+      "$oid": "65b95c262c682a136e2d58aa"
+    },
+    {
+      "$oid": "65b95c262c682a136e2d58ac"
+    },
+    {
+      "$oid": "65b95c262c682a136e2d58ae"
+    },
+    {
+      "$oid": "65b95d742c682a136e2d5a21"
+    },
+    {
+      "$oid": "65b95d742c682a136e2d5a23"
+    },
+    {
+      "$oid": "65ba949e74de7b22c9e6a96c"
+    },
+    {
+      "$oid": "65ba949e74de7b22c9e6a96e"
+    },
+    {
+      "$oid": "65d9695ff9f586086110be33"
+    },
+    {
+      "$oid": "65d9695ff9f586086110be35"
+    },
+    {
+      "$oid": "65daf38d528a676b83a2b3ea"
+    },
+    {
+      "$oid": "65daf38d528a676b83a2b3ec"
+    },
+    {
+      "$oid": "65daf38d528a676b83a2b3ee"
+    },
+    {
+      "$oid": "65daf38d528a676b83a2b3f0"
+    },
+    {
+      "$oid": "65daf414528a676b83a2b4b2"
+    },
+    {
+      "$oid": "65daf414528a676b83a2b4b4"
+    },
+    {
+      "$oid": "65daf414528a676b83a2b4b6"
+    },
+    {
+      "$oid": "65daf471528a676b83a2b51d"
+    },
+    {
+      "$oid": "65daf471528a676b83a2b51f"
+    },
+    {
+      "$oid": "65daf471528a676b83a2b521"
+    },
+    {
+      "$oid": "65daf471528a676b83a2b523"
+    },
+    {
+      "$oid": "65daf614528a676b83a2b6ab"
+    },
+    {
+      "$oid": "65daf614528a676b83a2b6ad"
+    },
+    {
+      "$oid": "65daf6e8528a676b83a2b7ed"
+    },
+    {
+      "$oid": "65daf9a9528a676b83a2baa6"
+    },
+    {
+      "$oid": "65daf9a9528a676b83a2baa8"
+    },
+    {
+      "$oid": "65daf9e4528a676b83a2bb0f"
+    },
+    {
+      "$oid": "65daf9e4528a676b83a2bb11"
+    },
+    {
+      "$oid": "65dafa7f528a676b83a2bb78"
+    },
+    {
+      "$oid": "65dafa7f528a676b83a2bb7a"
+    },
+    {
+      "$oid": "65dafa7f528a676b83a2bb7c"
+    },
+    {
+      "$oid": "65dafab8528a676b83a2bbeb"
+    },
+    {
+      "$oid": "65dafab8528a676b83a2bbed"
+    },
+    {
+      "$oid": "65daff91528a676b83a2bf4d"
+    },
+    {
+      "$oid": "65daff91528a676b83a2bf4f"
+    },
+    {
+      "$oid": "65daff91528a676b83a2bf51"
+    },
+    {
+      "$oid": "65db0020528a676b83a2bfc4"
+    },
+    {
+      "$oid": "65db0020528a676b83a2bfc6"
+    },
+    {
+      "$oid": "65db0020528a676b83a2bfc8"
+    },
+    {
+      "$oid": "65db0064528a676b83a2c03e"
+    },
+    {
+      "$oid": "65db0064528a676b83a2c040"
+    },
+    {
+      "$oid": "65db0140528a676b83a2c120"
+    },
+    {
+      "$oid": "65db028e528a676b83a2c288"
+    },
+    {
+      "$oid": "65db028e528a676b83a2c28a"
+    },
+    {
+      "$oid": "65db028e528a676b83a2c28c"
+    },
+    {
+      "$oid": "65db028e528a676b83a2c28e"
+    },
+    {
+      "$oid": "65db0380528a676b83a2c3f4"
+    },
+    {
+      "$oid": "65db0380528a676b83a2c3f6"
+    },
+    {
+      "$oid": "65db0380528a676b83a2c3f8"
+    },
+    {
+      "$oid": "65db0380528a676b83a2c3fa"
+    },
+    {
+      "$oid": "65df6f8acb46d674e51114fd"
+    },
+    {
+      "$oid": "65df6f8acb46d674e51114ff"
+    },
+    {
+      "$oid": "65df6f8acb46d674e5111501"
+    },
+    {
+      "$oid": "65df6f8acb46d674e5111503"
+    },
+    {
+      "$oid": "65df6f8acb46d674e5111505"
+    },
+    {
+      "$oid": "65df704fcb46d674e5111629"
+    },
+    {
+      "$oid": "65df7101cb46d674e511170d"
+    },
+    {
+      "$oid": "65df71abcb46d674e5111841"
+    },
+    {
+      "$oid": "65df73aecb46d674e5111a8d"
+    },
+    {
+      "$oid": "65df73aecb46d674e5111a8f"
+    },
+    {
+      "$oid": "65df76dccb46d674e5111ca8"
+    },
+    {
+      "$oid": "65df779acb46d674e5111dff"
+    },
+    {
+      "$oid": "65df779acb46d674e5111e01"
+    },
+    {
+      "$oid": "65df7a7acb46d674e5111f38"
+    },
+    {
+      "$oid": "65df7a7acb46d674e5111f3a"
+    },
+    {
+      "$oid": "65df7a7acb46d674e5111f3c"
+    },
+    {
+      "$oid": "65df7a7acb46d674e5111f3e"
+    },
+    {
+      "$oid": "65e0c3a8baa9e8584fea77e7"
+    },
+    {
+      "$oid": "65e0c3a8baa9e8584fea77e9"
+    },
+    {
+      "$oid": "65e0c3a8baa9e8584fea77eb"
+    },
+    {
+      "$oid": "65e0c44bbaa9e8584fea7903"
+    },
+    {
+      "$oid": "65e0c44bbaa9e8584fea7905"
+    }
+  ],
+  "monthlyData": [
+    {
+      "month": "September",
+      "totalMileage": 244,
+      "totalRevenue": 732,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65802f7ec455242ae5e42211"
+      }
+    }
+  ],
+  "yearlyJobs": 4,
+  "yearlyMileage": 244,
+  "yearlyRevenue": 732,
+  "__v": 43,
+  "updatedAt": {
+    "$date": "2024-02-29T17:52:11.112Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "658a76400ef5c837808a68cd"
+  },
+  "year": 2023,
+  "contractorId": "657ac2edfc044cca2c2b98e8",
+  "delivererId": "654f669091e232eb07068b57",
+  "dailyData": [
+    {
+      "date": "Tue Dec 26 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 444,
+      "totalRevenue": 1332,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "658a7640ea4305d784dbc0c8"
+      }
+    }
+  ],
+  "job_ids": [
+    {
+      "$oid": "658a763fea4305d784dbc0b4"
+    },
+    {
+      "$oid": "658a763fea4305d784dbc0b6"
+    }
+  ],
+  "monthlyData": [
+    {
+      "month": "December",
+      "totalMileage": 444,
+      "totalRevenue": 1332,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "658a7640ea4305d784dbc0c7"
+      }
+    }
+  ],
+  "yearlyJobs": 2,
+  "yearlyMileage": 444,
+  "yearlyRevenue": 1332,
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "65aea9bcfefcc474dde3c9bc"
+  },
+  "contractorId": "6565950c8827f7f34b114a52",
+  "delivererId": "654f669091e232eb07068b57",
+  "year": 2024,
+  "createdAt": {
+    "$date": "2024-01-22T17:45:32.063Z"
+  },
+  "dailyData": [
+    {
+      "date": "Wed Jan 24 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 2,
+      "totalRevenue": 3.3,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65b95c772c682a136e2d591a"
+      }
+    },
+    {
+      "date": "Wed Jan 17 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 8,
+      "totalRevenue": 21.000000000000004,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65b94c422c682a136e2d50a2"
+      }
+    },
+    {
+      "date": "Wed Jan 10 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": -13,
+      "totalRevenue": -38.350000000000016,
+      "totalJobs": 9,
+      "_id": {
+        "$oid": "65aeab69c461048f0f5b0bad"
+      }
+    },
+    {
+      "date": "Wed Feb 07 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 37,
+      "totalRevenue": 61.04999999999999,
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "65d96beef9f586086110c14f"
+      }
+    },
+    {
+      "date": "Tue Jan 30 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 47,
+      "totalRevenue": 77.54999999999998,
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "65ba93c274de7b22c9e6a86d"
+      }
+    },
+    {
+      "date": "Tue Jan 16 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 25,
+      "totalRevenue": 41.25,
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "65b9465e2c682a136e2d4dd5"
+      }
+    },
+    {
+      "date": "Tue Jan 09 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 23,
+      "totalRevenue": 67.85000000000001,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65b954cc2c682a136e2d529f"
+      }
+    },
+    {
+      "date": "Tue Feb 27 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 4,
+      "totalRevenue": 6.6,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65df76a6cb46d674e5111c37"
+      }
+    },
+    {
+      "date": "Tue Feb 13 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 25,
+      "totalRevenue": 73.75,
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "65dafb62528a676b83a2bcaa"
+      }
+    },
+    {
+      "date": "Thu Jan 18 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 40,
+      "totalRevenue": 118,
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "65b956582c682a136e2d5423"
+      }
+    },
+    {
+      "date": "Thu Jan 11 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 39,
+      "totalRevenue": 89.05000000000001,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65aeacbfc461048f0f5b0c8c"
+      }
+    },
+    {
+      "date": "Thu Feb 15 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 19,
+      "totalRevenue": 31.35,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65db016b528a676b83a2c19d"
+      }
+    },
+    {
+      "date": "Thu Feb 08 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 43,
+      "totalRevenue": 126.85000000000001,
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "65daf957528a676b83a2ba4a"
+      }
+    },
+    {
+      "date": "Thu Feb 01 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 40,
+      "totalRevenue": 65.99999999999999,
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "65daf5d9528a676b83a2b653"
+      }
+    },
+    {
+      "date": "Mon Jan 29 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 34,
+      "totalRevenue": 56.099999999999994,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65ba932474de7b22c9e6a800"
+      }
+    },
+    {
+      "date": "Mon Jan 08 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 14,
+      "totalRevenue": 28.299999999999997,
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "65aea9bcc461048f0f5b0a72"
+      }
+    },
+    {
+      "date": "Mon Feb 26 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 9,
+      "totalRevenue": 14.85,
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "65e0c011baa9e8584fea7524"
+      }
+    },
+    {
+      "date": "Mon Feb 05 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 35,
+      "totalRevenue": 57.75,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65daf6b6528a676b83a2b791"
+      }
+    },
+    {
+      "date": "Fri Jan 26 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 34,
+      "totalRevenue": 62.599999999999994,
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "65b95af32c682a136e2d5750"
+      }
+    },
+    {
+      "date": "Fri Feb 09 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 120,
+      "totalRevenue": 197.99999999999997,
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "65d96819f9f586086110bd37"
+      }
+    },
+    {
+      "date": "Fri Feb 02 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 2,
+      "totalRevenue": 3.3,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65d96b1ef9f586086110c049"
+      }
+    }
+  ],
+  "job_ids": [],
+  "monthlyData": [
+    {
+      "month": "January",
+      "totalMileage": 253,
+      "totalRevenue": 526.6500000000001,
+      "totalJobs": 48,
+      "_id": {
+        "$oid": "65aea9bcc461048f0f5b0a71"
+      }
+    },
+    {
+      "month": "February",
+      "totalMileage": 334,
+      "totalRevenue": 639.5000000000001,
+      "totalJobs": 40,
+      "_id": {
+        "$oid": "65d96819f9f586086110bd36"
+      }
+    }
+  ],
+  "updatedAt": {
+    "$date": "2024-02-29T17:35:15.326Z"
+  },
+  "yearlyJobs": 87,
+  "yearlyMileage": 587,
+  "yearlyRevenue": 1166.15
+},
+{
+  "_id": {
+    "$oid": "65aeab0bfefcc474dde3cb08"
+  },
+  "contractorId": "6565958e8827f7f34b114a79",
+  "delivererId": "654f669091e232eb07068b57",
+  "year": 2024,
+  "createdAt": {
+    "$date": "2024-01-22T17:51:07.302Z"
+  },
+  "dailyData": [
+    {
+      "date": "Wed Jan 31 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 10,
+      "totalRevenue": 16.5,
+      "totalJobs": 1,
+      "_id": {
+        "$oid": "65ba946274de7b22c9e6a924"
+      }
+    },
+    {
+      "date": "Wed Feb 28 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 13,
+      "totalRevenue": 21.45,
+      "totalJobs": 1,
+      "_id": {
+        "$oid": "65df77cccb46d674e5111e92"
+      }
+    },
+    {
+      "date": "Wed Feb 14 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 53,
+      "totalRevenue": 87.44999999999999,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65db00f9528a676b83a2c0c2"
+      }
+    },
+    {
+      "date": "Wed Feb 07 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 44,
+      "totalRevenue": 98.6,
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "65d96c46f9f586086110c1c3"
+      }
+    },
+    {
+      "date": "Tue Jan 30 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 21,
+      "totalRevenue": 34.65,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65ba942574de7b22c9e6a8d1"
+      }
+    },
+    {
+      "date": "Tue Jan 09 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 23,
+      "totalRevenue": 67.85000000000001,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65aeab0bc461048f0f5b0b41"
+      }
+    },
+    {
+      "date": "Tue Feb 27 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 27,
+      "totalRevenue": 44.55,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65df7717cb46d674e5111d36"
+      }
+    },
+    {
+      "date": "Tue Feb 20 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 4,
+      "totalRevenue": 6.6,
+      "totalJobs": 1,
+      "_id": {
+        "$oid": "65df70dbcb46d674e51116a7"
+      }
+    },
+    {
+      "date": "Thu Jan 25 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 33,
+      "totalRevenue": 54.449999999999996,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65b95cfe2c682a136e2d59aa"
+      }
+    },
+    {
+      "date": "Thu Jan 18 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 103,
+      "totalRevenue": 169.95,
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "65b94cdf2c682a136e2d511a"
+      }
+    },
+    {
+      "date": "Thu Jan 11 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 19,
+      "totalRevenue": 56.050000000000004,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65b955ae2c682a136e2d5391"
+      }
+    },
+    {
+      "date": "Thu Feb 22 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 37,
+      "totalRevenue": 61.05,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65df7284cb46d674e5111914"
+      }
+    },
+    {
+      "date": "Thu Feb 08 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 80,
+      "totalRevenue": 132,
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "65d965c6f9f586086110bae0"
+      }
+    },
+    {
+      "date": "Thu Feb 01 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 26,
+      "totalRevenue": 42.89999999999999,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65d96a69f9f586086110bf14"
+      }
+    },
+    {
+      "date": "Sat Feb 10 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 12,
+      "totalRevenue": 19.799999999999997,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65d96918f9f586086110bde5"
+      }
+    },
+    {
+      "date": "Mon Jan 29 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 14,
+      "totalRevenue": 41.300000000000004,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65ba95d374de7b22c9e6aa75"
+      }
+    },
+    {
+      "date": "Mon Jan 22 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 36,
+      "totalRevenue": 59.4,
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "65b9590b2c682a136e2d55b2"
+      }
+    },
+    {
+      "date": "Mon Feb 26 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 204,
+      "totalRevenue": 375.85,
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "65df72efcb46d674e5111a12"
+      }
+    },
+    {
+      "date": "Fri Feb 16 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 12,
+      "totalRevenue": 35.400000000000006,
+      "totalJobs": 1,
+      "_id": {
+        "$oid": "65db0326528a676b83a2c395"
+      }
+    },
+    {
+      "date": "Fri Feb 09 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 18,
+      "totalRevenue": 29.699999999999996,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65dafd41528a676b83a2bef2"
+      }
+    },
+    {
+      "date": "Fri Feb 02 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 67,
+      "totalRevenue": 110.55,
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "65d96abcf9f586086110bf79"
+      }
+    }
+  ],
+  "job_ids": [],
+  "monthlyData": [
+    {
+      "month": "January",
+      "totalMileage": 259,
+      "totalRevenue": 500.15000000000003,
+      "totalJobs": 24,
+      "_id": {
+        "$oid": "65aeab0bc461048f0f5b0b40"
+      }
+    },
+    {
+      "month": "February",
+      "totalMileage": 597,
+      "totalRevenue": 1065.8999999999999,
+      "totalJobs": 46,
+      "_id": {
+        "$oid": "65d965c6f9f586086110badf"
+      }
+    }
+  ],
+  "updatedAt": {
+    "$date": "2024-02-29T17:43:46.300Z"
+  },
+  "yearlyJobs": 69,
+  "yearlyMileage": 856,
+  "yearlyRevenue": 1566.0499999999997
+},
+{
+  "_id": {
+    "$oid": "65b9442541958eea07c6cbcc"
+  },
+  "year": 2024,
+  "contractorId": "656595d18827f7f34b114a89",
+  "delivererId": "654f669091e232eb07068b57",
+  "createdAt": {
+    "$date": "2024-01-30T18:47:00.989Z"
+  },
+  "dailyData": [
+    {
+      "date": "Wed Jan 31 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 23,
+      "totalRevenue": 37.95,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65ba949e74de7b22c9e6a980"
+      }
+    },
+    {
+      "date": "Wed Jan 10 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 32,
+      "totalRevenue": 52.8,
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "65b9556c2c682a136e2d5344"
+      }
+    },
+    {
+      "date": "Wed Feb 28 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 62,
+      "totalRevenue": 102.3,
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "65df779acb46d674e5111e13"
+      }
+    },
+    {
+      "date": "Wed Feb 14 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 46,
+      "totalRevenue": 75.89999999999999,
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "65db0020528a676b83a2bfe0"
+      }
+    },
+    {
+      "date": "Tue Jan 23 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 60,
+      "totalRevenue": 99,
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "65b95b712c682a136e2d5812"
+      }
+    },
+    {
+      "date": "Tue Jan 16 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 113,
+      "totalRevenue": 186.45,
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "65b9463e2c682a136e2d4d94"
+      }
+    },
+    {
+      "date": "Tue Feb 27 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 34,
+      "totalRevenue": 87.30000000000001,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65df76dccb46d674e5111cb4"
+      }
+    },
+    {
+      "date": "Tue Feb 20 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 28,
+      "totalRevenue": 46.199999999999996,
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "65df704fcb46d674e5111635"
+      }
+    },
+    {
+      "date": "Tue Feb 06 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 41,
+      "totalRevenue": 120.95000000000002,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65daf471528a676b83a2b541"
+      }
+    },
+    {
+      "date": "Thu Jan 25 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 54,
+      "totalRevenue": 89.1,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65b95a332c682a136e2d56b6"
+      }
+    },
+    {
+      "date": "Thu Jan 18 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 35,
+      "totalRevenue": 57.75,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65b958322c682a136e2d554f"
+      }
+    },
+    {
+      "date": "Thu Jan 11 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 28,
+      "totalRevenue": 46.199999999999996,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65b944242c682a136e2d4b4b"
+      }
+    },
+    {
+      "date": "Thu Feb 29 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 60,
+      "totalRevenue": 177,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65e0c44bbaa9e8584fea7917"
+      }
+    },
+    {
+      "date": "Thu Feb 22 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 24,
+      "totalRevenue": 70.80000000000001,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65df73aecb46d674e5111aa1"
+      }
+    },
+    {
+      "date": "Thu Feb 15 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 46,
+      "totalRevenue": 75.89999999999999,
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "65db0140528a676b83a2c12c"
+      }
+    },
+    {
+      "date": "Thu Feb 01 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 88,
+      "totalRevenue": 223.2,
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "65daf38d528a676b83a2b40e"
+      }
+    },
+    {
+      "date": "Sat Feb 10 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 20,
+      "totalRevenue": 33,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65d9695ff9f586086110be47"
+      }
+    },
+    {
+      "date": "Mon Jan 15 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 25,
+      "totalRevenue": 41.25,
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "65b9451e2c682a136e2d4bdc"
+      }
+    },
+    {
+      "date": "Mon Feb 12 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 9,
+      "totalRevenue": 26.55,
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "65dafab8528a676b83a2bbff"
+      }
+    },
+    {
+      "date": "Mon Feb 05 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 53,
+      "totalRevenue": 135.55,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65daf414528a676b83a2b4ce"
+      }
+    },
+    {
+      "date": "Fri Feb 23 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 42,
+      "totalRevenue": 123.9,
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "65df6f8bcb46d674e5111529"
+      }
+    },
+    {
+      "date": "Fri Feb 16 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 22,
+      "totalRevenue": 64.9,
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "65db0380528a676b83a2c418"
+      }
+    },
+    {
+      "date": "Fri Feb 09 2024 02:00:00 GMT+0200 (Central Africa Time)",
+      "totalMileage": 73,
+      "totalRevenue": 186.75,
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "65daf9a9528a676b83a2baba"
+      }
+    }
+  ],
+  "job_ids": [],
+  "monthlyData": [
+    {
+      "month": "January",
+      "totalMileage": 370,
+      "totalRevenue": 610.5,
+      "totalJobs": 33,
+      "_id": {
+        "$oid": "65b944242c682a136e2d4b4a"
+      }
+    },
+    {
+      "month": "February",
+      "totalMileage": 648,
+      "totalRevenue": 1550.2000000000012,
+      "totalJobs": 64,
+      "_id": {
+        "$oid": "65d9695ff9f586086110be46"
+      }
+    }
+  ],
+  "updatedAt": {
+    "$date": "2024-02-29T17:52:11.076Z"
+  },
+  "yearlyJobs": 96,
+  "yearlyMileage": 1018,
+  "yearlyRevenue": 2160.7000000000003
+}]

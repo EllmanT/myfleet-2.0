@@ -1,0 +1,25 @@
+[{
+  "_id": {
+    "$oid": "65802014c455242ae5e41b2b"
+  },
+  "vehicleId": "656b18ac81133c4fc74dfbb4",
+  "companyId": "654f669091e232eb07068b57",
+  "expenseData": [
+    {
+      "date": "Thu Dec 07 2023 02:00:00 GMT+0200 (Central Africa Time)",
+      "description": "gearbox change",
+      "employeeId": "656df3737f77fe94771a45af",
+      "cost": 3222,
+      "_id": {
+        "$oid": "65802014c455242ae5e41b2c"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2023-12-18T10:33:56.750Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-18T10:33:56.763Z"
+  },
+  "__v": 1
+}]
