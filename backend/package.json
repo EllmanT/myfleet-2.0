@@ -3,14 +3,11 @@
   "version": "2.0.0",
   "description": "",
   "main": "server.js",
-  "engines":{
-    "node":"16.16.0"
-  },
+  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
-    "start": "node server.js",
-    "heroku-post-build": "NPM_CONFIG_PRODUCTION=false"
+    "start": "node server.js"
   },
   "author": "Tapiwa Muranda",
   "license": "ISC",
