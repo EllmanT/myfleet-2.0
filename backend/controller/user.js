@@ -41,7 +41,8 @@ router.post("/create-user", upload.single("file"), async (req, res, next) => {
     };
 
     const activationToken = createActivationToken(user);
-    const activationUrl = `https://myfleet-ijfg.vercel.app/activation/${activationToken}`;
+    // const activationUrl = `https://myfleet-ijfg.vercel.app/activation/${activationToken}`;
+    const activationUrl = `https://checkins-render-prod-deployment.onrender.com/activation/${activationToken}`;
 
     try {
       await sendMail({
