@@ -9,7 +9,8 @@ const path = require("path");
 app.use(
   cors({
     // origin: "https://myfleet-ijfg.vercel.app",
-    origin: "http://localhost:3000",
+    // origin: "http://localhost:3000",
+    origin:"https://myfleet-2-0.onrender.com",
     credentials: true,
   })
 );
