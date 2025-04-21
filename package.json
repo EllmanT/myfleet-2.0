@@ -30,6 +30,9 @@
         "nodemailer-express-handlebars": "^6.1.2",
         "nodemon": "^3.0.1",
         "socket.io": "^4.7.5"
+      },
+      "devDependencies": {
+        "webpack": "^5.92.1"
       }
   
   }
