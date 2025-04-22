@@ -436,8 +436,8 @@ console.log(coOverallStats.yearlyExpenses);
         <StatBox
           title="Contractors"
           value={coOverallStats && coOverallStats.totalContractors}
-          increase={topContractorRevenue && topContractorRevenue}
-          description={topContractorRevenue && `$${highestRevenue}`}
+          // increase={topContractorRevenue && topContractorRevenue}
+          // description={topContractorRevenue && `$${highestRevenue}`}
           icon={
             <ReceiptLongOutlined
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}

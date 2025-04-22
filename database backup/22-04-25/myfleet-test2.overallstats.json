@@ -1,0 +1,4025 @@
+[{
+  "_id": {
+    "$oid": "6807645ee42d09ded9daf693"
+  },
+  "companyId": {
+    "$oid": "654f669091e232eb07068b57"
+  },
+  "year": 2024,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-04-22T09:41:50.049Z"
+  },
+  "dailyData": [
+    {
+      "date": "2024-01-08",
+      "totalMileage": 51,
+      "totalRevenue": {
+        "$numberDecimal": "89.35"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d53"
+      }
+    },
+    {
+      "date": "2024-01-09",
+      "totalMileage": 85,
+      "totalRevenue": {
+        "$numberDecimal": "200.05"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d54"
+      }
+    },
+    {
+      "date": "2024-01-10",
+      "totalMileage": 112,
+      "totalRevenue": {
+        "$numberDecimal": "231.6"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d55"
+      }
+    },
+    {
+      "date": "2024-01-11",
+      "totalMileage": 86,
+      "totalRevenue": {
+        "$numberDecimal": "191.3"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d56"
+      }
+    },
+    {
+      "date": "2024-01-15",
+      "totalMileage": 25,
+      "totalRevenue": {
+        "$numberDecimal": "41.25"
+      },
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d57"
+      }
+    },
+    {
+      "date": "2024-01-16",
+      "totalMileage": 138,
+      "totalRevenue": {
+        "$numberDecimal": "227.7"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d58"
+      }
+    },
+    {
+      "date": "2024-01-17",
+      "totalMileage": 8,
+      "totalRevenue": {
+        "$numberDecimal": "21"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d59"
+      }
+    },
+    {
+      "date": "2024-01-18",
+      "totalMileage": 178,
+      "totalRevenue": {
+        "$numberDecimal": "345.7"
+      },
+      "totalJobs": 15,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d5a"
+      }
+    },
+    {
+      "date": "2024-01-19",
+      "totalMileage": 33,
+      "totalRevenue": {
+        "$numberDecimal": "97.35"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d5b"
+      }
+    },
+    {
+      "date": "2024-01-22",
+      "totalMileage": 71,
+      "totalRevenue": {
+        "$numberDecimal": "121.05"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d5c"
+      }
+    },
+    {
+      "date": "2024-01-23",
+      "totalMileage": 60,
+      "totalRevenue": {
+        "$numberDecimal": "99"
+      },
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d5d"
+      }
+    },
+    {
+      "date": "2024-01-24",
+      "totalMileage": 2,
+      "totalRevenue": {
+        "$numberDecimal": "3.3"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d5e"
+      }
+    },
+    {
+      "date": "2024-01-25",
+      "totalMileage": 105,
+      "totalRevenue": {
+        "$numberDecimal": "173.25"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d5f"
+      }
+    },
+    {
+      "date": "2024-01-26",
+      "totalMileage": 34,
+      "totalRevenue": {
+        "$numberDecimal": "62.6"
+      },
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d60"
+      }
+    },
+    {
+      "date": "2024-01-29",
+      "totalMileage": 48,
+      "totalRevenue": {
+        "$numberDecimal": "97.4"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d61"
+      }
+    },
+    {
+      "date": "2024-01-30",
+      "totalMileage": 68,
+      "totalRevenue": {
+        "$numberDecimal": "112.2"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d62"
+      }
+    },
+    {
+      "date": "2024-01-31",
+      "totalMileage": 33,
+      "totalRevenue": {
+        "$numberDecimal": "54.45"
+      },
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d63"
+      }
+    },
+    {
+      "date": "2024-02-01",
+      "totalMileage": 120,
+      "totalRevenue": {
+        "$numberDecimal": "276"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d64"
+      }
+    },
+    {
+      "date": "2024-02-02",
+      "totalMileage": 69,
+      "totalRevenue": {
+        "$numberDecimal": "113.85"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d65"
+      }
+    },
+    {
+      "date": "2024-02-05",
+      "totalMileage": 88,
+      "totalRevenue": {
+        "$numberDecimal": "193.3"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d66"
+      }
+    },
+    {
+      "date": "2024-02-06",
+      "totalMileage": 41,
+      "totalRevenue": {
+        "$numberDecimal": "120.95"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d67"
+      }
+    },
+    {
+      "date": "2024-02-07",
+      "totalMileage": 81,
+      "totalRevenue": {
+        "$numberDecimal": "159.65"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d68"
+      }
+    },
+    {
+      "date": "2024-02-08",
+      "totalMileage": 123,
+      "totalRevenue": {
+        "$numberDecimal": "258.85"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d69"
+      }
+    },
+    {
+      "date": "2024-02-09",
+      "totalMileage": 211,
+      "totalRevenue": {
+        "$numberDecimal": "414.45"
+      },
+      "totalJobs": 19,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d6a"
+      }
+    },
+    {
+      "date": "2024-02-12",
+      "totalMileage": 41,
+      "totalRevenue": {
+        "$numberDecimal": "79.35"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d6b"
+      }
+    },
+    {
+      "date": "2024-02-13",
+      "totalMileage": 25,
+      "totalRevenue": {
+        "$numberDecimal": "73.75"
+      },
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d6c"
+      }
+    },
+    {
+      "date": "2024-02-14",
+      "totalMileage": 99,
+      "totalRevenue": {
+        "$numberDecimal": "163.35"
+      },
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d6d"
+      }
+    },
+    {
+      "date": "2024-02-15",
+      "totalMileage": 65,
+      "totalRevenue": {
+        "$numberDecimal": "107.25"
+      },
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d6e"
+      }
+    },
+    {
+      "date": "2024-02-16",
+      "totalMileage": 34,
+      "totalRevenue": {
+        "$numberDecimal": "100.3"
+      },
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d6f"
+      }
+    },
+    {
+      "date": "2024-02-20",
+      "totalMileage": 32,
+      "totalRevenue": {
+        "$numberDecimal": "52.8"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d70"
+      }
+    },
+    {
+      "date": "2024-02-22",
+      "totalMileage": 61,
+      "totalRevenue": {
+        "$numberDecimal": "131.85"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d71"
+      }
+    },
+    {
+      "date": "2024-02-23",
+      "totalMileage": 42,
+      "totalRevenue": {
+        "$numberDecimal": "123.9"
+      },
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d72"
+      }
+    },
+    {
+      "date": "2024-02-26",
+      "totalMileage": 213,
+      "totalRevenue": {
+        "$numberDecimal": "390.7"
+      },
+      "totalJobs": 9,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d73"
+      }
+    },
+    {
+      "date": "2024-02-27",
+      "totalMileage": 104,
+      "totalRevenue": {
+        "$numberDecimal": "202.8"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d74"
+      }
+    },
+    {
+      "date": "2024-02-28",
+      "totalMileage": 75,
+      "totalRevenue": {
+        "$numberDecimal": "123.75"
+      },
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d75"
+      }
+    },
+    {
+      "date": "2024-02-29",
+      "totalMileage": 174,
+      "totalRevenue": {
+        "$numberDecimal": "409.3"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d76"
+      }
+    },
+    {
+      "date": "2024-03-01",
+      "totalMileage": 435,
+      "totalRevenue": {
+        "$numberDecimal": "860.75"
+      },
+      "totalJobs": 18,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d77"
+      }
+    },
+    {
+      "date": "2024-03-04",
+      "totalMileage": 56,
+      "totalRevenue": {
+        "$numberDecimal": "92.4"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d78"
+      }
+    },
+    {
+      "date": "2024-03-05",
+      "totalMileage": 75,
+      "totalRevenue": {
+        "$numberDecimal": "161.45"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d79"
+      }
+    },
+    {
+      "date": "2024-03-06",
+      "totalMileage": 79,
+      "totalRevenue": {
+        "$numberDecimal": "130.35"
+      },
+      "totalJobs": 9,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d7a"
+      }
+    },
+    {
+      "date": "2024-03-07",
+      "totalMileage": 32,
+      "totalRevenue": {
+        "$numberDecimal": "94.4"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d7b"
+      }
+    },
+    {
+      "date": "2024-03-08",
+      "totalMileage": 43,
+      "totalRevenue": {
+        "$numberDecimal": "70.95"
+      },
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d7c"
+      }
+    },
+    {
+      "date": "2024-03-11",
+      "totalMileage": 242,
+      "totalRevenue": {
+        "$numberDecimal": "503.3"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d7d"
+      }
+    },
+    {
+      "date": "2024-03-12",
+      "totalMileage": 19,
+      "totalRevenue": {
+        "$numberDecimal": "31.35"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d7e"
+      }
+    },
+    {
+      "date": "2024-03-13",
+      "totalMileage": 135,
+      "totalRevenue": {
+        "$numberDecimal": "222.75"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d7f"
+      }
+    },
+    {
+      "date": "2024-03-14",
+      "totalMileage": 39,
+      "totalRevenue": {
+        "$numberDecimal": "64.35"
+      },
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d80"
+      }
+    },
+    {
+      "date": "2024-03-15",
+      "totalMileage": 92,
+      "totalRevenue": {
+        "$numberDecimal": "151.8"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d81"
+      }
+    },
+    {
+      "date": "2024-03-18",
+      "totalMileage": 209,
+      "totalRevenue": {
+        "$numberDecimal": "616.55"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d82"
+      }
+    },
+    {
+      "date": "2024-03-19",
+      "totalMileage": 83,
+      "totalRevenue": {
+        "$numberDecimal": "160.35"
+      },
+      "totalJobs": 9,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d83"
+      }
+    },
+    {
+      "date": "2024-03-20",
+      "totalMileage": 36,
+      "totalRevenue": {
+        "$numberDecimal": "59.4"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d84"
+      }
+    },
+    {
+      "date": "2024-03-21",
+      "totalMileage": 33,
+      "totalRevenue": {
+        "$numberDecimal": "54.45"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d85"
+      }
+    },
+    {
+      "date": "2024-03-22",
+      "totalMileage": 61,
+      "totalRevenue": {
+        "$numberDecimal": "100.65"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d86"
+      }
+    },
+    {
+      "date": "2024-03-25",
+      "totalMileage": 95,
+      "totalRevenue": {
+        "$numberDecimal": "156.75"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d87"
+      }
+    },
+    {
+      "date": "2024-03-26",
+      "totalMileage": 57,
+      "totalRevenue": {
+        "$numberDecimal": "94.05"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d88"
+      }
+    },
+    {
+      "date": "2024-03-28",
+      "totalMileage": 62,
+      "totalRevenue": {
+        "$numberDecimal": "102.3"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d89"
+      }
+    },
+    {
+      "date": "2024-04-02",
+      "totalMileage": 58,
+      "totalRevenue": {
+        "$numberDecimal": "138.6"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d8a"
+      }
+    },
+    {
+      "date": "2024-04-04",
+      "totalMileage": 34,
+      "totalRevenue": {
+        "$numberDecimal": "56.1"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d8b"
+      }
+    },
+    {
+      "date": "2024-04-05",
+      "totalMileage": 195,
+      "totalRevenue": {
+        "$numberDecimal": "356.85"
+      },
+      "totalJobs": 19,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d8c"
+      }
+    },
+    {
+      "date": "2024-04-08",
+      "totalMileage": 46,
+      "totalRevenue": {
+        "$numberDecimal": "75.9"
+      },
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d8d"
+      }
+    },
+    {
+      "date": "2024-04-09",
+      "totalMileage": 119,
+      "totalRevenue": {
+        "$numberDecimal": "263.95"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d8e"
+      }
+    },
+    {
+      "date": "2024-04-10",
+      "totalMileage": 78,
+      "totalRevenue": {
+        "$numberDecimal": "170.3"
+      },
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d8f"
+      }
+    },
+    {
+      "date": "2024-04-11",
+      "totalMileage": 72,
+      "totalRevenue": {
+        "$numberDecimal": "172.1"
+      },
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d90"
+      }
+    },
+    {
+      "date": "2024-04-12",
+      "totalMileage": 157,
+      "totalRevenue": {
+        "$numberDecimal": "372.15"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d91"
+      }
+    },
+    {
+      "date": "2024-04-15",
+      "totalMileage": 61,
+      "totalRevenue": {
+        "$numberDecimal": "151.35"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d92"
+      }
+    },
+    {
+      "date": "2024-04-16",
+      "totalMileage": 237,
+      "totalRevenue": {
+        "$numberDecimal": "431.35"
+      },
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d93"
+      }
+    },
+    {
+      "date": "2024-04-17",
+      "totalMileage": 265,
+      "totalRevenue": {
+        "$numberDecimal": "655.65"
+      },
+      "totalJobs": 19,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d94"
+      }
+    },
+    {
+      "date": "2024-04-22",
+      "totalMileage": 60,
+      "totalRevenue": {
+        "$numberDecimal": "99"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d95"
+      }
+    },
+    {
+      "date": "2024-04-23",
+      "totalMileage": 210,
+      "totalRevenue": {
+        "$numberDecimal": "503.8"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d96"
+      }
+    },
+    {
+      "date": "2024-04-24",
+      "totalMileage": 129,
+      "totalRevenue": {
+        "$numberDecimal": "298.65"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d97"
+      }
+    },
+    {
+      "date": "2024-04-25",
+      "totalMileage": 83,
+      "totalRevenue": {
+        "$numberDecimal": "204.55"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d98"
+      }
+    },
+    {
+      "date": "2024-04-26",
+      "totalMileage": 292,
+      "totalRevenue": {
+        "$numberDecimal": "745.7"
+      },
+      "totalJobs": 19,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d99"
+      }
+    },
+    {
+      "date": "2024-04-27",
+      "totalMileage": 34,
+      "totalRevenue": {
+        "$numberDecimal": "56.1"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d9a"
+      }
+    },
+    {
+      "date": "2024-04-29",
+      "totalMileage": 75,
+      "totalRevenue": {
+        "$numberDecimal": "165.35"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d9b"
+      }
+    },
+    {
+      "date": "2024-04-30",
+      "totalMileage": 224,
+      "totalRevenue": {
+        "$numberDecimal": "489.2"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d9c"
+      }
+    },
+    {
+      "date": "2024-05-02",
+      "totalMileage": 195,
+      "totalRevenue": {
+        "$numberDecimal": "359.45"
+      },
+      "totalJobs": 17,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d9d"
+      }
+    },
+    {
+      "date": "2024-05-03",
+      "totalMileage": 85,
+      "totalRevenue": {
+        "$numberDecimal": "202.65"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d9e"
+      }
+    },
+    {
+      "date": "2024-05-04",
+      "totalMileage": 107,
+      "totalRevenue": {
+        "$numberDecimal": "176.55"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d9f"
+      }
+    },
+    {
+      "date": "2024-05-06",
+      "totalMileage": 127,
+      "totalRevenue": {
+        "$numberDecimal": "209.55"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770da0"
+      }
+    },
+    {
+      "date": "2024-05-07",
+      "totalMileage": 110,
+      "totalRevenue": {
+        "$numberDecimal": "249.1"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770da1"
+      }
+    },
+    {
+      "date": "2024-05-08",
+      "totalMileage": 141,
+      "totalRevenue": {
+        "$numberDecimal": "240.45"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770da2"
+      }
+    },
+    {
+      "date": "2024-05-09",
+      "totalMileage": 152,
+      "totalRevenue": {
+        "$numberDecimal": "352.2"
+      },
+      "totalJobs": 15,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770da3"
+      }
+    },
+    {
+      "date": "2024-05-10",
+      "totalMileage": 159,
+      "totalRevenue": {
+        "$numberDecimal": "272.75"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770da4"
+      }
+    },
+    {
+      "date": "2024-05-13",
+      "totalMileage": 130,
+      "totalRevenue": {
+        "$numberDecimal": "323.7"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770da5"
+      }
+    },
+    {
+      "date": "2024-05-14",
+      "totalMileage": 150,
+      "totalRevenue": {
+        "$numberDecimal": "312.5"
+      },
+      "totalJobs": 9,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770da6"
+      }
+    },
+    {
+      "date": "2024-05-15",
+      "totalMileage": 135,
+      "totalRevenue": {
+        "$numberDecimal": "227.95"
+      },
+      "totalJobs": 16,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770da7"
+      }
+    },
+    {
+      "date": "2024-05-16",
+      "totalMileage": 100,
+      "totalRevenue": {
+        "$numberDecimal": "165"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770da8"
+      }
+    },
+    {
+      "date": "2024-05-17",
+      "totalMileage": 175,
+      "totalRevenue": {
+        "$numberDecimal": "409.65"
+      },
+      "totalJobs": 16,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770da9"
+      }
+    },
+    {
+      "date": "2024-05-20",
+      "totalMileage": 92,
+      "totalRevenue": {
+        "$numberDecimal": "151.8"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770daa"
+      }
+    },
+    {
+      "date": "2024-05-21",
+      "totalMileage": 218,
+      "totalRevenue": {
+        "$numberDecimal": "384.4"
+      },
+      "totalJobs": 23,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dab"
+      }
+    },
+    {
+      "date": "2024-05-22",
+      "totalMileage": 198,
+      "totalRevenue": {
+        "$numberDecimal": "326.7"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dac"
+      }
+    },
+    {
+      "date": "2024-05-23",
+      "totalMileage": 160,
+      "totalRevenue": {
+        "$numberDecimal": "264"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dad"
+      }
+    },
+    {
+      "date": "2024-05-24",
+      "totalMileage": 118,
+      "totalRevenue": {
+        "$numberDecimal": "270.1"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dae"
+      }
+    },
+    {
+      "date": "2024-05-27",
+      "totalMileage": 123,
+      "totalRevenue": {
+        "$numberDecimal": "214.65"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770daf"
+      }
+    },
+    {
+      "date": "2024-05-28",
+      "totalMileage": 35,
+      "totalRevenue": {
+        "$numberDecimal": "103.25"
+      },
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770db0"
+      }
+    },
+    {
+      "date": "2024-05-29",
+      "totalMileage": 107,
+      "totalRevenue": {
+        "$numberDecimal": "176.55"
+      },
+      "totalJobs": 9,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770db1"
+      }
+    },
+    {
+      "date": "2024-05-30",
+      "totalMileage": 180,
+      "totalRevenue": {
+        "$numberDecimal": "350.3"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770db2"
+      }
+    },
+    {
+      "date": "2024-05-31",
+      "totalMileage": 199,
+      "totalRevenue": {
+        "$numberDecimal": "442.75"
+      },
+      "totalJobs": 17,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770db3"
+      }
+    },
+    {
+      "date": "2024-06-03",
+      "totalMileage": 86,
+      "totalRevenue": {
+        "$numberDecimal": "141.9"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770db4"
+      }
+    },
+    {
+      "date": "2024-06-04",
+      "totalMileage": 155,
+      "totalRevenue": {
+        "$numberDecimal": "297.35"
+      },
+      "totalJobs": 18,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770db5"
+      }
+    },
+    {
+      "date": "2024-06-05",
+      "totalMileage": 217,
+      "totalRevenue": {
+        "$numberDecimal": "395.75"
+      },
+      "totalJobs": 20,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770db6"
+      }
+    },
+    {
+      "date": "2024-06-06",
+      "totalMileage": 41,
+      "totalRevenue": {
+        "$numberDecimal": "74.15"
+      },
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770db7"
+      }
+    },
+    {
+      "date": "2024-06-07",
+      "totalMileage": 101,
+      "totalRevenue": {
+        "$numberDecimal": "222.55"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770db8"
+      }
+    },
+    {
+      "date": "2024-06-10",
+      "totalMileage": 163,
+      "totalRevenue": {
+        "$numberDecimal": "378.15"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770db9"
+      }
+    },
+    {
+      "date": "2024-06-11",
+      "totalMileage": 124,
+      "totalRevenue": {
+        "$numberDecimal": "228"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dba"
+      }
+    },
+    {
+      "date": "2024-06-12",
+      "totalMileage": 86,
+      "totalRevenue": {
+        "$numberDecimal": "167.9"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dbb"
+      }
+    },
+    {
+      "date": "2024-06-13",
+      "totalMileage": 35,
+      "totalRevenue": {
+        "$numberDecimal": "57.75"
+      },
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dbc"
+      }
+    },
+    {
+      "date": "2024-06-14",
+      "totalMileage": 175,
+      "totalRevenue": {
+        "$numberDecimal": "378.45"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dbd"
+      }
+    },
+    {
+      "date": "2024-06-15",
+      "totalMileage": 16,
+      "totalRevenue": {
+        "$numberDecimal": "26.4"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dbe"
+      }
+    },
+    {
+      "date": "2024-06-17",
+      "totalMileage": 160,
+      "totalRevenue": {
+        "$numberDecimal": "339.4"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dbf"
+      }
+    },
+    {
+      "date": "2024-06-18",
+      "totalMileage": 117,
+      "totalRevenue": {
+        "$numberDecimal": "225.55"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dc0"
+      }
+    },
+    {
+      "date": "2024-06-19",
+      "totalMileage": 55,
+      "totalRevenue": {
+        "$numberDecimal": "95.95"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dc1"
+      }
+    },
+    {
+      "date": "2024-06-20",
+      "totalMileage": 105,
+      "totalRevenue": {
+        "$numberDecimal": "259.05"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dc2"
+      }
+    },
+    {
+      "date": "2024-06-21",
+      "totalMileage": 80,
+      "totalRevenue": {
+        "$numberDecimal": "132"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dc3"
+      }
+    },
+    {
+      "date": "2024-06-22",
+      "totalMileage": 36,
+      "totalRevenue": {
+        "$numberDecimal": "106.2"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dc4"
+      }
+    },
+    {
+      "date": "2024-06-24",
+      "totalMileage": 163,
+      "totalRevenue": {
+        "$numberDecimal": "376.85"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dc5"
+      }
+    },
+    {
+      "date": "2024-06-25",
+      "totalMileage": 136,
+      "totalRevenue": {
+        "$numberDecimal": "224.4"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dc6"
+      }
+    },
+    {
+      "date": "2024-06-26",
+      "totalMileage": 122,
+      "totalRevenue": {
+        "$numberDecimal": "248.1"
+      },
+      "totalJobs": 15,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dc7"
+      }
+    },
+    {
+      "date": "2024-06-27",
+      "totalMileage": 121,
+      "totalRevenue": {
+        "$numberDecimal": "246.45"
+      },
+      "totalJobs": 9,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dc8"
+      }
+    },
+    {
+      "date": "2024-06-28",
+      "totalMileage": 162,
+      "totalRevenue": {
+        "$numberDecimal": "364.8"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dc9"
+      }
+    },
+    {
+      "date": "2024-07-01",
+      "totalMileage": 109,
+      "totalRevenue": {
+        "$numberDecimal": "224.05"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dca"
+      }
+    },
+    {
+      "date": "2024-07-02",
+      "totalMileage": 158,
+      "totalRevenue": {
+        "$numberDecimal": "303.6"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dcb"
+      }
+    },
+    {
+      "date": "2024-07-03",
+      "totalMileage": 115,
+      "totalRevenue": {
+        "$numberDecimal": "297.65"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dcc"
+      }
+    },
+    {
+      "date": "2024-07-04",
+      "totalMileage": 41,
+      "totalRevenue": {
+        "$numberDecimal": "118.35"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dcd"
+      }
+    },
+    {
+      "date": "2024-07-05",
+      "totalMileage": 162,
+      "totalRevenue": {
+        "$numberDecimal": "380.4"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dce"
+      }
+    },
+    {
+      "date": "2024-07-06",
+      "totalMileage": 34,
+      "totalRevenue": {
+        "$numberDecimal": "100.3"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dcf"
+      }
+    },
+    {
+      "date": "2024-07-08",
+      "totalMileage": 82,
+      "totalRevenue": {
+        "$numberDecimal": "165.2"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dd0"
+      }
+    },
+    {
+      "date": "2024-07-09",
+      "totalMileage": 754,
+      "totalRevenue": {
+        "$numberDecimal": "878.15"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dd1"
+      }
+    },
+    {
+      "date": "2024-07-10",
+      "totalMileage": 146,
+      "totalRevenue": {
+        "$numberDecimal": "281.85"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dd2"
+      }
+    },
+    {
+      "date": "2024-07-11",
+      "totalMileage": 142,
+      "totalRevenue": {
+        "$numberDecimal": "221.3"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dd3"
+      }
+    },
+    {
+      "date": "2024-07-12",
+      "totalMileage": 204,
+      "totalRevenue": {
+        "$numberDecimal": "478.3"
+      },
+      "totalJobs": 15,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dd4"
+      }
+    },
+    {
+      "date": "2024-07-15",
+      "totalMileage": 199,
+      "totalRevenue": {
+        "$numberDecimal": "371.25"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dd5"
+      }
+    },
+    {
+      "date": "2024-07-16",
+      "totalMileage": 151,
+      "totalRevenue": {
+        "$numberDecimal": "346.65"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dd6"
+      }
+    },
+    {
+      "date": "2024-07-17",
+      "totalMileage": 227,
+      "totalRevenue": {
+        "$numberDecimal": "552.65"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dd7"
+      }
+    },
+    {
+      "date": "2024-07-18",
+      "totalMileage": 153,
+      "totalRevenue": {
+        "$numberDecimal": "364.25"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dd8"
+      }
+    },
+    {
+      "date": "2024-07-19",
+      "totalMileage": 267,
+      "totalRevenue": {
+        "$numberDecimal": "596.55"
+      },
+      "totalJobs": 23,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dd9"
+      }
+    },
+    {
+      "date": "2024-07-20",
+      "totalMileage": 49,
+      "totalRevenue": {
+        "$numberDecimal": "80.85"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dda"
+      }
+    },
+    {
+      "date": "2024-07-22",
+      "totalMileage": 96,
+      "totalRevenue": {
+        "$numberDecimal": "275.4"
+      },
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770ddb"
+      }
+    },
+    {
+      "date": "2024-07-23",
+      "totalMileage": 120,
+      "totalRevenue": {
+        "$numberDecimal": "240.9"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770ddc"
+      }
+    },
+    {
+      "date": "2024-07-24",
+      "totalMileage": 208,
+      "totalRevenue": {
+        "$numberDecimal": "448.5"
+      },
+      "totalJobs": 17,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770ddd"
+      }
+    },
+    {
+      "date": "2024-07-25",
+      "totalMileage": 156,
+      "totalRevenue": {
+        "$numberDecimal": "341.9"
+      },
+      "totalJobs": 17,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dde"
+      }
+    },
+    {
+      "date": "2024-07-26",
+      "totalMileage": 191,
+      "totalRevenue": {
+        "$numberDecimal": "451.65"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770ddf"
+      }
+    },
+    {
+      "date": "2024-07-27",
+      "totalMileage": 71,
+      "totalRevenue": {
+        "$numberDecimal": "209.45"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770de0"
+      }
+    },
+    {
+      "date": "2024-07-29",
+      "totalMileage": 122,
+      "totalRevenue": {
+        "$numberDecimal": "263.7"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770de1"
+      }
+    },
+    {
+      "date": "2024-07-30",
+      "totalMileage": 203,
+      "totalRevenue": {
+        "$numberDecimal": "480.55"
+      },
+      "totalJobs": 20,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770de2"
+      }
+    },
+    {
+      "date": "2024-07-31",
+      "totalMileage": 191,
+      "totalRevenue": {
+        "$numberDecimal": "363.25"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770de3"
+      }
+    },
+    {
+      "date": "2024-08-01",
+      "totalMileage": 184,
+      "totalRevenue": {
+        "$numberDecimal": "375.1"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770de4"
+      }
+    },
+    {
+      "date": "2024-08-02",
+      "totalMileage": 193,
+      "totalRevenue": {
+        "$numberDecimal": "383.45"
+      },
+      "totalJobs": 17,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770de5"
+      }
+    },
+    {
+      "date": "2024-08-03",
+      "totalMileage": 37,
+      "totalRevenue": {
+        "$numberDecimal": "61.05"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770de6"
+      }
+    },
+    {
+      "date": "2024-08-05",
+      "totalMileage": 191,
+      "totalRevenue": {
+        "$numberDecimal": "494.55"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770de7"
+      }
+    },
+    {
+      "date": "2024-08-06",
+      "totalMileage": 206,
+      "totalRevenue": {
+        "$numberDecimal": "527.1"
+      },
+      "totalJobs": 17,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770de8"
+      }
+    },
+    {
+      "date": "2024-08-07",
+      "totalMileage": 163,
+      "totalRevenue": {
+        "$numberDecimal": "411.95"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770de9"
+      }
+    },
+    {
+      "date": "2024-08-08",
+      "totalMileage": 166,
+      "totalRevenue": {
+        "$numberDecimal": "397.4"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dea"
+      }
+    },
+    {
+      "date": "2024-08-09",
+      "totalMileage": 215,
+      "totalRevenue": {
+        "$numberDecimal": "493.85"
+      },
+      "totalJobs": 17,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770deb"
+      }
+    },
+    {
+      "date": "2024-08-10",
+      "totalMileage": 55,
+      "totalRevenue": {
+        "$numberDecimal": "90.75"
+      },
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dec"
+      }
+    },
+    {
+      "date": "2024-08-14",
+      "totalMileage": 266,
+      "totalRevenue": {
+        "$numberDecimal": "591"
+      },
+      "totalJobs": 20,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770ded"
+      }
+    },
+    {
+      "date": "2024-08-15",
+      "totalMileage": 212,
+      "totalRevenue": {
+        "$numberDecimal": "401.8"
+      },
+      "totalJobs": 18,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dee"
+      }
+    },
+    {
+      "date": "2024-08-16",
+      "totalMileage": 225,
+      "totalRevenue": {
+        "$numberDecimal": "518.15"
+      },
+      "totalJobs": 18,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770def"
+      }
+    },
+    {
+      "date": "2024-08-17",
+      "totalMileage": 45,
+      "totalRevenue": {
+        "$numberDecimal": "132.75"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770df0"
+      }
+    },
+    {
+      "date": "2024-08-19",
+      "totalMileage": 172,
+      "totalRevenue": {
+        "$numberDecimal": "283.8"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770df1"
+      }
+    },
+    {
+      "date": "2024-08-20",
+      "totalMileage": 206,
+      "totalRevenue": {
+        "$numberDecimal": "490.7"
+      },
+      "totalJobs": 16,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770df2"
+      }
+    },
+    {
+      "date": "2024-08-21",
+      "totalMileage": 170,
+      "totalRevenue": {
+        "$numberDecimal": "342.9"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770df3"
+      }
+    },
+    {
+      "date": "2024-08-22",
+      "totalMileage": 108,
+      "totalRevenue": {
+        "$numberDecimal": "178.2"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770df4"
+      }
+    },
+    {
+      "date": "2024-08-23",
+      "totalMileage": 130,
+      "totalRevenue": {
+        "$numberDecimal": "214.5"
+      },
+      "totalJobs": 16,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770df5"
+      }
+    },
+    {
+      "date": "2024-08-24",
+      "totalMileage": 9,
+      "totalRevenue": {
+        "$numberDecimal": "14.85"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770df6"
+      }
+    },
+    {
+      "date": "2024-08-26",
+      "totalMileage": 167,
+      "totalRevenue": {
+        "$numberDecimal": "404.25"
+      },
+      "totalJobs": 17,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770df7"
+      }
+    },
+    {
+      "date": "2024-08-27",
+      "totalMileage": 156,
+      "totalRevenue": {
+        "$numberDecimal": "257.4"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770df8"
+      }
+    },
+    {
+      "date": "2024-08-28",
+      "totalMileage": 251,
+      "totalRevenue": {
+        "$numberDecimal": "663.75"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770df9"
+      }
+    },
+    {
+      "date": "2024-08-29",
+      "totalMileage": 155,
+      "totalRevenue": {
+        "$numberDecimal": "319.45"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dfa"
+      }
+    },
+    {
+      "date": "2024-08-30",
+      "totalMileage": 192,
+      "totalRevenue": {
+        "$numberDecimal": "416.9"
+      },
+      "totalJobs": 9,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dfb"
+      }
+    },
+    {
+      "date": "2024-09-02",
+      "totalMileage": 174,
+      "totalRevenue": {
+        "$numberDecimal": "383.3"
+      },
+      "totalJobs": 17,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dfc"
+      }
+    },
+    {
+      "date": "2024-09-03",
+      "totalMileage": 157,
+      "totalRevenue": {
+        "$numberDecimal": "377.35"
+      },
+      "totalJobs": 9,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dfd"
+      }
+    },
+    {
+      "date": "2024-09-04",
+      "totalMileage": 140,
+      "totalRevenue": {
+        "$numberDecimal": "305.1"
+      },
+      "totalJobs": 16,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dfe"
+      }
+    },
+    {
+      "date": "2024-09-05",
+      "totalMileage": 154,
+      "totalRevenue": {
+        "$numberDecimal": "363.3"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770dff"
+      }
+    },
+    {
+      "date": "2024-09-06",
+      "totalMileage": 187,
+      "totalRevenue": {
+        "$numberDecimal": "433.35"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e00"
+      }
+    },
+    {
+      "date": "2024-09-07",
+      "totalMileage": 49,
+      "totalRevenue": {
+        "$numberDecimal": "80.85"
+      },
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e01"
+      }
+    },
+    {
+      "date": "2024-09-09",
+      "totalMileage": 144,
+      "totalRevenue": {
+        "$numberDecimal": "297.4"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e02"
+      }
+    },
+    {
+      "date": "2024-09-10",
+      "totalMileage": 98,
+      "totalRevenue": {
+        "$numberDecimal": "222.8"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e03"
+      }
+    },
+    {
+      "date": "2024-09-11",
+      "totalMileage": 112,
+      "totalRevenue": {
+        "$numberDecimal": "184.8"
+      },
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e04"
+      }
+    },
+    {
+      "date": "2024-09-12",
+      "totalMileage": 54,
+      "totalRevenue": {
+        "$numberDecimal": "126.8"
+      },
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e05"
+      }
+    },
+    {
+      "date": "2024-09-13",
+      "totalMileage": 209,
+      "totalRevenue": {
+        "$numberDecimal": "443.65"
+      },
+      "totalJobs": 17,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e06"
+      }
+    },
+    {
+      "date": "2024-09-16",
+      "totalMileage": 219,
+      "totalRevenue": {
+        "$numberDecimal": "519.95"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e07"
+      }
+    },
+    {
+      "date": "2024-09-17",
+      "totalMileage": 86,
+      "totalRevenue": {
+        "$numberDecimal": "204.3"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e08"
+      }
+    },
+    {
+      "date": "2024-09-18",
+      "totalMileage": 146,
+      "totalRevenue": {
+        "$numberDecimal": "240.9"
+      },
+      "totalJobs": 17,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e09"
+      }
+    },
+    {
+      "date": "2024-09-19",
+      "totalMileage": 198,
+      "totalRevenue": {
+        "$numberDecimal": "393"
+      },
+      "totalJobs": 18,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e0a"
+      }
+    },
+    {
+      "date": "2024-09-20",
+      "totalMileage": 169,
+      "totalRevenue": {
+        "$numberDecimal": "345.15"
+      },
+      "totalJobs": 19,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e0b"
+      }
+    },
+    {
+      "date": "2024-09-21",
+      "totalMileage": 96,
+      "totalRevenue": {
+        "$numberDecimal": "283.2"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e0c"
+      }
+    },
+    {
+      "date": "2024-09-23",
+      "totalMileage": 138,
+      "totalRevenue": {
+        "$numberDecimal": "271.9"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e0d"
+      }
+    },
+    {
+      "date": "2024-09-24",
+      "totalMileage": 202,
+      "totalRevenue": {
+        "$numberDecimal": "463.3"
+      },
+      "totalJobs": 15,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e0e"
+      }
+    },
+    {
+      "date": "2024-09-25",
+      "totalMileage": 134,
+      "totalRevenue": {
+        "$numberDecimal": "332.9"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e0f"
+      }
+    },
+    {
+      "date": "2024-09-26",
+      "totalMileage": 52,
+      "totalRevenue": {
+        "$numberDecimal": "118.3"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e10"
+      }
+    },
+    {
+      "date": "2024-09-27",
+      "totalMileage": 223,
+      "totalRevenue": {
+        "$numberDecimal": "448.55"
+      },
+      "totalJobs": 21,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e11"
+      }
+    },
+    {
+      "date": "2024-09-30",
+      "totalMileage": 82,
+      "totalRevenue": {
+        "$numberDecimal": "153.5"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e12"
+      }
+    },
+    {
+      "date": "2024-10-01",
+      "totalMileage": 829,
+      "totalRevenue": {
+        "$numberDecimal": "1135.8"
+      },
+      "totalJobs": 19,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e13"
+      }
+    },
+    {
+      "date": "2024-10-02",
+      "totalMileage": 208,
+      "totalRevenue": {
+        "$numberDecimal": "520"
+      },
+      "totalJobs": 17,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e14"
+      }
+    },
+    {
+      "date": "2024-10-03",
+      "totalMileage": 142,
+      "totalRevenue": {
+        "$numberDecimal": "309.7"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e15"
+      }
+    },
+    {
+      "date": "2024-10-04",
+      "totalMileage": 66,
+      "totalRevenue": {
+        "$numberDecimal": "179.1"
+      },
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e16"
+      }
+    },
+    {
+      "date": "2024-10-05",
+      "totalMileage": 108,
+      "totalRevenue": {
+        "$numberDecimal": "318.6"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e17"
+      }
+    },
+    {
+      "date": "2024-10-07",
+      "totalMileage": 136,
+      "totalRevenue": {
+        "$numberDecimal": "266"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e18"
+      }
+    },
+    {
+      "date": "2024-10-08",
+      "totalMileage": 196,
+      "totalRevenue": {
+        "$numberDecimal": "388.4"
+      },
+      "totalJobs": 17,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e19"
+      }
+    },
+    {
+      "date": "2024-10-09",
+      "totalMileage": 188,
+      "totalRevenue": {
+        "$numberDecimal": "419.4"
+      },
+      "totalJobs": 18,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e1a"
+      }
+    },
+    {
+      "date": "2024-10-10",
+      "totalMileage": 193,
+      "totalRevenue": {
+        "$numberDecimal": "448.45"
+      },
+      "totalJobs": 16,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e1b"
+      }
+    },
+    {
+      "date": "2024-10-11",
+      "totalMileage": 105,
+      "totalRevenue": {
+        "$numberDecimal": "247.35"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e1c"
+      }
+    },
+    {
+      "date": "2024-10-12",
+      "totalMileage": 120,
+      "totalRevenue": {
+        "$numberDecimal": "354"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e1d"
+      }
+    },
+    {
+      "date": "2024-10-13",
+      "totalMileage": 56,
+      "totalRevenue": {
+        "$numberDecimal": "92.4"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e1e"
+      }
+    },
+    {
+      "date": "2024-10-14",
+      "totalMileage": 153,
+      "totalRevenue": {
+        "$numberDecimal": "388.95"
+      },
+      "totalJobs": 9,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e1f"
+      }
+    },
+    {
+      "date": "2024-10-15",
+      "totalMileage": 56,
+      "totalRevenue": {
+        "$numberDecimal": "124.9"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e20"
+      }
+    },
+    {
+      "date": "2024-10-16",
+      "totalMileage": 149,
+      "totalRevenue": {
+        "$numberDecimal": "352.45"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e21"
+      }
+    },
+    {
+      "date": "2024-10-17",
+      "totalMileage": 151,
+      "totalRevenue": {
+        "$numberDecimal": "363.55"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e22"
+      }
+    },
+    {
+      "date": "2024-10-18",
+      "totalMileage": 124,
+      "totalRevenue": {
+        "$numberDecimal": "204.6"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e23"
+      }
+    },
+    {
+      "date": "2024-10-19",
+      "totalMileage": 42,
+      "totalRevenue": {
+        "$numberDecimal": "123.9"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e24"
+      }
+    },
+    {
+      "date": "2024-10-21",
+      "totalMileage": 82,
+      "totalRevenue": {
+        "$numberDecimal": "182.1"
+      },
+      "totalJobs": 9,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e25"
+      }
+    },
+    {
+      "date": "2024-10-22",
+      "totalMileage": 205,
+      "totalRevenue": {
+        "$numberDecimal": "420.15"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e26"
+      }
+    },
+    {
+      "date": "2024-10-23",
+      "totalMileage": 164,
+      "totalRevenue": {
+        "$numberDecimal": "421.4"
+      },
+      "totalJobs": 9,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e27"
+      }
+    },
+    {
+      "date": "2024-10-24",
+      "totalMileage": 99,
+      "totalRevenue": {
+        "$numberDecimal": "241.35"
+      },
+      "totalJobs": 9,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e28"
+      }
+    },
+    {
+      "date": "2024-10-25",
+      "totalMileage": 159,
+      "totalRevenue": {
+        "$numberDecimal": "361.15"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e29"
+      }
+    },
+    {
+      "date": "2024-10-26",
+      "totalMileage": 56,
+      "totalRevenue": {
+        "$numberDecimal": "165.2"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e2a"
+      }
+    },
+    {
+      "date": "2024-10-28",
+      "totalMileage": 97,
+      "totalRevenue": {
+        "$numberDecimal": "238.05"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e2b"
+      }
+    },
+    {
+      "date": "2024-10-29",
+      "totalMileage": 161,
+      "totalRevenue": {
+        "$numberDecimal": "339.75"
+      },
+      "totalJobs": 15,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e2c"
+      }
+    },
+    {
+      "date": "2024-10-30",
+      "totalMileage": 113,
+      "totalRevenue": {
+        "$numberDecimal": "186.45"
+      },
+      "totalJobs": 9,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e2d"
+      }
+    },
+    {
+      "date": "2024-10-31",
+      "totalMileage": 111,
+      "totalRevenue": {
+        "$numberDecimal": "249.45"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e2e"
+      }
+    },
+    {
+      "date": "2024-11-01",
+      "totalMileage": 140,
+      "totalRevenue": {
+        "$numberDecimal": "231"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e2f"
+      }
+    },
+    {
+      "date": "2024-11-04",
+      "totalMileage": 57,
+      "totalRevenue": {
+        "$numberDecimal": "94.05"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e30"
+      }
+    },
+    {
+      "date": "2024-11-05",
+      "totalMileage": 118,
+      "totalRevenue": {
+        "$numberDecimal": "194.7"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e31"
+      }
+    },
+    {
+      "date": "2024-11-06",
+      "totalMileage": 53,
+      "totalRevenue": {
+        "$numberDecimal": "87.45"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e32"
+      }
+    },
+    {
+      "date": "2024-11-07",
+      "totalMileage": 276,
+      "totalRevenue": {
+        "$numberDecimal": "569.8"
+      },
+      "totalJobs": 22,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e33"
+      }
+    },
+    {
+      "date": "2024-11-08",
+      "totalMileage": 86,
+      "totalRevenue": {
+        "$numberDecimal": "206.9"
+      },
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e34"
+      }
+    },
+    {
+      "date": "2024-11-09",
+      "totalMileage": 50,
+      "totalRevenue": {
+        "$numberDecimal": "82.5"
+      },
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e35"
+      }
+    },
+    {
+      "date": "2024-11-10",
+      "totalMileage": 62,
+      "totalRevenue": {
+        "$numberDecimal": "102.3"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e36"
+      }
+    },
+    {
+      "date": "2024-11-11",
+      "totalMileage": 137,
+      "totalRevenue": {
+        "$numberDecimal": "353.45"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e37"
+      }
+    },
+    {
+      "date": "2024-11-12",
+      "totalMileage": 226,
+      "totalRevenue": {
+        "$numberDecimal": "626.4"
+      },
+      "totalJobs": 22,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e38"
+      }
+    },
+    {
+      "date": "2024-11-13",
+      "totalMileage": 189,
+      "totalRevenue": {
+        "$numberDecimal": "311.85"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e39"
+      }
+    },
+    {
+      "date": "2024-11-14",
+      "totalMileage": 206,
+      "totalRevenue": {
+        "$numberDecimal": "451.7"
+      },
+      "totalJobs": 20,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e3a"
+      }
+    },
+    {
+      "date": "2024-11-15",
+      "totalMileage": 151,
+      "totalRevenue": {
+        "$numberDecimal": "249.15"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e3b"
+      }
+    },
+    {
+      "date": "2024-11-16",
+      "totalMileage": 148,
+      "totalRevenue": {
+        "$numberDecimal": "369"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e3c"
+      }
+    },
+    {
+      "date": "2024-11-18",
+      "totalMileage": 138,
+      "totalRevenue": {
+        "$numberDecimal": "265.4"
+      },
+      "totalJobs": 16,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e3d"
+      }
+    },
+    {
+      "date": "2024-11-19",
+      "totalMileage": 117,
+      "totalRevenue": {
+        "$numberDecimal": "311.35"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e3e"
+      }
+    },
+    {
+      "date": "2024-11-20",
+      "totalMileage": 173,
+      "totalRevenue": {
+        "$numberDecimal": "453.15"
+      },
+      "totalJobs": 16,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e3f"
+      }
+    },
+    {
+      "date": "2024-11-21",
+      "totalMileage": 96,
+      "totalRevenue": {
+        "$numberDecimal": "227.3"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e40"
+      }
+    },
+    {
+      "date": "2024-11-22",
+      "totalMileage": 144,
+      "totalRevenue": {
+        "$numberDecimal": "257.1"
+      },
+      "totalJobs": 17,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e41"
+      }
+    },
+    {
+      "date": "2024-11-23",
+      "totalMileage": 74,
+      "totalRevenue": {
+        "$numberDecimal": "218.3"
+      },
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e42"
+      }
+    },
+    {
+      "date": "2024-11-25",
+      "totalMileage": 96,
+      "totalRevenue": {
+        "$numberDecimal": "224.7"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e43"
+      }
+    },
+    {
+      "date": "2024-11-26",
+      "totalMileage": 137,
+      "totalRevenue": {
+        "$numberDecimal": "341.75"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e44"
+      }
+    },
+    {
+      "date": "2024-11-27",
+      "totalMileage": 140,
+      "totalRevenue": {
+        "$numberDecimal": "285.6"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e45"
+      }
+    },
+    {
+      "date": "2024-11-28",
+      "totalMileage": 83,
+      "totalRevenue": {
+        "$numberDecimal": "183.75"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e46"
+      }
+    },
+    {
+      "date": "2024-11-29",
+      "totalMileage": 136,
+      "totalRevenue": {
+        "$numberDecimal": "342.7"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e47"
+      }
+    },
+    {
+      "date": "2024-12-01",
+      "totalMileage": 30,
+      "totalRevenue": {
+        "$numberDecimal": "88.5"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e48"
+      }
+    },
+    {
+      "date": "2024-12-02",
+      "totalMileage": 171,
+      "totalRevenue": {
+        "$numberDecimal": "378.35"
+      },
+      "totalJobs": 15,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e49"
+      }
+    },
+    {
+      "date": "2024-12-03",
+      "totalMileage": 96,
+      "totalRevenue": {
+        "$numberDecimal": "194.8"
+      },
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e4a"
+      }
+    },
+    {
+      "date": "2024-12-04",
+      "totalMileage": 139,
+      "totalRevenue": {
+        "$numberDecimal": "294.35"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e4b"
+      }
+    },
+    {
+      "date": "2024-12-05",
+      "totalMileage": 225,
+      "totalRevenue": {
+        "$numberDecimal": "516.85"
+      },
+      "totalJobs": 19,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e4c"
+      }
+    },
+    {
+      "date": "2024-12-06",
+      "totalMileage": 203,
+      "totalRevenue": {
+        "$numberDecimal": "411.65"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e4d"
+      }
+    },
+    {
+      "date": "2024-12-07",
+      "totalMileage": 98,
+      "totalRevenue": {
+        "$numberDecimal": "225.4"
+      },
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e4e"
+      }
+    },
+    {
+      "date": "2024-12-08",
+      "totalMileage": 88,
+      "totalRevenue": {
+        "$numberDecimal": "185.5"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e4f"
+      }
+    },
+    {
+      "date": "2024-12-09",
+      "totalMileage": 117,
+      "totalRevenue": {
+        "$numberDecimal": "242.45"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e50"
+      }
+    },
+    {
+      "date": "2024-12-10",
+      "totalMileage": 103,
+      "totalRevenue": {
+        "$numberDecimal": "229.75"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e51"
+      }
+    },
+    {
+      "date": "2024-12-11",
+      "totalMileage": 116,
+      "totalRevenue": {
+        "$numberDecimal": "259"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e52"
+      }
+    },
+    {
+      "date": "2024-12-12",
+      "totalMileage": 172,
+      "totalRevenue": {
+        "$numberDecimal": "387.8"
+      },
+      "totalJobs": 16,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e53"
+      }
+    },
+    {
+      "date": "2024-12-13",
+      "totalMileage": 136,
+      "totalRevenue": {
+        "$numberDecimal": "311.5"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e54"
+      }
+    },
+    {
+      "date": "2024-12-14",
+      "totalMileage": 182,
+      "totalRevenue": {
+        "$numberDecimal": "451.1"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e55"
+      }
+    },
+    {
+      "date": "2024-12-15",
+      "totalMileage": 46,
+      "totalRevenue": {
+        "$numberDecimal": "135.7"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e56"
+      }
+    },
+    {
+      "date": "2024-12-16",
+      "totalMileage": 113,
+      "totalRevenue": {
+        "$numberDecimal": "252.75"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e57"
+      }
+    },
+    {
+      "date": "2024-12-17",
+      "totalMileage": 68,
+      "totalRevenue": {
+        "$numberDecimal": "200.6"
+      },
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e58"
+      }
+    },
+    {
+      "date": "2024-12-18",
+      "totalMileage": 116,
+      "totalRevenue": {
+        "$numberDecimal": "281.1"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e59"
+      }
+    },
+    {
+      "date": "2024-12-19",
+      "totalMileage": 44,
+      "totalRevenue": {
+        "$numberDecimal": "75.2"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770e5a"
+      }
+    }
+  ],
+  "jobsByContractor": {
+    "Lammel": 602,
+    "Romeo Kitchens": 1193,
+    "Besthule": 747,
+    "Ufurn": 193,
+    "Carador": 18,
+    "Moxon": 8
+  },
+  "monthlyData": [
+    {
+      "month": "January",
+      "totalMileage": 1137,
+      "totalRevenue": {
+        "$numberDecimal": "2168.55"
+      },
+      "totalProfit": {
+        "$numberDecimal": "2168.55"
+      },
+      "totalExpenses": {
+        "$numberDecimal": "0"
+      },
+      "totalJobs": 125,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d47"
+      }
+    },
+    {
+      "month": "February",
+      "totalMileage": 1698,
+      "totalRevenue": {
+        "$numberDecimal": "3496.15"
+      },
+      "totalProfit": {
+        "$numberDecimal": "3496.15"
+      },
+      "totalExpenses": {
+        "$numberDecimal": "0"
+      },
+      "totalJobs": 157,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d48"
+      }
+    },
+    {
+      "month": "March",
+      "totalMileage": 1883,
+      "totalRevenue": {
+        "$numberDecimal": "3728.35"
+      },
+      "totalProfit": {
+        "$numberDecimal": "3728.35"
+      },
+      "totalExpenses": {
+        "$numberDecimal": "0"
+      },
+      "totalJobs": 124,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d49"
+      }
+    },
+    {
+      "month": "April",
+      "totalMileage": 2429,
+      "totalRevenue": {
+        "$numberDecimal": "5406.65"
+      },
+      "totalProfit": {
+        "$numberDecimal": "5406.65"
+      },
+      "totalExpenses": {
+        "$numberDecimal": "0"
+      },
+      "totalJobs": 173,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d4a"
+      }
+    },
+    {
+      "month": "May",
+      "totalMileage": 3196,
+      "totalRevenue": {
+        "$numberDecimal": "6186"
+      },
+      "totalProfit": {
+        "$numberDecimal": "6186"
+      },
+      "totalExpenses": {
+        "$numberDecimal": "0"
+      },
+      "totalJobs": 275,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d4b"
+      }
+    },
+    {
+      "month": "June",
+      "totalMileage": 2456,
+      "totalRevenue": {
+        "$numberDecimal": "4987.1"
+      },
+      "totalProfit": {
+        "$numberDecimal": "4987.1"
+      },
+      "totalExpenses": {
+        "$numberDecimal": "0"
+      },
+      "totalJobs": 226,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d4c"
+      }
+    },
+    {
+      "month": "July",
+      "totalMileage": 4351,
+      "totalRevenue": {
+        "$numberDecimal": "8836.65"
+      },
+      "totalProfit": {
+        "$numberDecimal": "8836.65"
+      },
+      "totalExpenses": {
+        "$numberDecimal": "0"
+      },
+      "totalJobs": 305,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d4d"
+      }
+    },
+    {
+      "month": "August",
+      "totalMileage": 3874,
+      "totalRevenue": {
+        "$numberDecimal": "8465.6"
+      },
+      "totalProfit": {
+        "$numberDecimal": "8465.6"
+      },
+      "totalExpenses": {
+        "$numberDecimal": "0"
+      },
+      "totalJobs": 299,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d4e"
+      }
+    },
+    {
+      "month": "September",
+      "totalMileage": 3223,
+      "totalRevenue": {
+        "$numberDecimal": "6993.65"
+      },
+      "totalProfit": {
+        "$numberDecimal": "6993.65"
+      },
+      "totalExpenses": {
+        "$numberDecimal": "0"
+      },
+      "totalJobs": 275,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d4f"
+      }
+    },
+    {
+      "month": "October",
+      "totalMileage": 4269,
+      "totalRevenue": {
+        "$numberDecimal": "9042.6"
+      },
+      "totalProfit": {
+        "$numberDecimal": "9042.6"
+      },
+      "totalExpenses": {
+        "$numberDecimal": "0"
+      },
+      "totalJobs": 294,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d50"
+      }
+    },
+    {
+      "month": "November",
+      "totalMileage": 3233,
+      "totalRevenue": {
+        "$numberDecimal": "7041.35"
+      },
+      "totalProfit": {
+        "$numberDecimal": "7041.35"
+      },
+      "totalExpenses": {
+        "$numberDecimal": "0"
+      },
+      "totalJobs": 310,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d51"
+      }
+    },
+    {
+      "month": "December",
+      "totalMileage": 2263,
+      "totalRevenue": {
+        "$numberDecimal": "5122.35"
+      },
+      "totalProfit": {
+        "$numberDecimal": "5122.35"
+      },
+      "totalExpenses": {
+        "$numberDecimal": "0"
+      },
+      "totalJobs": 198,
+      "_id": {
+        "$oid": "6807645e69bb2ea3ce770d52"
+      }
+    }
+  ],
+  "revenueByContractor": {
+    "Lammel": {
+      "$numberDecimal": "9534.9"
+    },
+    "Romeo Kitchens": {
+      "$numberDecimal": "34250"
+    },
+    "Besthule": {
+      "$numberDecimal": "18505.7"
+    },
+    "Ufurn": {
+      "$numberDecimal": "8793.35"
+    },
+    "Carador": {
+      "$numberDecimal": "297"
+    },
+    "Moxon": {
+      "$numberDecimal": "94.05"
+    }
+  },
+  "totalContractors": 6,
+  "totalCustomers": 396,
+  "updatedAt": {
+    "$date": "2025-04-22T09:41:50.049Z"
+  },
+  "yearlyExpenses": {
+    "$numberDecimal": "0"
+  },
+  "yearlyJobs": 2761,
+  "yearlyMileage": 34012,
+  "yearlyProfit": {
+    "$numberDecimal": "71475"
+  },
+  "yearlyRevenue": {
+    "$numberDecimal": "71475"
+  }
+},
+{
+  "_id": {
+    "$oid": "68076674e42d09ded9dafeff"
+  },
+  "companyId": {
+    "$oid": "654f669091e232eb07068b57"
+  },
+  "year": 2025,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2025-04-22T09:50:44.708Z"
+  },
+  "dailyData": [
+    {
+      "date": "2025-01-06",
+      "totalMileage": 54,
+      "totalRevenue": {
+        "$numberDecimal": "137.2"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79de"
+      }
+    },
+    {
+      "date": "2025-01-07",
+      "totalMileage": 122,
+      "totalRevenue": {
+        "$numberDecimal": "226"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79df"
+      }
+    },
+    {
+      "date": "2025-01-08",
+      "totalMileage": 188,
+      "totalRevenue": {
+        "$numberDecimal": "444.1"
+      },
+      "totalJobs": 22,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79e0"
+      }
+    },
+    {
+      "date": "2025-01-09",
+      "totalMileage": 137,
+      "totalRevenue": {
+        "$numberDecimal": "226.05"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79e1"
+      }
+    },
+    {
+      "date": "2025-01-10",
+      "totalMileage": 247,
+      "totalRevenue": {
+        "$numberDecimal": "580.45"
+      },
+      "totalJobs": 20,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79e2"
+      }
+    },
+    {
+      "date": "2025-01-13",
+      "totalMileage": 180,
+      "totalRevenue": {
+        "$numberDecimal": "297"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79e3"
+      }
+    },
+    {
+      "date": "2025-01-14",
+      "totalMileage": 101,
+      "totalRevenue": {
+        "$numberDecimal": "214.75"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79e4"
+      }
+    },
+    {
+      "date": "2025-01-15",
+      "totalMileage": 66,
+      "totalRevenue": {
+        "$numberDecimal": "153.1"
+      },
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79e5"
+      }
+    },
+    {
+      "date": "2025-01-16",
+      "totalMileage": 139,
+      "totalRevenue": {
+        "$numberDecimal": "324.25"
+      },
+      "totalJobs": 9,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79e6"
+      }
+    },
+    {
+      "date": "2025-01-17",
+      "totalMileage": 209,
+      "totalRevenue": {
+        "$numberDecimal": "444.95"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79e7"
+      }
+    },
+    {
+      "date": "2025-01-18",
+      "totalMileage": 97,
+      "totalRevenue": {
+        "$numberDecimal": "245.85"
+      },
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79e8"
+      }
+    },
+    {
+      "date": "2025-01-20",
+      "totalMileage": 189,
+      "totalRevenue": {
+        "$numberDecimal": "311.85"
+      },
+      "totalJobs": 16,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79e9"
+      }
+    },
+    {
+      "date": "2025-01-21",
+      "totalMileage": 24,
+      "totalRevenue": {
+        "$numberDecimal": "70.8"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79ea"
+      }
+    },
+    {
+      "date": "2025-01-22",
+      "totalMileage": 151,
+      "totalRevenue": {
+        "$numberDecimal": "307.65"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79eb"
+      }
+    },
+    {
+      "date": "2025-01-23",
+      "totalMileage": 138,
+      "totalRevenue": {
+        "$numberDecimal": "318.7"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79ec"
+      }
+    },
+    {
+      "date": "2025-01-24",
+      "totalMileage": 210,
+      "totalRevenue": {
+        "$numberDecimal": "519.4"
+      },
+      "totalJobs": 18,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79ed"
+      }
+    },
+    {
+      "date": "2025-01-25",
+      "totalMileage": 33,
+      "totalRevenue": {
+        "$numberDecimal": "54.45"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79ee"
+      }
+    },
+    {
+      "date": "2025-01-26",
+      "totalMileage": 38,
+      "totalRevenue": {
+        "$numberDecimal": "112.1"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79ef"
+      }
+    },
+    {
+      "date": "2025-01-27",
+      "totalMileage": 107,
+      "totalRevenue": {
+        "$numberDecimal": "196.05"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79f0"
+      }
+    },
+    {
+      "date": "2025-01-28",
+      "totalMileage": 50,
+      "totalRevenue": {
+        "$numberDecimal": "82.5"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79f1"
+      }
+    },
+    {
+      "date": "2025-01-29",
+      "totalMileage": 119,
+      "totalRevenue": {
+        "$numberDecimal": "196.35"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79f2"
+      }
+    },
+    {
+      "date": "2025-01-30",
+      "totalMileage": 101,
+      "totalRevenue": {
+        "$numberDecimal": "166.65"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79f3"
+      }
+    },
+    {
+      "date": "2025-01-31",
+      "totalMileage": 142,
+      "totalRevenue": {
+        "$numberDecimal": "324"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79f4"
+      }
+    },
+    {
+      "date": "2025-02-03",
+      "totalMileage": 103,
+      "totalRevenue": {
+        "$numberDecimal": "255.75"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79f5"
+      }
+    },
+    {
+      "date": "2025-02-04",
+      "totalMileage": 182,
+      "totalRevenue": {
+        "$numberDecimal": "300.3"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79f6"
+      }
+    },
+    {
+      "date": "2025-02-05",
+      "totalMileage": 227,
+      "totalRevenue": {
+        "$numberDecimal": "374.55"
+      },
+      "totalJobs": 16,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79f7"
+      }
+    },
+    {
+      "date": "2025-02-06",
+      "totalMileage": 151,
+      "totalRevenue": {
+        "$numberDecimal": "249.15"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79f8"
+      }
+    },
+    {
+      "date": "2025-02-07",
+      "totalMileage": 234,
+      "totalRevenue": {
+        "$numberDecimal": "386.1"
+      },
+      "totalJobs": 16,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79f9"
+      }
+    },
+    {
+      "date": "2025-02-10",
+      "totalMileage": 145,
+      "totalRevenue": {
+        "$numberDecimal": "351.05"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79fa"
+      }
+    },
+    {
+      "date": "2025-02-11",
+      "totalMileage": 102,
+      "totalRevenue": {
+        "$numberDecimal": "243.7"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79fb"
+      }
+    },
+    {
+      "date": "2025-02-12",
+      "totalMileage": 165,
+      "totalRevenue": {
+        "$numberDecimal": "382.75"
+      },
+      "totalJobs": 20,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79fc"
+      }
+    },
+    {
+      "date": "2025-02-13",
+      "totalMileage": 107,
+      "totalRevenue": {
+        "$numberDecimal": "235.05"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79fd"
+      }
+    },
+    {
+      "date": "2025-02-14",
+      "totalMileage": 205,
+      "totalRevenue": {
+        "$numberDecimal": "525.45"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79fe"
+      }
+    },
+    {
+      "date": "2025-02-17",
+      "totalMileage": 82,
+      "totalRevenue": {
+        "$numberDecimal": "135.3"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79ff"
+      }
+    },
+    {
+      "date": "2025-02-18",
+      "totalMileage": 74,
+      "totalRevenue": {
+        "$numberDecimal": "122.1"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a00"
+      }
+    },
+    {
+      "date": "2025-02-19",
+      "totalMileage": 92,
+      "totalRevenue": {
+        "$numberDecimal": "151.8"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a01"
+      }
+    },
+    {
+      "date": "2025-02-20",
+      "totalMileage": 123,
+      "totalRevenue": {
+        "$numberDecimal": "202.95"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a02"
+      }
+    },
+    {
+      "date": "2025-02-24",
+      "totalMileage": 63,
+      "totalRevenue": {
+        "$numberDecimal": "146.85"
+      },
+      "totalJobs": 5,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a03"
+      }
+    },
+    {
+      "date": "2025-02-25",
+      "totalMileage": 155,
+      "totalRevenue": {
+        "$numberDecimal": "390.95"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a04"
+      }
+    },
+    {
+      "date": "2025-02-26",
+      "totalMileage": 110,
+      "totalRevenue": {
+        "$numberDecimal": "181.5"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a05"
+      }
+    },
+    {
+      "date": "2025-02-27",
+      "totalMileage": 669,
+      "totalRevenue": {
+        "$numberDecimal": "851"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a06"
+      }
+    },
+    {
+      "date": "2025-02-28",
+      "totalMileage": 141,
+      "totalRevenue": {
+        "$numberDecimal": "296.35"
+      },
+      "totalJobs": 15,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a07"
+      }
+    },
+    {
+      "date": "2025-03-01",
+      "totalMileage": 104,
+      "totalRevenue": {
+        "$numberDecimal": "239.2"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a08"
+      }
+    },
+    {
+      "date": "2025-03-03",
+      "totalMileage": 72,
+      "totalRevenue": {
+        "$numberDecimal": "124"
+      },
+      "totalJobs": 11,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a09"
+      }
+    },
+    {
+      "date": "2025-03-04",
+      "totalMileage": 155,
+      "totalRevenue": {
+        "$numberDecimal": "357.15"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a0a"
+      }
+    },
+    {
+      "date": "2025-03-05",
+      "totalMileage": 43,
+      "totalRevenue": {
+        "$numberDecimal": "76.15"
+      },
+      "totalJobs": 8,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a0b"
+      }
+    },
+    {
+      "date": "2025-03-06",
+      "totalMileage": 180,
+      "totalRevenue": {
+        "$numberDecimal": "356.8"
+      },
+      "totalJobs": 26,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a0c"
+      }
+    },
+    {
+      "date": "2025-03-07",
+      "totalMileage": 212,
+      "totalRevenue": {
+        "$numberDecimal": "429.1"
+      },
+      "totalJobs": 17,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a0d"
+      }
+    },
+    {
+      "date": "2025-03-08",
+      "totalMileage": 53,
+      "totalRevenue": {
+        "$numberDecimal": "156.35"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a0e"
+      }
+    },
+    {
+      "date": "2025-03-10",
+      "totalMileage": 137,
+      "totalRevenue": {
+        "$numberDecimal": "281.95"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a0f"
+      }
+    },
+    {
+      "date": "2025-03-11",
+      "totalMileage": 182,
+      "totalRevenue": {
+        "$numberDecimal": "401.7"
+      },
+      "totalJobs": 15,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a10"
+      }
+    },
+    {
+      "date": "2025-03-12",
+      "totalMileage": 143,
+      "totalRevenue": {
+        "$numberDecimal": "302.25"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a11"
+      }
+    },
+    {
+      "date": "2025-03-13",
+      "totalMileage": 234,
+      "totalRevenue": {
+        "$numberDecimal": "552.5"
+      },
+      "totalJobs": 20,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a12"
+      }
+    },
+    {
+      "date": "2025-03-14",
+      "totalMileage": 130,
+      "totalRevenue": {
+        "$numberDecimal": "278.2"
+      },
+      "totalJobs": 10,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a13"
+      }
+    },
+    {
+      "date": "2025-03-15",
+      "totalMileage": 61,
+      "totalRevenue": {
+        "$numberDecimal": "100.65"
+      },
+      "totalJobs": 4,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a14"
+      }
+    },
+    {
+      "date": "2025-03-17",
+      "totalMileage": 186,
+      "totalRevenue": {
+        "$numberDecimal": "400.5"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a15"
+      }
+    },
+    {
+      "date": "2025-03-18",
+      "totalMileage": 116,
+      "totalRevenue": {
+        "$numberDecimal": "227.8"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a16"
+      }
+    },
+    {
+      "date": "2025-03-19",
+      "totalMileage": 184,
+      "totalRevenue": {
+        "$numberDecimal": "364.7"
+      },
+      "totalJobs": 15,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a17"
+      }
+    },
+    {
+      "date": "2025-03-20",
+      "totalMileage": 102,
+      "totalRevenue": {
+        "$numberDecimal": "168.3"
+      },
+      "totalJobs": 13,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a18"
+      }
+    },
+    {
+      "date": "2025-03-21",
+      "totalMileage": 202,
+      "totalRevenue": {
+        "$numberDecimal": "419.1"
+      },
+      "totalJobs": 20,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a19"
+      }
+    },
+    {
+      "date": "2025-03-22",
+      "totalMileage": 32,
+      "totalRevenue": {
+        "$numberDecimal": "52.8"
+      },
+      "totalJobs": 3,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a1a"
+      }
+    },
+    {
+      "date": "2025-03-24",
+      "totalMileage": 107,
+      "totalRevenue": {
+        "$numberDecimal": "176.55"
+      },
+      "totalJobs": 12,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a1b"
+      }
+    },
+    {
+      "date": "2025-03-25",
+      "totalMileage": 201,
+      "totalRevenue": {
+        "$numberDecimal": "453.85"
+      },
+      "totalJobs": 14,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a1c"
+      }
+    },
+    {
+      "date": "2025-03-26",
+      "totalMileage": 80,
+      "totalRevenue": {
+        "$numberDecimal": "194.4"
+      },
+      "totalJobs": 7,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a1d"
+      }
+    },
+    {
+      "date": "2025-03-27",
+      "totalMileage": 128,
+      "totalRevenue": {
+        "$numberDecimal": "235.9"
+      },
+      "totalJobs": 16,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a1e"
+      }
+    },
+    {
+      "date": "2025-03-28",
+      "totalMileage": 189,
+      "totalRevenue": {
+        "$numberDecimal": "374.25"
+      },
+      "totalJobs": 18,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a1f"
+      }
+    },
+    {
+      "date": "2025-03-29",
+      "totalMileage": 81,
+      "totalRevenue": {
+        "$numberDecimal": "194.75"
+      },
+      "totalJobs": 6,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a20"
+      }
+    },
+    {
+      "date": "2025-03-31",
+      "totalMileage": 2,
+      "totalRevenue": {
+        "$numberDecimal": "3.3"
+      },
+      "totalJobs": 2,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab7a21"
+      }
+    }
+  ],
+  "jobsByContractor": {
+    "Romeo Kitchens": 235,
+    "Lammel": 280,
+    "Besthule": 242,
+    "Ufurn": 31,
+    "Moxon": 7
+  },
+  "monthlyData": [
+    {
+      "month": "January",
+      "totalMileage": 2842,
+      "totalRevenue": {
+        "$numberDecimal": "5954.2"
+      },
+      "totalProfit": {
+        "$numberDecimal": "5954.2"
+      },
+      "totalExpenses": {
+        "$numberDecimal": "0"
+      },
+      "totalJobs": 251,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79db"
+      }
+    },
+    {
+      "month": "February",
+      "totalMileage": 3130,
+      "totalRevenue": {
+        "$numberDecimal": "5782.65"
+      },
+      "totalProfit": {
+        "$numberDecimal": "5782.65"
+      },
+      "totalExpenses": {
+        "$numberDecimal": "0"
+      },
+      "totalJobs": 237,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79dc"
+      }
+    },
+    {
+      "month": "March",
+      "totalMileage": 3316,
+      "totalRevenue": {
+        "$numberDecimal": "6922.2"
+      },
+      "totalProfit": {
+        "$numberDecimal": "6922.2"
+      },
+      "totalExpenses": {
+        "$numberDecimal": "0"
+      },
+      "totalJobs": 307,
+      "_id": {
+        "$oid": "680766743d920b2cf1ab79dd"
+      }
+    }
+  ],
+  "revenueByContractor": {
+    "Romeo Kitchens": {
+      "$numberDecimal": "5489.4"
+    },
+    "Lammel": {
+      "$numberDecimal": "5838.45"
+    },
+    "Besthule": {
+      "$numberDecimal": "5138.9"
+    },
+    "Ufurn": {
+      "$numberDecimal": "2126.3"
+    },
+    "Moxon": {
+      "$numberDecimal": "66"
+    }
+  },
+  "totalContractors": 5,
+  "totalCustomers": 396,
+  "updatedAt": {
+    "$date": "2025-04-22T09:50:44.708Z"
+  },
+  "yearlyExpenses": {
+    "$numberDecimal": "0"
+  },
+  "yearlyJobs": 795,
+  "yearlyMileage": 9288,
+  "yearlyProfit": {
+    "$numberDecimal": "18659.05"
+  },
+  "yearlyRevenue": {
+    "$numberDecimal": "18659.05"
+  }
+}]

@@ -12,8 +12,11 @@ router.get(
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
+      const currentYear = new Date().getFullYear()
       const vehicleStats = await VehicleStats.findOne(
-        { vehicleId: req.params.vehicleId },
+      
+        {year:currentYear,
+           vehicleId: req.params.vehicleId },
       );
 
       if (!vehicleStats) {

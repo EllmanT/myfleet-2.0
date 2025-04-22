@@ -27,7 +27,7 @@ const handlePrint = () => {
           </style>
         </head>
         <body>
-          <h1> Daily Jobs Data Analysis </h1>
+          <h1> Daily Data Analysis </h1>
           ${printContent.innerHTML}
           <script type="text/javascript">
             window.onload = function() {

@@ -365,10 +365,10 @@ const DashVehiclePage = () => {
         <StatBox
           title="Total Jobs"
           value={driverStats && driverStats.yearlyJobs}
-          increase={!isPercentage ? shortMonth(latestMonth) : shortMonth(secondLatestMonth)}
-          description={
-            !isPercentage ? `${latestMonthJobs} jobs` : `${percentage}%`
-          }
+          // increase={!isPercentage ? shortMonth(latestMonth) : shortMonth(secondLatestMonth)}
+          // description={
+          //   !isPercentage ? `${latestMonthJobs} jobs` : `${percentage}%`
+          // }
           icon={
             <Email
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}

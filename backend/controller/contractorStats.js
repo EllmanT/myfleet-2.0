@@ -13,8 +13,10 @@ router.get(
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
+      const currentYear = new Date().getFullYear();
       const contractorStats = await ContractorStats.findOne(
         {
+          year: currentYear,
           contractorId: req.params.contractorId,
           delivererId: req.user.companyId,
         },

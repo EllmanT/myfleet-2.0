@@ -330,8 +330,8 @@ const DashboardPage = () => {
         <StatBox
           title="Tot Revenue"
           value={coOverallStats && coOverallStats.yearlyRevenue}
-          increase={topContractorRevenue && topContractorRevenue}
-          description={topContractorRevenue && `$${highestRevenue}`}
+          // increase={topContractorRevenue && topContractorRevenue}
+          // description={topContractorRevenue && `$${highestRevenue}`}
           icon={
             <MonetizationOn
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}

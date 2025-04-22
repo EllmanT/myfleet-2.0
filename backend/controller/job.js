@@ -1578,7 +1578,7 @@ router.get(
 
       // Parse sort option if available
       const generateSort = () => {
-        if (!sort) return { orderDate: -1 };
+        // if (!sort) return { orderDate: -1 };
         const sortParsed = JSON.parse(sort);
         return {
           [sortParsed.field]: sortParsed.sort === "asc" ? 1 : -1,
@@ -1586,10 +1586,11 @@ router.get(
       };
       
 
-      const sortOptions = generateSort();
+      // const sortOptions = generateSort();
         // Formatted sort should look like { field: 1 } or { field: -1 }
         // const sortOptions = Boolean(sort) ? generateSort() : { orderDate: -1 };
-
+ // Formatted sort should look like { field: 1 } or { field: -1 }
+ const sortOptions = Boolean(sort) ? generateSort() : { orderDate: -1 };
 
       // Get the deliverer (company) based on the user
       const deliverer = await Deliverer.findById(req.user.companyId);
@@ -1651,16 +1652,22 @@ router.get(
             ],
           },
         },
-        { $sort: sortOptions },
+        { $sort: { orderDate: -1 } }, // Sort by orderDate in descending order
+
+        
         {
           $facet: {
             pageJobs: [
               { $skip: page * parseInt(pageSize, 10) },
               { $limit: parseInt(pageSize, 10) },
+
             ],
             totalCount: [{ $count: "total" }],
           },
         },
+
+        // { $sort: sortOptions },
+
       ];
 
       // Execute the aggregation pipeline
@@ -2341,10 +2348,13 @@ router.get(
       const totalCount = await Job.countDocuments({
         _id: { $in: jobIds },
       });
-
+      const formattedJobs = delivererWithJobsReport.map((job) => ({
+        ...job,
+        cost: parseFloat(job.cost.toString()), // Format the cost to 2 decimal places
+      }));
       res.status(200).json({
         success: true,
-        delivererWithJobsReport,
+        delivererWithJobsReport:formattedJobs,
         totalCount,
       });
     } catch (error) {
@@ -2597,10 +2607,14 @@ router.get(
       const totalCount = await Job.countDocuments({
         _id: { $in: jobIds },
       });
+      const formattedJobs = driverWithJobsReport.map((job) => ({
+        ...job,
+        cost: parseFloat(job.cost.toString()), // Format the cost to 2 decimal places
+      }));
 
       res.status(200).json({
         success: true,
-        driverWithJobsReport,
+        driverWithJobsReport: formattedJobs,
         totalCount,
       });
     } catch (error) {

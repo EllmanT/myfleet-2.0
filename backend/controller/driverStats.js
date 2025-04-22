@@ -11,8 +11,10 @@ router.get(
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
+      const currentYear = new Date().getFullYear();
       const driverStats = await DriverStats.findOne(
-        {  driverId:req.params.driverId },
+        { year: currentYear,
+            driverId:req.params.driverId },
       );
 
       if (!driverStats) {

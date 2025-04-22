@@ -1,0 +1,6336 @@
+[{
+  "_id": {
+    "$oid": "6551d4668b36163cd602db25"
+  },
+  "name": "cust tino",
+  "city": "Harare",
+  "phoneNumber": "434244234",
+  "address": "fdgs dfgfsda",
+  "createdAt": {
+    "$date": "2023-11-13T07:46:46.362Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-27T09:49:38.300Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6551d4898b36163cd602db31"
+  },
+  "name": "cust 334",
+  "city": "Chirundu",
+  "phoneNumber": "sdfa ad as",
+  "address": "sda fsd",
+  "createdAt": {
+    "$date": "2023-11-13T07:47:21.084Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-14T16:19:05.122Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6551d4a18b36163cd602db37"
+  },
+  "name": "ocean Vaskentt",
+  "city": "Chipinge",
+  "phoneNumber": "435643124253",
+  "address": "dfs sads",
+  "createdAt": {
+    "$date": "2023-11-13T07:47:45.517Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-14T16:07:23.253Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6551d4bf8b36163cd602db3d"
+  },
+  "name": "Bathromm botunga",
+  "city": "Harare",
+  "phoneNumber": "0943343",
+  "address": "sdfa d adfsd",
+  "createdAt": {
+    "$date": "2023-11-13T07:48:15.008Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-14T15:07:11.462Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65522365417935bea1e0cb17"
+  },
+  "name": "tinodad",
+  "city": "Gweru",
+  "phoneNumber": "32435643",
+  "address": "sdaf adf",
+  "createdAt": {
+    "$date": "2023-11-13T13:23:49.443Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-13T13:23:49.443Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "656598b18827f7f34b114b43"
+  },
+  "name": "cust66",
+  "city": "Chirundu",
+  "phoneNumber": "4345324144",
+  "address": "sdaf ad ffd323",
+  "createdAt": {
+    "$date": "2023-11-28T07:37:21.833Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-28T07:37:21.833Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65784371ae38bb2dc24b5b40"
+  },
+  "name": "dsfs dsa ",
+  "city": "Gweru",
+  "phoneNumber": "345434232",
+  "address": "a ds ",
+  "createdAt": {
+    "$date": "2023-12-12T11:26:41.524Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-12T11:26:41.524Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6578438dae38bb2dc24b5b46"
+  },
+  "name": " asfda",
+  "city": "Chirundu",
+  "phoneNumber": "424323",
+  "address": "f asdf",
+  "createdAt": {
+    "$date": "2023-12-12T11:27:09.556Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-12T11:27:09.556Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65aea78bc461048f0f5b08c2"
+  },
+  "name": "Boardex",
+  "city": "Harare",
+  "phoneNumber": "1111111111111",
+  "address": "Msasa",
+  "createdAt": {
+    "$date": "2024-01-22T17:36:11.487Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-22T17:36:11.487Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65aea7a0c461048f0f5b08cb"
+  },
+  "name": "KW",
+  "city": "Harare",
+  "phoneNumber": "2222222222222",
+  "address": "Msasa",
+  "createdAt": {
+    "$date": "2024-01-22T17:36:32.010Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-22T17:36:32.010Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65aea7b5c461048f0f5b08d4"
+  },
+  "name": "Sogo",
+  "city": "Harare",
+  "phoneNumber": "3333333333333",
+  "address": "Msasa",
+  "createdAt": {
+    "$date": "2024-01-22T17:36:53.662Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-22T17:36:53.662Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65aea7d7c461048f0f5b08dd"
+  },
+  "name": "Ethics",
+  "city": "Harare",
+  "phoneNumber": "5555555555555",
+  "address": "CBD",
+  "createdAt": {
+    "$date": "2024-01-22T17:37:27.702Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-22T17:37:27.702Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65aea7ecc461048f0f5b08e6"
+  },
+  "name": "CBZ Town",
+  "city": "Harare",
+  "phoneNumber": "7777777777777",
+  "address": "CBD",
+  "createdAt": {
+    "$date": "2024-01-22T17:37:48.927Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-22T17:37:48.927Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65aea806c461048f0f5b08ef"
+  },
+  "name": "ISS",
+  "city": "Harare",
+  "phoneNumber": "9999999999999",
+  "address": "Msasa",
+  "createdAt": {
+    "$date": "2024-01-22T17:38:14.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-22T17:38:14.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65aea89ec461048f0f5b098c"
+  },
+  "name": "Lammel",
+  "city": "Harare",
+  "phoneNumber": "8888878888888",
+  "address": "Msasa",
+  "createdAt": {
+    "$date": "2024-01-22T17:40:46.928Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-22T17:40:46.928Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b9367e2c682a136e2d4a44"
+  },
+  "name": "Pardon's House",
+  "city": "Harare",
+  "phoneNumber": "0111222233333",
+  "address": "Harare Msasa",
+  "createdAt": {
+    "$date": "2024-01-30T17:48:46.901Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T17:48:46.901Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b943772c682a136e2d4acc"
+  },
+  "name": "Besthule Shop",
+  "city": "Harare",
+  "phoneNumber": "011122233322",
+  "address": "22233444222233",
+  "createdAt": {
+    "$date": "2024-01-30T18:44:07.999Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T18:44:07.999Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b944552c682a136e2d4b7b"
+  },
+  "name": "Woodstock",
+  "city": "Harare",
+  "phoneNumber": "0123211312231",
+  "address": "123 MSasas",
+  "createdAt": {
+    "$date": "2024-01-30T18:47:49.182Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T18:47:49.182Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b944782c682a136e2d4b84"
+  },
+  "name": "Sander's House",
+  "city": "Harare",
+  "phoneNumber": "023123221323",
+  "address": "012313212221",
+  "createdAt": {
+    "$date": "2024-01-30T18:48:24.191Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T18:48:24.191Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b9449c2c682a136e2d4b8d"
+  },
+  "name": "Bhadhella",
+  "city": "Harare",
+  "phoneNumber": "1233323221323",
+  "address": "12 msdfa asa",
+  "createdAt": {
+    "$date": "2024-01-30T18:49:00.150Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T18:49:00.150Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b945ce2c682a136e2d4d4d"
+  },
+  "name": "Predam",
+  "city": "Harare",
+  "phoneNumber": "34434344324",
+  "address": "123sdadfsa",
+  "createdAt": {
+    "$date": "2024-01-30T18:54:06.018Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T18:54:06.018Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b949262c682a136e2d4e8f"
+  },
+  "name": "526 Cleverland",
+  "city": "Harare",
+  "phoneNumber": "123231323122",
+  "address": "34 asdfd",
+  "createdAt": {
+    "$date": "2024-01-30T19:08:22.805Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T19:08:22.805Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b9493a2c682a136e2d4e98"
+  },
+  "name": "Camfed",
+  "city": "Harare",
+  "phoneNumber": "32354543234",
+  "address": "dssf 3244",
+  "createdAt": {
+    "$date": "2024-01-30T19:08:42.196Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T19:08:42.196Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b94a422c682a136e2d5020"
+  },
+  "name": "Mbidzo",
+  "city": "Harare",
+  "phoneNumber": "45434332434",
+  "address": "sda asdf da",
+  "createdAt": {
+    "$date": "2024-01-30T19:13:06.566Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T19:13:06.566Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b94a5b2c682a136e2d5029"
+  },
+  "name": "Summerfields",
+  "city": "Harare",
+  "phoneNumber": "0546545334343",
+  "address": "gfsd sdf gdsf",
+  "createdAt": {
+    "$date": "2024-01-30T19:13:31.166Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T19:13:31.166Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b94a6c2c682a136e2d5032"
+  },
+  "name": "CRF",
+  "city": "Harare",
+  "phoneNumber": "3545345443544",
+  "address": "das asdfsdf",
+  "createdAt": {
+    "$date": "2024-01-30T19:13:48.155Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T19:13:48.155Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b94a922c682a136e2d5041"
+  },
+  "name": "Radiology",
+  "city": "Harare",
+  "phoneNumber": "7665465353452",
+  "address": "asd asdf da",
+  "createdAt": {
+    "$date": "2024-01-30T19:14:26.479Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T19:14:26.479Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b955d72c682a136e2d53cb"
+  },
+  "name": "Mrs Stoole",
+  "city": "Harare",
+  "phoneNumber": "03342443424",
+  "address": "dfas adsf ",
+  "createdAt": {
+    "$date": "2024-01-30T20:02:31.751Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T20:02:31.751Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b955f12c682a136e2d53d4"
+  },
+  "name": "Pomona Dump",
+  "city": "Harare",
+  "phoneNumber": "234213212343",
+  "address": "rr fdsa a",
+  "createdAt": {
+    "$date": "2024-01-30T20:02:57.498Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T20:02:57.498Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b9574b2c682a136e2d54b1"
+  },
+  "name": "Unifit",
+  "city": "Harare",
+  "phoneNumber": "565436632",
+  "address": "fsdggs sgffd",
+  "createdAt": {
+    "$date": "2024-01-30T20:08:43.652Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T20:08:43.652Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b9589a2c682a136e2d558b"
+  },
+  "name": "Fert Seed",
+  "city": "Harare",
+  "phoneNumber": "3454675432",
+  "address": "aedsf ssd dfaz",
+  "createdAt": {
+    "$date": "2024-01-30T20:14:18.276Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T20:14:18.276Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b958a72c682a136e2d5594"
+  },
+  "name": "Amalgamated",
+  "city": "Harare",
+  "phoneNumber": "342545434354",
+  "address": "asdff dsfa ",
+  "createdAt": {
+    "$date": "2024-01-30T20:14:31.429Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T20:14:31.429Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b95a622c682a136e2d56f7"
+  },
+  "name": "Revolve Solu",
+  "city": "Harare",
+  "phoneNumber": "344553524414",
+  "address": "dsaf sad",
+  "createdAt": {
+    "$date": "2024-01-30T20:21:54.706Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T20:21:54.706Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b95a782c682a136e2d5700"
+  },
+  "name": "Revolve Kelvin",
+  "city": "Harare",
+  "phoneNumber": "234324234324",
+  "address": "fdg sdf dfsg dsf ",
+  "createdAt": {
+    "$date": "2024-01-30T20:22:16.328Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T20:22:16.328Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b95b202c682a136e2d57d3"
+  },
+  "name": "190 Mtre Road",
+  "city": "Harare",
+  "phoneNumber": "5465453453454",
+  "address": "fdsg fdsg",
+  "createdAt": {
+    "$date": "2024-01-30T20:25:04.980Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T20:25:04.980Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b95ca82c682a136e2d5962"
+  },
+  "name": "mutyebere",
+  "city": "Harare",
+  "phoneNumber": "3456754321445",
+  "address": "f gdsf f",
+  "createdAt": {
+    "$date": "2024-01-30T20:31:36.588Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T20:31:36.588Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65b95d1c2c682a136e2d59ed"
+  },
+  "name": "GoldTech",
+  "city": "Harare",
+  "phoneNumber": "2344532123422",
+  "address": "df sfdg dsfgd2",
+  "createdAt": {
+    "$date": "2024-01-30T20:33:32.568Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-30T20:33:32.568Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65ba926674de7b22c9e6a7aa"
+  },
+  "name": "Syntegra",
+  "city": "Harare",
+  "phoneNumber": "5464653242",
+  "address": "sdffsad sd dafd a",
+  "createdAt": {
+    "$date": "2024-01-31T18:33:10.645Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-31T18:33:10.645Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65ba928774de7b22c9e6a7b3"
+  },
+  "name": "Rulethu",
+  "city": "Harare",
+  "phoneNumber": "3445364343245",
+  "address": "ewberwt erwr wr",
+  "createdAt": {
+    "$date": "2024-01-31T18:33:43.552Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-31T18:33:43.552Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d96469f9f586086110ba00"
+  },
+  "name": "Ground Up",
+  "city": "Harare",
+  "phoneNumber": "0000004354243",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-24T03:37:13.164Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-24T03:37:13.164Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d96484f9f586086110ba09"
+  },
+  "name": "Aluminium ",
+  "city": "Harare",
+  "phoneNumber": "0000000000000",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-24T03:37:40.775Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-24T03:37:40.775Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d964abf9f586086110ba18"
+  },
+  "name": "Shippy",
+  "city": "Harare",
+  "phoneNumber": "1111111111111",
+  "address": "fs adsf sda",
+  "createdAt": {
+    "$date": "2024-02-24T03:38:19.763Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-24T03:38:19.763Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d964d8f9f586086110ba64"
+  },
+  "name": "Halsteds",
+  "city": "Harare",
+  "phoneNumber": "0000000000000",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-24T03:39:04.316Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-24T03:39:04.316Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d964fef9f586086110ba6d"
+  },
+  "name": "MIC Radiology",
+  "city": "Harare",
+  "phoneNumber": "3333333223233",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-24T03:39:42.330Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-24T03:39:42.330Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d965f0f9f586086110bb31"
+  },
+  "name": "RDC",
+  "city": "Harare",
+  "phoneNumber": "3333333333333",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-24T03:43:44.169Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-24T03:43:44.169Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d9671cf9f586086110bc95"
+  },
+  "name": "Chipika",
+  "city": "Harare",
+  "phoneNumber": "3333333333333",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-24T03:48:44.270Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-24T03:48:44.270Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65d969e6f9f586086110beb4"
+  },
+  "name": "Casstech",
+  "city": "Harare",
+  "phoneNumber": "2222222222222",
+  "address": "Test",
+  "createdAt": {
+    "$date": "2024-02-24T04:00:38.867Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-24T04:00:38.867Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65daf0c3528a676b83a2b2de"
+  },
+  "name": "Steward Bank",
+  "city": "Harare",
+  "phoneNumber": "32434333434",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-25T07:48:19.472Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-25T07:48:19.472Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65daf0e4528a676b83a2b2e7"
+  },
+  "name": "Fivet",
+  "city": "Harare",
+  "phoneNumber": "23432132322",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-25T07:48:52.880Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-25T07:48:52.880Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65daf0fa528a676b83a2b2f0"
+  },
+  "name": "Koala Park",
+  "city": "Harare",
+  "phoneNumber": "343434444444",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-25T07:49:14.608Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-25T07:49:14.608Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65daf18c528a676b83a2b328"
+  },
+  "name": "Lucile Real Estate",
+  "city": "Harare",
+  "phoneNumber": "5545443334434",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-25T07:51:40.496Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-25T07:51:40.496Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65daf3b5528a676b83a2b47e"
+  },
+  "name": "Equals",
+  "city": "Harare",
+  "phoneNumber": "534545455444",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-25T08:00:53.235Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-25T08:00:53.235Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65daf893528a676b83a2b9f1"
+  },
+  "name": "Bitumen World",
+  "city": "Harare",
+  "phoneNumber": "553534343443",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-25T08:21:39.681Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-25T08:21:39.681Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65daf8bf528a676b83a2b9fa"
+  },
+  "name": "75 Kiwi Drive",
+  "city": "Harare",
+  "phoneNumber": "3929234322",
+  "address": "75 Kiwi Drive",
+  "createdAt": {
+    "$date": "2024-02-25T08:22:23.069Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-25T08:22:23.069Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65dafae0528a676b83a2bc5b"
+  },
+  "name": "First Capital",
+  "city": "Harare",
+  "phoneNumber": "4334343434343",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-25T08:31:28.735Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-25T08:31:28.735Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65dafbe1528a676b83a2bd38"
+  },
+  "name": "NBS Borrowdale",
+  "city": "Harare",
+  "phoneNumber": "33243442343",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-25T08:35:45.696Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-25T08:35:45.696Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65dafbf9528a676b83a2bd41"
+  },
+  "name": "NBS CBD",
+  "city": "Harare",
+  "phoneNumber": "1223323323232",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-25T08:36:09.180Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-25T08:36:09.180Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65dafc0b528a676b83a2bd4a"
+  },
+  "name": "Cimas",
+  "city": "Harare",
+  "phoneNumber": "2222222222222",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-25T08:36:27.762Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-25T08:36:27.762Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65dafc2b528a676b83a2bd56"
+  },
+  "name": "Chitewo",
+  "city": "Harare",
+  "phoneNumber": "4444444444444",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-25T08:36:59.342Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-25T08:36:59.342Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65db0229528a676b83a2c255"
+  },
+  "name": "Dominican Convent",
+  "city": "Harare",
+  "phoneNumber": "5454454544545",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-25T09:02:33.633Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-25T09:02:33.633Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65db02e9528a676b83a2c356"
+  },
+  "name": "Mwami Resources",
+  "city": "Harare",
+  "phoneNumber": "5454454545454",
+  "address": "test ",
+  "createdAt": {
+    "$date": "2024-02-25T09:05:45.429Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-25T09:05:45.429Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65df6e8bcb46d674e51114a3"
+  },
+  "name": "Interlog",
+  "city": "Gweru",
+  "phoneNumber": "2222222222222",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-28T17:34:03.241Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-28T17:34:03.241Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65df71c6cb46d674e51118cd"
+  },
+  "name": "Shaah",
+  "city": "Harare",
+  "phoneNumber": "2323222332323",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-28T17:47:50.325Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-28T17:47:50.325Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65df73e5cb46d674e5111b07"
+  },
+  "name": "Munshi",
+  "city": "Harare",
+  "phoneNumber": "5455444554",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-28T17:56:53.085Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-28T17:56:53.085Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65df7736cb46d674e5111daf"
+  },
+  "name": "Econet Borrowdale",
+  "city": "Harare",
+  "phoneNumber": "5555555555555",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-28T18:11:02.416Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-28T18:11:02.416Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65df77f8cb46d674e5111f05"
+  },
+  "name": "Clark Properties",
+  "city": "Harare",
+  "phoneNumber": "665576656756",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-28T18:14:16.298Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-28T18:14:16.298Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65e0bfb5baa9e8584fea74d5"
+  },
+  "name": "Steel Age",
+  "city": "Harare",
+  "phoneNumber": "6766565665556",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-29T17:32:37.996Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-29T17:32:37.996Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65e0c205baa9e8584fea76b5"
+  },
+  "name": "Kashura",
+  "city": "Harare",
+  "phoneNumber": "3434234324342",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-29T17:42:29.342Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-29T17:42:29.342Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65e0c278baa9e8584fea7797"
+  },
+  "name": "Power Speed",
+  "city": "Harare",
+  "phoneNumber": "4545435454354",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-29T17:44:24.021Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-29T17:44:24.021Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65e0c3c2baa9e8584fea786d"
+  },
+  "name": "Econet Highlands",
+  "city": "Harare",
+  "phoneNumber": "4344338457438",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-02-29T17:49:54.299Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-29T17:49:54.299Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66001f4a49aa472f5976350e"
+  },
+  "name": "Romeo Kitchens",
+  "city": "Harare",
+  "phoneNumber": "0046954043590",
+  "address": "fdsfdf dsfasdf",
+  "createdAt": {
+    "$date": "2024-03-24T12:40:42.596Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-24T12:40:42.596Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66001fb649aa472f59763602"
+  },
+  "name": "Munishi",
+  "city": "Harare",
+  "phoneNumber": "34545232423",
+  "address": "3454refdgfsafasd",
+  "createdAt": {
+    "$date": "2024-03-24T12:42:30.752Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-24T12:42:30.752Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66001fc449aa472f5976360b"
+  },
+  "name": "Jassa",
+  "city": "Harare",
+  "phoneNumber": "2434532565567",
+  "address": "dfa dsfad",
+  "createdAt": {
+    "$date": "2024-03-24T12:42:44.440Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-24T12:42:44.440Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "660021cf49aa472f597638f3"
+  },
+  "name": "Union Hardware",
+  "city": "Harare",
+  "phoneNumber": "0090990909",
+  "address": "trstgttt",
+  "createdAt": {
+    "$date": "2024-03-24T12:51:27.453Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-24T12:51:27.453Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "660021e049aa472f597638fc"
+  },
+  "name": "Radiology 2",
+  "city": "Harare",
+  "phoneNumber": "32443334432",
+  "address": "trest",
+  "createdAt": {
+    "$date": "2024-03-24T12:51:44.319Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-24T12:51:44.319Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "660021fc49aa472f59763905"
+  },
+  "name": "Kashula",
+  "city": "Harare",
+  "phoneNumber": "2342343",
+  "address": "twrest erew d",
+  "createdAt": {
+    "$date": "2024-03-24T12:52:12.122Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-24T12:52:12.122Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "660024c949aa472f59763e11"
+  },
+  "name": "Mrs N Mbanje",
+  "city": "Harare",
+  "phoneNumber": "56534534432",
+  "address": "dfsf sasf asdf",
+  "createdAt": {
+    "$date": "2024-03-24T13:04:09.268Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-24T13:04:09.268Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66044c57e8838bf08a0d61a3"
+  },
+  "name": "Matonhodze",
+  "city": "Harare",
+  "phoneNumber": "3243432",
+  "address": "sfda d f",
+  "createdAt": {
+    "$date": "2024-03-27T16:41:59.804Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-27T16:41:59.804Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66044c65e8838bf08a0d61ac"
+  },
+  "name": "Shaaz",
+  "city": "Harare",
+  "phoneNumber": "2112332",
+  "address": "asdf asdfdad",
+  "createdAt": {
+    "$date": "2024-03-27T16:42:13.928Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-27T16:42:13.928Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66044c85e8838bf08a0d61b8"
+  },
+  "name": "Alliance Insurance",
+  "city": "Harare",
+  "phoneNumber": "3231233234",
+  "address": "dafssda das",
+  "createdAt": {
+    "$date": "2024-03-27T16:42:45.365Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-27T16:42:45.365Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66044cafe8838bf08a0d61c4"
+  },
+  "name": "Bitumen Mt Hampden",
+  "city": "Harare",
+  "phoneNumber": "675643432434",
+  "address": "dsfa adf df",
+  "createdAt": {
+    "$date": "2024-03-27T16:43:27.126Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-27T16:43:27.126Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66044d1a0e16f2f46b81ab82"
+  },
+  "name": "Nsangi",
+  "city": "Harare",
+  "phoneNumber": "234212131",
+  "address": "wdfasdsfdf",
+  "createdAt": {
+    "$date": "2024-03-27T16:45:14.885Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-27T16:45:14.885Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66044fa20e16f2f46b81b10f"
+  },
+  "name": "Tarpaulins",
+  "city": "Harare",
+  "phoneNumber": "23123312",
+  "address": "ea sddfa",
+  "createdAt": {
+    "$date": "2024-03-27T16:56:02.412Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-27T16:56:02.412Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66044fbc0e16f2f46b81b118"
+  },
+  "name": "NMB B/Dale",
+  "city": "Harare",
+  "phoneNumber": "32123232",
+  "address": "wesdacqwadf sd",
+  "createdAt": {
+    "$date": "2024-03-27T16:56:28.663Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-27T16:56:28.663Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6604518c0e16f2f46b81b421"
+  },
+  "name": "National Foods",
+  "city": "Harare",
+  "phoneNumber": "213232321321",
+  "address": "awfd sfasdda",
+  "createdAt": {
+    "$date": "2024-03-27T17:04:12.141Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-27T17:04:12.141Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "660451b40e16f2f46b81b430"
+  },
+  "name": "Zinara House",
+  "city": "Harare",
+  "phoneNumber": "54324423432",
+  "address": "ddasfdsfasdaf adsfdf asd",
+  "createdAt": {
+    "$date": "2024-03-27T17:04:52.042Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-27T17:04:52.042Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "660452e70e16f2f46b81b7c8"
+  },
+  "name": "Beverley",
+  "city": "Harare",
+  "phoneNumber": "23213213233",
+  "address": "sdf sadfsadfasdfsdf",
+  "createdAt": {
+    "$date": "2024-03-27T17:09:59.535Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-27T17:09:59.535Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6629f7f1ed42ee036b51eb41"
+  },
+  "name": "Wiremett",
+  "city": "Harare",
+  "phoneNumber": "077123423",
+  "address": "fdsa asdfsa",
+  "createdAt": {
+    "$date": "2024-04-25T06:28:01.716Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T06:28:01.716Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6629f80fed42ee036b51eb53"
+  },
+  "name": "Scaffold",
+  "city": "Harare",
+  "phoneNumber": "09912233232",
+  "address": "dsfa dsasdf",
+  "createdAt": {
+    "$date": "2024-04-25T06:28:31.955Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T06:28:31.955Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6629fa34ed42ee036b51eedd"
+  },
+  "name": "O Riodan",
+  "city": "Harare",
+  "phoneNumber": "077122322",
+  "address": "ewdf sad fasd",
+  "createdAt": {
+    "$date": "2024-04-25T06:37:40.494Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T06:37:40.494Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6629fad6ed42ee036b51efcf"
+  },
+  "name": "Restapedic",
+  "city": "Harare",
+  "phoneNumber": "4353453244",
+  "address": "df asdf sa",
+  "createdAt": {
+    "$date": "2024-04-25T06:40:22.235Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T06:40:22.235Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6629fb3eed42ee036b51f026"
+  },
+  "name": "Zimra",
+  "city": "Harare",
+  "phoneNumber": "32443345412",
+  "address": "dfa sdf adf",
+  "createdAt": {
+    "$date": "2024-04-25T06:42:06.102Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T06:42:06.102Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6629fc80ed42ee036b51f1f4"
+  },
+  "name": "Aifresco",
+  "city": "Harare",
+  "phoneNumber": "324233234",
+  "address": "dsf daf ",
+  "createdAt": {
+    "$date": "2024-04-25T06:47:28.668Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T06:47:28.668Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662a0249ed42ee036b51f45c"
+  },
+  "name": "Mrs Moyo",
+  "city": "Harare",
+  "phoneNumber": "234234342",
+  "address": "fda sdfadffd",
+  "createdAt": {
+    "$date": "2024-04-25T07:12:09.303Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T07:12:09.303Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662a025fed42ee036b51f465"
+  },
+  "name": "Only Italian",
+  "city": "Harare",
+  "phoneNumber": "32124134",
+  "address": "dsfa afd dfafz",
+  "createdAt": {
+    "$date": "2024-04-25T07:12:31.495Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T07:12:31.495Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662a02a0ed42ee036b51f496"
+  },
+  "name": "Chimondo",
+  "city": "Harare",
+  "phoneNumber": "3255432443",
+  "address": "sda sadfaesdf",
+  "createdAt": {
+    "$date": "2024-04-25T07:13:36.103Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T07:13:36.103Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662a02b5ed42ee036b51f49f"
+  },
+  "name": "Classic Dessert",
+  "city": "Harare",
+  "phoneNumber": "32432423432",
+  "address": "32324sdf asdf ",
+  "createdAt": {
+    "$date": "2024-04-25T07:13:57.040Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T07:13:57.040Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662a087eed42ee036b51f97f"
+  },
+  "name": "UNDP",
+  "city": "Harare",
+  "phoneNumber": "324532434",
+  "address": "er sdf adf",
+  "createdAt": {
+    "$date": "2024-04-25T07:38:38.097Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T07:38:38.097Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662a0895ed42ee036b51f988"
+  },
+  "name": "Leigh",
+  "city": "Harare",
+  "phoneNumber": "3241413",
+  "address": "dfdfa dsfa sd",
+  "createdAt": {
+    "$date": "2024-04-25T07:39:01.699Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T07:39:01.699Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662a0a90ed42ee036b51fead"
+  },
+  "name": "Mujuru",
+  "city": "Harare",
+  "phoneNumber": "3221424",
+  "address": "sdaa sdfaf a",
+  "createdAt": {
+    "$date": "2024-04-25T07:47:28.392Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T07:47:28.392Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662a0ab7ed42ee036b51feb9"
+  },
+  "name": "Stewart",
+  "city": "Harare",
+  "phoneNumber": "231232",
+  "address": "fdfda sdfa",
+  "createdAt": {
+    "$date": "2024-04-25T07:48:07.663Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T07:48:07.663Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662a163eed42ee036b52023a"
+  },
+  "name": "Scott",
+  "city": "Harare",
+  "phoneNumber": "432334",
+  "address": "fdsa fsda d",
+  "createdAt": {
+    "$date": "2024-04-25T08:37:18.550Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T08:37:18.550Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662a18c9ed42ee036b5206e8"
+  },
+  "name": "Honey Dew",
+  "city": "Harare",
+  "phoneNumber": "33242334341",
+  "address": "dfa fsd sadf",
+  "createdAt": {
+    "$date": "2024-04-25T08:48:09.953Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T08:48:09.953Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662a18daed42ee036b5206f1"
+  },
+  "name": "Chinondo",
+  "city": "Harare",
+  "phoneNumber": "42332423",
+  "address": "sdf adsfa",
+  "createdAt": {
+    "$date": "2024-04-25T08:48:26.369Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-25T08:48:26.369Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662fd335df8de521360caf18"
+  },
+  "name": "Afresco",
+  "city": "Harare",
+  "phoneNumber": "0098432432",
+  "address": "ewadfs dfa asd",
+  "createdAt": {
+    "$date": "2024-04-29T17:04:53.779Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T17:04:53.779Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662fd430df8de521360cb17c"
+  },
+  "name": "Mbare",
+  "city": "Harare",
+  "phoneNumber": "4324123",
+  "address": "dawdfsadsa dsf",
+  "createdAt": {
+    "$date": "2024-04-29T17:09:04.957Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T17:09:04.957Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662fd49ddf8de521360cb254"
+  },
+  "name": "Rawplast",
+  "city": "Harare",
+  "phoneNumber": "2343142342",
+  "address": "aew sdfs asd d",
+  "createdAt": {
+    "$date": "2024-04-29T17:10:53.217Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T17:10:53.217Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662fd57cdf8de521360cb55e"
+  },
+  "name": "Colcom",
+  "city": "Harare",
+  "phoneNumber": "3223142",
+  "address": "adaf asdfd",
+  "createdAt": {
+    "$date": "2024-04-29T17:14:36.955Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T17:14:36.955Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662fd5e6df8de521360cb6a6"
+  },
+  "name": "Halsteds W/Vale",
+  "city": "Harare",
+  "phoneNumber": "43243432",
+  "address": "dfas asdf ",
+  "createdAt": {
+    "$date": "2024-04-29T17:16:22.842Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T17:16:22.842Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662fd674df8de521360cb7ee"
+  },
+  "name": "Moxon",
+  "city": "Harare",
+  "phoneNumber": "5342543",
+  "address": "Df asdf af",
+  "createdAt": {
+    "$date": "2024-04-29T17:18:44.424Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T17:18:44.424Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "662fd824df8de521360cbc38"
+  },
+  "name": "Magid",
+  "city": "Harare",
+  "phoneNumber": "345414",
+  "address": "awdf sdfad",
+  "createdAt": {
+    "$date": "2024-04-29T17:25:56.223Z"
+  },
+  "updatedAt": {
+    "$date": "2024-04-29T17:25:56.223Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6634dcc01f8a6fe66f1f454e"
+  },
+  "name": "Madokero",
+  "city": "Harare",
+  "phoneNumber": "3234545243",
+  "address": "dsaf asdf da",
+  "createdAt": {
+    "$date": "2024-05-03T12:46:56.098Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-03T12:46:56.098Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6634dcd81f8a6fe66f1f455a"
+  },
+  "name": "Capri",
+  "city": "Harare",
+  "phoneNumber": "32443321312",
+  "address": "efsd sdaf da",
+  "createdAt": {
+    "$date": "2024-05-03T12:47:20.153Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-03T12:47:20.153Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6634e5e41f8a6fe66f1f46b8"
+  },
+  "name": "I O Migration",
+  "city": "Harare",
+  "phoneNumber": "54632432",
+  "address": "gf sfd gsg df",
+  "createdAt": {
+    "$date": "2024-05-03T13:25:56.339Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-03T13:25:56.339Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6640d6243ffe21a0264eee8f"
+  },
+  "name": "ZimmyJ",
+  "city": "Harare",
+  "phoneNumber": "07724442555",
+  "address": "3413 adfdsa ",
+  "createdAt": {
+    "$date": "2024-05-12T14:45:56.066Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T14:45:56.066Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6640d7353ffe21a0264ef01d"
+  },
+  "name": "Somani",
+  "city": "Harare",
+  "phoneNumber": "7865546453",
+  "address": "afdfs ddafs",
+  "createdAt": {
+    "$date": "2024-05-12T14:50:29.196Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T14:50:29.196Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6640d7ef3ffe21a0264ef172"
+  },
+  "name": "Chop Chop",
+  "city": "Harare",
+  "phoneNumber": "0876776",
+  "address": "dsf sa asdfda",
+  "createdAt": {
+    "$date": "2024-05-12T14:53:35.571Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T14:53:35.571Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6640d8073ffe21a0264ef17b"
+  },
+  "name": "Alfresco",
+  "city": "Harare",
+  "phoneNumber": "2342131212",
+  "address": "dsfasfa  sdfasd",
+  "createdAt": {
+    "$date": "2024-05-12T14:53:59.370Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T14:53:59.370Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6640e9d93ffe21a0264efc82"
+  },
+  "name": "City Glass",
+  "city": "Harare",
+  "phoneNumber": "453243453",
+  "address": "dsa dsfa",
+  "createdAt": {
+    "$date": "2024-05-12T16:10:01.297Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T16:10:01.297Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6640ee343ffe21a0264f02b6"
+  },
+  "name": "Interphum Pvt Ltd",
+  "city": "Harare",
+  "phoneNumber": "678745656",
+  "address": "fdsg adsf ",
+  "createdAt": {
+    "$date": "2024-05-12T16:28:36.317Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T16:28:36.317Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6640eebc3ffe21a0264f0444"
+  },
+  "name": "Dzino",
+  "city": "Harare",
+  "phoneNumber": "754343543",
+  "address": "sfda afdsafd ",
+  "createdAt": {
+    "$date": "2024-05-12T16:30:52.850Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T16:30:52.850Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6640eed63ffe21a0264f04ed"
+  },
+  "name": "Ravlon Mining",
+  "city": "Harare",
+  "phoneNumber": "fd dsaf 54654",
+  "address": "erf sdfgs ",
+  "createdAt": {
+    "$date": "2024-05-12T16:31:18.801Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T16:31:18.801Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6640f0723ffe21a0264f0a4f"
+  },
+  "name": "Pro Dairy",
+  "city": "Harare",
+  "phoneNumber": "542433243",
+  "address": "efd asdfs dsd",
+  "createdAt": {
+    "$date": "2024-05-12T16:38:10.489Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T16:38:10.489Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6640f0e33ffe21a0264f0b89"
+  },
+  "name": "Letombo",
+  "city": "Harare",
+  "phoneNumber": "4653452343",
+  "address": "sdfa asfd d",
+  "createdAt": {
+    "$date": "2024-05-12T16:40:03.739Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T16:40:03.739Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6640f0f83ffe21a0264f0b92"
+  },
+  "name": "TT Motorcycles",
+  "city": "Harare",
+  "phoneNumber": "5432433423",
+  "address": "fdf ssdaf ",
+  "createdAt": {
+    "$date": "2024-05-12T16:40:24.619Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-12T16:40:24.619Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665338d21de80e31e6efb61d"
+  },
+  "name": "Cimmy T",
+  "city": "Harare",
+  "phoneNumber": "345443213",
+  "address": "dafsf asdf",
+  "createdAt": {
+    "$date": "2024-05-26T13:27:46.532Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-26T13:27:46.532Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66533b5c1de80e31e6efbd11"
+  },
+  "name": "U Furn",
+  "city": "Harare",
+  "phoneNumber": "453233",
+  "address": "fdfa sdf asdf",
+  "createdAt": {
+    "$date": "2024-05-26T13:38:36.337Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-26T13:38:36.337Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66533b8b1de80e31e6efbd33"
+  },
+  "name": "DHL",
+  "city": "Harare",
+  "phoneNumber": "435324322432",
+  "address": "dsaf sda fdfa",
+  "createdAt": {
+    "$date": "2024-05-26T13:39:23.837Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-26T13:39:23.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66533b981de80e31e6efbd3c"
+  },
+  "name": "Dzivarasekwa",
+  "city": "Harare",
+  "phoneNumber": "324332432",
+  "address": "sdvf af sdf",
+  "createdAt": {
+    "$date": "2024-05-26T13:39:36.890Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-26T13:39:36.890Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66533ea81de80e31e6efc79e"
+  },
+  "name": "Coral Breeze",
+  "city": "Harare",
+  "phoneNumber": "3454233",
+  "address": "dasfa sda f",
+  "createdAt": {
+    "$date": "2024-05-26T13:52:40.050Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-26T13:52:40.050Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6655fa23b7ae0802478451eb"
+  },
+  "name": "Penanel Trading",
+  "city": "Gweru",
+  "phoneNumber": "98998989",
+  "address": "dsg dgd",
+  "createdAt": {
+    "$date": "2024-05-28T15:37:07.861Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T15:37:07.861Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6655fa68b7ae0802478451f4"
+  },
+  "name": "3895 Tynwald",
+  "city": "Harare",
+  "phoneNumber": "97978789",
+  "address": "afxgf gfd jh g jh",
+  "createdAt": {
+    "$date": "2024-05-28T15:38:16.783Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T15:38:16.783Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6655faaab7ae080247845216"
+  },
+  "name": "Mohammed",
+  "city": "Harare",
+  "phoneNumber": "3412332132",
+  "address": "dsf as fdfa",
+  "createdAt": {
+    "$date": "2024-05-28T15:39:22.916Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T15:39:22.916Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6655fbecb7ae08024784521f"
+  },
+  "name": "Holden",
+  "city": "Harare",
+  "phoneNumber": "43324424",
+  "address": "sdads dsfsd a fadfa",
+  "createdAt": {
+    "$date": "2024-05-28T15:44:44.713Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T15:44:44.713Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6655fc66b7ae080247845294"
+  },
+  "name": "Pride of Africa",
+  "city": "Harare",
+  "phoneNumber": "4543242356432",
+  "address": "daf sdfa  d",
+  "createdAt": {
+    "$date": "2024-05-28T15:46:46.239Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T15:46:46.239Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6655fe46b7ae08024784597f"
+  },
+  "name": "Mhlanga",
+  "city": "Harare",
+  "phoneNumber": "32412211312",
+  "address": "ewrvds dfa d",
+  "createdAt": {
+    "$date": "2024-05-28T15:54:46.080Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T15:54:46.080Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6655ff67b7ae080247845d34"
+  },
+  "name": "Cabs NGO",
+  "city": "Harare",
+  "phoneNumber": "45322313243",
+  "address": "fdads asdf ",
+  "createdAt": {
+    "$date": "2024-05-28T15:59:35.494Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T15:59:35.494Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66560387b7ae0802478467b1"
+  },
+  "name": "Ncube",
+  "city": "Harare",
+  "phoneNumber": "331232113232",
+  "address": "sdfsa sdf ad ",
+  "createdAt": {
+    "$date": "2024-05-28T16:17:11.235Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T16:17:11.235Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66560451b7ae08024784690f"
+  },
+  "name": "Mind H",
+  "city": "Harare",
+  "phoneNumber": "3243243452423",
+  "address": "sfdsf sadaf  a ",
+  "createdAt": {
+    "$date": "2024-05-28T16:20:33.898Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T16:20:33.898Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665604e4b7ae080247846af4"
+  },
+  "name": "Sandton Park",
+  "city": "Harare",
+  "phoneNumber": "32434425432",
+  "address": "dsfs dsadfa sd",
+  "createdAt": {
+    "$date": "2024-05-28T16:23:00.975Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T16:23:00.975Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665605b8b7ae080247846d1f"
+  },
+  "name": "Brooke",
+  "city": "Harare",
+  "phoneNumber": "324433234432",
+  "address": "sdaf aasd fd",
+  "createdAt": {
+    "$date": "2024-05-28T16:26:32.242Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T16:26:32.242Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66560674b7ae080247846e39"
+  },
+  "name": "J & J",
+  "city": "Harare",
+  "phoneNumber": "345532434",
+  "address": "sdf asdf asda f",
+  "createdAt": {
+    "$date": "2024-05-28T16:29:40.023Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T16:29:40.023Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66560ad2b7ae080247847ab5"
+  },
+  "name": "Chimunorwa",
+  "city": "Harare",
+  "phoneNumber": "43534323424",
+  "address": "fda g gd s",
+  "createdAt": {
+    "$date": "2024-05-28T16:48:18.989Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T16:48:18.989Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66561170b7ae0802478482ea"
+  },
+  "name": "Bathroom Boutique",
+  "city": "Harare",
+  "phoneNumber": "5454324",
+  "address": "df fasf da",
+  "createdAt": {
+    "$date": "2024-05-28T17:16:32.883Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T17:16:32.883Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6656118bb7ae08024784832d"
+  },
+  "name": "Exodus",
+  "city": "Harare",
+  "phoneNumber": "454323554653",
+  "address": "sdf dsf sa f",
+  "createdAt": {
+    "$date": "2024-05-28T17:16:59.773Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T17:16:59.773Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6656150bb7ae080247848d12"
+  },
+  "name": "Les Hobbs",
+  "city": "Harare",
+  "phoneNumber": "3454654432",
+  "address": "sdaff fa sdfa",
+  "createdAt": {
+    "$date": "2024-05-28T17:31:55.256Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T17:31:55.256Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665616d2b7ae080247849352"
+  },
+  "name": "Fedex",
+  "city": "Harare",
+  "phoneNumber": "435435234",
+  "address": "fds asdf sd adf",
+  "createdAt": {
+    "$date": "2024-05-28T17:39:30.474Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-28T17:39:30.474Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665891e418c334f8f9ea03b9"
+  },
+  "name": "Grays",
+  "city": "Harare",
+  "phoneNumber": "3423432434",
+  "address": " asfd dsaf",
+  "createdAt": {
+    "$date": "2024-05-30T14:49:08.807Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-30T14:49:08.807Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665891fd18c334f8f9ea03c2"
+  },
+  "name": "McKibben",
+  "city": "Harare",
+  "phoneNumber": "676875786",
+  "address": "sdafds fdsf",
+  "createdAt": {
+    "$date": "2024-05-30T14:49:33.215Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-30T14:49:33.215Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665893b818c334f8f9ea075f"
+  },
+  "name": "Mukandi",
+  "city": "Harare",
+  "phoneNumber": "23443232",
+  "address": "dsadfasd",
+  "createdAt": {
+    "$date": "2024-05-30T14:56:56.424Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-30T14:56:56.424Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6658986b18c334f8f9ea1397"
+  },
+  "name": "Chamunorwa",
+  "city": "Harare",
+  "phoneNumber": "903490443443",
+  "address": "dsfa sdf asd",
+  "createdAt": {
+    "$date": "2024-05-30T15:16:59.408Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-30T15:16:59.408Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66712bbf378e829c74d47717"
+  },
+  "name": "Condev",
+  "city": "Harare",
+  "phoneNumber": "34535324434",
+  "address": "test address",
+  "createdAt": {
+    "$date": "2024-06-18T06:39:59.310Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-18T06:39:59.310Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66713081378e829c74d47af9"
+  },
+  "name": "Bargate Rd",
+  "city": "Harare",
+  "phoneNumber": "076535545",
+  "address": "testing",
+  "createdAt": {
+    "$date": "2024-06-18T07:00:17.879Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-18T07:00:17.879Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66756fccf40fe4d724a6a0b6"
+  },
+  "name": "AM and Afrispares",
+  "city": "Harare",
+  "phoneNumber": "324232423",
+  "address": "dfasd fasdf23424",
+  "createdAt": {
+    "$date": "2024-06-21T12:19:24.225Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-21T12:19:24.225Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66756fe3f40fe4d724a6a0bf"
+  },
+  "name": "Enterprise",
+  "city": "Harare",
+  "phoneNumber": "1232321",
+  "address": "New address",
+  "createdAt": {
+    "$date": "2024-06-21T12:19:47.065Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-30T15:16:02.125Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "667572b6f40fe4d724a6aaa5"
+  },
+  "name": "Arra",
+  "city": "Harare",
+  "phoneNumber": "3453234",
+  "address": "test 34234",
+  "createdAt": {
+    "$date": "2024-06-21T12:31:50.251Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-21T12:31:50.251Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "667573cff40fe4d724a6ad73"
+  },
+  "name": "Mana @ H",
+  "city": "Harare",
+  "phoneNumber": "333423432",
+  "address": "test address",
+  "createdAt": {
+    "$date": "2024-06-21T12:36:31.311Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-21T12:36:31.311Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66757770f40fe4d724a6babb"
+  },
+  "name": "TIBM",
+  "city": "Gweru",
+  "phoneNumber": "324332423",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-06-21T12:52:00.136Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-21T12:52:00.136Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66757b78f40fe4d724a6c035"
+  },
+  "name": "Tynwald North",
+  "city": "Harare",
+  "phoneNumber": "435324423",
+  "address": "testing",
+  "createdAt": {
+    "$date": "2024-06-21T13:09:12.014Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-21T13:09:12.014Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66757f98f40fe4d724a6c985"
+  },
+  "name": "Casio",
+  "city": "Harare",
+  "phoneNumber": "545453343",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-06-21T13:26:48.569Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-21T13:26:48.569Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "667580def40fe4d724a6ccaf"
+  },
+  "name": "Alex Park",
+  "city": "Harare",
+  "phoneNumber": "3423412312",
+  "address": "test 1122",
+  "createdAt": {
+    "$date": "2024-06-21T13:32:14.323Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-21T13:32:14.323Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66758359f40fe4d724a6d5f8"
+  },
+  "name": "Net One Town",
+  "city": "Harare",
+  "phoneNumber": "93432424",
+  "address": "test 324",
+  "createdAt": {
+    "$date": "2024-06-21T13:42:49.634Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-21T13:42:49.634Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66758377f40fe4d724a6d601"
+  },
+  "name": "Net One Cleveland",
+  "city": "Harare",
+  "phoneNumber": "13231231232",
+  "address": "Testing ",
+  "createdAt": {
+    "$date": "2024-06-21T13:43:19.365Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-21T13:43:19.365Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66758674f40fe4d724a6e06a"
+  },
+  "name": "K Crazzy",
+  "city": "Harare",
+  "phoneNumber": "231232123",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-06-21T13:56:04.444Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-21T13:56:04.444Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6675875ef40fe4d724a6e433"
+  },
+  "name": "NMB Town",
+  "city": "Harare",
+  "phoneNumber": "2312241213",
+  "address": "Test 323432",
+  "createdAt": {
+    "$date": "2024-06-21T13:59:58.974Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-21T13:59:58.974Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "667587b3f40fe4d724a6e4e0"
+  },
+  "name": "NMB Alex Park",
+  "city": "Harare",
+  "phoneNumber": "2432432343",
+  "address": "testing",
+  "createdAt": {
+    "$date": "2024-06-21T14:01:23.469Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-21T14:01:23.469Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6679159a7b1f2f4b071bd561"
+  },
+  "name": "Van Der ",
+  "city": "Harare",
+  "phoneNumber": "07484734",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-06-24T06:43:38.551Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-24T06:43:38.551Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "667d82799a8b58268e687147"
+  },
+  "name": "mACHEMBORE",
+  "city": "Harare",
+  "phoneNumber": "0771234223",
+  "address": "tESTING",
+  "createdAt": {
+    "$date": "2024-06-27T15:17:13.331Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-27T15:17:13.331Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "667d82c29a8b58268e6871a6"
+  },
+  "name": "Machembore",
+  "city": "Harare",
+  "phoneNumber": "0771234556",
+  "address": "testing",
+  "createdAt": {
+    "$date": "2024-06-27T15:18:26.898Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-27T15:18:26.898Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "667d84289a8b58268e68794d"
+  },
+  "name": "Area 8",
+  "city": "Harare",
+  "phoneNumber": "45643234234",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-06-27T15:24:24.864Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-27T15:24:24.864Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "667ea6f863d668159424e8cd"
+  },
+  "name": "Manwere",
+  "city": "Harare",
+  "phoneNumber": "54643342",
+  "address": "test 543",
+  "createdAt": {
+    "$date": "2024-06-28T12:05:12.659Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-28T12:05:12.659Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "667ea82f63d668159424ef63"
+  },
+  "name": "Broadhaven",
+  "city": "Harare",
+  "phoneNumber": "844233432",
+  "address": "test3234",
+  "createdAt": {
+    "$date": "2024-06-28T12:10:23.130Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-28T12:10:23.130Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "667eaa9b63d668159424f807"
+  },
+  "name": "BTM",
+  "city": "Harare",
+  "phoneNumber": "984234324",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-06-28T12:20:43.603Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-28T12:20:43.603Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "667eaabc63d668159424f895"
+  },
+  "name": "Dental Lab",
+  "city": "Harare",
+  "phoneNumber": "0892383",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-06-28T12:21:16.857Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-28T12:21:16.857Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "667eac0463d668159424fb54"
+  },
+  "name": "Fidelity",
+  "city": "Harare",
+  "phoneNumber": "3289423498",
+  "address": "324 testing",
+  "createdAt": {
+    "$date": "2024-06-28T12:26:44.710Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-28T12:26:44.710Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "667eac8b63d668159424fd6c"
+  },
+  "name": "Unicef",
+  "city": "Harare",
+  "phoneNumber": "98938123982",
+  "address": "Testing 1232",
+  "createdAt": {
+    "$date": "2024-06-28T12:28:59.915Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-28T12:28:59.915Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "667eacb363d668159424fd78"
+  },
+  "name": "Red Cross",
+  "city": "Harare",
+  "phoneNumber": "9012321312",
+  "address": "tesrr 23",
+  "createdAt": {
+    "$date": "2024-06-28T12:29:39.267Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-28T12:29:39.267Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "667eaf8363d6681594250932"
+  },
+  "name": "Cell Insurance",
+  "city": "Harare",
+  "phoneNumber": "324323243",
+  "address": "test 132324",
+  "createdAt": {
+    "$date": "2024-06-28T12:41:39.041Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-28T12:41:39.041Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668180b9014f010276da1973"
+  },
+  "name": "BAZ",
+  "city": "Harare",
+  "phoneNumber": "054653223",
+  "address": "Test ",
+  "createdAt": {
+    "$date": "2024-06-30T15:58:49.661Z"
+  },
+  "updatedAt": {
+    "$date": "2024-06-30T15:58:49.661Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668790a7c8cee23ea78f8b7b"
+  },
+  "name": "Redan ",
+  "city": "Harare",
+  "phoneNumber": "077733243",
+  "address": "Testing",
+  "createdAt": {
+    "$date": "2024-07-05T06:20:23.278Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-05T06:20:23.278Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668790cac8cee23ea78f8b8a"
+  },
+  "name": "Intrachem",
+  "city": "Harare",
+  "phoneNumber": "43454433",
+  "address": "345 fdgfsd",
+  "createdAt": {
+    "$date": "2024-07-05T06:20:58.385Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-05T06:20:58.385Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a279c5298773c05258dbd0"
+  },
+  "name": "Manuwere",
+  "city": "Harare",
+  "phoneNumber": "0434343",
+  "address": "df 32tst",
+  "createdAt": {
+    "$date": "2024-07-25T16:13:57.088Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-25T16:13:57.088Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a279df298773c05258dbd9"
+  },
+  "name": "Monomutapa",
+  "city": "Harare",
+  "phoneNumber": "0774554",
+  "address": "dfaf test",
+  "createdAt": {
+    "$date": "2024-07-25T16:14:23.323Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-25T16:14:23.323Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a279f3298773c05258dbe2"
+  },
+  "name": "Waste Property",
+  "city": "Harare",
+  "phoneNumber": "0324234",
+  "address": "Test",
+  "createdAt": {
+    "$date": "2024-07-25T16:14:43.474Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-25T16:14:43.474Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a27b35298773c05258e0c9"
+  },
+  "name": "Tasimba",
+  "city": "Harare",
+  "phoneNumber": "077311221",
+  "address": "Test",
+  "createdAt": {
+    "$date": "2024-07-25T16:20:05.185Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-25T16:20:05.185Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a27d2a298773c05258e98f"
+  },
+  "name": "Masvingo",
+  "city": "Harare",
+  "phoneNumber": "075443342",
+  "address": "testing ",
+  "createdAt": {
+    "$date": "2024-07-25T16:28:26.079Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-25T16:28:26.079Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a28038298773c05258f0e9"
+  },
+  "name": "WestPro",
+  "city": "Harare",
+  "phoneNumber": "077123422",
+  "address": "Testing",
+  "createdAt": {
+    "$date": "2024-07-25T16:41:28.403Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-25T16:41:28.403Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a2818d298773c05258f651"
+  },
+  "name": "6 FT",
+  "city": "Harare",
+  "phoneNumber": "35443242",
+  "address": "FAF2344FDA SD",
+  "createdAt": {
+    "$date": "2024-07-25T16:47:09.409Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-25T16:47:09.409Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a2bf26f9025d20129eecfc"
+  },
+  "name": "Platinum Groupe",
+  "city": "Harare",
+  "phoneNumber": "05432454",
+  "address": "rest 324342",
+  "createdAt": {
+    "$date": "2024-07-25T21:09:58.125Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-25T21:09:58.125Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a2c1a8f9025d20129ef5e0"
+  },
+  "name": "CPRZ",
+  "city": "Harare",
+  "phoneNumber": "056434324",
+  "address": "testing",
+  "createdAt": {
+    "$date": "2024-07-25T21:20:40.061Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-25T21:20:40.061Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a2c5b7f9025d20129f0157"
+  },
+  "name": "Chitsva",
+  "city": "Harare",
+  "phoneNumber": "43543323",
+  "address": "testing",
+  "createdAt": {
+    "$date": "2024-07-25T21:37:59.156Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-25T21:37:59.156Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a2c87af9025d20129f0b50"
+  },
+  "name": "Mrs Sharpe",
+  "city": "Harare",
+  "phoneNumber": "34432",
+  "address": "testing",
+  "createdAt": {
+    "$date": "2024-07-25T21:49:46.450Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-25T21:49:46.450Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a33fd9b4e40575ba5ca203"
+  },
+  "name": "Ebenezer",
+  "city": "Harare",
+  "phoneNumber": "3423",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-07-26T06:19:05.384Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-26T06:19:05.384Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a34034b4e40575ba5ca359"
+  },
+  "name": "Chevron",
+  "city": "Harare",
+  "phoneNumber": "2343232",
+  "address": "test Company",
+  "createdAt": {
+    "$date": "2024-07-26T06:20:36.350Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-26T06:20:36.350Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a340b4b4e40575ba5ca557"
+  },
+  "name": "Zimflex",
+  "city": "Harare",
+  "phoneNumber": "4322332",
+  "address": "sdafs",
+  "createdAt": {
+    "$date": "2024-07-26T06:22:44.282Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-26T06:22:44.282Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a348e3b4e40575ba5cbac6"
+  },
+  "name": "West Property",
+  "city": "Harare",
+  "phoneNumber": "06564322",
+  "address": "test3434",
+  "createdAt": {
+    "$date": "2024-07-26T06:57:39.686Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-26T06:57:39.686Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a34ab0b4e40575ba5cc416"
+  },
+  "name": "Glenview 8",
+  "city": "Harare",
+  "phoneNumber": "345464432",
+  "address": "test 334",
+  "createdAt": {
+    "$date": "2024-07-26T07:05:20.519Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-26T07:05:20.519Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a4b0051eaee495dd5c5834"
+  },
+  "name": "Huawei Offices",
+  "city": "Harare",
+  "phoneNumber": "077123223",
+  "address": "test company",
+  "createdAt": {
+    "$date": "2024-07-27T08:29:57.929Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-27T08:29:57.929Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a4b0aa1eaee495dd5c5b7d"
+  },
+  "name": "Sango",
+  "city": "Harare",
+  "phoneNumber": "45342",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-07-27T08:32:42.352Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-27T08:32:42.352Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a883c0882410a581ad29cc"
+  },
+  "name": "U.N.I.D.O",
+  "city": "Harare",
+  "phoneNumber": "0771234567",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-07-30T06:10:08.639Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-30T06:10:08.639Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a89cf1882410a581ad335c"
+  },
+  "name": "Bright Insurance",
+  "city": "Harare",
+  "phoneNumber": "0771232233",
+  "address": "test ",
+  "createdAt": {
+    "$date": "2024-07-30T07:57:37.493Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-30T07:57:37.493Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a89cff882410a581ad3365"
+  },
+  "name": "Angeles",
+  "city": "Harare",
+  "phoneNumber": "011332333",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-07-30T07:57:51.535Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-30T07:57:51.535Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a89e4d882410a581ad3a32"
+  },
+  "name": "EFT",
+  "city": "Harare",
+  "phoneNumber": "077123433",
+  "address": "TESTIN",
+  "createdAt": {
+    "$date": "2024-07-30T08:03:25.536Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-30T08:03:25.536Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a8a093882410a581ad3f18"
+  },
+  "name": "97 Churchill Gunhill",
+  "city": "Harare",
+  "phoneNumber": "0771343222",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-07-30T08:13:07.211Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-30T08:13:07.211Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a8a1ed882410a581ad4385"
+  },
+  "name": "14 Roif Ave",
+  "city": "Harare",
+  "phoneNumber": "07713423323",
+  "address": "testing",
+  "createdAt": {
+    "$date": "2024-07-30T08:18:53.560Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-30T08:18:53.560Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a8a201882410a581ad438e"
+  },
+  "name": "Lagor Paints",
+  "city": "Harare",
+  "phoneNumber": "07732323",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-07-30T08:19:13.816Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-30T08:19:13.816Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66aced6f301ec8d194b484e1"
+  },
+  "name": "Castace",
+  "city": "Harare",
+  "phoneNumber": "0771232323",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-02T14:30:07.786Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-02T14:30:07.786Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bdf9228a70597e0bb98310"
+  },
+  "name": "Matondo",
+  "city": "Harare",
+  "phoneNumber": "0771242121",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-15T12:48:34.352Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-15T12:48:34.352Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bdfe1e8a70597e0bb986b7"
+  },
+  "name": "Warren Park",
+  "city": "Harare",
+  "phoneNumber": "07712345654",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-15T13:09:50.196Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-15T13:09:50.196Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66be03628a70597e0bb98910"
+  },
+  "name": "Heights",
+  "city": "Harare",
+  "phoneNumber": "077123423122",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-15T13:32:18.305Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-15T13:32:18.305Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66be08378a70597e0bb98eac"
+  },
+  "name": "NF Aspindale",
+  "city": "Harare",
+  "phoneNumber": "0771234564",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-15T13:52:55.512Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-15T13:52:55.512Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cdd54a1719b164fe134987"
+  },
+  "name": "Global Paper",
+  "city": "Harare",
+  "phoneNumber": "07721122112",
+  "address": "test ",
+  "createdAt": {
+    "$date": "2024-08-27T13:31:54.048Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-27T13:31:54.048Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cdd7091719b164fe134e34"
+  },
+  "name": "267 Samora",
+  "city": "Harare",
+  "phoneNumber": "0771234333",
+  "address": "Test",
+  "createdAt": {
+    "$date": "2024-08-27T13:39:21.124Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-27T13:39:21.124Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cdd8821719b164fe13532c"
+  },
+  "name": "Timb",
+  "city": "Harare",
+  "phoneNumber": "077123222",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-27T13:45:38.417Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-27T13:45:38.417Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cdd95e1719b164fe13561a"
+  },
+  "name": "Plastic & Pipe",
+  "city": "Harare",
+  "phoneNumber": "07721212",
+  "address": "fdas",
+  "createdAt": {
+    "$date": "2024-08-27T13:49:18.541Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-27T13:49:18.541Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cde3721719b164fe135e16"
+  },
+  "name": "Tsopotsa",
+  "city": "Harare",
+  "phoneNumber": "0771212332",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-27T14:32:18.861Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-27T14:32:18.861Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cde8af1719b164fe13712f"
+  },
+  "name": "First Mutual",
+  "city": "Harare",
+  "phoneNumber": "071231212",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-27T14:54:39.541Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-27T14:54:39.541Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cdea891719b164fe13797f"
+  },
+  "name": "Kambuzuma",
+  "city": "Harare",
+  "phoneNumber": "0771232222",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-27T15:02:33.794Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-27T15:02:33.794Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cdeb741719b164fe13798b"
+  },
+  "name": "Maranatha School",
+  "city": "Harare",
+  "phoneNumber": "071231213",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-27T15:06:28.488Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-27T15:06:28.488Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cdec551719b164fe137cc0"
+  },
+  "name": "Brenda",
+  "city": "Harare",
+  "phoneNumber": "0771243233",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-27T15:10:13.848Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-27T15:10:13.848Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ce05431719b164fe13812f"
+  },
+  "name": "The Stone Guy",
+  "city": "Harare",
+  "phoneNumber": "0771234544",
+  "address": "Test",
+  "createdAt": {
+    "$date": "2024-08-27T16:56:35.053Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-27T16:56:35.053Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ce05fa1719b164fe13848b"
+  },
+  "name": "Safeguard",
+  "city": "Harare",
+  "phoneNumber": "077123422",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-27T16:59:38.834Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-27T16:59:38.834Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ce06ae1719b164fe1387ce"
+  },
+  "name": "CBZ Borrowdale",
+  "city": "Harare",
+  "phoneNumber": "0771232443",
+  "address": "test company",
+  "createdAt": {
+    "$date": "2024-08-27T17:02:38.343Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-27T17:02:38.343Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ce95f61719b164fe138b3a"
+  },
+  "name": "Southerton College",
+  "city": "Harare",
+  "phoneNumber": "077123222",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-28T03:13:58.512Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-28T03:13:58.512Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ce96131719b164fe138b43"
+  },
+  "name": "Nyaradzo Funeral ",
+  "city": "Harare",
+  "phoneNumber": "0756745423",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-28T03:14:27.978Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-28T03:14:27.978Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ce96291719b164fe138b4c"
+  },
+  "name": "Waterfalls",
+  "city": "Harare",
+  "phoneNumber": "0771234333",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-28T03:14:49.457Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-28T03:14:49.457Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ce96451719b164fe138b55"
+  },
+  "name": "Nyaradzo W/Vale",
+  "city": "Harare",
+  "phoneNumber": "077123422",
+  "address": "testing",
+  "createdAt": {
+    "$date": "2024-08-28T03:15:17.928Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-28T03:15:17.928Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cebd611719b164fe139d94"
+  },
+  "name": "Mr X-Haust",
+  "city": "Harare",
+  "phoneNumber": "077123322",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-28T06:02:09.658Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-28T06:02:09.658Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cebd971719b164fe139dc4"
+  },
+  "name": "Condev Yardley",
+  "city": "Harare",
+  "phoneNumber": "0771232312",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-28T06:03:03.485Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-28T06:03:03.485Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cec06b1719b164fe13a9e8"
+  },
+  "name": "Marshall Town",
+  "city": "Harare",
+  "phoneNumber": "07713243",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-28T06:15:07.028Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-28T06:15:07.028Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cec3b41719b164fe13b573"
+  },
+  "name": "Wiseman",
+  "city": "Harare",
+  "phoneNumber": "0771223213",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-28T06:29:08.039Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-28T06:29:08.039Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cec7571719b164fe13c92d"
+  },
+  "name": "PBC",
+  "city": "Harare",
+  "phoneNumber": "0771231232",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-28T06:44:39.687Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-28T06:44:39.687Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cec84c1719b164fe13cef8"
+  },
+  "name": "747 B/dale Brook",
+  "city": "Harare",
+  "phoneNumber": "332431",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-28T06:48:44.379Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-28T06:48:44.379Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cec8ab1719b164fe13cf28"
+  },
+  "name": "Total Rental",
+  "city": "Harare",
+  "phoneNumber": "073243423",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-28T06:50:19.513Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-28T06:50:19.513Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66cecec11719b164fe13d88e"
+  },
+  "name": "CBZ Pomona",
+  "city": "Harare",
+  "phoneNumber": "077123443",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-28T07:16:17.872Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-28T07:16:17.872Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ced4b293b1ad06b2a00768"
+  },
+  "name": "Sleep World",
+  "city": "Harare",
+  "phoneNumber": "077123222",
+  "address": "tewt",
+  "createdAt": {
+    "$date": "2024-08-28T07:41:38.525Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-28T07:41:38.525Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ced4c593b1ad06b2a00771"
+  },
+  "name": "Rugs & Cushions",
+  "city": "Harare",
+  "phoneNumber": "077122323",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-28T07:41:57.124Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-28T07:41:57.124Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ced63493b1ad06b2a00c01"
+  },
+  "name": "MPC",
+  "city": "Harare",
+  "phoneNumber": "07721212",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-28T07:48:04.724Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-28T07:48:04.724Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66ced91d93b1ad06b2a01593"
+  },
+  "name": "Little Acorn",
+  "city": "Harare",
+  "phoneNumber": "077122321",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-08-28T08:00:29.656Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-28T08:00:29.656Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d5daff6e895787cb4fb577"
+  },
+  "name": "Same",
+  "city": "Harare",
+  "phoneNumber": "0775323431",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-02T15:34:23.475Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-02T15:34:23.475Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d5de7e6e895787cb4fc47d"
+  },
+  "name": "Muzoriwa",
+  "city": "Harare",
+  "phoneNumber": "0771234223",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-02T15:49:18.382Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-02T15:49:18.382Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d5e0266e895787cb4fcdde"
+  },
+  "name": "Chihumbira",
+  "city": "Harare",
+  "phoneNumber": "07712345",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-02T15:56:22.098Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-02T15:56:22.098Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d5e2c36e895787cb4fd583"
+  },
+  "name": "Muzorewa",
+  "city": "Harare",
+  "phoneNumber": "0771234334",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-02T16:07:31.650Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-02T16:07:31.650Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d5e3eb6e895787cb4fdc40"
+  },
+  "name": "National Carpet",
+  "city": "Harare",
+  "phoneNumber": "077123422",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-02T16:12:27.248Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-02T16:12:27.248Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d5e4556e895787cb4fde4d"
+  },
+  "name": "Tandem",
+  "city": "Harare",
+  "phoneNumber": "0543343",
+  "address": "ftesd",
+  "createdAt": {
+    "$date": "2024-09-02T16:14:13.132Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-02T16:14:13.132Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66d5e58b6e895787cb4fe1f4"
+  },
+  "name": "24 Armadel B/Dale",
+  "city": "Harare",
+  "phoneNumber": "07713423",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-02T16:19:23.292Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-02T16:19:23.292Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66eda596d2de85605a218a14"
+  },
+  "name": "Munuhenzva Buses",
+  "city": "Harare",
+  "phoneNumber": "0771234334",
+  "address": "test address",
+  "createdAt": {
+    "$date": "2024-09-20T16:40:54.540Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-20T16:40:54.540Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66eda5b5d2de85605a218a20"
+  },
+  "name": "Twin Rivers",
+  "city": "Harare",
+  "phoneNumber": "077123232",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-20T16:41:25.581Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-20T16:41:25.581Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66eda754d2de85605a218a83"
+  },
+  "name": "Munhenzva Buses",
+  "city": "Harare",
+  "phoneNumber": "0771234322",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-20T16:48:20.374Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-20T16:48:20.374Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66edaacbd2de85605a2197da"
+  },
+  "name": "Fiscal Harmony",
+  "city": "Harare",
+  "phoneNumber": "077123432",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-20T17:03:07.903Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-20T17:03:07.903Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66edab48d2de85605a21997e"
+  },
+  "name": "Wingate Golf Club",
+  "city": "Harare",
+  "phoneNumber": "077123123",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-20T17:05:12.350Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-20T17:05:12.350Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66edae51d2de85605a21a3ac"
+  },
+  "name": "CABS",
+  "city": "Harare",
+  "phoneNumber": "099122312",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-20T17:18:09.654Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-20T17:18:09.654Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66edae6dd2de85605a21a3fc"
+  },
+  "name": "Ecobank",
+  "city": "Harare",
+  "phoneNumber": "071123123",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-20T17:18:37.782Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-20T17:18:37.782Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66edaea0d2de85605a21a44c"
+  },
+  "name": "Greendale Council",
+  "city": "Harare",
+  "phoneNumber": "07712312",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-20T17:19:28.220Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-20T17:19:28.220Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66edb081d2de85605a21afed"
+  },
+  "name": "W.R.S",
+  "city": "Harare",
+  "phoneNumber": "32423432322",
+  "address": "dsfads ",
+  "createdAt": {
+    "$date": "2024-09-20T17:27:29.412Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-20T17:27:29.412Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f663763d0a3604523abdbf"
+  },
+  "name": "Pomona Steel Fencing",
+  "city": "Harare",
+  "phoneNumber": "07712323",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-27T07:49:10.898Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-27T07:49:10.898Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f663eb3d0a3604523abe2c"
+  },
+  "name": "66 Lorraine Drive Bluffhill",
+  "city": "Harare",
+  "phoneNumber": "077123244",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-27T07:51:07.850Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-27T07:51:07.850Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f664af3d0a3604523ac08d"
+  },
+  "name": "Rondine Zimbabwe",
+  "city": "Harare",
+  "phoneNumber": "0771232344",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-27T07:54:23.480Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-27T07:54:23.480Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f665183d0a3604523ac2c0"
+  },
+  "name": "Mrs Dube",
+  "city": "Harare",
+  "phoneNumber": "077123232",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-27T07:56:08.959Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-27T07:56:08.959Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f66c253d0a3604523ae3db"
+  },
+  "name": "Space Works",
+  "city": "Harare",
+  "phoneNumber": "0771212312",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-27T08:26:13.165Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-27T08:26:13.165Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f66d423d0a3604523aeb07"
+  },
+  "name": "Sheik Mohammed",
+  "city": "Harare",
+  "phoneNumber": "077123123",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-27T08:30:58.885Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-27T08:30:58.885Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f670c63d0a3604523af291"
+  },
+  "name": "Gunhill",
+  "city": "Harare",
+  "phoneNumber": "07712321",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-27T08:45:58.856Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-27T08:45:58.856Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f676413d0a3604523b0415"
+  },
+  "name": "Newlands Shops",
+  "city": "Harare",
+  "phoneNumber": "0771232132",
+  "address": "tesdsre",
+  "createdAt": {
+    "$date": "2024-09-27T09:09:21.928Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-27T09:09:21.928Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f677153d0a3604523b0609"
+  },
+  "name": "Greendale dis/off",
+  "city": "Harare",
+  "phoneNumber": "07712121",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-27T09:12:53.092Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-27T09:12:53.092Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f67b253d0a3604523b1d02"
+  },
+  "name": "Moxom",
+  "city": "Harare",
+  "phoneNumber": "07732431",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-27T09:30:13.398Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-27T09:30:13.398Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f67b573d0a3604523b1d55"
+  },
+  "name": "Stanbic",
+  "city": "Harare",
+  "phoneNumber": "07732434",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-27T09:31:03.755Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-27T09:31:03.755Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66f67bc63d0a3604523b1f95"
+  },
+  "name": "Wattle",
+  "city": "Harare",
+  "phoneNumber": "077123232",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-27T09:32:54.780Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-27T09:32:54.780Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fad2c1bf19a44862ad2cb3"
+  },
+  "name": "Northern Tobacco",
+  "city": "Harare",
+  "phoneNumber": "0771233222",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-09-30T16:33:05.740Z"
+  },
+  "updatedAt": {
+    "$date": "2024-09-30T16:33:05.740Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fb95c2d316312c58f0caeb"
+  },
+  "name": "Gamma",
+  "city": "Harare",
+  "phoneNumber": "0771232232",
+  "address": "test ",
+  "createdAt": {
+    "$date": "2024-10-01T06:25:06.924Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-01T06:25:06.924Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fb97cdd316312c58f0d52e"
+  },
+  "name": "SME",
+  "city": "Harare",
+  "phoneNumber": "077134433",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-10-01T06:33:49.849Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-01T06:33:49.849Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fb9950d316312c58f0d9bd"
+  },
+  "name": "Kuwadzana Phase 3",
+  "city": "Harare",
+  "phoneNumber": "077122323",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-10-01T06:40:16.581Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-01T06:40:16.581Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fbef2452473ee968559aa0"
+  },
+  "name": "Ledger Paints",
+  "city": "Harare",
+  "phoneNumber": "0771232232",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-10-01T12:46:28.194Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-01T12:46:28.194Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fbf0ce52473ee96855a395"
+  },
+  "name": "Country Club",
+  "city": "Harare",
+  "phoneNumber": "07712334",
+  "address": "testing",
+  "createdAt": {
+    "$date": "2024-10-01T12:53:34.395Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-01T12:53:34.395Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fbf1ff52473ee96855a9ef"
+  },
+  "name": "Sams",
+  "city": "Harare",
+  "phoneNumber": "077123123",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-10-01T12:58:39.500Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-01T12:58:39.500Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fbf35952473ee96855b08d"
+  },
+  "name": "Nedbank",
+  "city": "Harare",
+  "phoneNumber": "077123433",
+  "address": "testef adsf",
+  "createdAt": {
+    "$date": "2024-10-01T13:04:25.198Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-01T13:04:25.198Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fbf3e652473ee96855b27a"
+  },
+  "name": "Costbase Investments",
+  "city": "Harare",
+  "phoneNumber": "07712322",
+  "address": "testing",
+  "createdAt": {
+    "$date": "2024-10-01T13:06:46.069Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-01T13:06:46.069Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66fbf68f52473ee96855b97c"
+  },
+  "name": "Ebebezer Airport",
+  "city": "Harare",
+  "phoneNumber": "0772313",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-10-01T13:18:07.854Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-01T13:18:07.854Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "670e18abd1e6914c146bb63c"
+  },
+  "name": "Nicoz Diamond",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2024-10-15T07:24:27.544Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-15T07:24:27.544Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6713a9074c966b19cdd9e9f1"
+  },
+  "name": "Acorn",
+  "city": "Harare",
+  "phoneNumber": "98989",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-10-19T12:41:43.068Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-19T12:41:43.068Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "671f8d33facd2cb976240e62"
+  },
+  "name": "40 Piers Road",
+  "city": "Harare",
+  "phoneNumber": "0771223232",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-10-28T13:10:11.049Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-28T13:10:11.049Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "671f8dadfacd2cb9762411c6"
+  },
+  "name": "Mugadza",
+  "city": "Harare",
+  "phoneNumber": "0771223222",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-10-28T13:12:13.380Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-28T13:12:13.380Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "671f8ea6facd2cb976241563"
+  },
+  "name": "Patel",
+  "city": "Harare",
+  "phoneNumber": "077112232",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-10-28T13:16:22.958Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-28T13:16:22.958Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "671f8f2afacd2cb976241970"
+  },
+  "name": "Mugadza 2",
+  "city": "Harare",
+  "phoneNumber": "077123323",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-10-28T13:18:34.310Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-28T13:18:34.310Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "671f9427facd2cb9762433f4"
+  },
+  "name": "Coronation Flats",
+  "city": "Harare",
+  "phoneNumber": "077132322",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-10-28T13:39:51.492Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-28T13:39:51.492Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "671f960afacd2cb976243ca5"
+  },
+  "name": "Nyathi Brewery",
+  "city": "Harare",
+  "phoneNumber": "077123422",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-10-28T13:47:54.569Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-28T13:47:54.569Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728c1ea8430d11b00e21003"
+  },
+  "name": "Showground",
+  "city": "Harare",
+  "phoneNumber": "0771234565",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T12:45:30.009Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T12:45:30.009Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728c3308430d11b00e217da"
+  },
+  "name": "Rayden",
+  "city": "Harare",
+  "phoneNumber": "324133",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T12:50:56.684Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T12:50:56.684Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728c5a68430d11b00e224d3"
+  },
+  "name": "Millenium",
+  "city": "Harare",
+  "phoneNumber": "23423432",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T13:01:26.759Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T13:01:26.759Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728c8fe8430d11b00e23047"
+  },
+  "name": "Champion Foods",
+  "city": "Harare",
+  "phoneNumber": "0712323231",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T13:15:42.971Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T13:15:42.971Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728c9138430d11b00e23053"
+  },
+  "name": "TPZ",
+  "city": "Harare",
+  "phoneNumber": "203341",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T13:16:03.544Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T13:16:03.544Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728c9298430d11b00e2305c"
+  },
+  "name": "Kopje Glass",
+  "city": "Gweru",
+  "phoneNumber": "3233232121",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T13:16:25.859Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T13:16:25.859Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728c9648430d11b00e23065"
+  },
+  "name": "Urbancraft Engineers",
+  "city": "Harare",
+  "phoneNumber": "0732232232",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T13:17:24.461Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T13:17:24.461Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728d20eca898b3f9b5fe894"
+  },
+  "name": "Simbisa Brands",
+  "city": "Harare",
+  "phoneNumber": "077234433",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T13:54:22.113Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T13:54:22.113Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728d623ca898b3f9b5ffec9"
+  },
+  "name": "Enterlect",
+  "city": "Harare",
+  "phoneNumber": "07712343e",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T14:11:47.696Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T14:11:47.696Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728d756ca898b3f9b6007e2"
+  },
+  "name": "Joselyne",
+  "city": "Harare",
+  "phoneNumber": "0771221",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T14:16:54.393Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T14:16:54.393Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728d9b7ca898b3f9b601bb7"
+  },
+  "name": "Dairiboard",
+  "city": "Harare",
+  "phoneNumber": "3454523412",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T14:27:03.058Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T14:27:03.058Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728f05cca898b3f9b603e4e"
+  },
+  "name": "Germany Embassy",
+  "city": "Harare",
+  "phoneNumber": "07712323",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T16:03:40.082Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T16:03:40.082Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728f106ca898b3f9b604074"
+  },
+  "name": "Mpehia Gweru",
+  "city": "Harare",
+  "phoneNumber": "07713332311",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T16:06:30.172Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T16:06:30.172Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728f11bca898b3f9b6040c4"
+  },
+  "name": "Old Mutual",
+  "city": "Harare",
+  "phoneNumber": "077123432",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T16:06:51.831Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T16:06:51.831Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728f131ca898b3f9b6040cd"
+  },
+  "name": "81 Coronation",
+  "city": "Harare",
+  "phoneNumber": "0771212",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T16:07:13.405Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T16:07:13.405Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728f31bca898b3f9b604740"
+  },
+  "name": "10 Citroen",
+  "city": "Harare",
+  "phoneNumber": "324234",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T16:15:23.167Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T16:15:23.167Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6728f749ca898b3f9b605f83"
+  },
+  "name": "Dhaka",
+  "city": "Harare",
+  "phoneNumber": "93232442",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-04T16:33:13.253Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-04T16:33:13.253Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672db046661e6c123fe8572a"
+  },
+  "name": "MRU",
+  "city": "Harare",
+  "phoneNumber": "0771234567",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-08T06:31:34.274Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-08T06:31:34.274Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672dbbc1661e6c123fe86972"
+  },
+  "name": "Kuwadzana Ext",
+  "city": "Harare",
+  "phoneNumber": "0721332132",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-08T07:20:33.473Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-08T07:20:33.473Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6740963dea5a59c6d2a4276f"
+  },
+  "name": "Brooke Estate",
+  "city": "Harare",
+  "phoneNumber": "34232432",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-22T14:33:33.454Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-22T14:33:33.454Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67409770ea5a59c6d2a42c0b"
+  },
+  "name": "Tenda",
+  "city": "Harare",
+  "phoneNumber": "34234232",
+  "address": "test ",
+  "createdAt": {
+    "$date": "2024-11-22T14:38:40.188Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-22T14:38:40.188Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67409899ea5a59c6d2a4335a"
+  },
+  "name": "Boscobel",
+  "city": "Harare",
+  "phoneNumber": "07721332323",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-22T14:43:37.978Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-22T14:43:37.978Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67409a28ea5a59c6d2a43c02"
+  },
+  "name": "Shamu House",
+  "city": "Harare",
+  "phoneNumber": "32234332",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-22T14:50:16.446Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-22T14:50:16.446Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67409be0ea5a59c6d2a44b56"
+  },
+  "name": "Elshadai Road",
+  "city": "Harare",
+  "phoneNumber": "03243224",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-22T14:57:36.199Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-22T14:57:36.199Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6740a150ea5a59c6d2a45aa4"
+  },
+  "name": "Farmec",
+  "city": "Harare",
+  "phoneNumber": "0734324342",
+  "address": "test 12312",
+  "createdAt": {
+    "$date": "2024-11-22T15:20:48.773Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-22T15:20:48.773Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6740a259ea5a59c6d2a463b9"
+  },
+  "name": "Sam",
+  "city": "Harare",
+  "phoneNumber": "21223232",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-22T15:25:13.007Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-22T15:25:13.007Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6740a3f2ea5a59c6d2a46aa4"
+  },
+  "name": "Columbian",
+  "city": "Gweru",
+  "phoneNumber": "32434324",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-22T15:32:02.304Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-22T15:32:02.304Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6740a893ea5a59c6d2a4834e"
+  },
+  "name": "Willowdale Rd",
+  "city": "Harare",
+  "phoneNumber": "32432232",
+  "address": "tester ",
+  "createdAt": {
+    "$date": "2024-11-22T15:51:47.123Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-22T15:51:47.123Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6740a8aeea5a59c6d2a4839e"
+  },
+  "name": "Success M Bank",
+  "city": "Harare",
+  "phoneNumber": "32423424",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-22T15:52:14.637Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-22T15:52:14.637Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6740abceea5a59c6d2a49086"
+  },
+  "name": "Fairlino",
+  "city": "Harare",
+  "phoneNumber": "2312231",
+  "address": "tes r",
+  "createdAt": {
+    "$date": "2024-11-22T16:05:34.402Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-22T16:05:34.402Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6740ac4fea5a59c6d2a49362"
+  },
+  "name": "Alro",
+  "city": "Harare",
+  "phoneNumber": "3243244",
+  "address": "tester",
+  "createdAt": {
+    "$date": "2024-11-22T16:07:43.221Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-22T16:07:43.221Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6740ae4cea5a59c6d2a49dcc"
+  },
+  "name": "Fairline Investments",
+  "city": "Harare",
+  "phoneNumber": "07723232",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-22T16:16:12.531Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-22T16:16:12.531Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6740b03cea5a59c6d2a4ac5c"
+  },
+  "name": "Sable Close B/Dale",
+  "city": "Harare",
+  "phoneNumber": "3242332",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-22T16:24:28.475Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-22T16:24:28.475Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6740b25bea5a59c6d2a4b52e"
+  },
+  "name": "Mulami",
+  "city": "Harare",
+  "phoneNumber": "0234323424",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-22T16:33:31.664Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-22T16:33:31.664Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67448aa0192012383f88395e"
+  },
+  "name": "Vlamstro Tech",
+  "city": "Harare",
+  "phoneNumber": "0778766654",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-11-25T14:33:04.894Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-25T14:33:04.894Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674d6134ac58c015509bf2bd"
+  },
+  "name": "Total Solutions",
+  "city": "Harare",
+  "phoneNumber": "0771232231",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-12-02T07:26:44.868Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-02T07:26:44.868Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674d8161ac58c015509c21ef"
+  },
+  "name": "Celso PBC",
+  "city": "Harare",
+  "phoneNumber": "07771212",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-12-02T09:44:01.381Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-02T09:44:01.381Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674d869eac58c015509c427a"
+  },
+  "name": "Heent Institute",
+  "city": "Harare",
+  "phoneNumber": "077123222",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-12-02T10:06:22.590Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-02T10:06:22.590Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6760177772178bf2b0a1a08d"
+  },
+  "name": "Airport",
+  "city": "Harare",
+  "phoneNumber": "07231231",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-12-16T12:05:11.352Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-16T12:05:11.352Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67601af472178bf2b0a1bab7"
+  },
+  "name": "Nyika",
+  "city": "Harare",
+  "phoneNumber": "324324324",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-12-16T12:20:04.361Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-16T12:20:04.361Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67601b7b72178bf2b0a1bd97"
+  },
+  "name": "Lenana Park",
+  "city": "Harare",
+  "phoneNumber": "0324344",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-12-16T12:22:19.193Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-16T12:22:19.193Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67602727859814db8f45015b"
+  },
+  "name": "S Micro Bank",
+  "city": "Harare",
+  "phoneNumber": "32423432",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-12-16T13:12:07.584Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-16T13:12:07.584Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6760283f859814db8f4507d1"
+  },
+  "name": "Urban Africa",
+  "city": "Harare",
+  "phoneNumber": "435345435",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-12-16T13:16:47.245Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-16T13:16:47.245Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67619bc33c0f0b5422bac074"
+  },
+  "name": "Damofalls",
+  "city": "Harare",
+  "phoneNumber": "2312213",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-12-17T15:41:55.871Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-17T15:41:55.871Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67619c0b3c0f0b5422bac0c3"
+  },
+  "name": "Rhodesville",
+  "city": "Harare",
+  "phoneNumber": "343232243",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-12-17T15:43:07.658Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-17T15:43:07.658Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67619c463c0f0b5422bac112"
+  },
+  "name": "Greendale",
+  "city": "Harare",
+  "phoneNumber": "234324342",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-12-17T15:44:06.659Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-17T15:44:06.659Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67619cea3c0f0b5422bac41e"
+  },
+  "name": "Workington",
+  "city": "Harare",
+  "phoneNumber": "03243243",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-12-17T15:46:50.313Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-17T15:46:50.313Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67619e0e3c0f0b5422baccc7"
+  },
+  "name": "Mukuvisi",
+  "city": "Harare",
+  "phoneNumber": "231231212",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-12-17T15:51:42.968Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-17T15:51:42.968Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6761ab56bee317bee83c4b12"
+  },
+  "name": "ZW Wardrobe",
+  "city": "Harare",
+  "phoneNumber": "034234223",
+  "address": "test",
+  "createdAt": {
+    "$date": "2024-12-17T16:48:22.726Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-17T16:48:22.726Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6794ad2ac0d0fb6172e38a8f"
+  },
+  "name": "Mrs Cohen",
+  "city": "Harare",
+  "phoneNumber": "077123456",
+  "address": "test",
+  "createdAt": {
+    "$date": "2025-01-25T09:21:46.286Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-25T09:21:46.286Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6794aef7c0d0fb6172e39287"
+  },
+  "name": "Kotecha",
+  "city": "Harare",
+  "phoneNumber": "07712223",
+  "address": "test",
+  "createdAt": {
+    "$date": "2025-01-25T09:29:27.253Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-25T09:29:27.253Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6794c7065f10cfcf7f5580a1"
+  },
+  "name": "Banc ABC",
+  "city": "Harare",
+  "phoneNumber": "077122323",
+  "address": "test",
+  "createdAt": {
+    "$date": "2025-01-25T11:12:06.954Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-25T11:12:06.954Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6794c9b95f10cfcf7f55a533"
+  },
+  "name": "Magaya Mining",
+  "city": "Harare",
+  "phoneNumber": "07712322",
+  "address": "test",
+  "createdAt": {
+    "$date": "2025-01-25T11:23:37.651Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-25T11:23:37.651Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6794d87b5f10cfcf7f55ef24"
+  },
+  "name": "Baker Tilly",
+  "city": "Harare",
+  "phoneNumber": "077123243",
+  "address": "test",
+  "createdAt": {
+    "$date": "2025-01-25T12:26:35.719Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-25T12:26:35.719Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6794db0b5f10cfcf7f561007"
+  },
+  "name": "Recruitment",
+  "city": "Harare",
+  "phoneNumber": "233243432",
+  "address": "test",
+  "createdAt": {
+    "$date": "2025-01-25T12:37:31.157Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-25T12:37:31.157Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6794df105f10cfcf7f561d3e"
+  },
+  "name": "Highlands Zomba",
+  "city": "Harare",
+  "phoneNumber": "1234566",
+  "address": "test",
+  "createdAt": {
+    "$date": "2025-01-25T12:54:40.711Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-25T12:54:40.711Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6794e3845f10cfcf7f564fc6"
+  },
+  "name": "Lime Star",
+  "city": "Harare",
+  "phoneNumber": "12346788",
+  "address": "test",
+  "createdAt": {
+    "$date": "2025-01-25T13:13:40.697Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-25T13:13:40.697Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67bae0e8e3df22e03fb8a074"
+  },
+  "name": "Highlands",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-23T08:48:40.618Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-23T08:48:40.618Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67bae342e3df22e03fb8b98c"
+  },
+  "name": "Home Improvements",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-23T08:58:42.011Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-23T08:58:42.011Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67bae42fe3df22e03fb8bfc7"
+  },
+  "name": "Action Against Hunger",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-23T09:02:39.810Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-23T09:02:39.810Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67bae735e3df22e03fb8d3e3"
+  },
+  "name": "NEC Agriculture",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-23T09:15:33.520Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-23T09:15:33.520Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67bae83de3df22e03fb8e037"
+  },
+  "name": "17 Winston Road",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-23T09:19:57.288Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-23T09:19:57.288Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67bae969e3df22e03fb8e96d"
+  },
+  "name": "9 Earls",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-23T09:24:57.823Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-23T09:24:57.823Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67baea68e3df22e03fb8ef7f"
+  },
+  "name": "M and FME Southern Africa",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-23T09:29:12.781Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-23T09:29:12.781Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67baf009e3df22e03fb8fb3d"
+  },
+  "name": "ASBG",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-23T09:53:13.158Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-23T09:53:13.158Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c06b43969495a9b037cfd5"
+  },
+  "name": "Makbase Construction",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-27T13:40:19.196Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-27T13:40:19.196Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c06ba3969495a9b037d341"
+  },
+  "name": "ACF",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-27T13:41:55.318Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-27T13:41:55.318Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c06d82969495a9b037dc98"
+  },
+  "name": "Garden Estate",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-27T13:49:54.930Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-27T13:49:54.930Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c0759e969495a9b037e411"
+  },
+  "name": "Ruwa TM",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-27T14:24:30.169Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-27T14:24:30.169Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c0a236969495a9b0380f3f"
+  },
+  "name": "Customer",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-27T17:34:46.256Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-27T17:34:46.256Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c0a30c969495a9b0380f8e"
+  },
+  "name": "Pomona",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-27T17:38:20.562Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-27T17:38:20.562Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c0a46d969495a9b038137e"
+  },
+  "name": "Speed Link",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-27T17:44:13.810Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-27T17:44:13.810Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c0a529969495a9b0381cac"
+  },
+  "name": "FAO",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-27T17:47:21.156Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-27T17:47:21.156Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c0a611969495a9b0382919"
+  },
+  "name": "Greystone Park",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-27T17:51:13.205Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-27T17:51:13.205Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c0a6b2969495a9b0382c9c"
+  },
+  "name": "Max Construction",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-27T17:53:54.625Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-27T17:53:54.625Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c0a731969495a9b03832ff"
+  },
+  "name": "Chai Arundel",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-27T17:56:01.545Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-27T17:56:01.545Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c0a88f969495a9b0384406"
+  },
+  "name": "Rocha",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-27T18:01:51.471Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-27T18:01:51.471Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c1550dea8aaf382f3a4696"
+  },
+  "name": "Slab Africa",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-28T06:17:49.876Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T06:17:49.876Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c156c7ea8aaf382f3a4d88"
+  },
+  "name": "Innscor",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-28T06:25:11.276Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T06:25:11.276Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c1579bea8aaf382f3a56b3"
+  },
+  "name": "Scullery",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-28T06:28:43.937Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T06:28:43.937Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c15a30ea8aaf382f3a661a"
+  },
+  "name": "Old Mazowe",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-28T06:39:44.643Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T06:39:44.643Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c15b58ea8aaf382f3a6f05"
+  },
+  "name": "Econet Msasa",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-28T06:44:40.107Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T06:44:40.107Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c15b68ea8aaf382f3a6f0e"
+  },
+  "name": "Econet Livingstone",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-28T06:44:56.226Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T06:44:56.226Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c15bceea8aaf382f3a726b"
+  },
+  "name": "Slab Sales",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-28T06:46:38.282Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T06:46:38.282Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c15c69ea8aaf382f3a7642"
+  },
+  "name": "Makarichi",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-28T06:49:13.182Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T06:49:13.182Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c160e6ea8aaf382f3a9f12"
+  },
+  "name": "Mbenje",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-28T07:08:22.214Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:08:22.214Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c16173ea8aaf382f3aa6de"
+  },
+  "name": "DZ Extension",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-28T07:10:43.987Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:10:43.987Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c16217ea8aaf382f3aadbd"
+  },
+  "name": "Jamu",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-02-28T07:13:27.287Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-28T07:13:27.287Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c878ec007d0e15174b47f7"
+  },
+  "name": "Transerve",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-03-05T16:16:44.435Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-05T16:16:44.435Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c87a054b1a16987c9b36b3"
+  },
+  "name": "MEFMC",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-03-05T16:21:25.424Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-05T16:21:25.424Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67c87a134b1a16987c9b36bc"
+  },
+  "name": "Cimas Gweru",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-03-05T16:21:39.799Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-05T16:21:39.799Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67dd1431de28a2245208efc2"
+  },
+  "name": "Muchemwa",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-03-21T07:24:33.564Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-21T07:24:33.564Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67dd14e0de28a2245208f684"
+  },
+  "name": "Mukudzavu",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-03-21T07:27:28.266Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-21T07:27:28.266Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67dd1ce7de28a22452091605"
+  },
+  "name": "Dickens",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-03-21T08:01:43.524Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-21T08:01:43.524Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67dd5416607475a25e946a2d"
+  },
+  "name": "Sandringham",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-03-21T11:57:10.506Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-21T11:57:10.506Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67dd542a607475a25e946a36"
+  },
+  "name": "Memi Eastern",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-03-21T11:57:30.289Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-21T11:57:30.289Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67dd5465607475a25e946a85"
+  },
+  "name": "Corrius and Co Attorneys",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-03-21T11:58:29.898Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-21T11:58:29.898Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67dd557b607475a25e94798d"
+  },
+  "name": "MEFMI",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-03-21T12:03:07.891Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-21T12:03:07.891Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67dd5711607475a25e948bc7"
+  },
+  "name": "ACRN Lab",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-03-21T12:09:53.520Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-21T12:09:53.520Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67dd5b1b607475a25e94a67c"
+  },
+  "name": "Revoltas Roots",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-03-21T12:27:07.064Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-21T12:27:07.064Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67dd5bb8607475a25e94ae67"
+  },
+  "name": "Seasons Pharm",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-03-21T12:29:44.970Z"
+  },
+  "updatedAt": {
+    "$date": "2025-03-21T12:29:44.970Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67ebbc14afd1c4082a54400c"
+  },
+  "name": "Tresers",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-04-01T10:12:36.414Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-01T10:12:36.414Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67ebbd92afd1c4082a54539f"
+  },
+  "name": "Credsure",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-04-01T10:18:58.453Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-01T10:18:58.453Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67ebbf04afd1c4082a546009"
+  },
+  "name": "Marlbough",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-04-01T10:25:08.376Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-01T10:25:08.376Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67ebc411afd1c4082a54892b"
+  },
+  "name": "Mukwereza",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-04-01T10:46:41.503Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-01T10:46:41.503Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67ebc4acafd1c4082a548cda"
+  },
+  "name": "Laubscher",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-04-01T10:49:16.976Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-01T10:49:16.976Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67ebc65dafd1c4082a54971f"
+  },
+  "name": "Brian",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-04-01T10:56:29.217Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-01T10:56:29.217Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67ebca73afd1c4082a54b9be"
+  },
+  "name": "Globe Stone",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-04-01T11:13:55.790Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-01T11:13:55.790Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67ebcc35afd1c4082a54c5e9"
+  },
+  "name": "Flusys Zimbabwe",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-04-01T11:21:25.004Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-01T11:21:25.004Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67ebcf79afd1c4082a54e0f8"
+  },
+  "name": "Nikolina",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-04-01T11:35:21.488Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-01T11:35:21.488Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67ebcff6afd1c4082a54e51c"
+  },
+  "name": "The Church of Christ",
+  "city": "Harare",
+  "phoneNumber": "0778115084",
+  "address": "80 Churchill Road",
+  "createdAt": {
+    "$date": "2025-04-01T11:37:26.691Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-01T11:37:26.691Z"
+  },
+  "__v": 0
+}]

@@ -342,14 +342,14 @@ const DashContractorPage = () => {
         <StatBox
           title="Total Jobs"
           value={contractorStats && contractorStats.yearlyJobs}
-          increase={
-            !isPercentage
-              ? shortMonth(latestMonth)
-              : shortMonth(secondLatestMonth)
-          }
-          description={
-            !isPercentage ? `${latestMonthJobs} jobs` : `${percentage}%`
-          }
+          // increase={
+          //   !isPercentage
+          //     ? shortMonth(latestMonth)
+          //     : shortMonth(secondLatestMonth)
+          // }
+          // description={
+          //   !isPercentage ? `${latestMonthJobs} jobs` : `${percentage}%`
+          // }
           icon={
             <Email
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
@@ -361,7 +361,7 @@ const DashContractorPage = () => {
           title="Tot Income"
           value={contractorStats && `$ ${contractorStats.yearlyRevenue}`}
           increase={"last mnth"}
-          description={lastMonthRevenue && `$${lastMonthRevenue}`}
+          // description={lastMonthRevenue && `$${lastMonthRevenue}`}
           icon={
             <MonetizationOn
               sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}

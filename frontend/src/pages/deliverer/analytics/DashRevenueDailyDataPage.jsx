@@ -28,7 +28,7 @@ const handlePrint = () => {
           </style>
         </head>
         <body>
-          <h1> Daily Jobs Data Analysis </h1>
+          <h1> Daily Revenue Data Analysis </h1>
           ${printContent.innerHTML}
           <script type="text/javascript">
             window.onload = function() {
@@ -51,8 +51,8 @@ const DashRevenueDailyDataPage = () => {
       <Box display="flex">
         {/* Your Header component */}
         <Header
-          title="DAILY JOBS INFO FOR THE Driver"
-          subtitle="Chart of daily jobs and mileages"
+          title="DAILY REVENUE INFO   "
+          subtitle="Chart of daily revenues and mileages"
         />
       </Box>
       <Button

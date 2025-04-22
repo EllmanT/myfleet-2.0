@@ -11,7 +11,7 @@ const Driver = require("../model/driver"); // Update with the correct path
 const Customer = require("../model/customer"); // Update with the correct path
 
 // MongoDB connection
-mongoose.connect("mongodb://localhost:27017/myfleet", {
+mongoose.connect("mongodb://localhost:27017/myfleet-test2", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -815,11 +815,169 @@ console.log("updating done")
   }
 };
 
-// updateDelivererStats("654f669091e232eb07068b57");
-// Call the functions to update the stats
-populateOverallStatsFromJobs("654f669091e232eb07068b57"); // Replace with the actual company ID
-// populateVehicleStatsFromJobs("65aea6bec461048f0f5b07e5");
+const updateVehicleStats = async (vehicleId) => {
+  const currentYear = new Date().getFullYear();
+
+  try {
+    // Fetch all jobs for the current contractorId
+    const jobs = await Job.find({ 
+      vehicleId, 
+    //     orderDate: {
+    //   $gte: new Date(`${currentYear}-01-01`),
+    //   $lte: new Date(`${currentYear}-12-31`),
+    // },
+});
+
+
+
+    // Extract job IDs
+    const jobIds = jobs.map(job => job._id);
+   
+    // Update the contractorStats by appending to the job_ids array
+    const updatedStats = await Vehicle.findByIdAndUpdate(
+      vehicleId,
+      {
+        $set: {
+           job_ids: jobIds,
+        
+
+          }, // Ensures no duplicates are added
+
+      },
+      { new: true } // Returns the updated document
+    );
+console.log("updating done")
+    // console.log("Updated Deliverer:", updatedStats);
+  } catch (error) {
+    console.error("Error updating ContractorStats:", error);
+  }
+};
+
+const updateDriverStats = async (driverId) => {
+  const currentYear = new Date().getFullYear();
+
+  try {
+    // Fetch all jobs for the current contractorId
+    const jobs = await Job.find({ 
+      driverId, 
+    //     orderDate: {
+    //   $gte: new Date(`${currentYear}-01-01`),
+    //   $lte: new Date(`${currentYear}-12-31`),
+    // },
+});
+
+
+
+    // Extract job IDs
+    const jobIds = jobs.map(job => job._id);
+   
+    // Update the contractorStats by appending to the job_ids array
+    const updatedStats = await Driver.findByIdAndUpdate(
+      driverId,
+      {
+        $set: {
+           job_ids: jobIds,
+        
+
+          }, // Ensures no duplicates are added
+
+      },
+      { new: true } // Returns the updated document
+    );
+console.log("updating done")
+    // console.log("Updated Deliverer:", updatedStats);
+  } catch (error) {
+    console.error("Error updating ContractorStats:", error);
+  }
+};
+
+const updateContractorStats = async (contractorId) => {
+  const currentYear = new Date().getFullYear();
+
+  try {
+    // Fetch all jobs for the current contractorId
+    const jobs = await Job.find({ 
+      contractorId, 
+    //     orderDate: {
+    //   $gte: new Date(`${currentYear}-01-01`),
+    //   $lte: new Date(`${currentYear}-12-31`),
+    // },
+});
+
+
+
+    // Extract job IDs
+    const jobIds = jobs.map(job => job._id);
+   
+    // Update the contractorStats by appending to the job_ids array
+    const updatedStats = await Contractor.findByIdAndUpdate(
+      contractorId,
+      {
+        $set: {
+           job_ids: jobIds,
+        
+
+          }, // Ensures no duplicates are added
+
+      },
+      { new: true } // Returns the updated document
+    );
+console.log("updating done")
+    // console.log("Updated Deliverer:", updatedStats);
+  } catch (error) {
+    console.error("Error updating ContractorStats:", error);
+  }
+};
+
+
+
+
+// Call the functions to update the overall stats
+// populateOverallStatsFromJobs("654f669091e232eb07068b57"); // Replace with the actual company ID
+
+// Updating the 4 vehicle stats
+// populateVehicleStatsFromJobs("65aea656c461048f0f5b07cd");
+// populateVehicleStatsFromJobs("65aea67fc461048f0f5b07d5");
+// populateVehicleStatsFromJobs("65aea69cc461048f0f5b07dd");
+// populateVehicleStatsFromJobs("65aea6bec461048f0f5b07e5"); 
+
+// updating the 5 driver stats
+// populateDriverStatsFromJobs("65aea916c461048f0f5b09f1");
+// populateDriverStatsFromJobs("65aea966c461048f0f5b09f9");
+// populateDriverStatsFromJobs("66a8a009882410a581ad3db3");
 // populateDriverStatsFromJobs("66a8a031882410a581ad3dd3");
+// populateDriverStatsFromJobs("67bae1f0e3df22e03fb8a871");
+
+// updating the contractor stats
+// populateContractorStatsFromJobs("6565950c8827f7f34b114a52","654f669091e232eb07068b57");
+// populateContractorStatsFromJobs("6565958e8827f7f34b114a79","654f669091e232eb07068b57");
+// populateContractorStatsFromJobs("656595d18827f7f34b114a89","654f669091e232eb07068b57");
+// populateContractorStatsFromJobs("6634dc8a1f8a6fe66f1f44d5","654f669091e232eb07068b57");
+// populateContractorStatsFromJobs("66a33f81b4e40575ba5ca026","654f669091e232eb07068b57");
 // populateContractorStatsFromJobs("66ce04eb1719b164fe1380e6","654f669091e232eb07068b57");
 
 
+// Updating the deliver table
+// updateDelivererStats("654f669091e232eb07068b57");
+
+// Update the contractor table
+// updateContractorStats("6565950c8827f7f34b114a52");
+// updateContractorStats("6565958e8827f7f34b114a79");
+// updateContractorStats("656595d18827f7f34b114a89");
+// updateContractorStats("6634dc8a1f8a6fe66f1f44d5");
+// updateContractorStats("66a33f81b4e40575ba5ca026");
+// updateContractorStats("66ce04eb1719b164fe1380e6");
+
+
+// updating the vehicle table
+// updateVehicleStats("65aea656c461048f0f5b07cd");
+// updateVehicleStats("65aea67fc461048f0f5b07d5");
+// updateVehicleStats("65aea69cc461048f0f5b07dd");
+// updateVehicleStats("65aea6bec461048f0f5b07e5");
+
+// updating the driver table
+// updateDriverStats("65aea916c461048f0f5b09f1");
+// updateDriverStats("65aea966c461048f0f5b09f9");
+// updateDriverStats("66a8a009882410a581ad3db3");
+// updateDriverStats("66a8a031882410a581ad3dd3");
+// updateDriverStats("67bae1f0e3df22e03fb8a871");
