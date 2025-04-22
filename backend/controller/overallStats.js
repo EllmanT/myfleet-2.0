@@ -11,10 +11,19 @@ router.get(
   "/get-all-overallStats-company",
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
+    let {year}=req.query;
+
+    console.log("req.query",req.query)
+
+    if(!year){
+      year = new Date().getFullYear(); // Get the current year
+    }
+
+
     try {
-      const currentYear = new Date().getFullYear(); // Get the current year
+      // const currentYear = new Date().getFullYear(); // Get the current year
       const delivererWithOverallStats = await OverallStats.findOne(
-        { companyId: req.user.companyId , year:currentYear }, 
+        { companyId: req.user.companyId , year }, 
       );
 
       if (!delivererWithOverallStats) {
