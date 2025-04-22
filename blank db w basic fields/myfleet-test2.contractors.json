@@ -1,0 +1,155 @@
+[{
+  "_id": {
+    "$oid": "6565950c8827f7f34b114a52"
+  },
+  "companyName": "Lammel",
+  "prefix": "LM",
+  "contact": "324342",
+  "address": "34234 msasa",
+  "city": "Harare",
+  "lastOrder": 112,
+  "goodsTypes": [
+    "dangerous",
+    "heavy_machinery"
+  ],
+  "vehiclesTypes": [
+    "mediumVehicle",
+    "largeVehicle",
+    "smallVehicle"
+  ],
+  "deliveryTypes": [
+    "local",
+    "express"
+  ],
+  "customers": [],
+  "createdAt": {
+    "$date": "2023-11-28T07:18:37.949Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-29T17:35:15.342Z"
+  },
+  "__v": 66
+},
+{
+  "_id": {
+    "$oid": "6565958e8827f7f34b114a79"
+  },
+  "companyName": "Romeo Kitchens",
+  "prefix": "RK",
+  "contact": "323424",
+  "address": "dsa sd da343",
+  "city": "Chipinge",
+  "lastOrder": 62,
+  "goodsTypes": [
+    "building_material",
+    "dangerous"
+  ],
+  "vehiclesTypes": [
+    "mediumVehicle",
+    "smallVehicle"
+  ],
+  "deliveryTypes": [
+    "local",
+    "express"
+  ],
+  "customers": [],
+  "createdAt": {
+    "$date": "2023-11-28T07:18:37.949Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-29T17:43:46.331Z"
+  },
+  "__v": 41
+},
+{
+  "_id": {
+    "$oid": "656595d18827f7f34b114a89"
+  },
+  "companyName": "Besthule",
+  "prefix": "BH",
+  "contact": "4324",
+  "address": "fdasgafas dsfas",
+  "city": "Chirundu",
+  "lastOrder": 75,
+  "goodsTypes": [
+    "dangerous",
+    "building_material"
+  ],
+  "vehiclesTypes": [
+    "mediumVehicle",
+    "largeVehicle",
+    "smallVehicle"
+  ],
+  "deliveryTypes": [
+    "local",
+    "express"
+  ],
+  "customers": [],
+  "createdAt": {
+    "$date": "2023-11-28T07:18:37.949Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-29T17:52:11.087Z"
+  },
+  "__v": 44
+},
+{
+  "_id": {
+    "$oid": "6565969b8827f7f34b114ad4"
+  },
+  "companyName": "Contr 3",
+  "prefix": "CT",
+  "contact": "23443241",
+  "address": "fds sadf",
+  "city": "Chipinge",
+  "lastOrder": 6,
+  "goodsTypes": [
+    "dangerous",
+    "building_material"
+  ],
+  "vehiclesTypes": [
+    "mediumVehicle",
+    "smallVehicle"
+  ],
+  "deliveryTypes": [
+    "local"
+  ],
+  "customers": [],
+  "createdAt": {
+    "$date": "2023-11-28T07:18:37.949Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-12T17:33:44.618Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "657ac2edfc044cca2c2b98e8"
+  },
+  "companyName": "contr 4",
+  "prefix": "CT",
+  "contact": "23233212",
+  "address": "fdsa sda fd",
+  "city": "Harare",
+  "lastOrder": 1,
+  "goodsTypes": [
+    "building_material",
+    "furniture"
+  ],
+  "vehiclesTypes": [
+    "mediumVehicle",
+    "smallVehicle"
+  ],
+  "deliveryTypes": [
+    "local"
+  ],
+  "customers": [],
+  "createdAt": {
+    "$date": "2023-12-14T08:53:30.778Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-26T06:44:16.058Z"
+  },
+  "__v": 1
+}]

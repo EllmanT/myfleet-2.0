@@ -1,0 +1,22 @@
+[{
+  "_id": {
+    "$oid": "655caf6b2404457633e864ff"
+  },
+  "name": "Tapiwa Muranda",
+  "email": "tmuranda1@gmail.com",
+  "password": "$2b$10$4ZQodcnP841OvJY459uBwOr505oDAj9a.usyzvDPFiaWpCw7AoXp.",
+  "phoneNumber": "453432124",
+  "role": "Deliverer Admin",
+  "address": "fvsda sdf ",
+  "city": "Gweru",
+  "companyId": {
+    "$oid": "654f669091e232eb07068b57"
+  },
+  "createdAt": {
+    "$date": "2023-11-21T13:23:55.287Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-27T10:15:00.385Z"
+  },
+  "__v": 0
+}]

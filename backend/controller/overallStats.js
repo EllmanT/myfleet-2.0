@@ -22,9 +22,9 @@ router.get(
       } else {
         const statsWithGetters = delivererWithOverallStats.toObject({ getters: true, virtuals: true });
 
-        console.log('With getters:', statsWithGetters.jobsByContractor);
-        // console.log(delivererWithOverallStats)
-        console.log('jobsContractor:', JSON.stringify(statsWithGetters.jobsContractor, null, 2));
+        // console.log('With getters:', statsWithGetters.jobsByContractor);
+        // // console.log(delivererWithOverallStats)
+        // console.log('jobsContractor:', JSON.stringify(statsWithGetters.jobsContractor, null, 2));
 
         res.status(201).json({
           success: true,

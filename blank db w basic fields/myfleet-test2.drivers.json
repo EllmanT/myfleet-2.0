@@ -1,0 +1,80 @@
+[{
+  "_id": {
+    "$oid": "656a0a47d2f4e82074ac793b"
+  },
+  "name": "dfs asda",
+  "phoneNumber": "234452225443",
+  "address": "dsa fd",
+  "city": "Chinhoyi",
+  "idNumber": "DFSADFEASVDFF",
+  "id": "uploads\\WhatsApp Image 2023-11-20 at 11-1701448263318-134338618.png",
+  "license": "uploads\\WhatsApp Image 2023-11-30 at 09-1701448263318-480890326.png",
+  "companyId": "654f669091e232eb07068b57",
+  "createdAt": {
+    "$date": "2023-12-01T16:31:03.326Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-26T06:43:14.798Z"
+  },
+  "__v": 42
+},
+{
+  "_id": {
+    "$oid": "656df3737f77fe94771a45af"
+  },
+  "name": "dsfd ",
+  "phoneNumber": "7857635675",
+  "address": "Dadnfda sdf",
+  "city": "Chirundu",
+  "idNumber": "578FDFDGSDFGD",
+  "id": "uploads\\images (1)-1701704563586-678391612.png",
+  "license": "uploads\\WhatsApp Image 2023-11-20 at 09-1701704563588-604626081.png",
+  "companyId": "654f669091e232eb07068b57",
+  "createdAt": {
+    "$date": "2023-12-04T15:42:43.627Z"
+  },
+  "updatedAt": {
+    "$date": "2023-12-26T06:44:16.047Z"
+  },
+  "__v": 10
+},
+{
+  "_id": {
+    "$oid": "65aea916c461048f0f5b09f1"
+  },
+  "name": "Chris",
+  "phoneNumber": "1111111111111",
+  "address": "Glenview",
+  "city": "Harare",
+  "idNumber": "465EFDSFAS324",
+  "id": "uploads\\energy-1705945366306-807501992.png",
+  "license": "uploads\\ddsf-1705945366308-115374152.png",
+  "companyId": "654f669091e232eb07068b57",
+  "createdAt": {
+    "$date": "2024-01-22T17:42:46.326Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-29T17:52:11.083Z"
+  },
+  "__v": 47
+},
+{
+  "_id": {
+    "$oid": "65aea966c461048f0f5b09f9"
+  },
+  "name": "Paul",
+  "phoneNumber": "3243243223212",
+  "address": "Mabvuku",
+  "city": "Harare",
+  "idNumber": "64DFASDFS324",
+  "id": "uploads\\erd-1705945446083-960967916.png",
+  "license": "uploads\\eq3-1705945446093-205274090.png",
+  "companyId": "654f669091e232eb07068b57",
+  "createdAt": {
+    "$date": "2024-01-22T17:44:06.105Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-29T17:35:15.332Z"
+  },
+  "__v": 65
+}]

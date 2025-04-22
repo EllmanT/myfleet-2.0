@@ -688,8 +688,10 @@ router.put(
         const aValue = parseFloat(a.toString());
         const bValue = parseFloat(b.toString());
 
+        console.log("a", a)
+        console.log("b",b)
         // Subtract and return as a new Decimal128
-        return Decimal128.fromString((aValue + bValue).toFixed(2));
+        return parseFloat((aValue + bValue).toFixed(2));
       }
       // Helper function to subtract Decimal128 values
       function subtractDecimal128(a, b) {
@@ -700,10 +702,12 @@ router.put(
         const bValue = parseFloat(b.toString());
 
         // Subtract and return as a new Decimal128
-        return Decimal128.fromString((aValue - bValue).toFixed(2));
+        return parseFloat((aValue - bValue).toFixed(2));
       }
 
       const costDifference = subtractDecimal128(cost, jobCostDecimal128);
+
+    
       const mileageDifference = distance - job.distance;
       const contractorFieldKey = `revenueByContractor.${contractor.companyName}`;
       updatedCost = parseFloat(costDifference).toFixed(2);
@@ -739,12 +743,19 @@ router.put(
         const monthlyStatsToUpdate = overallStats.monthlyData.find(
           (item) => item.month === month
         );
-
+        console.log("now herer 1")
+        
+        console.log("now herer 1",overallStats.yearlyRevenue)
+        console.log("cost", cost)
+        console.log("jobCostDecimal", jobCostDecimal128)
+        console.log("costDiffer", costDifference)
+        
         overallStats.yearlyMileage += mileageDifference;
         overallStats.yearlyRevenue = addDecimal128(
           overallStats.yearlyRevenue,
           costDifference
         );
+        console.log("now herer 2", overallStats.yearlyRevenue)
         overallStats.yearlyProfit = addDecimal128(
           overallStats.yearlyProfit,
           costDifference
@@ -1058,7 +1069,7 @@ router.delete(
         const bValue = parseFloat(b.toString());
 
         // Subtract and return as a new Decimal128
-        return Decimal128.fromString((aValue - bValue).toFixed(2));
+        return parseFloat((aValue - bValue).toFixed(2));
       }
       //END updating overall stats
       const overallStats = await OverallStats.findOne({
@@ -1089,6 +1100,7 @@ router.delete(
         );
         const jobsByContractorStatsToUpdate = overallStats.jobsByContractor;
 
+        console.log("Jobs by contractor stats to update", jobsByContractorStatsToUpdate)
         overallStats.yearlyJobs -= 1;
         overallStats.yearlyMileage -= job.distance;
         console.log(overallStats.yearlyRevenue);
@@ -1103,16 +1115,26 @@ router.delete(
           jobCostDecimal128
         );
 
-        const contractorJobsEntry = Array.from(
-          jobsByContractorStatsToUpdate.entries()
-        ).find(([key]) => key === contractor.companyName);
+        // console.log("jobs by contractor stats to update", jobsByContractorStatsToUpdate);
 
-        if (contractorJobsEntry) {
-          const [key, contractorJobValue] = contractorJobsEntry;
-          const newContrJobs = contractorJobValue - 1;
-          jobsByContractorStatsToUpdate.set(key, newContrJobs);
-        }
-
+        // // Convert to a Map
+        // const jobsByContractorStatsMap = new Map(Object.entries(jobsByContractorStatsToUpdate));
+        
+        // const contractorJobsEntry = Array.from(jobsByContractorStatsMap.entries())
+        //   .find(([key]) => key === contractor.companyName);
+        
+        // if (!contractorJobsEntry) {
+        //   console.log("An error occurred here");
+        //   return next(new ErrorHandler("Non contractor", 500));
+        // }
+        
+        // const [key, contractorJobValue] = contractorJobsEntry;
+        // const newContrJobs = contractorJobValue - 1;
+        // jobsByContractorStatsMap.set(key, newContrJobs);
+        
+        // // Optional: convert back to object
+        // jobsByContractorStatsToUpdate = Object.fromEntries(jobsByContractorStatsMap);
+        
         if (dailyStatsToUpdate) {
           dailyStatsToUpdate.totalJobs -= 1;
           dailyStatsToUpdate.totalMileage -= job.distance;
@@ -1161,33 +1183,52 @@ router.delete(
         //END updating overall stats
 
         const companyId = deliverer._id;
-        // Log the dynamic field key
-        const contractorFieldKey = `revenueByContractor.${contractor.companyName}`;
-        console.log(`Dynamic field key: ${contractorFieldKey}`);
-        updatedCost = parseFloat(job.cost).toFixed(2);
 
-        const updateRevenueOverallStats = [];
-        updateRevenueOverallStats.push({
-          updateOne: {
-            filter: { companyId, year },
-            update: {
-              $inc: {
-                [contractorFieldKey]: -updatedCost,
+        // Build dynamic keys
+        const revenueFieldKey = `revenueByContractor.${contractor.companyName}`;
+        const jobsFieldKey = `jobsByContractor.${contractor.companyName}`;
+        
+        console.log(`Dynamic revenue field key: ${revenueFieldKey}`);
+        console.log(`Dynamic jobs field key: ${jobsFieldKey}`);
+        
+        // Format cost
+       updatedCost = parseFloat(job.cost).toFixed(2);
+        
+        // Build the bulkWrite operations array
+        const updateStatsOperations = [
+          {
+            updateOne: {
+              filter: { companyId, year },
+              update: {
+                $inc: {
+                  [revenueFieldKey]: -updatedCost,
+                },
               },
+              upsert: true,
             },
-            upsert: true,
           },
-        });
-
+          {
+            updateOne: {
+              filter: { companyId, year },
+              update: {
+                $inc: {
+                  [jobsFieldKey]: -1,
+                },
+              },
+              upsert: true,
+            },
+          },
+        ];
+        
         try {
-          const resultOverall = await OverallStats.bulkWrite(
-            updateRevenueOverallStats
-          );
-          console.log("Update result:", resultOverall);
+          // Perform bulkWrite operation
+          const result = await OverallStats.bulkWrite(updateStatsOperations);
+          console.log("Update result:", result);
         } catch (error) {
           console.error("Error writing update to OverallStats:", error);
           throw new Error("Failed to write update to OverallStats.");
         }
+        
         await overallStats.save();
       }
 
@@ -1199,6 +1240,8 @@ router.delete(
           (item) => item.month === month
         );
         const jobsByContractorStatsToUpdate = vehStats.jobsByContractor;
+
+        console.log("jobs by contractor",jobsByContractorStatsToUpdate)
 
         vehStats.yearlyJobs -= 1;
         vehStats.yearlyMileage -= job.distance;
@@ -1212,15 +1255,15 @@ router.delete(
           jobCostDecimal128
         );
 
-        const contractorJobsEntry = Array.from(
-          jobsByContractorStatsToUpdate.entries()
-        ).find(([key]) => key === contractor.companyName);
+        // const contractorJobsEntry = Array.from(
+        //   jobsByContractorStatsToUpdate.entries()
+        // ).find(([key]) => key === contractor.companyName);
 
-        if (contractorJobsEntry) {
-          const [key, contractorJobValue] = contractorJobsEntry;
-          const newContrJobs = contractorJobValue - 1;
-          jobsByContractorStatsToUpdate.set(key, newContrJobs);
-        }
+        // if (contractorJobsEntry) {
+        //   const [key, contractorJobValue] = contractorJobsEntry;
+        //   const newContrJobs = contractorJobValue - 1;
+        //   jobsByContractorStatsToUpdate.set(key, newContrJobs);
+        // }
 
         if (dailyStatsToUpdate) {
           dailyStatsToUpdate.totalJobs -= 1;
@@ -1269,34 +1312,51 @@ router.delete(
 
         //END updating overall stats
 
-        // Log the dynamic field key
-        const contractorFieldKey = `revenueByContractor.${contractor.companyName}`;
-        console.log(`Dynamic field key: ${contractorFieldKey}`);
-        updatedCost = parseFloat(job.cost).toFixed(2);
-
-        const updateRevenueVehicleStats = [];
-
-        updateRevenueVehicleStats.push({
-          updateOne: {
-            filter: { vehicleId, year },
-            update: {
-              $inc: {
-                [contractorFieldKey]: -updatedCost,
+        // Build dynamic keys
+        const revenueFieldKey = `revenueByContractor.${contractor.companyName}`;
+        const jobsFieldKey = `jobsByContractor.${contractor.companyName}`;
+        
+        console.log(`Dynamic revenue field key: ${revenueFieldKey}`);
+        console.log(`Dynamic jobs field key: ${jobsFieldKey}`);
+        
+        // Format cost
+       updatedCost = parseFloat(job.cost).toFixed(2);
+        
+        // Build the bulkWrite operations array
+        const updateStatsOperations = [
+          {
+            updateOne: {
+              filter: { vehicleId, year },
+              update: {
+                $inc: {
+                  [revenueFieldKey]: -updatedCost,
+                },
               },
+              upsert: true,
             },
-            upsert: true,
           },
-        });
-
+          {
+            updateOne: {
+              filter: { vehicleId, year },
+              update: {
+                $inc: {
+                  [jobsFieldKey]: -1,
+                },
+              },
+              upsert: true,
+            },
+          },
+        ];
+        
         try {
-          const resultVehicle = await VehicleStats.bulkWrite(
-            updateRevenueVehicleStats
-          );
-          console.log("Update result:", resultVehicle);
+          // Perform bulkWrite operation
+          const result = await VehicleStats.bulkWrite(updateStatsOperations);
+          console.log("Update result:", result);
         } catch (error) {
           console.error("Error writing update to OverallStats:", error);
           throw new Error("Failed to write update to OverallStats.");
         }
+
 
         // Remove the jobId from the vehicle's array of jobIds
         const updatedJobIdsVeh = vehicle.job_ids.filter(
@@ -1329,15 +1389,7 @@ router.delete(
           jobCostDecimal128
         );
 
-        const contractorJobsEntry = Array.from(
-          jobsByContractorStatsToUpdate.entries()
-        ).find(([key]) => key === contractor.companyName);
-
-        if (contractorJobsEntry) {
-          const [key, contractorJobValue] = contractorJobsEntry;
-          const newContrJobs = contractorJobValue - 1;
-          jobsByContractorStatsToUpdate.set(key, newContrJobs);
-        }
+       
 
         if (dailyStatsToUpdate) {
           dailyStatsToUpdate.totalJobs -= 1;
@@ -1386,35 +1438,51 @@ router.delete(
 
         //END updating overall stats
 
-        // Log the dynamic field key
-        const contractorFieldKey = `revenueByContractor.${contractor.companyName}`;
-        console.log(`Dynamic field key: ${contractorFieldKey}`);
-        updatedCost = parseFloat(job.cost).toFixed(2);
-
-        const updateRevenueDriverStats = [];
-
-        updateRevenueDriverStats.push({
-          updateOne: {
-            filter: { driverId, year },
-            update: {
-              $inc: {
-                [contractorFieldKey]: -updatedCost,
-              },
-            },
-            upsert: true,
-          },
-        });
-
-        try {
-          const resultDriver = await DriverStats.bulkWrite(
-            updateRevenueDriverStats
-          );
-          console.log("Update result:", resultDriver);
-        } catch (error) {
-          console.error("Error writing update to OverallStats:", error);
-          throw new Error("Failed to write update to OverallStats.");
-        }
-        // Remove the jobId from the driver's array of jobIds
+             // Build dynamic keys
+             const revenueFieldKey = `revenueByContractor.${contractor.companyName}`;
+             const jobsFieldKey = `jobsByContractor.${contractor.companyName}`;
+             
+             console.log(`Dynamic revenue field key: ${revenueFieldKey}`);
+             console.log(`Dynamic jobs field key: ${jobsFieldKey}`);
+             
+             // Format cost
+            updatedCost = parseFloat(job.cost).toFixed(2);
+             
+             // Build the bulkWrite operations array
+             const updateStatsOperations = [
+               {
+                 updateOne: {
+                   filter: { driverId, year },
+                   update: {
+                     $inc: {
+                       [revenueFieldKey]: -updatedCost,
+                     },
+                   },
+                   upsert: true,
+                 },
+               },
+               {
+                 updateOne: {
+                   filter: { driverId, year },
+                   update: {
+                     $inc: {
+                       [jobsFieldKey]: -1,
+                     },
+                   },
+                   upsert: true,
+                 },
+               },
+             ];
+             
+             try {
+               // Perform bulkWrite operation
+               const result = await DriverStats.bulkWrite(updateStatsOperations);
+               console.log("Update result:", result);
+             } catch (error) {
+               console.error("Error writing update to OverallStats:", error);
+               throw new Error("Failed to write update to OverallStats.");
+             }
+      // Remove the jobId from the driver's array of jobIds
         const updatedJobIdsDr = driver.job_ids.filter(
           (id) => id.toString() !== jobId
         );
@@ -1506,6 +1574,8 @@ router.get(
         sortOrder = "desc",
       } = req.query;
 
+      console.log("sort",sort)
+
       // Parse sort option if available
       const generateSort = () => {
         if (!sort) return { orderDate: -1 };
@@ -1514,8 +1584,12 @@ router.get(
           [sortParsed.field]: sortParsed.sort === "asc" ? 1 : -1,
         };
       };
+      
 
       const sortOptions = generateSort();
+        // Formatted sort should look like { field: 1 } or { field: -1 }
+        // const sortOptions = Boolean(sort) ? generateSort() : { orderDate: -1 };
+
 
       // Get the deliverer (company) based on the user
       const deliverer = await Deliverer.findById(req.user.companyId);

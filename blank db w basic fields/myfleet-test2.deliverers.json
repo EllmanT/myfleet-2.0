@@ -1,0 +1,358 @@
+[{
+  "_id": {
+    "$oid": "654f669091e232eb07068b57"
+  },
+  "companyName": "test4",
+  "address": "dfga dsaf df",
+  "city": "Chirundu",
+  "goodsType": [
+    "heavy_machinery",
+    "animals",
+    "frozen_goods",
+    "building_material"
+  ],
+  "vehiclesType": [
+    "mediumVehicle",
+    "largeVehicle",
+    "smallVehicle"
+  ],
+  "deliveryType": [
+    "express",
+    "local"
+  ],
+  "customer_ids": [
+    {
+      "$oid": "6551d4668b36163cd602db25"
+    },
+    {
+      "$oid": "6551d4898b36163cd602db31"
+    },
+    {
+      "$oid": "6551d4a18b36163cd602db37"
+    },
+    {
+      "$oid": "6551d4bf8b36163cd602db3d"
+    },
+    {
+      "$oid": "65522365417935bea1e0cb17"
+    },
+    {
+      "$oid": "656598b18827f7f34b114b43"
+    },
+    {
+      "$oid": "65784371ae38bb2dc24b5b40"
+    },
+    {
+      "$oid": "6578438dae38bb2dc24b5b46"
+    },
+    {
+      "$oid": "65aea78bc461048f0f5b08c2"
+    },
+    {
+      "$oid": "65aea7a0c461048f0f5b08cb"
+    },
+    {
+      "$oid": "65aea7b5c461048f0f5b08d4"
+    },
+    {
+      "$oid": "65aea7d7c461048f0f5b08dd"
+    },
+    {
+      "$oid": "65aea7ecc461048f0f5b08e6"
+    },
+    {
+      "$oid": "65aea806c461048f0f5b08ef"
+    },
+    {
+      "$oid": "65aea89ec461048f0f5b098c"
+    },
+    {
+      "$oid": "65b9367e2c682a136e2d4a44"
+    },
+    {
+      "$oid": "65b943772c682a136e2d4acc"
+    },
+    {
+      "$oid": "65b944552c682a136e2d4b7b"
+    },
+    {
+      "$oid": "65b944782c682a136e2d4b84"
+    },
+    {
+      "$oid": "65b9449c2c682a136e2d4b8d"
+    },
+    {
+      "$oid": "65b945ce2c682a136e2d4d4d"
+    },
+    {
+      "$oid": "65b949262c682a136e2d4e8f"
+    },
+    {
+      "$oid": "65b9493a2c682a136e2d4e98"
+    },
+    {
+      "$oid": "65b94a422c682a136e2d5020"
+    },
+    {
+      "$oid": "65b94a5b2c682a136e2d5029"
+    },
+    {
+      "$oid": "65b94a6c2c682a136e2d5032"
+    },
+    {
+      "$oid": "65b94a922c682a136e2d5041"
+    },
+    {
+      "$oid": "65b955d72c682a136e2d53cb"
+    },
+    {
+      "$oid": "65b955f12c682a136e2d53d4"
+    },
+    {
+      "$oid": "65b9574b2c682a136e2d54b1"
+    },
+    {
+      "$oid": "65b9589a2c682a136e2d558b"
+    },
+    {
+      "$oid": "65b958a72c682a136e2d5594"
+    },
+    {
+      "$oid": "65b95a622c682a136e2d56f7"
+    },
+    {
+      "$oid": "65b95a782c682a136e2d5700"
+    },
+    {
+      "$oid": "65b95b202c682a136e2d57d3"
+    },
+    {
+      "$oid": "65b95ca82c682a136e2d5962"
+    },
+    {
+      "$oid": "65b95d1c2c682a136e2d59ed"
+    },
+    {
+      "$oid": "65ba926674de7b22c9e6a7aa"
+    },
+    {
+      "$oid": "65ba928774de7b22c9e6a7b3"
+    },
+    {
+      "$oid": "65d96469f9f586086110ba00"
+    },
+    {
+      "$oid": "65d96484f9f586086110ba09"
+    },
+    {
+      "$oid": "65d964abf9f586086110ba18"
+    },
+    {
+      "$oid": "65d964d8f9f586086110ba64"
+    },
+    {
+      "$oid": "65d964fef9f586086110ba6d"
+    },
+    {
+      "$oid": "65d965f0f9f586086110bb31"
+    },
+    {
+      "$oid": "65d9671cf9f586086110bc95"
+    },
+    {
+      "$oid": "65d969e6f9f586086110beb4"
+    },
+    {
+      "$oid": "65daf0c3528a676b83a2b2de"
+    },
+    {
+      "$oid": "65daf0e4528a676b83a2b2e7"
+    },
+    {
+      "$oid": "65daf0fa528a676b83a2b2f0"
+    },
+    {
+      "$oid": "65daf18c528a676b83a2b328"
+    },
+    {
+      "$oid": "65daf3b5528a676b83a2b47e"
+    },
+    {
+      "$oid": "65daf893528a676b83a2b9f1"
+    },
+    {
+      "$oid": "65daf8bf528a676b83a2b9fa"
+    },
+    {
+      "$oid": "65dafae0528a676b83a2bc5b"
+    },
+    {
+      "$oid": "65dafbe1528a676b83a2bd38"
+    },
+    {
+      "$oid": "65dafbf9528a676b83a2bd41"
+    },
+    {
+      "$oid": "65dafc0b528a676b83a2bd4a"
+    },
+    {
+      "$oid": "65dafc2b528a676b83a2bd56"
+    },
+    {
+      "$oid": "65db0229528a676b83a2c255"
+    },
+    {
+      "$oid": "65db02e9528a676b83a2c356"
+    },
+    {
+      "$oid": "65df6e8bcb46d674e51114a3"
+    },
+    {
+      "$oid": "65df71c6cb46d674e51118cd"
+    },
+    {
+      "$oid": "65df73e5cb46d674e5111b07"
+    },
+    {
+      "$oid": "65df7736cb46d674e5111daf"
+    },
+    {
+      "$oid": "65df77f8cb46d674e5111f05"
+    },
+    {
+      "$oid": "65e0bfb5baa9e8584fea74d5"
+    },
+    {
+      "$oid": "65e0c205baa9e8584fea76b5"
+    },
+    {
+      "$oid": "65e0c278baa9e8584fea7797"
+    },
+    {
+      "$oid": "65e0c3c2baa9e8584fea786d"
+    }
+  ],
+  "driver_ids": [
+    {
+      "$oid": "6551d5418b36163cd602db6c"
+    },
+    {
+      "$oid": "6551d57a8b36163cd602db71"
+    },
+    {
+      "$oid": "6551d5a18b36163cd602db76"
+    },
+    {
+      "$oid": "65659ea88827f7f34b114cfa"
+    },
+    {
+      "$oid": "656a06b7d2f4e82074ac6fab"
+    },
+    {
+      "$oid": "656a073ad2f4e82074ac70f4"
+    },
+    {
+      "$oid": "656a080fd2f4e82074ac727f"
+    },
+    {
+      "$oid": "656a08d6d2f4e82074ac74b0"
+    },
+    {
+      "$oid": "656a09dfd2f4e82074ac76ff"
+    },
+    {
+      "$oid": "656a0a47d2f4e82074ac793b"
+    },
+    {
+      "$oid": "656a10dcd2f4e82074ac7ac9"
+    },
+    {
+      "$oid": "656df3737f77fe94771a45af"
+    },
+    {
+      "$oid": "65aea916c461048f0f5b09f1"
+    },
+    {
+      "$oid": "65aea966c461048f0f5b09f9"
+    }
+  ],
+  "vehicle_ids": [
+    {
+      "$oid": "6551d5b48b36163cd602db7e"
+    },
+    {
+      "$oid": "6551d5e78b36163cd602db88"
+    },
+    {
+      "$oid": "6551d5f58b36163cd602db8d"
+    },
+    {
+      "$oid": "6551d6028b36163cd602db92"
+    },
+    {
+      "$oid": "6551d61d8b36163cd602db97"
+    },
+    {
+      "$oid": "6551d6318b36163cd602db9c"
+    },
+    {
+      "$oid": "65659cda8827f7f34b114c32"
+    },
+    {
+      "$oid": "65659d238827f7f34b114c5e"
+    },
+    {
+      "$oid": "656b18ac81133c4fc74dfbb4"
+    },
+    {
+      "$oid": "656c6381b25556d1e0cfa630"
+    },
+    {
+      "$oid": "65aea656c461048f0f5b07cd"
+    },
+    {
+      "$oid": "65aea67fc461048f0f5b07d5"
+    },
+    {
+      "$oid": "65aea69cc461048f0f5b07dd"
+    },
+    {
+      "$oid": "65aea6bec461048f0f5b07e5"
+    }
+  ],
+  "prefix": "SDFD",
+  "lastOrder": 0,
+  "Rates": [],
+  "createdAt": {
+    "$date": "2023-11-11T11:33:36.066Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-29T17:52:11.085Z"
+  },
+  "__v": 555,
+  "admin_ids": [
+    {
+      "$oid": "655caceb7dc3583d8b4005ee"
+    },
+    {
+      "$oid": "655caf6b2404457633e864ff"
+    }
+  ],
+  "contractor_ids": [
+    {
+      "$oid": "6565950c8827f7f34b114a52"
+    },
+    {
+      "$oid": "6565958e8827f7f34b114a79"
+    },
+    {
+      "$oid": "656595d18827f7f34b114a89"
+    },
+    {
+      "$oid": "6565969b8827f7f34b114ad4"
+    },
+    {
+      "$oid": "657ac2edfc044cca2c2b98e8"
+    }
+  ]
+}]
