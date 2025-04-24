@@ -16,7 +16,7 @@ const RevenueBarChart = ({ isDashboard = false, view }) => {
   );
 
   useEffect(() => {
-    dispatch(getAllOverallStatsDeliverer());
+    // dispatch(getAllOverallStatsDeliverer());
     // dispatch(getAllContractorsPage());
   }, [dispatch]);
 
@@ -65,6 +65,18 @@ const RevenueBarChart = ({ isDashboard = false, view }) => {
           legendPosition: "middle",
           legendOffset: -50,
         }}
+        axisBottom={{
+          format: (v) => {
+             return v.slice(0, 3);
+           
+            
+          },//dea
+          tickRotation: 90,
+          tickSize: 5,
+          tickPadding: 5,
+  
+  
+         }}
         legends={[
           {
             anchor: "bottom-right",
@@ -76,6 +88,7 @@ const RevenueBarChart = ({ isDashboard = false, view }) => {
             itemDirection: "left-to-right",
             itemWidth: 80,
             itemHeight: 20,
+            
             itemOpacity: 0.75,
             symbolSize: 12,
             symbolShape: "circle",

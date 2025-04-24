@@ -34,7 +34,7 @@ const RevenueDailyLineChart = ({
     const { dailyData } = coOverallStats;
     const totalRevenueLine = {
       id: "totalRevenue",
-      color: theme.palette.secondary.main,
+      color: "#008000",
       data: [],
     };
     const totalMileageLine = {

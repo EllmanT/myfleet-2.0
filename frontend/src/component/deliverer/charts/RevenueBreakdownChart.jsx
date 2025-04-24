@@ -14,9 +14,9 @@ const RevenueBreakdownChart = ({ isDashboard = false }) => {
   );
 
   useEffect(() => {
-    dispatch(getLatestJobsDeliverer());
-    dispatch(getAllOverallStatsDeliverer());
-    dispatch(getAllContractorsPage());
+    // dispatch(getLatestJobsDeliverer());
+    // dispatch(getAllOverallStatsDeliverer());
+    // dispatch(getAllContractorsPage());
   }, [dispatch]);
   let formattedData;
 

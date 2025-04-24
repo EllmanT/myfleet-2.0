@@ -52,7 +52,7 @@ const DashRevenueMonthlyPage = () => {
       <Box display="flex">
         {/* Your Header component */}
         <Header
-          title="BREAKDOWN OF REVENUE ANALYSIS"
+          title={`BREAKDOWN OF REVENUE ANALYSIS`}
           subtitle="Chart of the revenue breakdown by the contractor"
         />
       </Box>

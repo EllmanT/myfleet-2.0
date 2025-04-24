@@ -88,7 +88,7 @@ const DashRevenuePage = () => {
     dispatch(getAllDeliverersPage());
     //dispatch(loadUser());
   }, [dispatch]);
-console.log(coOverallStats.yearlyExpenses);
+// console.log(coOverallStats.yearlyExpenses);
   let highestRevenue = 0;
   let topContractorRevenue = "";
 
@@ -289,14 +289,14 @@ console.log(coOverallStats.yearlyExpenses);
     html2pdf().from(element).save("Revenue_Multilinechart.pdf");
   };
 
-  const handleViewPC = (companyId) => {
-    navigate(`/revenue-analytics/breakdown/${companyId}`);
+  const handleViewPC = (year) => {
+    navigate(`/revenue-analytics/breakdown/${year}`);
   };
-  const handleViewBC = (companyId) => {
-    navigate(`/revenue-analytics/monthly/${companyId}`);
+  const handleViewBC = (year) => {
+    navigate(`/revenue-analytics/monthly/${year}`);
   };
-  const handleViewMLC = (companyId) => {
-    navigate(`/revenue-analytics/daily-data/${companyId}`);
+  const handleViewMLC = (year) => {
+    navigate(`/revenue-analytics/daily-data/${year}`);
   };
 
   return (
@@ -424,7 +424,7 @@ console.log(coOverallStats.yearlyExpenses);
 
             <IconButton
               sx={{ ml: "8rem" }}
-              onClick={() => handleViewMLC(delivererId)}
+              onClick={() => handleViewMLC(selectedYear)}
             >
               <RemoveRedEye />
             </IconButton>
@@ -487,7 +487,7 @@ console.log(coOverallStats.yearlyExpenses);
             </Typography>
             <IconButton
               sx={{ ml: "8rem" }}
-              onClick={() => handleViewPC(delivererId)}
+              onClick={() => handleViewPC(selectedYear)}
             >
               <RemoveRedEye />
             </IconButton>
@@ -540,7 +540,7 @@ console.log(coOverallStats.yearlyExpenses);
 
             <IconButton
               sx={{ ml: "1rem" }}
-              onClick={() => handleViewBC(delivererId)}
+              onClick={() => handleViewBC(selectedYear)}
             >
               <RemoveRedEye />
             </IconButton>

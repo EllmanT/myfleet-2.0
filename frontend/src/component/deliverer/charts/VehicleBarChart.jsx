@@ -62,7 +62,7 @@ const VehicleBarChart = ({ isDashboard = false, view, vehicleId }) => {
           format: (v) => {
             if (isDashboard) return v.slice(0, 3);
             return v;
-          },
+          },//dea
           tickRotation: 90,
           tickSize: 5,
           tickPadding: 5,

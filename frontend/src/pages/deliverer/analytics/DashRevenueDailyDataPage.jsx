@@ -44,14 +44,14 @@ const handlePrint = () => {
   uniqueWindowName.document.close();
 };
 const DashRevenueDailyDataPage = () => {
-  const { driverId } = useParams();
+  // const { companyId } = useParams();
 
   return (
     <Box m="1.5rem 2.5rem">
       <Box display="flex">
         {/* Your Header component */}
         <Header
-          title="DAILY REVENUE INFO   "
+          title={`DAILY REVENUE INFO `}
           subtitle="Chart of daily revenues and mileages"
         />
       </Box>

@@ -44,14 +44,16 @@ const handlePrint = () => {
   uniqueWindowName.document.close();
 };
 const DashRevenueMonthlyPage = () => {
-  const { companyId } = useParams();
+  const { companyId} = useParams();
 
+
+console.log("year", companyId)
   return (
     <Box m="1.5rem 2.5rem">
       <Box display="flex">
         {/* Your Header component */}
         <Header
-          title="MONTHLY REVENUE ANALYSIS"
+          title={`MONTHLY REVENUE ANALYSIS`}
           subtitle="Chart of monthly revenue info"
         />
       </Box>
@@ -65,7 +67,7 @@ const DashRevenueMonthlyPage = () => {
       </Button>
       <Box height="75vh" id="print-content">
         {/* Your JobsDailyLineChart component */}
-        <RevenueBarChart isDashboard={false} />
+        <RevenueBarChart isDashboard={false} year={companyId} view={"revenue"}/>
       </Box>
     </Box>
   );

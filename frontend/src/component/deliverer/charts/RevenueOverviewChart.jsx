@@ -11,7 +11,7 @@ const RevenueOverviewChart = ({ isDashboard = false, view }) => {
   );
 
   useEffect(() => {
-    dispatch(getAllOverallStatsDeliverer());
+    // dispatch(getAllOverallStatsDeliverer());
   }, [dispatch]);
 
   const [formattedData] = useMemo(() => {
