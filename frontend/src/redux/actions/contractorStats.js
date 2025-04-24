@@ -2,7 +2,7 @@ import axios from "axios";
 import { server } from "server";
 
 // get All ContractorStats for a deliverer
-export const getContractorStats = (contractorId) => async (dispatch) => {
+export const getContractorStats = (contractorId, year) => async (dispatch) => {
   try {
     dispatch({
       type: "getContractorStatsRequest",
@@ -10,7 +10,11 @@ export const getContractorStats = (contractorId) => async (dispatch) => {
 
     const { data } = await axios.get(
       `${server}/contractorStats/get-contractorStats/${contractorId}`,
-      { withCredentials: true }
+      { withCredentials: true,
+        params:{
+          year
+        }
+       }
     );
     dispatch({
       type: "getContractorStatsSuccess",

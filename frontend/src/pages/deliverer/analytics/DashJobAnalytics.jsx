@@ -65,9 +65,16 @@ const DashJobAnalytics = () => {
   );
   let deliverer;
   deliverer = deliverersPage && deliverersPage.find((d) => d._id === companyId);
+  const currentYear = new Date().getFullYear();
 
+    const [selectedYear, setSelectedYear]=useState(currentYear);
+  
+    useEffect(()=>{
+      console.log("selected Year", selectedYear)
+      dispatch(getAllOverallStatsDeliverer(selectedYear));
+    },[dispatch,selectedYear])
   useEffect(() => {
-    dispatch(getAllOverallStatsDeliverer());
+    // dispatch(getAllOverallStatsDeliverer());
     dispatch(getLatestJobsDeliverer());
     dispatch(getAllDeliverersPage());
     dispatch(loadUser());
@@ -300,6 +307,21 @@ const DashJobAnalytics = () => {
             All
           </Button>
         </Box>
+         <FormControl sx={{ ml: "1rem" }}>
+                      <Select
+                        value={selectedYear}
+                        onChange={(e) => setSelectedYear(e.target.value)}
+                        color="info"
+                        size="small"
+                        defaultValue="jobs"
+                        inputProps={{ "aria-label": "Select an option" }}
+                      >
+                        <MenuItem value="2025" selected>
+                          2025
+                        </MenuItem>
+                        <MenuItem value="2024">2024</MenuItem>
+                      </Select>
+                    </FormControl>
         <Box>
           <Button
             onClick={addOrder}

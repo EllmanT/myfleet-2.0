@@ -13,10 +13,18 @@ router.get(
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
-      const currentYear = new Date().getFullYear();
+
+      let {year} = req.query;
+      if(!year){
+        year =new Date().getFullYear();
+        console.log("Failed to get the year")
+      }
+
+      console.log(year)
+      console.log(year) 
       const contractorStats = await ContractorStats.findOne(
         {
-          year: currentYear,
+          year,
           contractorId: req.params.contractorId,
           delivererId: req.user.companyId,
         },
