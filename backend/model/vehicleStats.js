@@ -84,5 +84,6 @@ const VehicleStatsSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+VehicleStatsSchema.index({ vehicleId: 1, year: 1 }, { unique: true });
 
 module.exports = mongoose.model("VehicleStats", VehicleStatsSchema);

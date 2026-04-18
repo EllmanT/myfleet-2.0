@@ -22,7 +22,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid } from "component/deliverer/AgDataGrid";
 import BreakdownChart from "component/deliverer/BreakdownChart";
 import FlexBetween from "component/deliverer/FlexBetween";
 import Header from "component/deliverer/Header";
@@ -54,6 +54,7 @@ import { getContractorStats } from "redux/actions/contractorStats";
 import ContrSingleLineChart from "component/deliverer/charts/ContrSingleLineChart";
 import ContractorDailyLineChart from "component/deliverer/charts/ContrDailyLineChart";
 import ContrBarChart from "component/deliverer/charts/ContrBarChart";
+import YearSelect from "component/deliverer/YearSelect";
 
 const DashContrAnalytics = () => {
   const theme = useTheme();
@@ -75,6 +76,7 @@ const DashContrAnalytics = () => {
   const { latestJobsDeliverer, latestJobsDelivererLoading } = useSelector(
     (state) => state.jobs
   );
+  const { selectedYear } = useSelector((state) => state.filters);
   const { pageContractors, isPageContrLoading } = useSelector(
     (state) => state.contractors
   );
@@ -83,11 +85,11 @@ const DashContrAnalytics = () => {
     pageContractors && pageContractors.find((c) => c._id === contractorId);
 console.log(contractor)
   useEffect(() => {
-    dispatch(getContractorStats(contractorId));
-    dispatch(getLatestJobsContractor(contractorId));
+    dispatch(getContractorStats(contractorId, selectedYear));
+    dispatch(getLatestJobsContractor(contractorId, selectedYear));
     dispatch(getAllContractorsPage());
     dispatch(loadUser());
-  }, [dispatch]);
+  }, [dispatch, contractorId, selectedYear]);
 
   let highestRevenue = 0;
   let topContractorRevenue = "";
@@ -265,6 +267,9 @@ console.log(contractor)
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
         <Header title={contractor && contractor.companyName} />
+        <Box>
+          <YearSelect />
+        </Box>
         <Box>
           <Button
             variant="outlined"

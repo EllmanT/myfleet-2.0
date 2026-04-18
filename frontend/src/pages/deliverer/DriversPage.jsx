@@ -17,7 +17,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { DataGrid, GridSearchIcon } from "@mui/x-data-grid";
+import { DataGrid, GridSearchIcon } from "component/deliverer/AgDataGrid";
 import {
   Add,
   CircleOutlined,

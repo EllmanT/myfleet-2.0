@@ -14,12 +14,13 @@ const DriverBreakdownChart = ({ isDashboard = false }) => {
   const { driverStats, isDriverStatsLoading } = useSelector(
     (state) => state.driverStats
   );
+  const { selectedYear } = useSelector((state) => state.filters);
 
   console.log(driverStats)
   useEffect(() => {
-    dispatch(getDriverStats(driverId));
+    dispatch(getDriverStats(driverId, selectedYear));
     dispatch(getAllContractorsPage());
-  }, [dispatch]);
+  }, [dispatch, driverId, selectedYear]);
   let formattedData;
   
 

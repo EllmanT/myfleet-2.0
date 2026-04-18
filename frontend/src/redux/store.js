@@ -13,6 +13,7 @@ import { expensesReducer } from "./reducers/expense";
 import { vehicleStatsReducer } from "./reducers/vehicleStats";
 import { driverStatsReducer } from "./reducers/driverStats";
 import { contractorStatsReducer } from "./reducers/contractorStats";
+import { filtersReducer } from "./reducers/filters";
 
 const Store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ const Store = configureStore({
     driverStats: driverStatsReducer,
     contractorStats: contractorStatsReducer,
     expenses: expensesReducer,
+    filters: filtersReducer,
   },
 });
 

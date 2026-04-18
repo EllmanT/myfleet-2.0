@@ -10,10 +10,11 @@ const ContrSingleLineChart = ({ isDashboard = false, view, contractorId }) => {
   const { contractorStats, isContractorStatsLoading } = useSelector(
     (state) => state.contractorStats
   );
+  const { selectedYear } = useSelector((state) => state.filters);
 
   useEffect(() => {
-    dispatch(getContractorStats(contractorId));
-  }, [dispatch]);
+    dispatch(getContractorStats(contractorId, selectedYear));
+  }, [dispatch, contractorId, selectedYear]);
 
   const [totalJobsLine, totalMileageLine] = useMemo(() => {
     if (!contractorStats) return [];

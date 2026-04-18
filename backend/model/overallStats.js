@@ -99,6 +99,7 @@ overallStatsSchema.virtual('jobsContractor').get(function () {
 // Enable virtuals in toObject and toJSON
 overallStatsSchema.set('toObject', { getters: true, virtuals: true });
 overallStatsSchema.set('toJSON', { getters: true, virtuals: true });
+overallStatsSchema.index({ companyId: 1, year: 1 }, { unique: true });
 
 // Export the model
 const OverallStats = mongoose.model('OverallStats', overallStatsSchema);

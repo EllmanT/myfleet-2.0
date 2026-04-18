@@ -22,7 +22,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid } from "component/deliverer/AgDataGrid";
 import BreakdownChart from "component/deliverer/BreakdownChart";
 import FlexBetween from "component/deliverer/FlexBetween";
 import Header from "component/deliverer/Header";
@@ -50,6 +50,7 @@ import DriverBreakdownChart from "component/deliverer/charts/DriverBreakdownChar
 import DriverDailyLineChart from "component/deliverer/charts/DriverDailyLineChart";
 import DriverBarChart from "component/deliverer/charts/DriverBarChart";
 import DrSingleLineChart from "component/deliverer/charts/DrSingleLineChart";
+import YearSelect from "component/deliverer/YearSelect";
 
 const DashDriverAnalytics = () => {
   const theme = useTheme();
@@ -72,6 +73,7 @@ const DashDriverAnalytics = () => {
   const { latestJobsDeliverer, latestJobsDelivererLoading } = useSelector(
     (state) => state.jobs
   );
+  const { selectedYear } = useSelector((state) => state.filters);
   const { driversPage, isPageVehLoading } = useSelector(
     (state) => state.drivers
   );
@@ -80,11 +82,11 @@ const DashDriverAnalytics = () => {
 
 
   useEffect(() => {
-    dispatch(getDriverStats(driverId));
-    dispatch(getLatestJobsDriver(driverId));
+    dispatch(getDriverStats(driverId, selectedYear));
+    dispatch(getLatestJobsDriver(driverId, selectedYear));
     dispatch(getAllDriversPage());
     dispatch(loadUser());
-  }, [dispatch]);
+  }, [dispatch, driverId, selectedYear]);
 
   let highestRevenue = 0;
   let topContractorRevenue = "";
@@ -262,6 +264,9 @@ const DashDriverAnalytics = () => {
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
         <Header title={driver && driver.name} />
+        <Box>
+          <YearSelect />
+        </Box>
         <Box>
           <Button
             variant="outlined"

@@ -14,7 +14,7 @@ import {
   DataGrid,
   GridDeleteIcon,
   GridVisibilityOffIcon,
-} from "@mui/x-data-grid";
+} from "component/deliverer/AgDataGrid";
 import {
   Close,
   EditNotifications,

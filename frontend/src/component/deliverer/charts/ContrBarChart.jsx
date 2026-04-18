@@ -15,11 +15,12 @@ const ContrBarChart = ({ isDashboard = false, view }) => {
   const { contractorStats, isContractorStatsLoading } = useSelector(
     (state) => state.contractorStats
   );
+  const { selectedYear } = useSelector((state) => state.filters);
 
   useEffect(() => {
-    dispatch(getContractorStats(contractorId));
+    dispatch(getContractorStats(contractorId, selectedYear));
     // dispatch(getAllContractorsPage());
-  }, [dispatch]);
+  }, [dispatch, contractorId, selectedYear]);
 
   if (!contractorStats) return [];
 

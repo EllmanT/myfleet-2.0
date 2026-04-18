@@ -2,7 +2,7 @@ import axios from "axios";
 import { server } from "server";
 
 // get All VehicleStats for a deliverer
-export const getVehicleStats = (vehicleId) => async (dispatch) => {
+export const getVehicleStats = (vehicleId, year) => async (dispatch) => {
   try {
     dispatch({
       type: "getVehicleStatsRequest",
@@ -10,7 +10,7 @@ export const getVehicleStats = (vehicleId) => async (dispatch) => {
 
     const { data } = await axios.get(
       `${server}/vehicleStats/get-vehicleStats/${vehicleId}`,
-      { withCredentials: true }
+      { withCredentials: true, params: { year } }
     );
     dispatch({
       type: "getVehicleStatsSuccess",

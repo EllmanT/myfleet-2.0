@@ -19,9 +19,10 @@ const ContractorDailyLineChart = ({
   const { contractorStats, isContractorStatsLoading } = useSelector(
     (state) => state.contractorStats
   );
+  const { selectedYear } = useSelector((state) => state.filters);
   useEffect(() => {
-    dispatch(getContractorStats(contractorId));
-  }, [dispatch, contractorId]);
+    dispatch(getContractorStats(contractorId, selectedYear));
+  }, [dispatch, contractorId, selectedYear]);
 
   const currentDate = new Date();
   const starttDate = new Date(currentDate.getTime() - 30 * 24 * 60 * 60 * 1000);

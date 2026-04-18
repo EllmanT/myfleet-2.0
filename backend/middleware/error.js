@@ -11,9 +11,11 @@ module.exports = (err, req, res, next) => {
     err = new ErrorHandler(message, 400);
   }
   //duplicate error
-  if (err.code === "1100") {
-    message = `Duplicate found at ${Object.key(err.keysValue())}`;
-    err = new ErrorHandler(message, 400);
+  if (err.code === 11000) {
+    const duplicateKeys = Object.keys(err.keyValue || {});
+    const duplicateField = duplicateKeys[0] || "field";
+    message = `Duplicate value for ${duplicateField}`;
+    err = new ErrorHandler(message, 409);
   }
 
   //jwt token error

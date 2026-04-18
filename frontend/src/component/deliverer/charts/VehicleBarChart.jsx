@@ -15,11 +15,12 @@ const VehicleBarChart = ({ isDashboard = false, view, vehicleId }) => {
   const { vehicleStats, isVehicleStatsLoading } = useSelector(
     (state) => state.vehicleStats
   );
+  const { selectedYear } = useSelector((state) => state.filters);
 
   useEffect(() => {
-    dispatch(getVehicleStats(vehicleId));
+    dispatch(getVehicleStats(vehicleId, selectedYear));
     // dispatch(getAllContractorsPage());
-  }, [dispatch]);
+  }, [dispatch, vehicleId, selectedYear]);
 
   if (!vehicleStats) return [];
   const { monthlyData } = vehicleStats;

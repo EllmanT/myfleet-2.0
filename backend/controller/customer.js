@@ -8,6 +8,17 @@ const { isAuthenticated } = require("../middleware/auth");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const router = express.Router();
 const mongoose = require("mongoose");
+
+function parsePaginationParams(query) {
+  const rawPage = Number.parseInt(query.page, 10);
+  const rawLimit = Number.parseInt(query.limit ?? query.pageSize, 10);
+  const page = Number.isInteger(rawPage) && rawPage >= 0 ? rawPage : 0;
+  const limit = Number.isInteger(rawLimit)
+    ? Math.min(Math.max(rawLimit, 1), 100)
+    : 25;
+
+  return { page, limit, skip: page * limit };
+}
 //create customer
 router.post(
   "/create-customer",
@@ -16,11 +27,22 @@ router.post(
   async (req, res, next) => {
     try {
       const { name, phoneNumber, address, city, companyId } = req.body;
-      let checkCustomer = await Customer.findOne({ name });
+      const normalizedName = name?.trim();
+      const normalizedAddress = address?.trim();
+
+      if (!normalizedName || !normalizedAddress) {
+        return next(new ErrorHandler("Name and address are required", 400));
+      }
+
+      let checkCustomer = await Customer.findOne({ name: normalizedName });
 
       const isCompanyDeliverer = await Deliverer.findById(companyId);
 
       const isCompanyContractor = await Contractor.findById(companyId);
+
+      if (!isCompanyDeliverer && !isCompanyContractor) {
+        return next(new ErrorHandler("Company not found", 404));
+      }
 
       if (checkCustomer) {
         //checking to see if customer exists in the deliverers customers array list
@@ -30,13 +52,13 @@ router.post(
         if (isCompanyDeliverer) {
           //check if customer already exists as a client for deliverer
           const isDeliveryCustomer = isCompanyDeliverer.customer_ids.find(
-            (customer) => (customer = checkCustomer._id)
+            (customer) => customer?.toString() === checkCustomer._id.toString()
           );
           if (isDeliveryCustomer) {
             return next(
               new ErrorHandler(
-                `  ${checkCustomer.name} is already your customer`,
-                500
+                `${checkCustomer.name} is already your customer`,
+                409
               )
             );
           }
@@ -51,18 +73,19 @@ router.post(
         } else {
           //check if customer already exists as a client for contractor
           if (isCompanyContractor) {
-            isContractorCustomer = isCompanyContractor.customer_ids.find(
-              (customer) => customer === checkCustomer._id
+            const contractorCustomers = isCompanyContractor.customers || [];
+            const isContractorCustomer = contractorCustomers.find(
+              (customer) => customer?.toString() === checkCustomer._id.toString()
             );
             if (isContractorCustomer) {
               return next(
                 new ErrorHandler(
                   `${checkCustomer.name} is already your customer`,
-                  500
+                  409
                 )
               );
             }
-            isCompanyContractor.customer_ids.push(checkCustomer._id);
+            isCompanyContractor.customers.push(checkCustomer._id);
             await isCompanyContractor.save();
             res.status(201).json({
               success: true,
@@ -74,10 +97,10 @@ router.post(
         //return next(new ErrorHandler("The customer already exists", 400));
       } else {
         checkCustomer = await Customer.create({
-          name: name,
+          name: normalizedName,
           phoneNumber: phoneNumber,
           city: city,
-          address: address,
+          address: normalizedAddress,
         });
 
         //pushing the data into deliverer
@@ -91,7 +114,7 @@ router.post(
         } else {
           //pushing the data into the contractor
           if (isCompanyContractor) {
-            isCompanyContractor.customer_ids.push(checkCustomer._id);
+            isCompanyContractor.customers.push(checkCustomer._id);
             await isCompanyContractor.save();
             res.status(201).json({
               success: true,
@@ -182,14 +205,8 @@ router.get(
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
-      let {
-        page = 0,
-        pageSize = 25,
-        sort = null,
-        sortField = "_id",
-        sortOrder = "desc",
-        search = "",
-      } = req.query;
+      const { sort = null, search = "" } = req.query;
+      const { page, limit, skip } = parsePaginationParams(req.query);
 
       // Formatted sort should look like { field: 1 } or { field: -1 }
       const generateSort = () => {
@@ -201,7 +218,7 @@ router.get(
         return sortOptions;
       };
 
-      const sortOptions = Boolean(sort) ? generateSort() : {};
+      const sortOptions = Boolean(sort) ? generateSort() : { _id: -1 };
 
       // Find the deliverer based on the company ID
       const deliverer = await Deliverer.findById(req.user.companyId);
@@ -225,29 +242,18 @@ router.get(
           // Add other fields to search on as needed
         ],
       };
-      // Query for the customers using the search filter
-      const pageCustomers = await Customer.find(searchFilter)
-        .sort(sortOptions)
-        .lean();
-
-      if (pageCustomers.length === 0) {
-        return res.status(200).json({
-          success: true,
-          message: "No customers in the system",
-        });
-      }
-
-      // Paginate the results manually based on the requested page and page size
-      const startIndex = page * pageSize;
-      const endIndex = startIndex + pageSize;
-      const paginatedCustomers = pageCustomers.slice(startIndex, endIndex);
-
-      const totalCount = pageCustomers.length;
+      const [pageCustomers, totalCount] = await Promise.all([
+        Customer.find(searchFilter).sort(sortOptions).skip(skip).limit(limit).lean(),
+        Customer.countDocuments(searchFilter),
+      ]);
 
       res.status(200).json({
         success: true,
-        pageCustomers: paginatedCustomers,
+        pageCustomers,
+        rows: pageCustomers,
         totalCount,
+        page,
+        limit,
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));

@@ -10,11 +10,12 @@ const DrSingleLineChart = ({ isDashboard = false, view , driverId }) => {
   const { driverStats, isDriverStatsLoading } = useSelector(
     (state) => state.driverStats
   );
+  const { selectedYear } = useSelector((state) => state.filters);
 
 
   useEffect(() => {
-    dispatch(getDriverStats(driverId));
-  },[dispatch]);
+    dispatch(getDriverStats(driverId, selectedYear));
+  }, [dispatch, driverId, selectedYear]);
 
   const [totalJobsLine, totalMileageLine] = useMemo(() => {
     if (!driverStats) return [];

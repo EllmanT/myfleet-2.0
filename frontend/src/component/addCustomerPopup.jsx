@@ -19,8 +19,6 @@ import {
   updateCustomer,
 } from "redux/actions/customer";
 import Cities from "./Cities";
-import axios from "axios";
-import { server } from "server";
 
 const AddCustomerPopup = ({
   open,
@@ -32,6 +30,7 @@ const AddCustomerPopup = ({
   isEdit,
   isAddButton,
   isEditButton,
+  onCustomerCreated,
 }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -50,6 +49,43 @@ const AddCustomerPopup = ({
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
 
+  const resetFormState = () => {
+    setId("");
+    setName("");
+    setPhoneNumber("");
+    setCity("");
+    setAddress("");
+    setDisable(false);
+    setDisableSelect(false);
+    setView(false);
+    setLastStep(0);
+  };
+
+  const getUiErrorMessage = (err) => {
+    if (typeof err === "string") {
+      return err;
+    }
+
+    return (
+      err?.response?.data?.message ||
+      err?.message ||
+      "Customer request failed. Please try again."
+    );
+  };
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    dispatch({ type: "clearErrors" });
+    dispatch({ type: "clearMessages" });
+
+    if (isAddButton && !isEditButton) {
+      resetFormState();
+    }
+  }, [dispatch, isAddButton, isEditButton, open]);
+
   useEffect(() => {
     if (isView) {
       setName(selectedCustomer.name);
@@ -58,7 +94,7 @@ const AddCustomerPopup = ({
       setAddress(selectedCustomer.address);
 
       setLastStep(totalSteps - 1);
-setDisableSelect(true)
+      setDisableSelect(true);
     }
   }, [isView, selectedCustomer]);
   useEffect(() => {
@@ -70,27 +106,26 @@ setDisableSelect(true)
       setLastStep(totalSteps - 1);
 
       setAddress(selectedCustomer.address);
-      setDisableSelect(false)
+      setDisableSelect(false);
     }
   }, [isEdit, selectedCustomer]);
 
   useEffect(() => {
     if (error) {
-      toast.error(error.message);
+      toast.error(getUiErrorMessage(error));
       dispatch({ type: "clearErrors" });
     }
     if (success) {
       toast.success("Customer added successfully");
-      // onAddNewCustomer(newCustomer);
-      handleClose();
       dispatch({ type: "clearMessages" });
-      dispatch({ type: "loadCreateCustomerSuccess" });
     }
   }, [dispatch, error, success]);
 
   const handleSubmit = async (e) => {
-    setDisable(false);
     e.preventDefault();
+    if (disable) {
+      return;
+    }
 
     const newForm = new FormData();
 
@@ -101,28 +136,35 @@ setDisableSelect(true)
     newForm.append("address", address);
     newForm.append("companyId", user.companyId);
     if (name !== "" && address !== "") {
+      setDisable(true);
       if (isAddButton === true && isEditButton === false) {
-        dispatch(createCustomer(newForm))
-          .then(() => {
-            handleClose();
-            dispatch(getAllCustomersPage());
-            dispatch({ type: "clearMessages" });
-          })
-          .catch((error) => {
-            toast.error(error.response.message);
-          });
+        try {
+          const result = await dispatch(createCustomer(newForm));
+          if (typeof onCustomerCreated === "function") {
+            onCustomerCreated(result?.customer || null);
+          }
+          resetFormState();
+          handleClose();
+          dispatch(getAllCustomersPage());
+          dispatch({ type: "clearMessages" });
+        } catch (error) {
+          // Error toast is handled by the global customer error effect.
+        } finally {
+          setDisable(false);
+        }
       }
       if (isAddButton === false && isEditButton === true) {
-        dispatch(updateCustomer(id, name, phoneNumber, city, address))
-          .then(() => {
-            toast.success("Customer updated successfully");
-            handleClose();
-            dispatch(getAllCustomersPage());
-            dispatch({ type: "clearMessages" });
-          })
-          .catch((error) => {
-            toast.error(error.response.data.message);
-          });
+        try {
+          await dispatch(updateCustomer(id, name, phoneNumber, city, address));
+          toast.success("Customer updated successfully");
+          handleClose();
+          dispatch(getAllCustomersPage());
+          dispatch({ type: "clearMessages" });
+        } catch (error) {
+          toast.error(getUiErrorMessage(error));
+        } finally {
+          setDisable(false);
+        }
 
         //edit the customer
       }
@@ -174,7 +216,7 @@ setDisableSelect(true)
               <Box display={"flex"} flexDirection={"column"}>
                 <FormControl sx={{ m: 1, minWidth: 250 }}>
                   <TextField
-                  disabled={disableSelect}
+                    disabled={disableSelect}
                     required
                     variant="outlined"
                     type="text"
@@ -194,7 +236,7 @@ setDisableSelect(true)
                   </FormControl>
                   <FormControl sx={{ m: 1, minWidth: 150 }}>
                     <TextField
-                    disabled={disableSelect}
+                      disabled={disableSelect}
                       required
                       variant="outlined"
                       type="text"
@@ -209,7 +251,7 @@ setDisableSelect(true)
 
                 <FormControl sx={{ m: 1, minWidth: 250 }}>
                   <TextField
-                  disabled={disableSelect}
+                    disabled={disableSelect}
                     required
                     variant="outlined"
                     type="text"

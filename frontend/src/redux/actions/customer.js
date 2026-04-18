@@ -1,28 +1,69 @@
 import axios from "axios";
 import { server } from "server";
 
+const wait = (delay) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, delay);
+  });
+
+const getErrorMessage = (error) =>
+  error?.response?.data?.message ||
+  error?.message ||
+  "Failed to create customer. Please try again.";
+
+const isRetryableCreateError = (error) => {
+  const status = error?.response?.status;
+  if (!status) {
+    return true;
+  }
+
+  return status === 429 || status >= 500;
+};
+
 export const createCustomer = (newForm) => async (dispatch) => {
+  const retryDelays = [300, 800];
+
   try {
     dispatch({
       type: "loadCustomerCreateRequest",
     });
 
-    const config = { Headers: { "Content-Type": "multipart/formdata" } };
+    const config = {
+      headers: { "Content-Type": "multipart/form-data" },
+      withCredentials: true,
+    };
 
-    const { data } = await axios.post(
-      `${server}/customer/create-customer`,
-      newForm,
-      config
-    );
-    dispatch({
-      type: "loadCustomerCreateSuccess",
-      payload: data.customer,
-    });
+    let attempt = 0;
+    while (attempt <= retryDelays.length) {
+      try {
+        const { data } = await axios.post(
+          `${server}/customer/create-customer`,
+          newForm,
+          config
+        );
+        dispatch({
+          type: "loadCustomerCreateSuccess",
+          payload: data.customer,
+        });
+        return data;
+      } catch (error) {
+        const retryable =
+          isRetryableCreateError(error) && attempt < retryDelays.length;
+        if (!retryable) {
+          throw error;
+        }
+
+        await wait(retryDelays[attempt]);
+        attempt += 1;
+      }
+    }
   } catch (error) {
+    const message = getErrorMessage(error);
     dispatch({
       type: "loadCustomerCreateFailed",
-      payload: error.response.data.message,
+      payload: message,
     });
+    throw error;
   }
 };
 
@@ -51,7 +92,7 @@ export const getAllCustomersDeliverer = () => async (dispatch) => {
 
 // get All Customers for a deliverer
 export const getAllCustomersPage =
-  (page, pageSize, sort, search) => async (dispatch) => {
+  (page, limit, sort, search) => async (dispatch) => {
     try {
       dispatch({
         type: "getAllCustomersPageRequest",
@@ -63,7 +104,8 @@ export const getAllCustomersPage =
           withCredentials: true,
           params: {
             page,
-            pageSize,
+            limit,
+            pageSize: limit,
             sort,
             search,
           },
@@ -72,7 +114,7 @@ export const getAllCustomersPage =
 
       dispatch({
         type: "getAllCustomersPageSuccess",
-        payload: data.pageCustomers,
+        payload: data.pageCustomers || data.rows || [],
       });
       dispatch({
         type: "setTotalCount",

@@ -19,9 +19,10 @@ const VehicleDailyLineChart = ({
   const { vehicleStats, isVehicleStatsLoading } = useSelector(
     (state) => state.vehicleStats
   );
+  const { selectedYear } = useSelector((state) => state.filters);
   useEffect(() => {
-    dispatch(getVehicleStats(vehicleId));
-  }, [dispatch, vehicleId]);
+    dispatch(getVehicleStats(vehicleId, selectedYear));
+  }, [dispatch, vehicleId, selectedYear]);
 
   const currentDate = new Date();
   const starttDate = new Date(currentDate.getTime() - 30 * 24 * 60 * 60 * 1000);

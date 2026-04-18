@@ -18,12 +18,13 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid } from "component/deliverer/AgDataGrid";
 import ExpensesPopup from "component/deliverer/ExpensePopup";
 import ExpensePopup from "component/deliverer/ExpensePopup";
 import FlexBetween from "component/deliverer/FlexBetween";
 import Header from "component/deliverer/Header";
 import StatBox from "component/deliverer/Statbox";
+import YearSelect from "component/deliverer/YearSelect";
 import DrSingleLineChart from "component/deliverer/charts/DrSingleLineChart";
 import DriverBreakdownChart from "component/deliverer/charts/DriverBreakdownChart";
 import React, { useEffect, useState } from "react";
@@ -46,14 +47,15 @@ const DashVehiclePage = () => {
   const { latestJobsDriver, latestJobsDrLoading } = useSelector(
     (state) => state.jobs
   );
+  const { selectedYear } = useSelector((state) => state.filters);
   const { driversPage } = useSelector((state) => state.drivers);
 
   useEffect(() => {
-    dispatch(getDriverStats(driverId));
+    dispatch(getDriverStats(driverId, selectedYear));
     dispatch(getAllContractorsPage());
-    dispatch(getLatestJobsDriver(driverId));
+    dispatch(getLatestJobsDriver(driverId, selectedYear));
     dispatch(getAllDriversPage());
-  }, [dispatch, driverId]);
+  }, [dispatch, driverId, selectedYear]);
 
   const driver = driversPage && driversPage.find((v) => v._id === driverId);
   console.log(driver);
@@ -306,6 +308,7 @@ const DashVehiclePage = () => {
             Reports
           </Button>
         </Box>
+        <YearSelect />
         <Box>
           <Button
             onClick={() => addExpense()}

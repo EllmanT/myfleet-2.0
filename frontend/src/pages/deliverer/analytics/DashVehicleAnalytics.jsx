@@ -22,7 +22,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid } from "component/deliverer/AgDataGrid";
 import BreakdownChart from "component/deliverer/BreakdownChart";
 import FlexBetween from "component/deliverer/FlexBetween";
 import Header from "component/deliverer/Header";
@@ -49,6 +49,7 @@ import html2pdf from "html2pdf.js";
 import VehicleBreakdownChart from "component/deliverer/charts/VehicleBreakdownChart";
 import VehicleDailyLineChart from "component/deliverer/charts/VehicleDailyLineChart";
 import VehicleBarChart from "component/deliverer/charts/VehicleBarChart";
+import YearSelect from "component/deliverer/YearSelect";
 
 const DashVehicleAnalytics = () => {
   const theme = useTheme();
@@ -71,6 +72,7 @@ const DashVehicleAnalytics = () => {
   const { latestJobsDeliverer, latestJobsDelivererLoading } = useSelector(
     (state) => state.jobs
   );
+  const { selectedYear } = useSelector((state) => state.filters);
   const { vehiclesPage, isPageVehLoading } = useSelector(
     (state) => state.vehicles
   );
@@ -79,11 +81,11 @@ const DashVehicleAnalytics = () => {
 
 
   useEffect(() => {
-    dispatch(getVehicleStats(vehicleId));
-    dispatch(getLatestJobsVehicle(vehicleId));
+    dispatch(getVehicleStats(vehicleId, selectedYear));
+    dispatch(getLatestJobsVehicle(vehicleId, selectedYear));
     dispatch(getAllVehiclesPage());
     dispatch(loadUser());
-  }, [dispatch]);
+  }, [dispatch, vehicleId, selectedYear]);
 
   let highestRevenue = 0;
   let topContractorRevenue = "";
@@ -261,6 +263,9 @@ const DashVehicleAnalytics = () => {
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
         <Header title={vehicle && vehicle.regNumber} />
+        <Box>
+          <YearSelect />
+        </Box>
         <Box>
           <Button
             variant="outlined"

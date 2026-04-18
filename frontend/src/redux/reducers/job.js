@@ -98,7 +98,7 @@ export const jobReducer = createReducer(initialState, {
   },
 
   //load all overallStats of a Deliverer failed
-  getAlJobsReportDelivererFailed: (state, action) => {
+  getAllJobsReportDelivererFailed: (state, action) => {
     state.isAllJobsReportDelivererLoading = false;
     state.error = action.payload;
   },
@@ -116,7 +116,7 @@ export const jobReducer = createReducer(initialState, {
   },
 
   //load all Jobs Report of a Contr Failed
-  getAlJobsReportContrFailed: (state, action) => {
+  getAllJobsReportContrFailed: (state, action) => {
     state.isAllJobsReportContrLoading = false;
     state.error = action.payload;
   },
@@ -134,7 +134,7 @@ export const jobReducer = createReducer(initialState, {
   },
 
   //load allJobsReport of a Driver Failed
-  getAlJobsReportDriverFailed: (state, action) => {
+  getAllJobsReportDriverFailed: (state, action) => {
     state.isAllJobsReportDriverLoading = false;
     state.error = action.payload;
   },
@@ -150,7 +150,7 @@ export const jobReducer = createReducer(initialState, {
   },
 
   //load allJobsReport of a Vehicle Failed
-  getAlJobsReportVehicleFailed: (state, action) => {
+  getAllJobsReportVehicleFailed: (state, action) => {
     state.isAllJobsReportVehicleLoading = false;
     state.error = action.payload;
   },

@@ -10,11 +10,12 @@ const VehSingleLineChart = ({ isDashboard = false, view , vehicleId }) => {
   const { vehicleStats, isvehicleStatsLoading } = useSelector(
     (state) => state.vehicleStats
   );
+  const { selectedYear } = useSelector((state) => state.filters);
 
 
   useEffect(() => {
-    dispatch(getVehicleStats(vehicleId));
-  },[dispatch]);
+    dispatch(getVehicleStats(vehicleId, selectedYear));
+  }, [dispatch, vehicleId, selectedYear]);
 
 
   const [totalJobsLine, totalMileageLine] = useMemo(() => {

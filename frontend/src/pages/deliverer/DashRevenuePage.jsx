@@ -21,12 +21,13 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid } from "component/deliverer/AgDataGrid";
 import BreakdownChart from "component/deliverer/BreakdownChart";
 import FlexBetween from "component/deliverer/FlexBetween";
 import Header from "component/deliverer/Header";
 import OverviewChart from "component/deliverer/OverviewChart";
 import StatBox from "component/deliverer/Statbox";
+import YearSelect from "component/deliverer/YearSelect";
 import RevenueBarChart from "component/deliverer/charts/RevenueBarChart";
 import RevenueBreakdownChart from "component/deliverer/charts/RevenueBreakdownChart";
 import RevenueOverviewChart from "component/deliverer/charts/RevenueOverviewChart";
@@ -51,6 +52,7 @@ const DashRevenuePage = () => {
   const { coOverallStats, isCoOverallStatsLoading } = useSelector(
     (state) => state.overallStats
   );
+  const { selectedYear } = useSelector((state) => state.filters);
   const { latestJobsDeliverer, latestJobsDelivererLoading } = useSelector(
     (state) => state.jobs
   );
@@ -61,13 +63,9 @@ const DashRevenuePage = () => {
   const [selectedOptionSLC, setSelectedOptionSLC] = useState("totalRevenue");
   const [selectedOptionBC, setSelectedOptionBC] = useState("totalRevenue");
 
-  const currentYear = new Date().getFullYear();
-  const [selectedYear, setSelectedYear]=useState(currentYear);
-
-  useEffect(()=>{
-    console.log("selected Year", selectedYear)
+  useEffect(() => {
     dispatch(getAllOverallStatsDeliverer(selectedYear));
-  },[dispatch,selectedYear])
+  }, [dispatch, selectedYear]);
 
   let deliverer;
   let delivererId;
@@ -84,10 +82,10 @@ const DashRevenuePage = () => {
   }
   useEffect(() => {
     // dispatch(getAllOverallStatsDeliverer());
-    dispatch(getLatestJobsDeliverer());
+    dispatch(getLatestJobsDeliverer(undefined, undefined, undefined, undefined, undefined, undefined, undefined, selectedYear));
     dispatch(getAllDeliverersPage());
     //dispatch(loadUser());
-  }, [dispatch]);
+  }, [dispatch, selectedYear]);
 // console.log(coOverallStats.yearlyExpenses);
   let highestRevenue = 0;
   let topContractorRevenue = "";
@@ -321,21 +319,7 @@ const DashRevenuePage = () => {
             Reports
           </Button>
         </Box>
-        <FormControl sx={{ ml: "1rem" }}>
-              <Select
-                value={selectedYear}
-                onChange={(e) => setSelectedYear(e.target.value)}
-                color="info"
-                size="small"
-                defaultValue="jobs"
-                inputProps={{ "aria-label": "Select an option" }}
-              >
-                <MenuItem value="2025" selected>
-                  2025
-                </MenuItem>
-                <MenuItem value="2024">2024</MenuItem>
-              </Select>
-            </FormControl>
+        <YearSelect />
         <Box>
           <Button
             onClick={addOrder}

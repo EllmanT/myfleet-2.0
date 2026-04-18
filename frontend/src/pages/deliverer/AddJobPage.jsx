@@ -102,7 +102,8 @@ const AddJobPage = () => {
   const [completed, setCompleted] = React.useState({});
   const [disable, setDisable] = useState(false);
   const [addCustomerOpen, setCustomerOpen] = useState(false);
-  const [addedCustomer, setAddedCustomer] = useState("");
+  const [customerTargetIndex, setCustomerTargetIndex] = useState(null);
+  const [pendingCreatedCustomer, setPendingCreatedCustomer] = useState(null);
 
   //the customer info
   const [jobNum, setJobNum] = useState("");
@@ -171,7 +172,8 @@ const AddJobPage = () => {
   };
 
   //open the add customer popup
-  const handleAddCustomer = () => {
+  const handleAddCustomer = (index) => {
+    setCustomerTargetIndex(index);
     setCustomerOpen(true);
   };
   //close the add customer popup
@@ -191,12 +193,8 @@ const AddJobPage = () => {
     setLabels([...labels, null]);
   };
 
-  const handleAutocompleteChange = (index, selectedDest, newCustomer) => {
+  const handleAutocompleteChange = (index, selectedDest) => {
     const updatedDestinations = [...destinations];
-    updatedDestinations[index] = selectedDest;
-    if (newCustomer) {
-      updatedDestinations[index] = newCustomer;
-    }
     updatedDestinations[index] = selectedDest;
     setDestinations(updatedDestinations);
 
@@ -209,6 +207,50 @@ const AddJobPage = () => {
       setLabels(updatedLabels);
     }
   };
+
+  useEffect(() => {
+    if (
+      pendingCreatedCustomer === null ||
+      customerTargetIndex === null ||
+      isDelCustLoading
+    ) {
+      return;
+    }
+
+    const latestCustomers = delCustomers
+      ? delCustomers.flatMap((item) => item.customers)
+      : [];
+    const resolvedCustomer =
+      latestCustomers.find(
+        (customer) =>
+          pendingCreatedCustomer?._id &&
+          customer._id === pendingCreatedCustomer._id
+      ) ||
+      latestCustomers.find(
+        (customer) =>
+          pendingCreatedCustomer?.name &&
+          customer.name === pendingCreatedCustomer.name
+      ) ||
+      pendingCreatedCustomer;
+
+    const updatedDestinations = [...destinations];
+    updatedDestinations[customerTargetIndex] = resolvedCustomer;
+    setDestinations(updatedDestinations);
+
+    const updatedLabels = [...labels];
+    updatedLabels[customerTargetIndex] = resolvedCustomer?.name || "";
+    setLabels(updatedLabels);
+
+    setPendingCreatedCustomer(null);
+    setCustomerTargetIndex(null);
+  }, [
+    customerTargetIndex,
+    delCustomers,
+    destinations,
+    isDelCustLoading,
+    labels,
+    pendingCreatedCustomer,
+  ]);
   const removeAutocomplete = (index) => {
     const updatedDestinations = [...destinations];
     updatedDestinations.splice(index, 1);
@@ -492,6 +534,31 @@ const AddJobPage = () => {
 
                         <div>
                           <FormControl sx={{ m: 1, minWidth: 100 }}>
+                            <Button
+                              onClick={() => {
+                                if (destinations.length === 0) {
+                                  addAutocomplete();
+                                  handleAddCustomer(0);
+                                  return;
+                                }
+                                handleAddCustomer(destinations.length - 1);
+                              }}
+                              sx={{
+                                backgroundColor: theme.palette.secondary.light,
+                                color: theme.palette.background.alt,
+                                fontSize: "14px",
+                                fontWeight: "bold",
+                                padding: "10px 20px",
+                                ":hover": {
+                                  backgroundColor: theme.palette.secondary[100],
+                                },
+                              }}
+                            >
+                              <GroupAddOutlined sx={{ mr: "10px" }} />
+                              + New Customer
+                            </Button>
+                          </FormControl>
+                          <FormControl sx={{ m: 1, minWidth: 100 }}>
                             <Box display="flex">
                               {destinations.length === 0 && (
                                 <>
@@ -562,6 +629,19 @@ const AddJobPage = () => {
                                             />
                                           )}
                                         />
+                                        <Button
+                                          onClick={() =>
+                                            handleAddCustomer(
+                                              index + rowIndex * 2
+                                            )
+                                          }
+                                          sx={{
+                                            color: theme.palette.secondary[100],
+                                            mt: 1,
+                                          }}
+                                        >
+                                          + New Customer
+                                        </Button>
                                         <Button
                                           onClick={() =>
                                             removeAutocomplete(
@@ -954,6 +1034,21 @@ const AddJobPage = () => {
             </div>
           </Box>
         </form>
+        <AddCustomerPopup
+          open={addCustomerOpen}
+          activeStep={0}
+          totalSteps={1}
+          handleClose={handleAddCustomerClose}
+          selectedCustomer={{}}
+          isView={false}
+          isEdit={false}
+          isAddButton={true}
+          isEditButton={false}
+          onCustomerCreated={(customer) => {
+            setPendingCreatedCustomer(customer);
+            dispatch(getAllCustomersDeliverer());
+          }}
+        />
       </Box>
     </>
   );

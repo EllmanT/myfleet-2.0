@@ -106,7 +106,7 @@ export const deleteJob = (jobId) => async (dispatch) => {
   }
 };
 export const getAllJobsPage =
-  (page, pageSize, searcha, sort, sorta, contractor, jobSearch) =>
+  (page, limit, searcha, sort, sorta, contractor, jobSearch, year) =>
   async (dispatch) => {
     try {
       dispatch({
@@ -115,11 +115,21 @@ export const getAllJobsPage =
 
       const { data } = await axios.get(`${server}/job/get-all-jobs-page`, {
         withCredentials: true,
-        params: { page, pageSize, searcha, sort, sorta, contractor, jobSearch },
+        params: {
+          page,
+          limit,
+          pageSize: limit,
+          searcha,
+          sort,
+          sorta,
+          contractor,
+          jobSearch,
+          year,
+        },
       });
       dispatch({
         type: "getAllJobsPageSuccess",
-        payload: data.pageJobs,
+        payload: data.pageJobs || data.rows || [],
       });
       dispatch({
         type: "setTotalCount",
@@ -134,7 +144,7 @@ export const getAllJobsPage =
   };
 
 export const getLatestJobsDeliverer =
-  (page, pageSize, searcha, sort, sorta, contractor, jobSearch) =>
+  (page, pageSize, searcha, sort, sorta, contractor, jobSearch, year) =>
   async (dispatch) => {
     try {
       dispatch({
@@ -153,6 +163,7 @@ export const getLatestJobsDeliverer =
             sorta,
             contractor,
             jobSearch,
+            year,
           },
         }
       );
@@ -168,7 +179,7 @@ export const getLatestJobsDeliverer =
     }
   };
 
-export const getLatestJobsVehicle = (vehicleId) => async (dispatch) => {
+export const getLatestJobsVehicle = (vehicleId, year) => async (dispatch) => {
   try {
     dispatch({
       type: "getLatestJobsVehicleRequest",
@@ -178,6 +189,7 @@ export const getLatestJobsVehicle = (vehicleId) => async (dispatch) => {
       `${server}/job/get-latest-jobs-vehicle/${vehicleId}`,
       {
         withCredentials: true,
+        params: { year },
       }
     );
     dispatch({
@@ -192,7 +204,7 @@ export const getLatestJobsVehicle = (vehicleId) => async (dispatch) => {
   }
 };
 
-export const getLatestJobsDriver = (driverId) => async (dispatch) => {
+export const getLatestJobsDriver = (driverId, year) => async (dispatch) => {
   try {
     dispatch({
       type: "getLatestJobsDriverRequest",
@@ -202,6 +214,7 @@ export const getLatestJobsDriver = (driverId) => async (dispatch) => {
       `${server}/job/get-latest-jobs-driver/${driverId}`,
       {
         withCredentials: true,
+        params: { year },
       }
     );
     dispatch({
@@ -215,7 +228,8 @@ export const getLatestJobsDriver = (driverId) => async (dispatch) => {
     });
   }
 };
-export const getLatestJobsContractor = (contractorId) => async (dispatch) => {
+export const getLatestJobsContractor =
+  (contractorId, year) => async (dispatch) => {
   try {
     dispatch({
       type: "getLatestJobsContractorRequest",
@@ -225,6 +239,7 @@ export const getLatestJobsContractor = (contractorId) => async (dispatch) => {
       `${server}/job/get-latest-jobs-contractor/${contractorId}`,
       {
         withCredentials: true,
+        params: { year },
       }
     );
     dispatch({
@@ -239,7 +254,9 @@ export const getLatestJobsContractor = (contractorId) => async (dispatch) => {
   }
 };
 
-export const getAllJobsReportDeliverer = () => async (dispatch) => {
+export const getAllJobsReportDeliverer =
+  ({ year, page = 0, limit = 25, jobSearch = "" }) =>
+  async (dispatch) => {
   try {
     dispatch({
       type: "getAllJobsReportDelivererRequest",
@@ -247,11 +264,15 @@ export const getAllJobsReportDeliverer = () => async (dispatch) => {
 
     const { data } = await axios.get(
       `${server}/job/get-all-jobsReport-deliverer`,
-      { withCredentials: true }
+      { withCredentials: true, params: { year, page, limit, pageSize: limit, jobSearch } }
     );
     dispatch({
       type: "getAllJobsReportDelivererSuccess",
-      payload: data.delivererWithJobsReport,
+      payload: data.delivererWithJobsReport || data.rows || [],
+    });
+    dispatch({
+      type: "setTotalCount",
+      payload: data.totalCount || 0,
     });
   } catch (error) {
     dispatch({
@@ -259,9 +280,11 @@ export const getAllJobsReportDeliverer = () => async (dispatch) => {
       payload: error.response.data.message,
     });
   }
-};
+  };
 
-export const getAllJobsReportContr = (contractorId) => async (dispatch) => {
+export const getAllJobsReportContr =
+  (contractorId, { year, page = 0, limit = 25, jobSearch = "" }) =>
+  async (dispatch) => {
   try {
     dispatch({
       type: "getAllJobsReportContrRequest",
@@ -269,11 +292,15 @@ export const getAllJobsReportContr = (contractorId) => async (dispatch) => {
 
     const { data } = await axios.get(
       `${server}/job/get-all-jobsReport-contractor/${contractorId}`,
-      { withCredentials: true }
+      { withCredentials: true, params: { year, page, limit, pageSize: limit, jobSearch } }
     );
     dispatch({
       type: "getAllJobsReportContrSuccess",
-      payload: data.contractorWithJobsReport,
+      payload: data.contractorWithJobsReport || data.rows || [],
+    });
+    dispatch({
+      type: "setTotalCount",
+      payload: data.totalCount || 0,
     });
   } catch (error) {
     dispatch({
@@ -281,9 +308,11 @@ export const getAllJobsReportContr = (contractorId) => async (dispatch) => {
       payload: error.response.data.message,
     });
   }
-};
+  };
 
-export const getAllJobsReportDriver = (driverId) => async (dispatch) => {
+export const getAllJobsReportDriver =
+  (driverId, { year, page = 0, limit = 25, jobSearch = "" }) =>
+  async (dispatch) => {
   try {
     dispatch({
       type: "getAllJobsReportDriverRequest",
@@ -291,11 +320,15 @@ export const getAllJobsReportDriver = (driverId) => async (dispatch) => {
 
     const { data } = await axios.get(
       `${server}/job/get-all-jobsReport-driver/${driverId}`,
-      { withCredentials: true }
+      { withCredentials: true, params: { year, page, limit, pageSize: limit, jobSearch } }
     );
     dispatch({
       type: "getAllJobsReportDriverSuccess",
-      payload: data.driverWithJobsReport,
+      payload: data.driverWithJobsReport || data.rows || [],
+    });
+    dispatch({
+      type: "setTotalCount",
+      payload: data.totalCount || 0,
     });
   } catch (error) {
     dispatch({
@@ -303,9 +336,11 @@ export const getAllJobsReportDriver = (driverId) => async (dispatch) => {
       payload: error.response.data.message,
     });
   }
-};
+  };
 
-export const getAllJobsReportVehicle = (vehicleId) => async (dispatch) => {
+export const getAllJobsReportVehicle =
+  (vehicleId, { year, page = 0, limit = 25, jobSearch = "" }) =>
+  async (dispatch) => {
   try {
     dispatch({
       type: "getAllJobsReportVehicleRequest",
@@ -313,12 +348,15 @@ export const getAllJobsReportVehicle = (vehicleId) => async (dispatch) => {
 
     const { data } = await axios.get(
       `${server}/job/get-all-jobsReport-vehicle/${vehicleId}`,
-
-      { withCredentials: true }
+      { withCredentials: true, params: { year, page, limit, pageSize: limit, jobSearch } }
     );
     dispatch({
       type: "getAllJobsReportVehicleSuccess",
-      payload: data.vehicleWithJobsReport,
+      payload: data.vehicleWithJobsReport || data.rows || [],
+    });
+    dispatch({
+      type: "setTotalCount",
+      payload: data.totalCount || 0,
     });
   } catch (error) {
     dispatch({
@@ -326,4 +364,4 @@ export const getAllJobsReportVehicle = (vehicleId) => async (dispatch) => {
       payload: error.response.data.message,
     });
   }
-};
+  };

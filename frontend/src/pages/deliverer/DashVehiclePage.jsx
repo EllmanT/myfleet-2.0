@@ -21,7 +21,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid } from "component/deliverer/AgDataGrid";
 import BreakdownChart from "component/deliverer/BreakdownChart";
 import ExpensesPopup from "component/deliverer/ExpensePopup";
 import ExpensePopup from "component/deliverer/ExpensePopup";
@@ -29,6 +29,7 @@ import FlexBetween from "component/deliverer/FlexBetween";
 import Header from "component/deliverer/Header";
 import OverviewChart from "component/deliverer/OverviewChart";
 import StatBox from "component/deliverer/Statbox";
+import YearSelect from "component/deliverer/YearSelect";
 import VehSingleLineChart from "component/deliverer/charts/VehSingleLineChart";
 import VehicleBreakdownChart from "component/deliverer/charts/VehicleBreakdownChart";
 import React, { useEffect, useState } from "react";
@@ -53,6 +54,7 @@ const DashVehiclePage = () => {
   const { latestJobsVehicle, latestJobsVehLoading } = useSelector(
     (state) => state.jobs
   );
+  const { selectedYear } = useSelector((state) => state.filters);
   const { vehiclesPage } = useSelector((state) => state.vehicles);
 
   const [page, setPage] = useState(1);
@@ -64,11 +66,11 @@ const DashVehiclePage = () => {
   const [contractor, setContractor] = useState("");
 
   useEffect(() => {
-    dispatch(getVehicleStats(vehicleId));
+    dispatch(getVehicleStats(vehicleId, selectedYear));
     dispatch(getAllContractorsPage());
-    dispatch(getLatestJobsVehicle(vehicleId));
+    dispatch(getLatestJobsVehicle(vehicleId, selectedYear));
     dispatch(getAllVehiclesPage());
-  }, [dispatch, vehicleId]);
+  }, [dispatch, vehicleId, selectedYear]);
 
   const vehicle = vehiclesPage && vehiclesPage.find((v) => v._id === vehicleId);
   console.log(vehicle);
@@ -318,6 +320,7 @@ const DashVehiclePage = () => {
             Reports
           </Button>
         </Box>
+        <YearSelect />
         <Box>
           <Button
             onClick={() => addExpense()}

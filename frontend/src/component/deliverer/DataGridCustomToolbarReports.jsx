@@ -6,15 +6,14 @@ import {
   InputAdornment,
   Button,
   Box,
+  FormControl,
+  MenuItem,
+  Select,
 } from "@mui/material";
-import {
-  GridToolbarDensitySelector,
-  GridToolbarContainer,
-  GridToolbarExport,
-  GridToolbarColumnsButton,
-} from "@mui/x-data-grid";
 import FlexBetween from "./FlexBetween";
 import ReactDatePicker from "react-datepicker";
+import axios from "axios";
+import { server } from "server";
 
 const DataGridCustomToolbarReports = ({
   searchInput,
@@ -25,6 +24,8 @@ const DataGridCustomToolbarReports = ({
   setStartDate,
   endDate,
   setEndDate,
+  defaultStartDate,
+  defaultEndDate,
   totalJobsDistance,
   totalJobsCost,
   totalJobsCount,
@@ -32,20 +33,38 @@ const DataGridCustomToolbarReports = ({
   contractorName,
   vehicleRegNumber,
   driverName,
+  selectedYear,
+  setSelectedYear,
+  exportParams = {},
 }) => {
   const [view, setView] = useState("");
 
-  // const [startDate, setStartDate] = useState(starttDate);
-  //const [endDate, setEndDate] = useState(currentDate);
-  const [isDisabled, setIsDisabled] = useState(false);
-
   const handleReset = () => {
     setJobSearch("");
+    setSearchInput("");
     setView("");
+    setStartDate(defaultStartDate);
+    setEndDate(defaultEndDate);
+  };
+
+  const triggerDownload = async (type) => {
+    const response = await axios.get(`${server}/job/export-jobs-${type}`, {
+      withCredentials: true,
+      params: exportParams,
+      responseType: "blob",
+    });
+    const href = window.URL.createObjectURL(response.data);
+    const link = document.createElement("a");
+    link.href = href;
+    link.download = `jobs-report.${type === "csv" ? "csv" : "pdf"}`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(href);
   };
 
   return (
-    <GridToolbarContainer>
+    <div>
       <FlexBetween width="100%">
         <FlexBetween>
           <Button variant="outlined" color="info" sx={{ mr: "1rem" }}>
@@ -108,9 +127,28 @@ const DataGridCustomToolbarReports = ({
       </FlexBetween>
       <FlexBetween width="100%">
         <FlexBetween>
-          <GridToolbarColumnsButton />
-          <GridToolbarDensitySelector />
-          <GridToolbarExport />
+          {exportParams?.enabled ? (
+            <>
+              <Button
+                size="small"
+                variant="outlined"
+                color="info"
+                sx={{ mr: "0.5rem" }}
+                onClick={() => triggerDownload("csv")}
+              >
+                Export CSV
+              </Button>
+              <Button
+                size="small"
+                variant="outlined"
+                color="info"
+                sx={{ mr: "0.5rem" }}
+                onClick={() => triggerDownload("pdf")}
+              >
+                Export PDF
+              </Button>
+            </>
+          ) : null}
           <Button
             size="small"
             variant="outlined"
@@ -124,13 +162,28 @@ const DataGridCustomToolbarReports = ({
 
         <FlexBetween>
           <Box display={"flex"}>
+            <FormControl size="small" sx={{ mr: "0.5rem", minWidth: "100px" }}>
+              <Select
+                color="info"
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(Number(e.target.value))}
+              >
+                {Array.from(
+                  { length: new Date().getFullYear() - 2019 },
+                  (_, i) => new Date().getFullYear() - i
+                ).map((year) => (
+                  <MenuItem key={year} value={year}>
+                    {year}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <ReactDatePicker
               selected={startDate}
               onChange={(date) => setStartDate(date)}
               selectsStart
               startDate={startDate}
               endDate={endDate}
-              disabled={isDisabled}
             />
 
             <ReactDatePicker
@@ -140,12 +193,11 @@ const DataGridCustomToolbarReports = ({
               startDate={startDate}
               endDate={endDate}
               minDate={startDate}
-              disabled={isDisabled}
             />
           </Box>
         </FlexBetween>
       </FlexBetween>
-    </GridToolbarContainer>
+    </div>
   );
 };
 

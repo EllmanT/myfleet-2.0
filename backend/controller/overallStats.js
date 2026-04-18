@@ -6,18 +6,25 @@ const OverallStats = require("../model/overallStats");
 const Contractor = require("../model/contractor");
 const router = express.Router();
 
+const parseYear = (rawYear) => {
+  const fallbackYear = new Date().getFullYear();
+  if (rawYear === undefined || rawYear === null || rawYear === "") {
+    return fallbackYear;
+  }
+
+  const year = Number(rawYear);
+  if (!Number.isInteger(year) || year < 2000 || year > 2100) {
+    throw new ErrorHandler("Invalid year query parameter", 400);
+  }
+  return year;
+};
+
 //getting all the overall stats info 
 router.get(
   "/get-all-overallStats-company",
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
-    let {year}=req.query;
-
-    console.log("req.query",req.query)
-
-    if(!year){
-      year = new Date().getFullYear(); // Get the current year
-    }
+    const year = parseYear(req.query.year);
 
 
     try {
@@ -52,7 +59,7 @@ router.get(
   catchAsyncErrors(async (req, res, next) => {
     try {
       const delivererWithOverallStatstj = await OverallStats.findOne(
-        { companyId: req.user.companyId },
+        { companyId: req.user.companyId, year: parseYear(req.query.year) },
         { jobsByContractor: 1 } // Specify the fields to include in the resultc
       );
 
@@ -77,7 +84,7 @@ router.get(
   catchAsyncErrors(async (req, res, next) => {
     try {
       const delivererWithOverallStats = await OverallStats.findOne(
-        { companyId: req.user.companyId },
+        { companyId: req.user.companyId, year: parseYear(req.query.year) },
         { revenueByContractor: 1 } // Specify the fields to include in the result
       );
 

@@ -15,11 +15,12 @@ const DriverBarChart = ({ isDashboard = false, view, driverId }) => {
   const { driverStats, isDriverStatsLoading } = useSelector(
     (state) => state.driverStats
   );
+  const { selectedYear } = useSelector((state) => state.filters);
 
   useEffect(() => {
-    dispatch(getDriverStats(driverId));
+    dispatch(getDriverStats(driverId, selectedYear));
     // dispatch(getAllContractorsPage());
-  }, [dispatch]);
+  }, [dispatch, driverId, selectedYear]);
 
   if (!driverStats) return [];
   const { monthlyData } = driverStats;

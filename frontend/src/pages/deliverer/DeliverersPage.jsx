@@ -39,7 +39,7 @@ import {
 } from "redux/actions/deliverer";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { DataGrid, GridDeleteIcon } from "@mui/x-data-grid";
+import { DataGrid, GridDeleteIcon } from "component/deliverer/AgDataGrid";
 import DataGridCustomToolbar from "component/deliverer/DataGridCustomToolbar";
 
 const steps = ["General Details", "Rates", "Preview"];

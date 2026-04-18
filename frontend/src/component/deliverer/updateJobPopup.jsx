@@ -18,7 +18,7 @@ import {
   TextareaAutosize,
   useTheme,
 } from "@mui/material";
-import { DataGrid, GridDeleteIcon } from "@mui/x-data-grid";
+import { DataGrid, GridDeleteIcon } from "component/deliverer/AgDataGrid";
 import { CalendarIcon } from "@mui/x-date-pickers";
 import AddCustomerPopup from "component/addCustomerPopup";
 import DataGridCustomToolbar from "component/deliverer/DataGridCustomToolbar";

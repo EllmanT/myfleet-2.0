@@ -26,7 +26,7 @@ import {
   Select,
   useTheme,
 } from "@mui/material";
-import { DataGrid, GridDeleteIcon } from "@mui/x-data-grid";
+import { DataGrid, GridDeleteIcon } from "component/deliverer/AgDataGrid";
 import { CalendarIcon } from "@mui/x-date-pickers";
 import AddCustomerPopup from "component/addCustomerPopup";
 import DataGridCustomToolbar from "component/deliverer/DataGridCustomToolbar";
@@ -48,19 +48,13 @@ import { getAllVehiclesPage } from "redux/actions/vehicle";
 
 const DashVehicleReports = () => {
   const { user } = useSelector((state) => state.user);
+  const { selectedYear } = useSelector((state) => state.filters);
 
   const theme = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { vehicleId } = useParams();
   console.log(vehicleId);
-
-  useEffect(() => {
-    dispatch(getAllVehiclesPage());
-    dispatch(getAllJobsReportVehicle(vehicleId));
-
-    // dispatch(loadUser());
-  }, [dispatch]);
 
   const { vehiclesPage, isVehiclesPageLoading } = useSelector(
     (state) => state.vehicles
@@ -116,13 +110,28 @@ const DashVehicleReports = () => {
   const [jobId, setJobId] = useState("");
   const [jobNumber, setJobNumber] = useState("");
 
-  const currentDate = new Date();
-  const starttDate = new Date(currentDate.getTime() - 30 * 24 * 60 * 60 * 1000);
-  const [startDate, setStartDate] = useState(starttDate);
-  const [endDate, setEndDate] = useState(currentDate);
+  const defaultEndDate = useMemo(() => new Date(), []);
+  const defaultStartDate = useMemo(
+    () => new Date(defaultEndDate.getTime() - 30 * 24 * 60 * 60 * 1000),
+    [defaultEndDate]
+  );
+  const [startDate, setStartDate] = useState(defaultStartDate);
+  const [endDate, setEndDate] = useState(defaultEndDate);
 
   console.log(page);
   console.log(sort);
+
+  useEffect(() => {
+    dispatch(getAllVehiclesPage());
+    dispatch(
+      getAllJobsReportVehicle(vehicleId, {
+        year: selectedYear,
+        page,
+        limit: pageSize,
+        jobSearch,
+      })
+    );
+  }, [dispatch, vehicleId, selectedYear, page, pageSize, jobSearch]);
 
   const handleClose = (event, reason) => {
     if (reason !== "backdropClick") {
@@ -229,16 +238,21 @@ const DashVehicleReports = () => {
   console.log(AllJobsReportVehicle);
 
   //
-  let allReportsVehicle;
-  let formattedJobData = [""];
-  let totalJobsCount = 0;
-  let totalJobsDistance = 0;
-  let totalJobsCost = 0;
+  const reportData = useMemo(() => {
+    if (!AllJobsReportVehicle) {
+      return {
+        rows: [],
+        totalJobsCount: 0,
+        totalJobsDistance: 0,
+        totalJobsCost: 0,
+      };
+    }
 
-  const [formattedData] = useMemo(() => {
-    if (!AllJobsReportVehicle) return []; // Add a check for coOverallStats
-
+    const rangeStart = startDate <= endDate ? startDate : endDate;
+    const rangeEnd = startDate <= endDate ? endDate : startDate;
     let totalJobs = [];
+    let totalJobsDistance = 0;
+    let totalJobsCost = 0;
 
     Object.values(AllJobsReportVehicle).forEach(
       ({
@@ -257,7 +271,7 @@ const DashVehicleReports = () => {
         contractorId,
       }) => {
         const dateFormatted = new Date(orderDate);
-        if (dateFormatted >= startDate && dateFormatted <= endDate) {
+        if (dateFormatted >= rangeStart && dateFormatted <= rangeEnd) {
           const splitDate = dateFormatted.toLocaleDateString(undefined, {
             day: "2-digit",
             month: "2-digit",
@@ -282,35 +296,29 @@ const DashVehicleReports = () => {
             },
           ];
 
-          totalJobsCost += cost;
-          totalJobsDistance += distance;
+          totalJobsCost += cost || 0;
+          totalJobsDistance += distance || 0;
         }
       }
     );
 
-    formattedJobData = [totalJobs];
-    allReportsVehicle = formattedJobData[0];
-    totalJobsCount = allReportsVehicle.length;
-    return [
-      allReportsVehicle,
-      formattedJobData,
-      totalJobsCount,
-      totalJobsCost,
+    return {
+      rows: totalJobs,
+      totalJobsCount: totalJobs.length,
       totalJobsDistance,
-    ];
+      totalJobsCost,
+    };
   }, [AllJobsReportVehicle, startDate, endDate]); // eslint-disable-line react-hooks/exhaustive-deps
 
   console.log(AllJobsReportVehicle);
 
-  allReportsVehicle = formattedJobData[0];
-  console.log(formattedJobData);
-  console.log(allReportsVehicle);
+  console.log(reportData.rows);
   console.log(AllJobsReportVehicle);
   console.log(startDate);
   console.log(endDate);
 
-  console.log(totalJobsCost);
-  console.log(totalJobsDistance);
+  console.log(reportData.totalJobsCost);
+  console.log(reportData.totalJobsDistance);
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
@@ -429,12 +437,19 @@ const DashVehicleReports = () => {
         }}
       >
         <DataGrid
-          loading={isAllJobsReportVehicleLoading || !allReportsVehicle}
+          loading={isAllJobsReportVehicleLoading}
           Header="hello"
           getRowId={(row) => row._id}
-          rows={(AllJobsReportVehicle && allReportsVehicle) || []}
+          rows={reportData.rows}
           columns={columns}
-          rowCount={totalJobsCount || 0}
+          rowCount={totalCount || 0}
+          rowsPerPageOptions={[25, 50, 100]}
+          pagination
+          page={page}
+          pageSize={pageSize}
+          paginationModel={paginationModel}
+          onPaginationModelChange={setPaginationModel}
+          paginationMode="server"
           components={{ Toolbar: DataGridCustomToolbarReports }}
           componentsProps={{
             toolbar: {
@@ -446,10 +461,24 @@ const DashVehicleReports = () => {
               setStartDate,
               endDate,
               setEndDate,
-              totalJobsDistance,
-              totalJobsCost,
-              totalJobsCount,
+              defaultStartDate,
+              defaultEndDate,
+              totalJobsDistance: reportData.totalJobsDistance,
+              totalJobsCost: reportData.totalJobsCost,
+              totalJobsCount: reportData.totalJobsCount,
               vehicleRegNumber,
+              selectedYear,
+              setSelectedYear: (year) =>
+                dispatch({ type: "setSelectedYear", payload: year }),
+              exportParams: {
+                enabled: true,
+                scope: "vehicle",
+                entityId: vehicleId,
+                year: selectedYear,
+                jobSearch,
+                startDate: startDate?.toISOString(),
+                endDate: endDate?.toISOString(),
+              },
             },
           }}
         />

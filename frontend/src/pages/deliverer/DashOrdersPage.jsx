@@ -19,13 +19,14 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid } from "component/deliverer/AgDataGrid";
 import BreakdownChart from "component/deliverer/BreakdownChart";
 import FlexBetween from "component/deliverer/FlexBetween";
 import Header from "component/deliverer/Header";
 import OverviewChart from "component/deliverer/OverviewChart";
 import StatBox from "component/deliverer/Statbox";
-import React, { useEffect, useState } from "react";
+import YearSelect from "component/deliverer/YearSelect";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAllContractorsPage } from "redux/actions/contractor";
@@ -44,6 +45,7 @@ const DashOrdersPage = () => {
   const { coOverallStats, isCoOverallStatsLoading } = useSelector(
     (state) => state.overallStats
   );
+  const { selectedYear } = useSelector((state) => state.filters);
   const { latestJobsDeliverer, latestJobsDelivererLoading } = useSelector(
     (state) => state.jobs
   );
@@ -64,20 +66,16 @@ const DashOrdersPage = () => {
     delivererId = deliverer._id;
   }
 
-    const currentYear = new Date().getFullYear();
-    const [selectedYear, setSelectedYear]=useState(currentYear);
-  
-    useEffect(()=>{
-      console.log("selected Year", selectedYear)
-      dispatch(getAllOverallStatsDeliverer(selectedYear));
-    },[dispatch,selectedYear])
+  useEffect(() => {
+    dispatch(getAllOverallStatsDeliverer(selectedYear));
+  }, [dispatch, selectedYear]);
 
   useEffect(() => {
     // dispatch(getAllOverallStatsDeliverer());
-    dispatch(getLatestJobsDeliverer());
+    dispatch(getLatestJobsDeliverer(undefined, undefined, undefined, undefined, undefined, undefined, undefined, selectedYear));
     dispatch(getAllDeliverersPage());
     dispatch(loadUser());
-  }, [dispatch]);
+  }, [dispatch, selectedYear]);
 
   let highestRevenue = 0;
   let topContractorRevenue = "";
@@ -288,21 +286,7 @@ const DashOrdersPage = () => {
             Reports
           </Button>
         </Box>
-        <FormControl sx={{ ml: "1rem" }}>
-              <Select
-                value={selectedYear}
-                onChange={(e) => setSelectedYear(e.target.value)}
-                color="info"
-                size="small"
-                defaultValue="jobs"
-                inputProps={{ "aria-label": "Select an option" }}
-              >
-                <MenuItem value="2025" selected>
-                  2025
-                </MenuItem>
-                <MenuItem value="2024">2024</MenuItem>
-              </Select>
-            </FormControl>
+        <YearSelect />
         <Box>
           <Button
             onClick={addOrder}

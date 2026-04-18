@@ -119,6 +119,32 @@ Schemas live in **`model/`**: user, deliverer, customer, contractor, driver, veh
 
 ---
 
+## Database seed and cleanup
+
+Run from `backend/`:
+
+```bash
+npm run seed
+```
+
+What it does:
+- imports JSON backup data from `SEED_BACKUP_DIR` (default `../DB/backup/2026/04/18`)
+- drops and reloads base collections
+- reloads `jobs` as source of truth
+- drops and rebuilds derived stats (`overallstats`, `vehiclestats`, `driverstats`, `contractorstats`) from `jobs`
+- rebuilds `job_ids` links on `deliverers`, `contractors`, `drivers`, and `vehicles`
+- validates document counts after insert/rebuild
+- runs local stage first, then live stage (aborts on local failure)
+
+Required environment variables:
+- `MONGO_URI_LOCAL` (or fallback `OFFLINE_DB_URL`)
+- `MONGO_URI_LIVE` (or fallback `DB_URL`)
+- optional `SEED_BACKUP_DIR`
+
+The script writes structured logs (start, finish, duration, counts, errors) to help production debugging.
+
+---
+
 ## Dependencies
 
 Install with **`npm install`** in **`backend/`**. The repository root **package.json** may list extra packages; the backend code paths use the dependencies declared in **this** `package.json`.

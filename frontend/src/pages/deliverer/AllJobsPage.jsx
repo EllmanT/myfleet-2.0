@@ -25,7 +25,7 @@ import {
   Select,
   useTheme,
 } from "@mui/material";
-import { DataGrid, GridDeleteIcon } from "@mui/x-data-grid";
+import { DataGrid, GridDeleteIcon } from "component/deliverer/AgDataGrid";
 import { CalendarIcon } from "@mui/x-date-pickers";
 import AddCustomerPopup from "component/addCustomerPopup";
 import DataGridCustomToolbar from "component/deliverer/DataGridCustomToolbar";
@@ -40,6 +40,7 @@ import { deleteJob, getAllJobsPage } from "redux/actions/job";
 
 const AllJobsPage = () => {
   const { user } = useSelector((state) => state.user);
+  const { selectedYear } = useSelector((state) => state.filters);
 
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -142,7 +143,8 @@ const AllJobsPage = () => {
           JSON.stringify(sorta),
           contractor,
           searcha,
-          jobSearch
+          jobSearch,
+          selectedYear
         )
       );
       if (jobSearch === "") {
@@ -151,7 +153,7 @@ const AllJobsPage = () => {
         setResults(0);
       }
     }
-  }, [page, pageSize, sort, sorta, searcha, jobSearch, contractor, dispatch]);
+  }, [page, pageSize, sort, sorta, searcha, jobSearch, contractor, dispatch, selectedYear]);
 
   console.log(totalJobs);
   const handleClickOpen = () => {
@@ -192,7 +194,18 @@ const AllJobsPage = () => {
       .then(() => {
         // The deleteJob action has successfully executed
         toast.success("Job deleted successfully");
-        dispatch(getAllJobsPage());
+        dispatch(
+          getAllJobsPage(
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            selectedYear
+          )
+        );
         handleDeleteDialogueClose();
       })
       .catch((error) => {
@@ -445,7 +458,18 @@ const AllJobsPage = () => {
           onSortModelChange={(newSortModel) => setSorta(...newSortModel)}
           components={{ Toolbar: DataGridCustomToolbar }}
           componentsProps={{
-            toolbar: { searchInput, setSearchInput, setJobSearch, results },
+            toolbar: {
+              searchInput,
+              setSearchInput,
+              setJobSearch,
+              results,
+              exportParams: {
+                enabled: true,
+                scope: "deliverer",
+                jobSearch,
+                sort: JSON.stringify(sorta || {}),
+              },
+            },
           }}
         />
       </Box>

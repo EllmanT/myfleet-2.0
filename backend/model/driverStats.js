@@ -81,5 +81,6 @@ const DriverStatsSchema = new mongoose.Schema({
     },
   },
 }, { timestamps: true });
+DriverStatsSchema.index({ driverId: 1, year: 1 }, { unique: true });
 
 module.exports = mongoose.model("DriverStats", DriverStatsSchema);

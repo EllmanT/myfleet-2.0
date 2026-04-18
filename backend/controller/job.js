@@ -12,604 +12,405 @@ const OverallStats = require("../model/overallStats");
 const ContractorStats = require("../model/contractorStats");
 const Driver = require("../model/driver");
 const Vehicle = require("../model/vehicle");
+const mongoose = require("mongoose");
+const {
+  asNumber,
+  roundMoney,
+  applyJobDelta,
+  buildJobSnapshot,
+} = require("./helpers/jobStatsSync");
 const router = express.Router();
+function addUniqueId(list, id) {
+  const target = Array.isArray(list) ? list : [];
+  const idStr = String(id);
+  if (!target.some((item) => String(item) === idStr)) {
+    target.push(id);
+  }
+  return target;
+}
 
-const { Decimal128 } = require("mongodb");
+function removeId(list, id) {
+  const idStr = String(id);
+  return list.filter((item) => String(item) !== idStr);
+}
 
-// ...
+function withSession(query, session) {
+  return session ? query.session(session) : query;
+}
+
+async function runWithOptionalTransaction(work) {
+  const session = await mongoose.startSession();
+  try {
+    await session.withTransaction(async () => {
+      await work(session);
+    });
+  } catch (error) {
+    const message = String(error?.message || "");
+    const notSupported =
+      message.includes("Transaction numbers are only allowed") ||
+      message.includes("replica set") ||
+      message.includes("Transaction support");
+
+    if (!notSupported) {
+      throw error;
+    }
+    await work(null);
+  } finally {
+    await session.endSession();
+  }
+}
+
+function getYearFilter(req) {
+  const fallbackYear = new Date().getFullYear();
+  const rawYear = req.query.year;
+
+  if (rawYear === undefined || rawYear === null || rawYear === "") {
+    const start = new Date(fallbackYear, 0, 1);
+    const end = new Date(fallbackYear + 1, 0, 1);
+    return { year: fallbackYear, dateMatch: { orderDate: { $gte: start, $lt: end } } };
+  }
+
+  const year = Number(rawYear);
+  if (!Number.isInteger(year) || year < 2000 || year > 2100) {
+    throw new ErrorHandler("Invalid year query parameter", 400);
+  }
+
+  const start = new Date(year, 0, 1);
+  const end = new Date(year + 1, 0, 1);
+  return { year, dateMatch: { orderDate: { $gte: start, $lt: end } } };
+}
+
+function escapeRegex(value = "") {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function escapeCsv(value) {
+  const text = value === undefined || value === null ? "" : String(value);
+  return `"${text.replace(/"/g, '""')}"`;
+}
+
+function escapePdfText(value = "") {
+  return String(value).replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
+}
+
+function buildSimplePdfBuffer(lines) {
+  const bodyLines = lines.length ? lines : ["No data"];
+  const textOps = ["BT", "/F1 10 Tf", "40 800 Td"];
+  bodyLines.forEach((line, index) => {
+    if (index > 0) {
+      textOps.push("T*");
+    }
+    textOps.push(`(${escapePdfText(line)}) Tj`);
+  });
+  textOps.push("ET");
+  const stream = textOps.join("\n");
+  const objects = [
+    "1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj",
+    "2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >> endobj",
+    "3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >> endobj",
+    `4 0 obj << /Length ${Buffer.byteLength(stream, "utf8")} >> stream\n${stream}\nendstream endobj`,
+    "5 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj",
+  ];
+  let pdf = "%PDF-1.4\n";
+  const offsets = [0];
+  objects.forEach((obj) => {
+    offsets.push(Buffer.byteLength(pdf, "utf8"));
+    pdf += `${obj}\n`;
+  });
+  const xrefStart = Buffer.byteLength(pdf, "utf8");
+  pdf += `xref\n0 ${objects.length + 1}\n`;
+  pdf += "0000000000 65535 f \n";
+  for (let index = 1; index < offsets.length; index += 1) {
+    pdf += `${String(offsets[index]).padStart(10, "0")} 00000 n \n`;
+  }
+  pdf += `trailer << /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefStart}\n%%EOF`;
+  return Buffer.from(pdf, "utf8");
+}
+
+async function getScopedJobIds(req) {
+  const { scope = "deliverer", entityId } = req.query;
+
+  if (scope === "contractor" && entityId) {
+    const contractor = await Contractor.findById(entityId);
+    return contractor?.job_ids || [];
+  }
+  if (scope === "driver" && entityId) {
+    const driver = await Driver.findById(entityId);
+    return driver?.job_ids || [];
+  }
+  if (scope === "vehicle" && entityId) {
+    const vehicle = await Vehicle.findById(entityId);
+    return vehicle?.job_ids || [];
+  }
+
+  const deliverer = await Deliverer.findById(req.user.companyId);
+  if (!deliverer) {
+    throw new ErrorHandler("Deliverer not found", 404);
+  }
+  return deliverer.job_ids || [];
+}
+
+async function buildJobsForExport(req) {
+  const { jobSearch = "", sort = null } = req.query;
+  const searchValue = escapeRegex(jobSearch);
+  const { dateMatch: yearMatch } = getYearFilter(req);
+  const { startDate, endDate } = req.query;
+  let dateMatch = yearMatch;
+  if (startDate || endDate) {
+    const start = startDate ? new Date(startDate) : new Date("2000-01-01T00:00:00.000Z");
+    const end = endDate ? new Date(endDate) : new Date("2100-01-01T00:00:00.000Z");
+    if (!Number.isNaN(start.getTime()) && !Number.isNaN(end.getTime())) {
+      dateMatch = { orderDate: { $gte: start, $lte: end } };
+    }
+  }
+  const jobIds = await getScopedJobIds(req);
+
+  let sortOptions = { orderDate: -1 };
+  if (sort) {
+    const parsed = JSON.parse(sort);
+    sortOptions = { [parsed.field]: parsed.sort === "asc" ? 1 : -1 };
+  }
+
+  const pipeline = [
+    { $match: { _id: { $in: jobIds }, ...dateMatch } },
+    {
+      $lookup: {
+        from: "customers",
+        localField: "customer",
+        foreignField: "_id",
+        as: "customer",
+      },
+    },
+    { $unwind: "$customer" },
+    {
+      $lookup: {
+        from: "customers",
+        localField: "from",
+        foreignField: "_id",
+        as: "from",
+      },
+    },
+    { $unwind: "$from" },
+    {
+      $lookup: {
+        from: "contractors",
+        let: { contractorId: "$contractorId" },
+        pipeline: [
+          { $match: { $expr: { $eq: ["$_id", "$$contractorId"] } } },
+          { $project: { companyName: 1 } },
+        ],
+        as: "contractorId",
+      },
+    },
+    { $unwind: "$contractorId" },
+    {
+      $match: {
+        $or: [
+          { "customer.name": { $regex: `.*${searchValue}.*`, $options: "i" } },
+          { "from.name": { $regex: `.*${searchValue}.*`, $options: "i" } },
+          { "contractorId.companyName": { $regex: `.*${searchValue}.*`, $options: "i" } },
+          { jobNumber: { $regex: `.*${searchValue}.*`, $options: "i" } },
+          { deliveryType: { $regex: `.*${searchValue}.*`, $options: "i" } },
+        ],
+      },
+    },
+    { $sort: sortOptions },
+  ];
+
+  return Job.aggregate(pipeline);
+}
+
+function parsePaginationParams(query) {
+  const rawPage = Number.parseInt(query.page, 10);
+  const rawLimit = Number.parseInt(query.limit ?? query.pageSize, 10);
+  const page = Number.isInteger(rawPage) && rawPage >= 0 ? rawPage : 0;
+  const limit = Number.isInteger(rawLimit)
+    ? Math.min(Math.max(rawLimit, 1), 100)
+    : 25;
+
+  return { page, limit, skip: page * limit };
+}
+
+function buildSortOptions(sort, fallback = { orderDate: -1, _id: -1 }) {
+  if (!sort) {
+    return fallback;
+  }
+
+  try {
+    const parsed = typeof sort === "string" ? JSON.parse(sort) : sort;
+    if (!parsed?.field || !parsed?.sort) {
+      return fallback;
+    }
+
+    const direction = parsed.sort === "asc" ? 1 : -1;
+    return { [parsed.field]: direction, _id: direction };
+  } catch (error) {
+    return fallback;
+  }
+}
+
+function buildJobSearchMatch(jobSearch = "") {
+  return {
+    $or: [
+      { "customer.name": { $regex: `.*${jobSearch}.*`, $options: "i" } },
+      { "from.name": { $regex: `.*${jobSearch}.*`, $options: "i" } },
+      {
+        "contractorId.companyName": {
+          $regex: `.*${jobSearch}.*`,
+          $options: "i",
+        },
+      },
+      { deliveryType: { $regex: `.*${jobSearch}.*`, $options: "i" } },
+      { jobNumber: { $regex: `.*${jobSearch}.*`, $options: "i" } },
+    ],
+  };
+}
+
+function buildBaseJobsPipeline(jobIds, dateMatch, jobSearch) {
+  return [
+    { $match: { _id: { $in: jobIds }, ...dateMatch } },
+    {
+      $lookup: {
+        from: "customers",
+        localField: "customer",
+        foreignField: "_id",
+        as: "customer",
+      },
+    },
+    { $unwind: "$customer" },
+    {
+      $lookup: {
+        from: "customers",
+        localField: "from",
+        foreignField: "_id",
+        as: "from",
+      },
+    },
+    { $unwind: "$from" },
+    {
+      $lookup: {
+        from: "contractors",
+        let: { contractorId: "$contractorId" },
+        pipeline: [
+          { $match: { $expr: { $eq: ["$_id", "$$contractorId"] } } },
+          { $project: { companyName: 1 } },
+        ],
+        as: "contractorId",
+      },
+    },
+    { $unwind: "$contractorId" },
+    { $match: buildJobSearchMatch(jobSearch) },
+  ];
+}
+
+function mapJobCost(rows) {
+  return rows.map((job) => ({
+    ...job,
+    cost: parseFloat(job.cost?.toString() || "0"),
+  }));
+}
+
 //creating the job
 router.post(
   "/create-job",
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
-      const jobs = req.body;
-
-      const driverIds = new Set();
-      const vehicleIds = new Set();
-      const bulkDriverStats = [];
-      const bulkVehicleStats = [];
-      const bulkOverallStats = [];
-      const bulkContractorStats = [];
-      const jobIds = [];
-
-      const deliverer = await Deliverer.findById(req.user.companyId);
-
-      if (!deliverer) {
-        return next(new ErrorHandler("Deliverer not found", 500));
+      const jobs = Array.isArray(req.body) ? req.body : [req.body];
+      if (!jobs.length) {
+        return next(new ErrorHandler("At least one job is required", 400));
       }
-      const delivererId = req.user.companyId;
-      const totalCustomers = deliverer.customer_ids.length;
-      const totalContractors = deliverer.contractor_ids.length;
-      const companyId = req.user.companyId;
-      let year;
-      let contractorId;
-      contractorId = jobs[0].contractorId;
-      const vehicleId = jobs[0].vehicleId;
-      const driverId = jobs[0].driverId;
 
-      const contractor = await Contractor.findById(contractorId);
-      const vehicle = await Vehicle.findById(vehicleId);
-      const driver = await Driver.findById(driverId);
-      const contractorName = contractor.companyName;
+      const createdJobs = [];
 
-      for (const job of jobs) {
-        const newJob = new Job(job);
-        const date = new Date(job.orderDate);
-        year = date.getFullYear();
-        const month = date.toLocaleString("default", { month: "long" }); // Get month name
-        //const currentDate = date.getDate();
-
-        const day = String(date.getDate()).padStart(2, "0"); // Get the day component and pad with leading zero if necessary
-        const monthNumber = String(date.getMonth() + 1).padStart(2, "0"); // Get the month component and pad with leading zero if necessary
-
-        const formattedDate = `${year}-${monthNumber}-${day}`;
-        const distance = parseFloat(job.distance).toFixed(2);
-        const cost = parseFloat(job.cost).toFixed(2);
-
-        if (!driverId || !vehicleId || !companyId || !year || !distance) {
-          continue; // Skip this job and proceed to the next iteration
+      await runWithOptionalTransaction(async (session) => {
+        const deliverer = await withSession(
+          Deliverer.findById(req.user.companyId),
+          session
+        );
+        if (!deliverer) {
+          throw new ErrorHandler("Deliverer not found", 404);
         }
 
-        driverIds.add(driverId);
-        vehicleIds.add(vehicleId);
-        //START OF THE DRIVERSTATS UPDATING
-        bulkDriverStats.push({
-          updateOne: {
-            filter: { driverId, year },
-            update: {
-              $inc: {
-                yearlyMileage: distance,
-                yearlyRevenue: cost,
-                yearlyProfit: cost,
-                yearlyExpenses: 0,
-                [`revenueByContractor.${contractorName}`]: cost,
-                [`jobsByContractor.${contractorName}`]: 1,
-                yearlyJobs: 1, // Increment yearlyJobs by 1
-              },
-              $setOnInsert: {
-                monthlyData: [],
-                dailyData: [],
-                // yearlyJobs: 1,
-                totalCustomers: totalCustomers,
-              },
-            },
-            upsert: true,
-          },
-        });
+        const totalCustomers = (deliverer.customer_ids || []).length;
+        const totalContractors = (deliverer.contractor_ids || []).length;
 
-        bulkDriverStats.push({
-          updateOne: {
-            filter: { driverId, year, "monthlyData.month": month },
-            update: {
-              $inc: {
-                // yearlyJobs: 1,
+        for (const payload of jobs) {
+          const contractor = await withSession(
+            Contractor.findById(payload.contractorId),
+            session
+          );
+          const vehicle = await withSession(
+            Vehicle.findById(payload.vehicleId),
+            session
+          );
+          const driver = await withSession(
+            Driver.findById(payload.driverId),
+            session
+          );
 
-                "monthlyData.$.totalMileage": distance,
-                "monthlyData.$.totalRevenue": cost,
-                "monthlyData.$.totalProfit": cost,
-                "monthlyData.$.totalExpenses": 0,
-                "monthlyData.$.totalJobs": 1,
-              },
+          if (!contractor || !vehicle || !driver) {
+            throw new ErrorHandler(
+              "Invalid contractor, vehicle, or driver for job",
+              400
+            );
+          }
 
-              arrayFilters: [{ "elem.month": month }],
-            },
-          },
-        });
+          const newJob = new Job({
+            ...payload,
+            distance: asNumber(payload.distance),
+            cost: roundMoney(payload.cost),
+          });
+          await newJob.save(session ? { session } : {});
 
-        bulkDriverStats.push({
-          updateOne: {
-            filter: { driverId, year, "monthlyData.month": { $ne: month } },
-            update: {
-              $push: {
-                monthlyData: {
-                  $each: [
-                    {
-                      month,
-                      totalMileage: distance,
-                      totalRevenue: cost,
-                      totalProfit: cost,
-                      totalExpenses: 0,
-                      totalJobs: 1,
-                    },
-                  ],
-                  $sort: { month: -1 },
-                },
-              },
-            },
-          },
-        });
-        //Updating the daily data and soring
-        bulkDriverStats.push({
-          updateOne: {
-            filter: { driverId, year, "dailyData.date": formattedDate },
-            update: {
-              $inc: {
-                "dailyData.$.totalMileage": distance,
-                "dailyData.$.totalRevenue": cost,
-                "dailyData.$.totalJobs": 1,
-              },
-            },
-          },
-        });
+          deliverer.job_ids = addUniqueId(deliverer.job_ids, newJob._id);
+          driver.job_ids = addUniqueId(driver.job_ids, newJob._id);
+          vehicle.job_ids = addUniqueId(vehicle.job_ids, newJob._id);
+          contractor.job_ids = addUniqueId(contractor.job_ids, newJob._id);
+          contractor.lastOrder = asNumber(contractor.lastOrder) + 1;
 
-        bulkDriverStats.push({
-          updateOne: {
-            filter: {
-              driverId,
-              year,
-              "dailyData.date": { $ne: formattedDate },
-            },
-            update: {
-              $push: {
-                dailyData: {
-                  $each: [
-                    {
-                      date: formattedDate,
-                      totalMileage: distance,
-                      totalRevenue: cost,
-                      totalJobs: 1,
-                    },
-                  ],
-                  $sort: { date: -1 },
-                },
-              },
-            },
-          },
-        });
+          await Promise.all([
+            deliverer.save(session ? { session } : {}),
+            driver.save(session ? { session } : {}),
+            vehicle.save(session ? { session } : {}),
+            contractor.save(session ? { session } : {}),
+          ]);
 
-        //END OF THE DRIVERSTATS UPDATING
+          const snapshot = buildJobSnapshot({
+            job: newJob,
+            contractorName: contractor.companyName,
+          });
+          await applyJobDelta(snapshot, 1, {
+            companyId: req.user.companyId,
+            totalCustomers,
+            totalContractors,
+            session,
+          });
 
-        //START OF THE VEHICLESTATS UPDATING
+          const contractorStats = await withSession(
+            ContractorStats.findOne({
+              contractorId: String(snapshot.contractorId),
+              delivererId: String(req.user.companyId),
+              year: snapshot.year,
+            }),
+            session
+          );
+          if (contractorStats) {
+            contractorStats.job_ids = addUniqueId(contractorStats.job_ids, newJob._id);
+            await contractorStats.save(session ? { session } : {});
+          }
 
-        bulkVehicleStats.push({
-          updateOne: {
-            filter: { vehicleId, year },
-            update: {
-              $inc: {
-                yearlyMileage: distance,
-                yearlyRevenue: cost,
-                yearlyProfit: cost,
-                yearlyExpenses: 0,
-                [`revenueByContractor.${contractorName}`]: cost,
-                [`jobsByContractor.${contractorName}`]: 1,
-                yearlyJobs: 1, // Increment yearlyJobs by 1
-              },
-              $setOnInsert: {
-                monthlyData: [],
-                dailyData: [],
-                // yearlyJobs: 1,
-                totalCustomers: totalCustomers,
-              },
-            },
-            upsert: true,
-          },
-        });
-
-        bulkVehicleStats.push({
-          updateOne: {
-            filter: { vehicleId, year, "monthlyData.month": month },
-            update: {
-              $inc: {
-                // yearlyJobs: 1,
-
-                "monthlyData.$.totalMileage": distance,
-                "monthlyData.$.totalRevenue": cost,
-                "monthlyData.$.totalProfit": cost,
-                "monthlyData.$.totalExpenses": 0,
-                "monthlyData.$.totalJobs": 1,
-              },
-
-              arrayFilters: [{ "elem.month": month }],
-            },
-          },
-        });
-
-        bulkVehicleStats.push({
-          updateOne: {
-            filter: { vehicleId, year, "monthlyData.month": { $ne: month } },
-            update: {
-              $push: {
-                monthlyData: {
-                  $each: [
-                    {
-                      month,
-                      totalMileage: distance,
-                      totalRevenue: cost,
-                      totalProfit: cost,
-                      totalExpenses: 0,
-                      totalJobs: 1,
-                    },
-                  ],
-                  $sort: { month: -1 },
-                },
-              },
-            },
-          },
-        });
-        //Updating the daily data and soring
-        bulkVehicleStats.push({
-          updateOne: {
-            filter: { vehicleId, year, "dailyData.date": formattedDate },
-            update: {
-              $inc: {
-                "dailyData.$.totalMileage": distance,
-                "dailyData.$.totalRevenue": cost,
-                "dailyData.$.totalJobs": 1,
-              },
-            },
-          },
-        });
-
-        bulkVehicleStats.push({
-          updateOne: {
-            filter: {
-              vehicleId,
-              year,
-              "dailyData.date": { $ne: formattedDate },
-            },
-            update: {
-              $push: {
-                dailyData: {
-                  $each: [
-                    {
-                      date: formattedDate,
-                      totalMileage: distance,
-                      totalRevenue: cost,
-                      totalJobs: 1,
-                    },
-                  ],
-                  $sort: { date: -1 },
-                },
-              },
-            },
-          },
-        });
-
-        //END OF THE  VEHICLESTATS UPDATING
-
-        //START OF THE CONTRACTORSTATS UPDATING
-
-        bulkContractorStats.push({
-          updateOne: {
-            filter: { contractorId, delivererId, year },
-            update: {
-              $inc: {
-                yearlyMileage: distance,
-                yearlyRevenue: cost,
-                yearlyJobs: 1, // Increment yearlyJobs by 1
-              },
-              $setOnInsert: {
-                monthlyData: [],
-                dailyData: [],
-              },
-            },
-            upsert: true,
-          },
-        });
-
-        bulkContractorStats.push({
-          updateOne: {
-            filter: {
-              contractorId,
-              delivererId,
-              year,
-              "monthlyData.month": month,
-            },
-            update: {
-              $inc: {
-                // yearlyJobs: 1,
-
-                "monthlyData.$.totalMileage": distance,
-                "monthlyData.$.totalRevenue": cost,
-                "monthlyData.$.totalProfit": cost,
-                "monthlyData.$.totalExpenses": 0,
-                "monthlyData.$.totalJobs": 1,
-              },
-
-              arrayFilters: [{ "elem.month": month }],
-            },
-          },
-        });
-
-        bulkContractorStats.push({
-          updateOne: {
-            filter: {
-              contractorId,
-              delivererId,
-              year,
-              "monthlyData.month": { $ne: month },
-            },
-            update: {
-              $push: {
-                monthlyData: {
-                  $each: [
-                    {
-                      month,
-                      totalMileage: distance,
-                      totalRevenue: cost,
-                      totalJobs: 1,
-                    },
-                  ],
-                  $sort: { month: -1 },
-                },
-              },
-            },
-          },
-        });
-        //Updating the daily data and soring
-        bulkContractorStats.push({
-          updateOne: {
-            filter: {
-              contractorId,
-              delivererId,
-              year,
-              "dailyData.date": formattedDate,
-            },
-            update: {
-              $inc: {
-                "dailyData.$.totalMileage": distance,
-                "dailyData.$.totalRevenue": cost,
-                "dailyData.$.totalJobs": 1,
-              },
-            },
-          },
-        });
-
-        bulkContractorStats.push({
-          updateOne: {
-            filter: {
-              contractorId,
-              delivererId,
-              year,
-              "dailyData.date": { $ne: formattedDate },
-            },
-            update: {
-              $push: {
-                dailyData: {
-                  $each: [
-                    {
-                      date: formattedDate,
-                      totalMileage: distance,
-                      totalRevenue: cost,
-                      totalJobs: 1,
-                    },
-                  ],
-                  $sort: { date: -1 },
-                },
-              },
-            },
-          },
-        });
-        //END OF THE CONTRACTORSTATS UPDATING
-
-        //START OF THE OVERALLSTATS UPDATING
-
-        bulkOverallStats.push({
-          updateOne: {
-            filter: { companyId, year },
-            update: {
-              $inc: {
-                yearlyMileage: distance,
-                yearlyRevenue: parseFloat(cost).toFixed(2),
-                yearlyProfit: cost,
-                yearlyExpenses: 0,
-                [`revenueByContractor.${contractorName}`]: cost,
-                [`jobsByContractor.${contractorName}`]: 1,
-                yearlyJobs: 1, // Increment yearlyJobs by 1
-              },
-              $setOnInsert: {
-                monthlyData: [],
-                dailyData: [],
-                // yearlyJobs: 1,
-                totalCustomers: totalCustomers,
-              },
-            },
-            upsert: true,
-          },
-        });
-
-        bulkOverallStats.push({
-          updateOne: {
-            filter: { companyId, year, "monthlyData.month": month },
-            update: {
-              $inc: {
-                // yearlyJobs: 1,
-
-                "monthlyData.$.totalMileage": distance,
-                "monthlyData.$.totalRevenue": cost,
-                "monthlyData.$.totalProfit": cost,
-                "monthlyData.$.totalExpenses": 0,
-                "monthlyData.$.totalJobs": 1,
-              },
-
-              arrayFilters: [{ "elem.month": month }],
-            },
-          },
-        });
-
-        bulkOverallStats.push({
-          updateOne: {
-            filter: { companyId, year, "monthlyData.month": { $ne: month } },
-            update: {
-              $push: {
-                monthlyData: {
-                  $each: [
-                    {
-                      month,
-                      totalMileage: distance,
-                      totalRevenue: cost,
-                      totalProfit: cost,
-                      totalExpenses: 0,
-                      totalJobs: 1,
-                    },
-                  ],
-                  $sort: { month: -1 },
-                },
-              },
-            },
-          },
-        });
-        //Updating the daily data and soring
-        bulkOverallStats.push({
-          updateOne: {
-            filter: { companyId, year, "dailyData.date": formattedDate },
-            update: {
-              $inc: {
-                "dailyData.$.totalMileage": distance,
-                "dailyData.$.totalRevenue": cost,
-                "dailyData.$.totalJobs": 1,
-              },
-            },
-          },
-        });
-
-        bulkOverallStats.push({
-          updateOne: {
-            filter: {
-              companyId,
-              year,
-              "dailyData.date": { $ne: formattedDate },
-            },
-            update: {
-              $push: {
-                dailyData: {
-                  $each: [
-                    {
-                      date: formattedDate,
-                      totalMileage: distance,
-                      totalRevenue: cost,
-                      totalJobs: 1,
-                    },
-                  ],
-                  $sort: { date: -1 },
-                },
-              },
-            },
-          },
-        });
-
-        //END OF THE DRIVERSTATS UPDATING
-
-        await newJob.save();
-
-        const jobId = newJob._id;
-        jobIds.push(jobId);
-      }
-      //checking the deliverer table
-
-      // Perform bulk operations for DriverStats, VehicleStats, and OverallStats
-      await DriverStats.bulkWrite(bulkDriverStats);
-      await VehicleStats.bulkWrite(bulkVehicleStats);
-      await OverallStats.bulkWrite(bulkOverallStats);
-      await ContractorStats.bulkWrite(bulkContractorStats);
-
-      await OverallStats.updateOne(
-        { companyId, year },
-        {
-          $set: {
-            totalCustomers: totalCustomers,
-            totalContractors: totalContractors,
-          },
-        },
-        {}
-      );
-
-      await Contractor.updateOne(
-        { _id: contractorId },
-        { $inc: { lastOrder: 1 } }
-      );
-
-      await deliverer.job_ids.push(...jobIds);
-      await driver.job_ids.push(...jobIds);
-      await vehicle.job_ids.push(...jobIds);
-      await contractor.job_ids.push(...jobIds);
-
-      await driver.save();
-      await vehicle.save();
-      await deliverer.save();
-      await contractor.save();
-
-      const vehStats = await VehicleStats.findOne({ vehicleId: vehicleId });
-      const drStats = await DriverStats.findOne({ driverId: driverId });
-      const ovStats = await OverallStats.findOne({ companyId: companyId });
-
-      // Sort the monthlyData array by month in ascending order
-      drStats.monthlyData.sort(
-        (a, b) =>
-          new Date(Date.parse(`01 ${a.month} 2000`)) -
-          new Date(Date.parse(`01 ${b.month} 2000`))
-      );
-      // Sort the dailyData array by date in ascending order
-      // the a.date is date is the name of he field in the dailyData
-      drStats.dailyData.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-      await drStats.save();
-
-      // Sort the monthlyData array by month in ascending order
-      vehStats.monthlyData.sort(
-        (a, b) =>
-          new Date(Date.parse(`01 ${a.month} 2000`)) -
-          new Date(Date.parse(`01 ${b.month} 2000`))
-      );
-      // Sort the dailyData array by date in ascending order
-      // the a.date is date is the name of he field in the dailyData
-      vehStats.dailyData.sort((a, b) => new Date(a.date) - new Date(b.date));
-      // Save the sorted dailyData array
-      await vehStats.save();
-
-      // Sort the monthlyData array by month in ascending order
-      ovStats.monthlyData.sort(
-        (a, b) =>
-          new Date(Date.parse(`01 ${a.month} 2000`)) -
-          new Date(Date.parse(`01 ${b.month} 2000`))
-      );
-      // Sort the dailyData array by date in ascending order
-      // the a.date is date is the name of he field in the dailyData
-      ovStats.dailyData.sort((a, b) => new Date(a.date) - new Date(b.date));
-      // Save the sorted dailyData array
-      await ovStats.save();
-
-      // Update driver and vehicle collections
-
-      const contrStats = await ContractorStats.find({
-        contractorId: contractorId,
-        delivererId: companyId,
+          createdJobs.push(newJob);
+        }
       });
-      if (!contrStats) {
-        return next(new ErrorHandler("Contractor not found", 400));
-      }
-      await contrStats[0].job_ids.push(...jobIds);
-      await contrStats[0].save();
-      // ...
 
       res.status(201).json({
         success: true,
         message: "Jobs added successfully",
-        jobs,
+        jobs: createdJobs,
       });
     } catch (error) {
-      return next(new ErrorHandler(error.message, 400));
+      return next(new ErrorHandler(error.message || error, 400));
     }
   })
 );
@@ -620,380 +421,171 @@ router.put(
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
-      const {
-        jobId,
-        jobNum,
-        fromId,
-        pageCustomerId,
-        description,
-        vehicleId,
-        contractorId,
-        driverId,
-        mileageIn,
-        mileageOut,
-        deliveryType,
-        cost,
-        distance,
-        orderDatee,
-      } = req.body;
-
-      const job = await Job.findById(jobId);
-
-      if (!job) {
-        return next(new ErrorHandler("Job not found", 400));
-      }
+      const { jobId } = req.body;
       if (!jobId) {
-        return next(new ErrorHandler("Job Id is required"));
+        return next(new ErrorHandler("Job Id is required", 400));
       }
 
-      //START updating the stats
+      let updatedJob;
 
-      const deliverer = await Deliverer.findById(req.user.companyId);
-
-      const companyId = deliverer._id;
-      console.log(companyId);
-
-      const contractor = await Contractor.findById(contractorId);
-      if (!contractor || !contractor.companyName) {
-        return next(new ErrorHandler("Contractor not found ", 500));
-      }
-
-      const jobDate = job.orderDate;
-      year = jobDate.getFullYear();
-
-      // Validate year
-      if (!year) {
-        console.error("Year is not defined.");
-        throw new Error("Year is required for the filter.");
-      }
-      const month = jobDate.toLocaleString("default", { month: "long" }); // Get month name
-
-      //const currentDate = date.getDate();
-
-      const day = String(jobDate.getDate()).padStart(2, "0"); // Get the day component and pad with leading zero if necessary
-      const monthNumber = String(jobDate.getMonth() + 1).padStart(2, "0"); // Get the month component and pad with leading zero if necessary
-
-      const formattedDate = `${year}-${monthNumber}-${day}`;
-
-      const jobCostDecimal128 = Decimal128.fromString(job.cost.toString());
-      const newOldCostDecimal128 = Decimal128.fromString(cost.toString());
-      let updatedCost;
-
-
-      // Helper function to subtract Decimal128 values
-      function addDecimal128(a, b) {
-        // Ensure both are Decimal128
-
-        // Convert Decimal128 to string for correct subtraction
-        const aValue = parseFloat(a.toString());
-        const bValue = parseFloat(b.toString());
-
-        console.log("a", a)
-        console.log("b",b)
-        // Subtract and return as a new Decimal128
-        return parseFloat((aValue + bValue).toFixed(2));
-      }
-      // Helper function to subtract Decimal128 values
-      function subtractDecimal128(a, b) {
-        // Ensure both are Decimal128
-
-        // Convert Decimal128 to string for correct subtraction
-        const aValue = parseFloat(a.toString());
-        const bValue = parseFloat(b.toString());
-
-        // Subtract and return as a new Decimal128
-        return parseFloat((aValue - bValue).toFixed(2));
-      }
-
-      const costDifference = subtractDecimal128(cost, jobCostDecimal128);
-
-    
-      const mileageDifference = distance - job.distance;
-      const contractorFieldKey = `revenueByContractor.${contractor.companyName}`;
-      updatedCost = parseFloat(costDifference).toFixed(2);
-
-
-      //start of updating the overall stats
-
-      const overallStats = await OverallStats.findOne({
-        companyId: req.user.companyId,
-        year: year,
-      });
-
-      const vehStats = await VehicleStats.findOne({
-        vehicleId: vehicleId,
-        year: year,
-      });
-      
-      const drStats = await DriverStats.findOne({
-        driverId: driverId,
-        year: year,
-      });
-      const contrStats = await ContractorStats.findOne({
-        contractorId: contractorId,
-        delivererId: req.user.companyId,
-        year: year,
-      });
-
-
-      if (overallStats) {
-        const dailyStatsToUpdate = overallStats.dailyData.find(
-          (item) => item.date === formattedDate
+      await runWithOptionalTransaction(async (session) => {
+        const deliverer = await withSession(
+          Deliverer.findById(req.user.companyId),
+          session
         );
-        const monthlyStatsToUpdate = overallStats.monthlyData.find(
-          (item) => item.month === month
-        );
-        console.log("now herer 1")
-        
-        console.log("now herer 1",overallStats.yearlyRevenue)
-        console.log("cost", cost)
-        console.log("jobCostDecimal", jobCostDecimal128)
-        console.log("costDiffer", costDifference)
-        
-        overallStats.yearlyMileage += mileageDifference;
-        overallStats.yearlyRevenue = addDecimal128(
-          overallStats.yearlyRevenue,
-          costDifference
-        );
-        console.log("now herer 2", overallStats.yearlyRevenue)
-        overallStats.yearlyProfit = addDecimal128(
-          overallStats.yearlyProfit,
-          costDifference
-        );
-
-        if (dailyStatsToUpdate) {
-          dailyStatsToUpdate.totalMileage += mileageDifference;
-          dailyStatsToUpdate.totalRevenue = addDecimal128(
-            dailyStatsToUpdate.totalRevenue,
-            costDifference
-          );
+        if (!deliverer) {
+          throw new ErrorHandler("Deliverer not found", 404);
         }
-        if (monthlyStatsToUpdate) {
-          monthlyStatsToUpdate.totalMileage += mileageDifference;
-          monthlyStatsToUpdate.totalRevenue = addDecimal128(
-            monthlyStatsToUpdate.totalRevenue,
-            costDifference
-          );
-          monthlyStatsToUpdate.totalProfit = addDecimal128(
-            monthlyStatsToUpdate.totalProfit,
-            costDifference
-          );
+        const totalCustomers = (deliverer.customer_ids || []).length;
+        const totalContractors = (deliverer.contractor_ids || []).length;
+
+        const job = await withSession(Job.findById(jobId), session);
+        if (!job) {
+          throw new ErrorHandler("Job not found", 404);
         }
 
-        // Log the dynamic field key
-
-        const updateRevenueOverallStats = [];
-        updateRevenueOverallStats.push({
-          updateOne: {
-            filter: { companyId, year },
-            update: {
-              $inc: {
-                [contractorFieldKey]: updatedCost,
-              },
-            },
-            upsert: true,
-          },
+        const oldContractor = await withSession(
+          Contractor.findById(job.contractorId),
+          session
+        );
+        if (!oldContractor) {
+          throw new ErrorHandler("Current contractor not found", 404);
+        }
+        const oldSnapshot = buildJobSnapshot({
+          job,
+          contractorName: oldContractor.companyName,
         });
 
-        try {
-          const resultOverall = await OverallStats.bulkWrite(
-            updateRevenueOverallStats
-          );
-        } catch (error) {
-          console.error("Error writing update to OverallStats:", error);
-          throw new Error("Failed to write update to OverallStats.");
-        }
-        await overallStats.save();
-      }
+        const nextValues = {
+          jobNumber: req.body.jobNum ?? job.jobNumber,
+          from: req.body.fromId ?? job.from,
+          customer: req.body.pageCustomerId ?? job.customer,
+          description: req.body.description ?? job.description,
+          vehicleId: req.body.vehicleId ?? job.vehicleId,
+          contractorId: req.body.contractorId ?? job.contractorId,
+          driverId: req.body.driverId ?? job.driverId,
+          mileageIn: req.body.mileageIn ?? job.mileageIn,
+          mileageOut: req.body.mileageOut ?? job.mileageOut,
+          deliveryType: req.body.deliveryType ?? job.deliveryType,
+          cost: req.body.cost !== undefined ? roundMoney(req.body.cost) : job.cost,
+          distance:
+            req.body.distance !== undefined
+              ? asNumber(req.body.distance)
+              : asNumber(job.distance),
+          orderDate: req.body.orderDatee ?? job.orderDate,
+        };
 
-      //end of updateing the overall stats
-      if (vehStats) {
-        const dailyStatsToUpdate = vehStats.dailyData.find(
-          (item) => item.date === formattedDate
+        const newContractor = await withSession(
+          Contractor.findById(nextValues.contractorId),
+          session
         );
-        const monthlyStatsToUpdate = vehStats.monthlyData.find(
-          (item) => item.month === month
+        const newDriver = await withSession(
+          Driver.findById(nextValues.driverId),
+          session
         );
-
-        vehStats.yearlyMileage += mileageDifference;
-        vehStats.yearlyRevenue = addDecimal128(
-          vehStats.yearlyRevenue,
-          costDifference
+        const newVehicle = await withSession(
+          Vehicle.findById(nextValues.vehicleId),
+          session
         );
-        vehStats.yearlyProfit = addDecimal128(
-          vehStats.yearlyProfit,
-          costDifference
-        );
-
-        if (dailyStatsToUpdate) {
-          dailyStatsToUpdate.totalMileage += mileageDifference;
-          dailyStatsToUpdate.totalRevenue = addDecimal128(
-            dailyStatsToUpdate.totalRevenue,
-            costDifference
-          );
-        }
-        if (monthlyStatsToUpdate) {
-          monthlyStatsToUpdate.totalMileage += mileageDifference;
-          monthlyStatsToUpdate.totalRevenue = addDecimal128(
-            monthlyStatsToUpdate.totalRevenue,
-            costDifference
-          );
-          monthlyStatsToUpdate.totalProfit = addDecimal128(
-            monthlyStatsToUpdate.totalProfit,
-            costDifference
+        if (!newContractor || !newDriver || !newVehicle) {
+          throw new ErrorHandler(
+            "Invalid contractor, vehicle, or driver for job update",
+            400
           );
         }
 
-        const updateRevenuevehStats = [];
-        updateRevenuevehStats.push({
-          updateOne: {
-            filter: { vehicleId, year },
-            update: {
-              $inc: {
-                [contractorFieldKey]: updatedCost,
-              },
-            },
-            upsert: true,
-          },
+        await applyJobDelta(oldSnapshot, -1, {
+          companyId: req.user.companyId,
+          totalCustomers,
+          totalContractors,
+          session,
         });
 
-        try {
-          const resultveh = await VehicleStats.bulkWrite(
-            updateRevenuevehStats
-          );
-        } catch (error) {
-          console.error("Error writing update to vehStats:", error);
-          throw new Error("Failed to write update to vehStats.");
-        }
-        await vehStats.save();
-      }
+        Object.assign(job, nextValues);
+        await job.save(session ? { session } : {});
 
-      if (drStats) {
-        const dailyStatsToUpdate = drStats.dailyData.find(
-          (item) => item.date === formattedDate
-        );
-        const monthlyStatsToUpdate = drStats.monthlyData.find(
-          (item) => item.month === month
-        );
-
-        drStats.yearlyMileage += mileageDifference;
-        drStats.yearlyRevenue = addDecimal128(
-          drStats.yearlyRevenue,
-          costDifference
-        );
-        drStats.yearlyProfit = addDecimal128(
-          drStats.yearlyProfit,
-          costDifference
-        );
-
-        if (dailyStatsToUpdate) {
-          dailyStatsToUpdate.totalMileage += mileageDifference;
-          dailyStatsToUpdate.totalRevenue = addDecimal128(
-            dailyStatsToUpdate.totalRevenue,
-            costDifference
-          );
-        }
-        if (monthlyStatsToUpdate) {
-          monthlyStatsToUpdate.totalMileage += mileageDifference;
-          monthlyStatsToUpdate.totalRevenue = addDecimal128(
-            monthlyStatsToUpdate.totalRevenue,
-            costDifference
-          );
-          monthlyStatsToUpdate.totalProfit = addDecimal128(
-            monthlyStatsToUpdate.totalProfit,
-            costDifference
-          );
-        }
-
-        const updateRevenuedrStats = [];
-        updateRevenuedrStats.push({
-          updateOne: {
-            filter: { driverId, year },
-            update: {
-              $inc: {
-                [contractorFieldKey]: updatedCost,
-              },
-            },
-            upsert: true,
-          },
+        const newSnapshot = buildJobSnapshot({
+          job,
+          contractorName: newContractor.companyName,
+        });
+        await applyJobDelta(newSnapshot, 1, {
+          companyId: req.user.companyId,
+          totalCustomers,
+          totalContractors,
+          session,
         });
 
-        try {
-          const resultdr = await DriverStats.bulkWrite(
-            updateRevenuedrStats
-          );
-          console.log("Update result:", resultdr);
-        } catch (error) {
-          console.error("Error writing update to drStats:", error);
-          throw new Error("Failed to write update to drStats.");
-        }
-        await drStats.save();
-      }
-
-      
-      if (contrStats) {
-        const dailyStatsToUpdate = contrStats.dailyData.find(
-          (item) => item.date === formattedDate
+        const oldDriver = await withSession(
+          Driver.findById(oldSnapshot.driverId),
+          session
         );
-        const monthlyStatsToUpdate = contrStats.monthlyData.find(
-          (item) => item.month === month
+        const oldVehicle = await withSession(
+          Vehicle.findById(oldSnapshot.vehicleId),
+          session
         );
-
-        contrStats.yearlyMileage += mileageDifference;
-        // Perform subtraction and round to 2 decimal places
-        contrStats.yearlyRevenue = addDecimal128(
-          contrStats.yearlyRevenue,
-          costDifference
-        );
-
-        if (dailyStatsToUpdate) {
-          dailyStatsToUpdate.totalMileage += mileageDifference
-          dailyStatsToUpdate.totalRevenue = addDecimal128(
-            dailyStatsToUpdate.totalRevenue,
-            costDifference
-          );
-        }
-        if (monthlyStatsToUpdate) {
-          monthlyStatsToUpdate.totalMileage += mileageDifference;
-          monthlyStatsToUpdate.totalRevenue = addDecimal128(
-            monthlyStatsToUpdate.totalRevenue,
-            costDifference
-          );
+        if (!oldDriver || !oldVehicle) {
+          throw new ErrorHandler("Current driver or vehicle not found", 404);
         }
 
-      
-        await contrStats.save();
-      }
-      
+        oldDriver.job_ids = removeId(oldDriver.job_ids || [], job._id);
+        oldVehicle.job_ids = removeId(oldVehicle.job_ids || [], job._id);
+        oldContractor.job_ids = removeId(oldContractor.job_ids || [], job._id);
+        await Promise.all([
+          oldDriver.save(session ? { session } : {}),
+          oldVehicle.save(session ? { session } : {}),
+          oldContractor.save(session ? { session } : {}),
+        ]);
 
-      // Remove the jobId from the deliverer's array of jobIds
+        newDriver.job_ids = addUniqueId(newDriver.job_ids, job._id);
+        newVehicle.job_ids = addUniqueId(newVehicle.job_ids, job._id);
+        newContractor.job_ids = addUniqueId(newContractor.job_ids, job._id);
+        await Promise.all([
+          newDriver.save(session ? { session } : {}),
+          newVehicle.save(session ? { session } : {}),
+          newContractor.save(session ? { session } : {}),
+        ]);
 
-      try {
-        job.jobNumber = jobNum;
-        job.from = fromId;
-        job.customer = pageCustomerId;
-        job.distance = distance;
-        job.cost = cost;
-        job.mileageIn = mileageIn;
-        job.mileageOut = mileageOut;
-        job.orderDate = orderDatee;
-        job.description = description;
-        job.deliveryType = deliveryType;
-        job.contractorId = contractorId;
-        job.driverId = driverId;
-        job.vehicleId = vehicleId;
+        const oldContractorStats = await withSession(
+          ContractorStats.findOne({
+            contractorId: String(oldSnapshot.contractorId),
+            delivererId: String(req.user.companyId),
+            year: oldSnapshot.year,
+          }),
+          session
+        );
+        if (oldContractorStats) {
+          oldContractorStats.job_ids = removeId(
+            oldContractorStats.job_ids || [],
+            job._id
+          );
+          await oldContractorStats.save(session ? { session } : {});
+        }
 
-        await job.save();
-      } catch (error) {
-        return next(new ErrorHandler(error.message, 500));
-      }
+        const newContractorStats = await withSession(
+          ContractorStats.findOne({
+            contractorId: String(newSnapshot.contractorId),
+            delivererId: String(req.user.companyId),
+            year: newSnapshot.year,
+          }),
+          session
+        );
+        if (newContractorStats) {
+          newContractorStats.job_ids = addUniqueId(
+            newContractorStats.job_ids,
+            job._id
+          );
+          await newContractorStats.save(session ? { session } : {});
+        }
+
+        updatedJob = job;
+      });
 
       res.status(201).json({
         success: true,
-        job,
+        job: updatedJob,
       });
     } catch (error) {
-      return next(new ErrorHandler(error.message, 500));
+      return next(new ErrorHandler(error.message || error, 500));
     }
   })
 );
@@ -1004,556 +596,82 @@ router.delete(
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
-      const jobId = req.params.jobId;
+      const { jobId } = req.params;
 
-      const job = await Job.findById(jobId);
-
-      if (!job) {
-        return next(new ErrorHandler("There is no job with this id", 500));
-      }
-
-      const vehicleId = job.vehicleId;
-      const driverId = job.driverId;
-      const contractorId = job.contractorId;
-      const deliverer = await Deliverer.findById(req.user.companyId);
-
-      if (!deliverer) {
-        return next(
-          new ErrorHandler("There is no deliverer with this id", 500)
+      await runWithOptionalTransaction(async (session) => {
+        const deliverer = await withSession(
+          Deliverer.findById(req.user.companyId),
+          session
         );
-      }
-      const driver = await Driver.findById(driverId);
+        if (!deliverer) {
+          throw new ErrorHandler("Deliverer not found", 404);
+        }
 
-      if (!driver) {
-        return next(new ErrorHandler("Driver not found", 500));
-      }
-      const vehicle = await Vehicle.findById(vehicleId);
-      if (!vehicle) {
-        return next(new ErrorHandler("Driver not found ", 500));
-      }
+        const job = await withSession(Job.findById(jobId), session);
+        if (!job) {
+          throw new ErrorHandler("There is no job with this id", 404);
+        }
 
-      const contractor = await Contractor.findById(contractorId);
-      if (!contractor) {
-        return next(new ErrorHandler("Contractor not found ", 500));
-      }
+        const contractor = await withSession(
+          Contractor.findById(job.contractorId),
+          session
+        );
+        const driver = await withSession(Driver.findById(job.driverId), session);
+        const vehicle = await withSession(
+          Vehicle.findById(job.vehicleId),
+          session
+        );
+        if (!contractor || !driver || !vehicle) {
+          throw new ErrorHandler("Related job entities not found", 404);
+        }
 
-      // Remove the jobId from the deliverer's array of jobIds
-      const updatedJobIds = deliverer.job_ids.filter(
-        (id) => id.toString() !== jobId
-      );
+        const totalCustomers = (deliverer.customer_ids || []).length;
+        const totalContractors = (deliverer.contractor_ids || []).length;
 
-      // Update the deliverer's jobIds array with the updated array
-      deliverer.job_ids = updatedJobIds;
+        const snapshot = buildJobSnapshot({
+          job,
+          contractorName: contractor.companyName,
+        });
+        await applyJobDelta(snapshot, -1, {
+          companyId: req.user.companyId,
+          totalCustomers,
+          totalContractors,
+          session,
+        });
 
-      await deliverer.save();
+        deliverer.job_ids = removeId(deliverer.job_ids || [], job._id);
+        driver.job_ids = removeId(driver.job_ids || [], job._id);
+        vehicle.job_ids = removeId(vehicle.job_ids || [], job._id);
+        contractor.job_ids = removeId(contractor.job_ids || [], job._id);
+        await Promise.all([
+          deliverer.save(session ? { session } : {}),
+          driver.save(session ? { session } : {}),
+          vehicle.save(session ? { session } : {}),
+          contractor.save(session ? { session } : {}),
+        ]);
 
-      const jobDate = job.orderDate;
-      year = jobDate.getFullYear();
-      const month = jobDate.toLocaleString("default", { month: "long" }); // Get month name
+        const contractorStats = await withSession(
+          ContractorStats.findOne({
+            contractorId: String(snapshot.contractorId),
+            delivererId: String(req.user.companyId),
+            year: snapshot.year,
+          }),
+          session
+        );
+        if (contractorStats) {
+          contractorStats.job_ids = removeId(contractorStats.job_ids || [], job._id);
+          await contractorStats.save(session ? { session } : {});
+        }
 
-      //const currentDate = date.getDate();
-
-      const day = String(jobDate.getDate()).padStart(2, "0"); // Get the day component and pad with leading zero if necessary
-      const monthNumber = String(jobDate.getMonth() + 1).padStart(2, "0"); // Get the month component and pad with leading zero if necessary
-
-      const formattedDate = `${year}-${monthNumber}-${day}`;
-      const jobCostDecimal128 = Decimal128.fromString(job.cost.toString());
-
-      // Helper function to round Decimal128 to 2 decimal places
-      // Helper function to subtract Decimal128 values
-      function subtractDecimal128(a, b) {
-        // Ensure both are Decimal128
-
-        // Convert Decimal128 to string for correct subtraction
-        const aValue = parseFloat(a.toString());
-        const bValue = parseFloat(b.toString());
-
-        // Subtract and return as a new Decimal128
-        return parseFloat((aValue - bValue).toFixed(2));
-      }
-      //END updating overall stats
-      const overallStats = await OverallStats.findOne({
-        companyId: req.user.companyId,
-        year: year,
+        await Job.deleteOne({ _id: job._id }, session ? { session } : {});
       });
-
-      const vehStats = await VehicleStats.findOne({
-        vehicleId: vehicleId,
-        year: year,
-      });
-      const drStats = await DriverStats.findOne({
-        driverId: driverId,
-        year: year,
-      });
-      const contrStats = await ContractorStats.findOne({
-        contractorId: contractorId,
-        delivererId: req.user.companyId,
-        year: year,
-      });
-
-      if (overallStats) {
-        const dailyStatsToUpdate = overallStats.dailyData.find(
-          (item) => item.date === formattedDate
-        );
-        const monthlyStatsToUpdate = overallStats.monthlyData.find(
-          (item) => item.month === month
-        );
-        const jobsByContractorStatsToUpdate = overallStats.jobsByContractor;
-
-        console.log("Jobs by contractor stats to update", jobsByContractorStatsToUpdate)
-        overallStats.yearlyJobs -= 1;
-        overallStats.yearlyMileage -= job.distance;
-        console.log(overallStats.yearlyRevenue);
-        console.log(jobCostDecimal128);
-        // Perform subtraction and round to 2 decimal places
-        overallStats.yearlyRevenue = subtractDecimal128(
-          overallStats.yearlyRevenue,
-          jobCostDecimal128
-        );
-        overallStats.yearlyProfit = subtractDecimal128(
-          overallStats.yearlyProfit,
-          jobCostDecimal128
-        );
-
-        // console.log("jobs by contractor stats to update", jobsByContractorStatsToUpdate);
-
-        // // Convert to a Map
-        // const jobsByContractorStatsMap = new Map(Object.entries(jobsByContractorStatsToUpdate));
-        
-        // const contractorJobsEntry = Array.from(jobsByContractorStatsMap.entries())
-        //   .find(([key]) => key === contractor.companyName);
-        
-        // if (!contractorJobsEntry) {
-        //   console.log("An error occurred here");
-        //   return next(new ErrorHandler("Non contractor", 500));
-        // }
-        
-        // const [key, contractorJobValue] = contractorJobsEntry;
-        // const newContrJobs = contractorJobValue - 1;
-        // jobsByContractorStatsMap.set(key, newContrJobs);
-        
-        // // Optional: convert back to object
-        // jobsByContractorStatsToUpdate = Object.fromEntries(jobsByContractorStatsMap);
-        
-        if (dailyStatsToUpdate) {
-          dailyStatsToUpdate.totalJobs -= 1;
-          dailyStatsToUpdate.totalMileage -= job.distance;
-          dailyStatsToUpdate.totalRevenue = subtractDecimal128(
-            dailyStatsToUpdate.totalRevenue,
-            jobCostDecimal128
-          );
-        }
-        if (monthlyStatsToUpdate) {
-          monthlyStatsToUpdate.totalJobs -= 1;
-          monthlyStatsToUpdate.totalMileage -= job.distance;
-          monthlyStatsToUpdate.totalRevenue = subtractDecimal128(
-            monthlyStatsToUpdate.totalRevenue,
-            jobCostDecimal128
-          );
-          monthlyStatsToUpdate.totalProfit = subtractDecimal128(
-            monthlyStatsToUpdate.totalProfit,
-            jobCostDecimal128
-          );
-        }
-
-        //END updating overall stats
-
-        // Parse and convert the cost to Decimal128
-        let updatedCost;
-        try {
-          updatedCost = Decimal128.fromString(parseFloat(job.cost).toFixed(2));
-          console.log(`Parsed cost as Decimal128: ${updatedCost.toString()}`);
-        } catch (error) {
-          console.error("Error parsing job cost to Decimal128:", error);
-          throw new Error("Failed to parse job cost to Decimal128.");
-        }
-
-        // Validate contractor name
-        if (!contractor || !contractor.companyName) {
-          console.error("Invalid contractor object:", contractor);
-          throw new Error("Contractor name is missing or invalid.");
-        }
-
-        // Validate year
-        if (!year) {
-          console.error("Year is not defined.");
-          throw new Error("Year is required for the filter.");
-        }
-
-        //END updating overall stats
-
-        const companyId = deliverer._id;
-
-        // Build dynamic keys
-        const revenueFieldKey = `revenueByContractor.${contractor.companyName}`;
-        const jobsFieldKey = `jobsByContractor.${contractor.companyName}`;
-        
-        console.log(`Dynamic revenue field key: ${revenueFieldKey}`);
-        console.log(`Dynamic jobs field key: ${jobsFieldKey}`);
-        
-        // Format cost
-       updatedCost = parseFloat(job.cost).toFixed(2);
-        
-        // Build the bulkWrite operations array
-        const updateStatsOperations = [
-          {
-            updateOne: {
-              filter: { companyId, year },
-              update: {
-                $inc: {
-                  [revenueFieldKey]: -updatedCost,
-                },
-              },
-              upsert: true,
-            },
-          },
-          {
-            updateOne: {
-              filter: { companyId, year },
-              update: {
-                $inc: {
-                  [jobsFieldKey]: -1,
-                },
-              },
-              upsert: true,
-            },
-          },
-        ];
-        
-        try {
-          // Perform bulkWrite operation
-          const result = await OverallStats.bulkWrite(updateStatsOperations);
-          console.log("Update result:", result);
-        } catch (error) {
-          console.error("Error writing update to OverallStats:", error);
-          throw new Error("Failed to write update to OverallStats.");
-        }
-        
-        await overallStats.save();
-      }
-
-      if (vehStats) {
-        const dailyStatsToUpdate = vehStats.dailyData.find(
-          (item) => item.date === formattedDate
-        );
-        const monthlyStatsToUpdate = vehStats.monthlyData.find(
-          (item) => item.month === month
-        );
-        const jobsByContractorStatsToUpdate = vehStats.jobsByContractor;
-
-        console.log("jobs by contractor",jobsByContractorStatsToUpdate)
-
-        vehStats.yearlyJobs -= 1;
-        vehStats.yearlyMileage -= job.distance;
-        // Perform subtraction and round to 2 decimal places
-        vehStats.yearlyRevenue = subtractDecimal128(
-          vehStats.yearlyRevenue,
-          jobCostDecimal128
-        );
-        vehStats.yearlyProfit = subtractDecimal128(
-          vehStats.yearlyProfit,
-          jobCostDecimal128
-        );
-
-        // const contractorJobsEntry = Array.from(
-        //   jobsByContractorStatsToUpdate.entries()
-        // ).find(([key]) => key === contractor.companyName);
-
-        // if (contractorJobsEntry) {
-        //   const [key, contractorJobValue] = contractorJobsEntry;
-        //   const newContrJobs = contractorJobValue - 1;
-        //   jobsByContractorStatsToUpdate.set(key, newContrJobs);
-        // }
-
-        if (dailyStatsToUpdate) {
-          dailyStatsToUpdate.totalJobs -= 1;
-          dailyStatsToUpdate.totalMileage -= job.distance;
-          dailyStatsToUpdate.totalRevenue = subtractDecimal128(
-            dailyStatsToUpdate.totalRevenue,
-            jobCostDecimal128
-          );
-        }
-        if (monthlyStatsToUpdate) {
-          monthlyStatsToUpdate.totalJobs -= 1;
-          monthlyStatsToUpdate.totalMileage -= job.distance;
-          monthlyStatsToUpdate.totalRevenue = subtractDecimal128(
-            monthlyStatsToUpdate.totalRevenue,
-            jobCostDecimal128
-          );
-          monthlyStatsToUpdate.totalProfit = subtractDecimal128(
-            monthlyStatsToUpdate.totalProfit,
-            jobCostDecimal128
-          );
-        }
-
-        //END updating overall stats
-
-        // Parse and convert the cost to Decimal128
-        let updatedCost;
-        try {
-          updatedCost = Decimal128.fromString(parseFloat(job.cost).toFixed(2));
-          console.log(`Parsed cost as Decimal128: ${updatedCost.toString()}`);
-        } catch (error) {
-          console.error("Error parsing job cost to Decimal128:", error);
-          throw new Error("Failed to parse job cost to Decimal128.");
-        }
-
-        // Validate contractor name
-        if (!contractor || !contractor.companyName) {
-          console.error("Invalid contractor object:", contractor);
-          throw new Error("Contractor name is missing or invalid.");
-        }
-
-        // Validate year
-        if (!year) {
-          console.error("Year is not defined.");
-          throw new Error("Year is required for the filter.");
-        }
-
-        //END updating overall stats
-
-        // Build dynamic keys
-        const revenueFieldKey = `revenueByContractor.${contractor.companyName}`;
-        const jobsFieldKey = `jobsByContractor.${contractor.companyName}`;
-        
-        console.log(`Dynamic revenue field key: ${revenueFieldKey}`);
-        console.log(`Dynamic jobs field key: ${jobsFieldKey}`);
-        
-        // Format cost
-       updatedCost = parseFloat(job.cost).toFixed(2);
-        
-        // Build the bulkWrite operations array
-        const updateStatsOperations = [
-          {
-            updateOne: {
-              filter: { vehicleId, year },
-              update: {
-                $inc: {
-                  [revenueFieldKey]: -updatedCost,
-                },
-              },
-              upsert: true,
-            },
-          },
-          {
-            updateOne: {
-              filter: { vehicleId, year },
-              update: {
-                $inc: {
-                  [jobsFieldKey]: -1,
-                },
-              },
-              upsert: true,
-            },
-          },
-        ];
-        
-        try {
-          // Perform bulkWrite operation
-          const result = await VehicleStats.bulkWrite(updateStatsOperations);
-          console.log("Update result:", result);
-        } catch (error) {
-          console.error("Error writing update to OverallStats:", error);
-          throw new Error("Failed to write update to OverallStats.");
-        }
-
-
-        // Remove the jobId from the vehicle's array of jobIds
-        const updatedJobIdsVeh = vehicle.job_ids.filter(
-          (id) => id.toString() !== jobId
-        );
-
-        // Update the vehicle's jobIds array with the updated array
-        vehicle.job_ids = updatedJobIdsVeh;
-        await vehicle.save();
-        await vehStats.save();
-      }
-      if (drStats) {
-        const dailyStatsToUpdate = drStats.dailyData.find(
-          (item) => item.date === formattedDate
-        );
-        const monthlyStatsToUpdate = drStats.monthlyData.find(
-          (item) => item.month === month
-        );
-        const jobsByContractorStatsToUpdate = drStats.jobsByContractor;
-
-        drStats.yearlyJobs -= 1;
-        drStats.yearlyMileage -= job.distance;
-        // Perform subtraction and round to 2 decimal places
-        drStats.yearlyRevenue = subtractDecimal128(
-          drStats.yearlyRevenue,
-          jobCostDecimal128
-        );
-        drStats.yearlyProfit = subtractDecimal128(
-          drStats.yearlyProfit,
-          jobCostDecimal128
-        );
-
-       
-
-        if (dailyStatsToUpdate) {
-          dailyStatsToUpdate.totalJobs -= 1;
-          dailyStatsToUpdate.totalMileage -= job.distance;
-          dailyStatsToUpdate.totalRevenue = subtractDecimal128(
-            dailyStatsToUpdate.totalRevenue,
-            jobCostDecimal128
-          );
-        }
-        if (monthlyStatsToUpdate) {
-          monthlyStatsToUpdate.totalJobs -= 1;
-          monthlyStatsToUpdate.totalMileage -= job.distance;
-          monthlyStatsToUpdate.totalRevenue = subtractDecimal128(
-            monthlyStatsToUpdate.totalRevenue,
-            jobCostDecimal128
-          );
-          monthlyStatsToUpdate.totalProfit = subtractDecimal128(
-            monthlyStatsToUpdate.totalProfit,
-            jobCostDecimal128
-          );
-        }
-
-        //END updating overall stats
-
-        // Parse and convert the cost to Decimal128
-        let updatedCost;
-        try {
-          updatedCost = Decimal128.fromString(parseFloat(job.cost).toFixed(2));
-          console.log(`Parsed cost as Decimal128: ${updatedCost.toString()}`);
-        } catch (error) {
-          console.error("Error parsing job cost to Decimal128:", error);
-          throw new Error("Failed to parse job cost to Decimal128.");
-        }
-
-        // Validate contractor name
-        if (!contractor || !contractor.companyName) {
-          console.error("Invalid contractor object:", contractor);
-          throw new Error("Contractor name is missing or invalid.");
-        }
-
-        // Validate year
-        if (!year) {
-          console.error("Year is not defined.");
-          throw new Error("Year is required for the filter.");
-        }
-
-        //END updating overall stats
-
-             // Build dynamic keys
-             const revenueFieldKey = `revenueByContractor.${contractor.companyName}`;
-             const jobsFieldKey = `jobsByContractor.${contractor.companyName}`;
-             
-             console.log(`Dynamic revenue field key: ${revenueFieldKey}`);
-             console.log(`Dynamic jobs field key: ${jobsFieldKey}`);
-             
-             // Format cost
-            updatedCost = parseFloat(job.cost).toFixed(2);
-             
-             // Build the bulkWrite operations array
-             const updateStatsOperations = [
-               {
-                 updateOne: {
-                   filter: { driverId, year },
-                   update: {
-                     $inc: {
-                       [revenueFieldKey]: -updatedCost,
-                     },
-                   },
-                   upsert: true,
-                 },
-               },
-               {
-                 updateOne: {
-                   filter: { driverId, year },
-                   update: {
-                     $inc: {
-                       [jobsFieldKey]: -1,
-                     },
-                   },
-                   upsert: true,
-                 },
-               },
-             ];
-             
-             try {
-               // Perform bulkWrite operation
-               const result = await DriverStats.bulkWrite(updateStatsOperations);
-               console.log("Update result:", result);
-             } catch (error) {
-               console.error("Error writing update to OverallStats:", error);
-               throw new Error("Failed to write update to OverallStats.");
-             }
-      // Remove the jobId from the driver's array of jobIds
-        const updatedJobIdsDr = driver.job_ids.filter(
-          (id) => id.toString() !== jobId
-        );
-
-        // Update the driver's jobIds array with the updated array
-        driver.job_ids = updatedJobIdsDr;
-        await driver.save();
-        await drStats.save();
-      }
-
-      if (contrStats) {
-        const dailyStatsToUpdate = contrStats.dailyData.find(
-          (item) => item.date === formattedDate
-        );
-        const monthlyStatsToUpdate = contrStats.monthlyData.find(
-          (item) => item.month === month
-        );
-
-        contrStats.yearlyJobs -= 1;
-        contrStats.yearlyMileage -= job.distance;
-        // Perform subtraction and round to 2 decimal places
-        contrStats.yearlyRevenue = subtractDecimal128(
-          contrStats.yearlyRevenue,
-          jobCostDecimal128
-        );
-
-        if (dailyStatsToUpdate) {
-          dailyStatsToUpdate.totalJobs -= 1;
-          dailyStatsToUpdate.totalMileage -= job.distance;
-          dailyStatsToUpdate.totalRevenue = subtractDecimal128(
-            dailyStatsToUpdate.totalRevenue,
-            jobCostDecimal128
-          );
-        }
-        if (monthlyStatsToUpdate) {
-          monthlyStatsToUpdate.totalJobs -= 1;
-          monthlyStatsToUpdate.totalMileage -= job.distance;
-          monthlyStatsToUpdate.totalRevenue = subtractDecimal128(
-            monthlyStatsToUpdate.totalRevenue,
-            jobCostDecimal128
-          );
-        }
-
-        // Remove the jobId from the driver's array of jobIds
-        const updatedJobIdsContr = contractor.job_ids.filter(
-          (id) => id.toString() !== jobId
-        );
-        // Remove the jobId from the driver's array of jobIds
-        const updatedJobIdsContrStats = contrStats.job_ids.filter(
-          (id) => id.toString() !== jobId
-        );
-
-        // Update the driver's jobIds array with the updated array
-        contractor.job_ids = updatedJobIdsContr;
-        contrStats.job_ids = updatedJobIdsContrStats;
-
-        await contractor.save();
-        await contrStats.save();
-      }
-
-      const jobToDelete = await Job.findByIdAndDelete({ _id: jobId });
-      if (!jobToDelete) {
-        return next(new ErrorHandler("There is no job with this id", 500));
-      }
 
       res.status(201).json({
         success: true,
         message: "Job Deleted!",
       });
     } catch (error) {
-      return next(new ErrorHandler(error, 400));
+      return next(new ErrorHandler(error.message || error, 400));
     }
   })
 );
@@ -1563,34 +681,9 @@ router.get(
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
-      let {
-        page = 0,
-        pageSize = 25,
-        jobSearch = "",
-        contractor,
-        sort = null,
-        sorta = null,
-        sortField = "_id",
-        sortOrder = "desc",
-      } = req.query;
-
-      console.log("sort",sort)
-
-      // Parse sort option if available
-      const generateSort = () => {
-        // if (!sort) return { orderDate: -1 };
-        const sortParsed = JSON.parse(sort);
-        return {
-          [sortParsed.field]: sortParsed.sort === "asc" ? 1 : -1,
-        };
-      };
-      
-
-      // const sortOptions = generateSort();
-        // Formatted sort should look like { field: 1 } or { field: -1 }
-        // const sortOptions = Boolean(sort) ? generateSort() : { orderDate: -1 };
- // Formatted sort should look like { field: 1 } or { field: -1 }
- const sortOptions = Boolean(sort) ? generateSort() : { orderDate: -1 };
+      const { jobSearch = "", sort = null } = req.query;
+      const { page, limit, skip } = parsePaginationParams(req.query);
+      const sortOptions = buildSortOptions(sort, { orderDate: -1, _id: -1 });
 
       // Get the deliverer (company) based on the user
       const deliverer = await Deliverer.findById(req.user.companyId);
@@ -1602,98 +695,105 @@ router.get(
       }
 
       const jobIds = deliverer.job_ids;
+      const { dateMatch } = getYearFilter(req);
 
-      // MongoDB aggregation pipeline for optimization
       const pipeline = [
-        { $match: { _id: { $in: jobIds } } },
-        {
-          $lookup: {
-            from: "customers",
-            localField: "customer",
-            foreignField: "_id",
-            as: "customer",
-          },
-        },
-        { $unwind: "$customer" },
-        {
-          $lookup: {
-            from: "customers",
-            localField: "from",
-            foreignField: "_id",
-            as: "from",
-          },
-        },
-        { $unwind: "$from" },
-        {
-          $lookup: {
-            from: "contractors",
-            let: { contractorId: "$contractorId" },
-            pipeline: [
-              { $match: { $expr: { $eq: ["$_id", "$$contractorId"] } } },
-              { $project: { companyName: 1 } },
-            ],
-            as: "contractorId",
-          },
-        },
-        { $unwind: "$contractorId" },
-        {
-          $match: {
-            $or: [
-              {
-                "customer.name": { $regex: `.*${jobSearch}.*`, $options: "i" },
-              },
-              {
-                "contractorId.companyName": {
-                  $regex: `.*${jobSearch}.*`,
-                  $options: "i",
-                },
-              },
-              { jobNumber: { $regex: `.*${jobSearch}.*`, $options: "i" } },
-            ],
-          },
-        },
-        { $sort: { orderDate: -1 } }, // Sort by orderDate in descending order
-
-        
+        ...buildBaseJobsPipeline(jobIds, dateMatch, jobSearch),
+        { $sort: sortOptions },
         {
           $facet: {
-            pageJobs: [
-              { $skip: page * parseInt(pageSize, 10) },
-              { $limit: parseInt(pageSize, 10) },
-
-            ],
+            pageJobs: [{ $skip: skip }, { $limit: limit }],
             totalCount: [{ $count: "total" }],
           },
         },
-
-        // { $sort: sortOptions },
-
       ];
 
       // Execute the aggregation pipeline
       const result = await Job.aggregate(pipeline);
 
-      if (result.length === 0 || result[0].pageJobs.length === 0) {
-        return res.status(200).json({
-          success: true,
-          message: "No jobs in the system",
-        });
-      }
+      const { pageJobs = [], totalCount = [] } = result[0] || {};
+      const formattedJobs = mapJobCost(pageJobs);
+      const total = totalCount.length ? totalCount[0].total : 0;
 
-      const { pageJobs, totalCount } = result[0];
-
-      // Format the 'cost' field if needed
-      const formattedJobs = pageJobs.map((job) => ({
-        ...job,
-        cost: parseFloat(job.cost.toString()).toFixed(2), // Format the cost to 2 decimal places
-      }));
-
-      // Return the paginated jobs with the total count
       res.status(200).json({
         success: true,
         pageJobs: formattedJobs,
-        totalCount: totalCount.length ? totalCount[0].total : 0,
+        rows: formattedJobs,
+        totalCount: total,
+        page,
+        limit,
       });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+router.get(
+  "/export-jobs-csv",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const rows = await buildJobsForExport(req);
+      const headers = [
+        "Job Number",
+        "Delivery Type",
+        "Contractor",
+        "From",
+        "Customer",
+        "Distance",
+        "Cost",
+        "Order Date",
+      ];
+      const lines = [headers.map(escapeCsv).join(",")];
+      rows.forEach((job) => {
+        lines.push(
+          [
+            job.jobNumber,
+            job.deliveryType,
+            job.contractorId?.companyName,
+            job.from?.name,
+            job.customer?.name,
+            asNumber(job.distance).toFixed(2),
+            asNumber(job.cost).toFixed(2),
+            new Date(job.orderDate).toISOString().split("T")[0],
+          ]
+            .map(escapeCsv)
+            .join(",")
+        );
+      });
+      res.setHeader("Content-Type", "text/csv; charset=utf-8");
+      res.setHeader("Content-Disposition", 'attachment; filename="jobs-export.csv"');
+      return res.status(200).send(lines.join("\n"));
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+router.get(
+  "/export-jobs-pdf",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const rows = await buildJobsForExport(req);
+      const lines = [
+        "Jobs export",
+        "Job Number | Delivery Type | Contractor | Customer | Cost | Date",
+      ];
+      rows.forEach((job) => {
+        lines.push(
+          `${job.jobNumber || ""} | ${job.deliveryType || ""} | ${
+            job.contractorId?.companyName || ""
+          } | ${job.customer?.name || ""} | ${asNumber(job.cost).toFixed(2)} | ${
+            new Date(job.orderDate).toISOString().split("T")[0]
+          }`
+        );
+      });
+      const pdfBuffer = buildSimplePdfBuffer(lines);
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader("Content-Disposition", 'attachment; filename="jobs-export.pdf"');
+      return res.status(200).send(pdfBuffer);
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }
@@ -1743,10 +843,11 @@ router.get(
 
       // Get the job IDs associated with the deliverer
       const jobIds = deliverer.job_ids;
+      const { dateMatch } = getYearFilter(req);
 
       // Update the pipeline with the revised $match stage
       const pipeline = [
-        { $match: { _id: { $in: jobIds } } },
+        { $match: { _id: { $in: jobIds }, ...dateMatch } },
         {
           $lookup: {
             from: "customers",
@@ -1814,6 +915,7 @@ router.get(
       // Get the total count of jobs
       const totalCount = await Job.countDocuments({
         _id: { $in: jobIds },
+        ...dateMatch,
       });
 
       // Format the 'cost' field if needed
@@ -1881,6 +983,7 @@ router.get(
 
       // Get the job IDs associated with the deliverer
       const jobIds = getContractorStats[0].job_ids;
+      const { dateMatch } = getYearFilter(req);
 
       if (!jobIds.length === 0) {
         res.status(201).json({
@@ -1890,7 +993,7 @@ router.get(
       }
       // Update the pipeline with the revised $match stage
       const pipeline = [
-        { $match: { _id: { $in: jobIds } } },
+        { $match: { _id: { $in: jobIds }, ...dateMatch } },
         {
           $lookup: {
             from: "customers",
@@ -1958,6 +1061,7 @@ router.get(
       // Get the total count of jobs
       const totalCount = await Job.countDocuments({
         _id: { $in: jobIds },
+        ...dateMatch,
       });
 
       const formattedJobs = latestContractorJobs.map((job) => ({
@@ -2018,10 +1122,11 @@ router.get(
 
       // Get the customer IDs associated with the deliverer
       const jobIds = vehicle.job_ids;
+      const { dateMatch } = getYearFilter(req);
 
       // Update the pipeline with the revised $match stage
       const pipeline = [
-        { $match: { _id: { $in: jobIds } } },
+        { $match: { _id: { $in: jobIds }, ...dateMatch } },
         {
           $lookup: {
             from: "customers",
@@ -2089,6 +1194,7 @@ router.get(
       // Get the total count of jobs
       const totalCount = await Job.countDocuments({
         _id: { $in: jobIds },
+        ...dateMatch,
       });
       const formattedJobs = latestVehicleJobs.map((job) => ({
         ...job,
@@ -2147,10 +1253,11 @@ router.get(
 
       // Get the customer IDs associated with the deliverer
       const jobIds = driver.job_ids;
+      const { dateMatch } = getYearFilter(req);
 
       // Update the pipeline with the revised $match stage
       const pipeline = [
-        { $match: { _id: { $in: jobIds } } },
+        { $match: { _id: { $in: jobIds }, ...dateMatch } },
         {
           $lookup: {
             from: "customers",
@@ -2212,6 +1319,7 @@ router.get(
       // Get the total count of jobs
       const totalCount = await Job.countDocuments({
         _id: { $in: jobIds },
+        ...dateMatch,
       });
       if (!latestDriverJobs) {
         return res.status(200).json({
@@ -2241,29 +1349,9 @@ router.get(
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
-      let {
-        page = 0,
-        pageSize = 25,
-        searcha = "",
-        jobSearch = "",
-        contractor,
-        sort = null,
-        sorta = null,
-        sortField = "_id",
-        sortOrder = "desc",
-      } = req.query;
-
-      const generateSort = () => {
-        const sortParsed = JSON.parse(sort);
-        const sortOptions = {
-          [sortParsed.field]: sortParsed.sort === "asc" ? 1 : -1,
-        };
-
-        return sortOptions;
-      };
-
-      // Formatted sort should look like { field: 1 } or { field: -1 }
-      const sortOptions = Boolean(sort) ? generateSort() : { orderDate: 1 };
+      const { jobSearch = "", sort = null } = req.query;
+      const { page, limit, skip } = parsePaginationParams(req.query);
+      const sortOptions = buildSortOptions(sort, { orderDate: 1, _id: 1 });
 
       // Find the deliverer based on the company ID
       const deliverer = await Deliverer.findById(req.user.companyId);
@@ -2276,86 +1364,28 @@ router.get(
 
       // Get the customer IDs associated with the deliverer
       const jobIds = deliverer.job_ids;
+      const { dateMatch } = getYearFilter(req);
 
-      // Update the pipeline with the revised $match stage
       const pipeline = [
-        { $match: { _id: { $in: jobIds } } },
-        {
-          $lookup: {
-            from: "customers",
-            localField: "customer",
-            foreignField: "_id",
-            as: "customer",
-          },
-        },
-        { $unwind: "$customer" },
-        {
-          $lookup: {
-            from: "customers",
-            localField: "from",
-            foreignField: "_id",
-            as: "from",
-          },
-        },
-        { $unwind: "$from" },
-        {
-          $lookup: {
-            from: "contractors",
-            let: { contractorId: "$contractorId" },
-            pipeline: [
-              { $match: { $expr: { $eq: ["$_id", "$$contractorId"] } } },
-              { $project: { companyName: 1 } },
-            ],
-            as: "contractorId",
-          },
-        },
-        { $unwind: "$contractorId" },
-        {
-          $match: {
-            $or: [
-              // Add your alternative search conditions here
-              {
-                "customer.name": { $regex: `.*${jobSearch}.*`, $options: "i" },
-              }, // Example: search in field1 using regex
-              { "from.name": { $regex: `.*${jobSearch}.*`, $options: "i" } },
-              {
-                "contractorId.companyName": {
-                  $regex: `.*${jobSearch}.*`,
-                  $options: "i",
-                },
-              },
-              { deliveryType: { $regex: `.*${jobSearch}.*`, $options: "i" } },
-              { jobNumber: { $regex: `.*${jobSearch}.*`, $options: "i" } },
-
-              // Add more conditions as needed
-            ],
-          },
-        },
-        // { $sort: { orderDate: 1 } }, // Sort by orderDate in descending order
-
+        ...buildBaseJobsPipeline(jobIds, dateMatch, jobSearch),
         { $sort: sortOptions },
+        {
+          $facet: {
+            rows: [{ $skip: skip }, { $limit: limit }],
+            totalCount: [{ $count: "total" }],
+          },
+        },
       ];
-      // Execute the aggregation pipeline
-      const delivererWithJobsReport = await Job.aggregate(pipeline);
-      if (delivererWithJobsReport.length === 0) {
-        return res.status(200).json({
-          success: true,
-          message: "No jobs in the system",
-        });
-      }
-
-      // Get the total count of jobs
-      const totalCount = await Job.countDocuments({
-        _id: { $in: jobIds },
-      });
-      const formattedJobs = delivererWithJobsReport.map((job) => ({
-        ...job,
-        cost: parseFloat(job.cost.toString()), // Format the cost to 2 decimal places
-      }));
+      const [{ rows = [], totalCount = [] } = {}] = await Job.aggregate(pipeline);
+      const formattedJobs = mapJobCost(rows);
+      const total = totalCount.length ? totalCount[0].total : 0;
       res.status(200).json({
         success: true,
-        delivererWithJobsReport:formattedJobs,
-        totalCount,
+        delivererWithJobsReport: formattedJobs,
+        rows: formattedJobs,
+        totalCount: total,
+        page,
+        limit,
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
@@ -2370,29 +1400,9 @@ router.get(
   catchAsyncErrors(async (req, res, next) => {
     try {
       const contractorId = req.params.contractorId;
-      let {
-        //page = 0,
-        //pageSize = 25,
-        //searcha = "",
-        jobSearch = "",
-
-        sort = null,
-        //sorta = null,
-        //sortField = "_id",
-        //sortOrder = "desc",
-      } = req.query;
-
-      const generateSort = () => {
-        const sortParsed = JSON.parse(sort);
-        const sortOptions = {
-          [sortParsed.field]: sortParsed.sort === "asc" ? 1 : -1,
-        };
-
-        return sortOptions;
-      };
-
-      // Formatted sort should look like { field: 1 } or { field: -1 }
-      const sortOptions = Boolean(sort) ? generateSort() : { orderDate: 1 };
+      const { jobSearch = "", sort = null } = req.query;
+      const { page, limit, skip } = parsePaginationParams(req.query);
+      const sortOptions = buildSortOptions(sort, { orderDate: 1, _id: 1 });
 
       // Find the deliverer based on the company ID
       const contractor = await Contractor.findById(contractorId);
@@ -2405,87 +1415,28 @@ router.get(
 
       // Get the customer IDs associated with the contractor
       const jobIds = contractor.job_ids;
+      const { dateMatch } = getYearFilter(req);
 
-      // Update the pipeline with the revised $match stage
       const pipeline = [
-        { $match: { _id: { $in: jobIds } } },
-        {
-          $lookup: {
-            from: "customers",
-            localField: "customer",
-            foreignField: "_id",
-            as: "customer",
-          },
-        },
-        { $unwind: "$customer" },
-        {
-          $lookup: {
-            from: "customers",
-            localField: "from",
-            foreignField: "_id",
-            as: "from",
-          },
-        },
-        { $unwind: "$from" },
-        {
-          $lookup: {
-            from: "contractors",
-            let: { contractorId: "$contractorId" },
-            pipeline: [
-              { $match: { $expr: { $eq: ["$_id", "$$contractorId"] } } },
-              { $project: { companyName: 1 } },
-            ],
-            as: "contractorId",
-          },
-        },
-        { $unwind: "$contractorId" },
-        {
-          $match: {
-            $or: [
-              // Add your alternative search conditions here
-              {
-                "customer.name": { $regex: `.*${jobSearch}.*`, $options: "i" },
-              }, // Example: search in field1 using regex
-              { "from.name": { $regex: `.*${jobSearch}.*`, $options: "i" } },
-              {
-                "contractorId.companyName": {
-                  $regex: `.*${jobSearch}.*`,
-                  $options: "i",
-                },
-              },
-              { deliveryType: { $regex: `.*${jobSearch}.*`, $options: "i" } },
-              { jobNumber: { $regex: `.*${jobSearch}.*`, $options: "i" } },
-
-              // Add more conditions as needed
-            ],
-          },
-        },
-        // { $sort: { orderDate: 1 } }, // Sort by orderDate in descending order
-
+        ...buildBaseJobsPipeline(jobIds, dateMatch, jobSearch),
         { $sort: sortOptions },
+        {
+          $facet: {
+            rows: [{ $skip: skip }, { $limit: limit }],
+            totalCount: [{ $count: "total" }],
+          },
+        },
       ];
-      // Execute the aggregation pipeline
-      const contractorWithJobsReport = await Job.aggregate(pipeline);
-      if (contractorWithJobsReport.length === 0) {
-        return res.status(200).json({
-          success: true,
-          message: "No jobs in the system",
-        });
-      }
-
-      // Get the total count of jobs
-      const totalCount = await Job.countDocuments({
-        _id: { $in: jobIds },
-      });
-
-      const formattedJobs = contractorWithJobsReport.map((job) => ({
-        ...job,
-        cost: parseFloat(job.cost.toString()), // Format the cost to 2 decimal places
-      }));
+      const [{ rows = [], totalCount = [] } = {}] = await Job.aggregate(pipeline);
+      const formattedJobs = mapJobCost(rows);
+      const total = totalCount.length ? totalCount[0].total : 0;
       res.status(200).json({
         success: true,
-        contractorWithJobsReport:formattedJobs,
-        totalCount,
+        contractorWithJobsReport: formattedJobs,
+        rows: formattedJobs,
+        totalCount: total,
+        page,
+        limit,
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
@@ -2500,29 +1451,9 @@ router.get(
   catchAsyncErrors(async (req, res, next) => {
     try {
       const driverId = req.params.driverId;
-      let {
-        page = 0,
-        pageSize = 25,
-        searcha = "",
-        jobSearch = "",
-        contractor,
-        sort = null,
-        sorta = null,
-        sortField = "_id",
-        sortOrder = "desc",
-      } = req.query;
-
-      const generateSort = () => {
-        const sortParsed = JSON.parse(sort);
-        const sortOptions = {
-          [sortParsed.field]: sortParsed.sort === "asc" ? 1 : -1,
-        };
-
-        return sortOptions;
-      };
-
-      // Formatted sort should look like { field: 1 } or { field: -1 }
-      const sortOptions = Boolean(sort) ? generateSort() : { orderDate: 1 };
+      const { jobSearch = "", sort = null } = req.query;
+      const { page, limit, skip } = parsePaginationParams(req.query);
+      const sortOptions = buildSortOptions(sort, { orderDate: 1, _id: 1 });
 
       // Find the deliverer based on the company ID
       const driver = await Driver.findById(driverId);
@@ -2535,87 +1466,29 @@ router.get(
 
       // Get the customer IDs associated with the driver
       const jobIds = driver.job_ids;
+      const { dateMatch } = getYearFilter(req);
 
-      // Update the pipeline with the revised $match stage
       const pipeline = [
-        { $match: { _id: { $in: jobIds } } },
-        {
-          $lookup: {
-            from: "customers",
-            localField: "customer",
-            foreignField: "_id",
-            as: "customer",
-          },
-        },
-        { $unwind: "$customer" },
-        {
-          $lookup: {
-            from: "customers",
-            localField: "from",
-            foreignField: "_id",
-            as: "from",
-          },
-        },
-        { $unwind: "$from" },
-        {
-          $lookup: {
-            from: "contractors",
-            let: { contractorId: "$contractorId" },
-            pipeline: [
-              { $match: { $expr: { $eq: ["$_id", "$$contractorId"] } } },
-              { $project: { companyName: 1 } },
-            ],
-            as: "contractorId",
-          },
-        },
-        { $unwind: "$contractorId" },
-        {
-          $match: {
-            $or: [
-              // Add your alternative search conditions here
-              {
-                "customer.name": { $regex: `.*${jobSearch}.*`, $options: "i" },
-              }, // Example: search in field1 using regex
-              { "from.name": { $regex: `.*${jobSearch}.*`, $options: "i" } },
-              {
-                "contractorId.companyName": {
-                  $regex: `.*${jobSearch}.*`,
-                  $options: "i",
-                },
-              },
-              { deliveryType: { $regex: `.*${jobSearch}.*`, $options: "i" } },
-              { jobNumber: { $regex: `.*${jobSearch}.*`, $options: "i" } },
-
-              // Add more conditions as needed
-            ],
-          },
-        },
-        // { $sort: { orderDate: 1 } }, // Sort by orderDate in descending order
-
+        ...buildBaseJobsPipeline(jobIds, dateMatch, jobSearch),
         { $sort: sortOptions },
+        {
+          $facet: {
+            rows: [{ $skip: skip }, { $limit: limit }],
+            totalCount: [{ $count: "total" }],
+          },
+        },
       ];
-      // Execute the aggregation pipeline
-      const driverWithJobsReport = await Job.aggregate(pipeline);
-      if (driverWithJobsReport.length === 0) {
-        return res.status(200).json({
-          success: true,
-          message: "No jobs in the system",
-        });
-      }
-
-      // Get the total count of jobs
-      const totalCount = await Job.countDocuments({
-        _id: { $in: jobIds },
-      });
-      const formattedJobs = driverWithJobsReport.map((job) => ({
-        ...job,
-        cost: parseFloat(job.cost.toString()), // Format the cost to 2 decimal places
-      }));
+      const [{ rows = [], totalCount = [] } = {}] = await Job.aggregate(pipeline);
+      const formattedJobs = mapJobCost(rows);
+      const total = totalCount.length ? totalCount[0].total : 0;
 
       res.status(200).json({
         success: true,
         driverWithJobsReport: formattedJobs,
-        totalCount,
+        rows: formattedJobs,
+        totalCount: total,
+        page,
+        limit,
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
@@ -2631,29 +1504,9 @@ router.get(
     try {
       const vehicleId = req.params.vehicleId;
 
-      let {
-        page = 0,
-        pageSize = 25,
-        searcha = "",
-        jobSearch = "",
-        contractor,
-        sort = null,
-        sorta = null,
-        sortField = "_id",
-        sortOrder = "desc",
-      } = req.query;
-
-      const generateSort = () => {
-        const sortParsed = JSON.parse(sort);
-        const sortOptions = {
-          [sortParsed.field]: sortParsed.sort === "asc" ? 1 : -1,
-        };
-
-        return sortOptions;
-      };
-
-      // Formatted sort should look like { field: 1 } or { field: -1 }
-      const sortOptions = Boolean(sort) ? generateSort() : { orderDate: 1 };
+      const { jobSearch = "", sort = null } = req.query;
+      const { page, limit, skip } = parsePaginationParams(req.query);
+      const sortOptions = buildSortOptions(sort, { orderDate: 1, _id: 1 });
 
       // Find the vehicle based on the company ID
       const vehicle = await Vehicle.findById(vehicleId);
@@ -2666,88 +1519,29 @@ router.get(
 
       // Get the customer IDs associated with the vehicle
       const jobIds = vehicle.job_ids;
+      const { dateMatch } = getYearFilter(req);
 
-      // Update the pipeline with the revised $match stage
       const pipeline = [
-        { $match: { _id: { $in: jobIds } } },
-        {
-          $lookup: {
-            from: "customers",
-            localField: "customer",
-            foreignField: "_id",
-            as: "customer",
-          },
-        },
-        { $unwind: "$customer" },
-        {
-          $lookup: {
-            from: "customers",
-            localField: "from",
-            foreignField: "_id",
-            as: "from",
-          },
-        },
-        { $unwind: "$from" },
-        {
-          $lookup: {
-            from: "contractors",
-            let: { contractorId: "$contractorId" },
-            pipeline: [
-              { $match: { $expr: { $eq: ["$_id", "$$contractorId"] } } },
-              { $project: { companyName: 1 } },
-            ],
-            as: "contractorId",
-          },
-        },
-        { $unwind: "$contractorId" },
-        {
-          $match: {
-            $or: [
-              // Add your alternative search conditions here
-              {
-                "customer.name": { $regex: `.*${jobSearch}.*`, $options: "i" },
-              }, // Example: search in field1 using regex
-              { "from.name": { $regex: `.*${jobSearch}.*`, $options: "i" } },
-              {
-                "contractorId.companyName": {
-                  $regex: `.*${jobSearch}.*`,
-                  $options: "i",
-                },
-              },
-              { deliveryType: { $regex: `.*${jobSearch}.*`, $options: "i" } },
-              { jobNumber: { $regex: `.*${jobSearch}.*`, $options: "i" } },
-
-              // Add more conditions as needed
-            ],
-          },
-        },
-        // { $sort: { orderDate: 1 } }, // Sort by orderDate in descending order
-
+        ...buildBaseJobsPipeline(jobIds, dateMatch, jobSearch),
         { $sort: sortOptions },
+        {
+          $facet: {
+            rows: [{ $skip: skip }, { $limit: limit }],
+            totalCount: [{ $count: "total" }],
+          },
+        },
       ];
-      // Execute the aggregation pipeline
-      const vehicleWithJobsReport = await Job.aggregate(pipeline);
-      if (vehicleWithJobsReport.length === 0) {
-        return res.status(200).json({
-          success: true,
-          message: "No jobs in the system",
-        });
-      }
-
-      // Get the total count of jobs
-      const totalCount = await Job.countDocuments({
-        _id: { $in: jobIds },
-      });
-      // Format the 'cost' field if needed
-      const formattedJobs = vehicleWithJobsReport.map((job) => ({
-        ...job,
-        cost: parseFloat(job.cost.toString()), // Format the cost to 2 decimal places
-      }));
+      const [{ rows = [], totalCount = [] } = {}] = await Job.aggregate(pipeline);
+      const formattedJobs = mapJobCost(rows);
+      const total = totalCount.length ? totalCount[0].total : 0;
 
       res.status(200).json({
         success: true,
         vehicleWithJobsReport: formattedJobs,
-        totalCount,
+        rows: formattedJobs,
+        totalCount: total,
+        page,
+        limit,
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));

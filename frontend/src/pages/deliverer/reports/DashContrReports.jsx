@@ -26,7 +26,7 @@ import {
   Select,
   useTheme,
 } from "@mui/material";
-import { DataGrid, GridDeleteIcon } from "@mui/x-data-grid";
+import { DataGrid, GridDeleteIcon } from "component/deliverer/AgDataGrid";
 import { CalendarIcon } from "@mui/x-date-pickers";
 import AddCustomerPopup from "component/addCustomerPopup";
 import DataGridCustomToolbar from "component/deliverer/DataGridCustomToolbar";
@@ -48,6 +48,7 @@ import {
 
 const AllContrReportsPage = () => {
   const { user } = useSelector((state) => state.user);
+  const { selectedYear } = useSelector((state) => state.filters);
 
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -107,10 +108,13 @@ const AllContrReportsPage = () => {
   const [jobId, setJobId] = useState("");
   const [jobNumber, setJobNumber] = useState("");
 
-  const currentDate = new Date();
-  const starttDate = new Date(currentDate.getTime() - 50 * 24 * 60 * 60 * 1000);
-  const [startDate, setStartDate] = useState(starttDate);
-  const [endDate, setEndDate] = useState(currentDate);
+  const defaultEndDate = useMemo(() => new Date(), []);
+  const defaultStartDate = useMemo(
+    () => new Date(defaultEndDate.getTime() - 50 * 24 * 60 * 60 * 1000),
+    [defaultEndDate]
+  );
+  const [startDate, setStartDate] = useState(defaultStartDate);
+  const [endDate, setEndDate] = useState(defaultEndDate);
 
   console.log(page);
   console.log(sort);
@@ -207,20 +211,32 @@ const AllContrReportsPage = () => {
   } = useSelector((state) => state.jobs);
   console.log(AllJobsReportContr);
   useEffect(() => {
-    dispatch(getAllJobsReportContr(contractorId));
-  }, [dispatch]);
+    dispatch(
+      getAllJobsReportContr(contractorId, {
+        year: selectedYear,
+        page,
+        limit: pageSize,
+        jobSearch,
+      })
+    );
+  }, [dispatch, contractorId, selectedYear, page, pageSize, jobSearch]);
 
   //
-  let allReportsContr;
-  let formattedJobData = [""];
-  let totalJobsCount = 0;
-  let totalJobsDistance = 0;
-  let totalJobsCost = 0;
+  const reportData = useMemo(() => {
+    if (!AllJobsReportContr) {
+      return {
+        rows: [],
+        totalJobsCount: 0,
+        totalJobsDistance: 0,
+        totalJobsCost: 0,
+      };
+    }
 
-  const [formattedData] = useMemo(() => {
-    if (!AllJobsReportContr) return []; // Add a check for coOverallStats
-
+    const rangeStart = startDate <= endDate ? startDate : endDate;
+    const rangeEnd = startDate <= endDate ? endDate : startDate;
     let totalJobs = [];
+    let totalJobsDistance = 0;
+    let totalJobsCost = 0;
 
     Object.values(AllJobsReportContr).forEach(
       ({
@@ -236,7 +252,7 @@ const AllContrReportsPage = () => {
         vehicleId,
       }) => {
         const dateFormatted = new Date(orderDate);
-        if (dateFormatted >= startDate && dateFormatted <= endDate) {
+        if (dateFormatted >= rangeStart && dateFormatted <= rangeEnd) {
           const splitDate = dateFormatted.toLocaleDateString(undefined, {
             day: "2-digit",
             month: "2-digit",
@@ -259,35 +275,29 @@ const AllContrReportsPage = () => {
             },
           ];
 
-          totalJobsCost += cost;
-          totalJobsDistance += distance;
+          totalJobsCost += cost || 0;
+          totalJobsDistance += distance || 0;
         }
       }
     );
 
-    formattedJobData = [totalJobs];
-    allReportsContr = formattedJobData[0];
-    totalJobsCount = allReportsContr.length;
-    return [
-      allReportsContr,
-      formattedJobData,
-      totalJobsCount,
-      totalJobsCost,
+    return {
+      rows: totalJobs,
+      totalJobsCount: totalJobs.length,
       totalJobsDistance,
-    ];
+      totalJobsCost,
+    };
   }, [AllJobsReportContr, startDate, endDate]); // eslint-disable-line react-hooks/exhaustive-deps
 
   console.log(AllJobsReportContr);
 
-  allReportsContr = formattedJobData[0];
-  console.log(formattedJobData);
-  console.log(allReportsContr);
+  console.log(reportData.rows);
   console.log(AllJobsReportContr);
   console.log(startDate);
   console.log(endDate);
 
-  console.log(totalJobsCost);
-  console.log(totalJobsDistance);
+  console.log(reportData.totalJobsCost);
+  console.log(reportData.totalJobsDistance);
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
@@ -406,12 +416,19 @@ const AllContrReportsPage = () => {
         }}
       >
         <DataGrid
-          loading={isAllJobsReportContrLoading || !allReportsContr}
+          loading={isAllJobsReportContrLoading}
           Header="hello"
           getRowId={(row) => row._id}
-          rows={(AllJobsReportContr && allReportsContr) || []}
+          rows={reportData.rows}
           columns={columns}
-          rowCount={totalJobsCount || 0}
+          rowCount={totalCount || 0}
+          rowsPerPageOptions={[25, 50, 100]}
+          pagination
+          page={page}
+          pageSize={pageSize}
+          paginationModel={paginationModel}
+          onPaginationModelChange={setPaginationModel}
+          paginationMode="server"
           components={{ Toolbar: DataGridCustomToolbarReports }}
           componentsProps={{
             toolbar: {
@@ -423,10 +440,24 @@ const AllContrReportsPage = () => {
               setStartDate,
               endDate,
               setEndDate,
-              totalJobsDistance,
-              totalJobsCost,
-              totalJobsCount,
+              defaultStartDate,
+              defaultEndDate,
+              totalJobsDistance: reportData.totalJobsDistance,
+              totalJobsCost: reportData.totalJobsCost,
+              totalJobsCount: reportData.totalJobsCount,
               contractorName,
+              selectedYear,
+              setSelectedYear: (year) =>
+                dispatch({ type: "setSelectedYear", payload: year }),
+              exportParams: {
+                enabled: true,
+                scope: "contractor",
+                entityId: contractorId,
+                year: selectedYear,
+                jobSearch,
+                startDate: startDate?.toISOString(),
+                endDate: endDate?.toISOString(),
+              },
             },
           }}
         />

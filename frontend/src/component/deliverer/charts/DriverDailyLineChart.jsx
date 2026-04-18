@@ -19,9 +19,10 @@ const DriverDailyLineChart = ({
   const { driverStats, isDriverStatsLoading } = useSelector(
     (state) => state.driverStats
   );
+  const { selectedYear } = useSelector((state) => state.filters);
   useEffect(() => {
-    dispatch(getDriverStats(driverId));
-  }, [dispatch, driverId]);
+    dispatch(getDriverStats(driverId, selectedYear));
+  }, [dispatch, driverId, selectedYear]);
 
   const currentDate = new Date();
   const starttDate = new Date(currentDate.getTime() - 30 * 24 * 60 * 60 * 1000);

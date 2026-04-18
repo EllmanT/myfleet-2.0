@@ -36,7 +36,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAdmin, getAllAdminsPage, updateAdmin } from "redux/actions/user";
-import { DataGrid, GridDeleteIcon } from "@mui/x-data-grid";
+import { DataGrid, GridDeleteIcon } from "component/deliverer/AgDataGrid";
 import DataGridCustomToolbar from "component/deliverer/DataGridCustomToolbar";
 
 let steps = [];

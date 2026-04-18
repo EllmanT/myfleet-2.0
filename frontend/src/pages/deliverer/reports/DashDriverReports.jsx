@@ -26,7 +26,7 @@ import {
   Select,
   useTheme,
 } from "@mui/material";
-import { DataGrid, GridDeleteIcon } from "@mui/x-data-grid";
+import { DataGrid, GridDeleteIcon } from "component/deliverer/AgDataGrid";
 import { CalendarIcon } from "@mui/x-date-pickers";
 import AddCustomerPopup from "component/addCustomerPopup";
 import DataGridCustomToolbar from "component/deliverer/DataGridCustomToolbar";
@@ -50,17 +50,13 @@ import {
 
 const DashDriverReports = () => {
   const { user } = useSelector((state) => state.user);
+  const { selectedYear } = useSelector((state) => state.filters);
 
   const theme = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { driverId } = useParams();
   console.log(driverId);
-
-  useEffect(() => {
-    dispatch(getAllDriversPage());
-    dispatch(getAllJobsReportDriver(driverId));
-  }, [dispatch]);
 
   const { driversPage, isPageDriversLoading } = useSelector(
     (state) => state.drivers
@@ -111,13 +107,28 @@ const DashDriverReports = () => {
   const [jobId, setJobId] = useState("");
   const [jobNumber, setJobNumber] = useState("");
 
-  const currentDate = new Date();
-  const starttDate = new Date(currentDate.getTime() - 30 * 24 * 60 * 60 * 1000);
-  const [startDate, setStartDate] = useState(starttDate);
-  const [endDate, setEndDate] = useState(currentDate);
+  const defaultEndDate = useMemo(() => new Date(), []);
+  const defaultStartDate = useMemo(
+    () => new Date(defaultEndDate.getTime() - 30 * 24 * 60 * 60 * 1000),
+    [defaultEndDate]
+  );
+  const [startDate, setStartDate] = useState(defaultStartDate);
+  const [endDate, setEndDate] = useState(defaultEndDate);
 
   console.log(page);
   console.log(sort);
+
+  useEffect(() => {
+    dispatch(getAllDriversPage());
+    dispatch(
+      getAllJobsReportDriver(driverId, {
+        year: selectedYear,
+        page,
+        limit: pageSize,
+        jobSearch,
+      })
+    );
+  }, [dispatch, driverId, selectedYear, page, pageSize, jobSearch]);
 
   const handleClose = (event, reason) => {
     if (reason !== "backdropClick") {
@@ -207,16 +218,21 @@ const DashDriverReports = () => {
   } = useSelector((state) => state.jobs);
 
   //
-  let allReportsDriver;
-  let formattedJobData = [""];
-  let totalJobsCount = 0;
-  let totalJobsDistance = 0;
-  let totalJobsCost = 0;
+  const reportData = useMemo(() => {
+    if (!AllJobsReportDriver) {
+      return {
+        rows: [],
+        totalJobsCount: 0,
+        totalJobsDistance: 0,
+        totalJobsCost: 0,
+      };
+    }
 
-  const [formattedData] = useMemo(() => {
-    if (!AllJobsReportDriver) return []; // Add a check for coOverallStats
-
+    const rangeStart = startDate <= endDate ? startDate : endDate;
+    const rangeEnd = startDate <= endDate ? endDate : startDate;
     let totalJobs = [];
+    let totalJobsDistance = 0;
+    let totalJobsCost = 0;
 
     Object.values(AllJobsReportDriver).forEach(
       ({
@@ -233,7 +249,7 @@ const DashDriverReports = () => {
         vehicleId,
       }) => {
         const dateFormatted = new Date(orderDate);
-        if (dateFormatted >= startDate && dateFormatted <= endDate) {
+        if (dateFormatted >= rangeStart && dateFormatted <= rangeEnd) {
           const splitDate = dateFormatted.toLocaleDateString(undefined, {
             day: "2-digit",
             month: "2-digit",
@@ -256,33 +272,28 @@ const DashDriverReports = () => {
             },
           ];
 
-          totalJobsCost += cost;
-          totalJobsDistance += distance;
+          totalJobsCost += cost || 0;
+          totalJobsDistance += distance || 0;
         }
       }
     );
 
-    formattedJobData = [totalJobs];
-    allReportsDriver = formattedJobData[0];
-    totalJobsCount = allReportsDriver.length;
-    return [
-      allReportsDriver,
-      formattedJobData,
-      totalJobsCount,
-      totalJobsCost,
+    return {
+      rows: totalJobs,
+      totalJobsCount: totalJobs.length,
       totalJobsDistance,
-    ];
+      totalJobsCost,
+    };
   }, [AllJobsReportDriver, startDate, endDate]); // eslint-disable-line react-hooks/exhaustive-deps
 
   console.log(AllJobsReportDriver);
 
-  allReportsDriver = formattedJobData[0];
-  console.log(formattedJobData);
+  console.log(reportData.rows);
   console.log(startDate);
   console.log(endDate);
 
-  console.log(totalJobsCost);
-  console.log(totalJobsDistance);
+  console.log(reportData.totalJobsCost);
+  console.log(reportData.totalJobsDistance);
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
@@ -401,12 +412,19 @@ const DashDriverReports = () => {
         }}
       >
         <DataGrid
-          loading={isAllJobsReportDriverLoading || !allReportsDriver}
+          loading={isAllJobsReportDriverLoading}
           Header="hello"
           getRowId={(row) => row._id}
-          rows={(AllJobsReportDriver && allReportsDriver) || []}
+          rows={reportData.rows}
           columns={columns}
-          rowCount={totalJobsCount || 0}
+          rowCount={totalCount || 0}
+          rowsPerPageOptions={[25, 50, 100]}
+          pagination
+          page={page}
+          pageSize={pageSize}
+          paginationModel={paginationModel}
+          onPaginationModelChange={setPaginationModel}
+          paginationMode="server"
           components={{ Toolbar: DataGridCustomToolbarReports }}
           componentsProps={{
             toolbar: {
@@ -418,10 +436,24 @@ const DashDriverReports = () => {
               setStartDate,
               endDate,
               setEndDate,
-              totalJobsDistance,
-              totalJobsCost,
-              totalJobsCount,
+              defaultStartDate,
+              defaultEndDate,
+              totalJobsDistance: reportData.totalJobsDistance,
+              totalJobsCost: reportData.totalJobsCost,
+              totalJobsCount: reportData.totalJobsCount,
               driverName,
+              selectedYear,
+              setSelectedYear: (year) =>
+                dispatch({ type: "setSelectedYear", payload: year }),
+              exportParams: {
+                enabled: true,
+                scope: "driver",
+                entityId: driverId,
+                year: selectedYear,
+                jobSearch,
+                startDate: startDate?.toISOString(),
+                endDate: endDate?.toISOString(),
+              },
             },
           }}
         />

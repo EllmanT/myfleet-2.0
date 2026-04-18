@@ -47,5 +47,9 @@ const ContractorStatsSchema = new mongoose.Schema({
     ref: "Job",
   },
 }, { timestamps: true });
+ContractorStatsSchema.index(
+  { contractorId: 1, delivererId: 1, year: 1 },
+  { unique: true }
+);
 
 module.exports = mongoose.model("ContractorStats", ContractorStatsSchema);

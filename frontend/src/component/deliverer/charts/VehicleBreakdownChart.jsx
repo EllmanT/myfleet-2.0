@@ -14,12 +14,13 @@ const VehicleBreakdownChart = ({ isDashboard = false }) => {
   const { vehicleStats, isVehicleStatsLoading } = useSelector(
     (state) => state.vehicleStats
   );
+  const { selectedYear } = useSelector((state) => state.filters);
 
   console.log(vehicleStats)
   useEffect(() => {
-    dispatch(getVehicleStats(vehicleId));
+    dispatch(getVehicleStats(vehicleId, selectedYear));
     dispatch(getAllContractorsPage());
-  }, [dispatch]);
+  }, [dispatch, vehicleId, selectedYear]);
   let formattedData;
   
 
