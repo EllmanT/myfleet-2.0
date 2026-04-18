@@ -204,4 +204,124 @@
     }
   ],
   "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6634dc8a1f8a6fe66f1f44d9"
+  },
+  "contractor": {
+    "$oid": "6634dc8a1f8a6fe66f1f44d5"
+  },
+  "deliverer": {
+    "$oid": "654f669091e232eb07068b57"
+  },
+  "rateTypes": [
+    {
+      "rateType": "local",
+      "smallVehicle": 1.65,
+      "largeVehicle": 3,
+      "mediumVehicle": 2.95,
+      "horse": 0,
+      "_id": {
+        "$oid": "6634dc8a1f8a6fe66f1f44da"
+      }
+    },
+    {
+      "rateType": "express",
+      "smallVehicle": 1,
+      "largeVehicle": 3,
+      "mediumVehicle": 1.5,
+      "horse": 0,
+      "_id": {
+        "$oid": "6634dc8a1f8a6fe66f1f44db"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-05-03T12:46:02.440Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-03T12:46:02.440Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a33f81b4e40575ba5ca02a"
+  },
+  "contractor": {
+    "$oid": "66a33f81b4e40575ba5ca026"
+  },
+  "deliverer": {
+    "$oid": "654f669091e232eb07068b57"
+  },
+  "rateTypes": [
+    {
+      "rateType": "local",
+      "smallVehicle": 1.65,
+      "largeVehicle": 0,
+      "mediumVehicle": 2.95,
+      "horse": 0,
+      "_id": {
+        "$oid": "66a33f9fb4e40575ba5ca10b"
+      }
+    },
+    {
+      "rateType": "express",
+      "smallVehicle": 1,
+      "largeVehicle": 0,
+      "mediumVehicle": 1.9,
+      "horse": 0,
+      "_id": {
+        "$oid": "66a33f9fb4e40575ba5ca10c"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-07-26T06:17:37.747Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-26T06:18:07.579Z"
+  },
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "66ce04eb1719b164fe1380ea"
+  },
+  "contractor": {
+    "$oid": "66ce04eb1719b164fe1380e6"
+  },
+  "deliverer": {
+    "$oid": "654f669091e232eb07068b57"
+  },
+  "rateTypes": [
+    {
+      "rateType": "local",
+      "smallVehicle": 1.65,
+      "largeVehicle": 0,
+      "mediumVehicle": 2.95,
+      "horse": 0,
+      "_id": {
+        "$oid": "66ce04eb1719b164fe1380eb"
+      }
+    },
+    {
+      "rateType": "express",
+      "smallVehicle": 1,
+      "largeVehicle": 0,
+      "mediumVehicle": 2,
+      "horse": 0,
+      "_id": {
+        "$oid": "66ce04eb1719b164fe1380ec"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-08-27T16:55:07.265Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-27T16:55:07.265Z"
+  },
+  "__v": 0
 }]

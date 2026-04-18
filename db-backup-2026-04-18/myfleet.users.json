@@ -19,4 +19,26 @@
     "$date": "2023-11-27T10:15:00.385Z"
   },
   "__v": 0
+},
+{
+  "_id": {
+    "$oid": "663bb20c06aba5f25778fff7"
+  },
+  "name": "tapson",
+  "email": "alleaworldwide@gmail.com",
+  "password": "$2b$10$SqHEEGXTO26SwXG6QGM0B.t9lt/5F3JB./47xCo71Wt2XDQdaZHW6",
+  "phoneNumber": "8667755",
+  "role": "Super Admin",
+  "address": "fdsg dfsg fs",
+  "city": "Harare",
+  "companyId": {
+    "$oid": "663bb13906aba5f25778ffcd"
+  },
+  "createdAt": {
+    "$date": "2024-05-08T17:10:36.802Z"
+  },
+  "updatedAt": {
+    "$date": "2024-05-08T17:10:36.802Z"
+  },
+  "__v": 0
 }]

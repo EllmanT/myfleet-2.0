@@ -1,70 +1,86 @@
-# Getting Started with Create React App
+# MyFleet — Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Create React App (CRA) single-page application for the deliverer dashboard: vehicles, drivers, customers, contractors, jobs, rates, analytics (Nivo charts), and reports.
 
-## Available Scripts
+**Parent project:** [README.md](../README.md) · [docs/PROJECT_REFERENCE.md](../docs/PROJECT_REFERENCE.md)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Tech stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React 18**, **react-router-dom v6**
+- **Material UI (MUI) v5**, Emotion, **MUI X Data Grid** and **Date Pickers**
+- **Redux Toolkit**, **React Redux**
+- **Axios** (API calls with **`withCredentials: true`** for cookies)
+- **Day.js**, **react-datepicker**
+- **Nivo** (`@nivo/bar`, `line`, `pie`) for charts
+- **react-hot-toast**, **html2pdf.js**, **mui-file-input**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Requirements
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Node.js** (LTS recommended)
+- **npm**
+- A running **MyFleet API** (see [backend/README.md](../backend/README.md))
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## API base URL
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The frontend does **not** use CRA `proxy` for the API in this repo. The base URL is defined in **`src/server.js`**:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```javascript
+export const server = "http://localhost:5050/api/v2";
+```
 
-### `npm run eject`
+For another host (staging, production), change this constant (or refactor to an env-based build variable). The value **must** match:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Backend **PORT** (default local setup: **5050**)
+- The **`/api/v2`** prefix used in [backend/app.js](../backend/app.js)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Axios calls use **`withCredentials: true`** so the **httpOnly** JWT cookie is sent. The backend CORS config must allow your frontend origin and credentials (see `origin` in `backend/app.js`).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Scripts
 
-## Learn More
+Run from **`frontend/`**:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Command | Description |
+|---------|-------------|
+| **`npm start`** | Dev server at [http://localhost:3000](http://localhost:3000) (hot reload). |
+| **`npm run build`** | Production build to **`build/`**. |
+| **`npm test`** | Jest test runner (interactive). |
+| **`npm run eject`** | Irreversible CRA eject — avoid unless required. |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## Folder structure (`src/`)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+| Path | Role |
+|------|------|
+| **App.js** | Routes, theme, layout, initial dispatches (`loadUser`, `getRates`, etc.). |
+| **index.js** / **index.css** | React root, global styles. |
+| **theme.js** | MUI theme settings. |
+| **server.js** | API base URL export. |
+| **route/delRoutes.js** | Page component exports used by `App.js`. |
+| **route/delProtectedRoutes.js** | Wrapper for routes that require authentication. |
+| **redux/store.js** | Redux store configuration. |
+| **redux/actions/** | Async thunks and API calls per domain. |
+| **redux/reducers/** | State slices per domain. |
+| **pages/deliverer/** | Dashboard, CRUD pages, analytics, reports, login/register. |
+| **component/deliverer/** | Layout (navbar, shell), charts, grids, dialogs. |
+| **providers/** | e.g. toast provider. |
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Cookies and local development
 
-### Making a Progressive Web App
+The API sets the auth cookie with **`Secure`** and **`SameSite=None`**. On **http://localhost** some browsers treat secure cookies strictly; if login succeeds but subsequent requests are unauthenticated, use HTTPS locally or align cookie options on the server for development.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## Learn more (CRA)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This app was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Official CRA docs: [getting started](https://facebook.github.io/create-react-app/docs/getting-started).
