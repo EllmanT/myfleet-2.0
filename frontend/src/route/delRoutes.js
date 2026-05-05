@@ -1,5 +1,7 @@
 import DelRegisterPage from "../pages/deliverer/RegisterPage.jsx";
 import DelLoginPage from "../pages/deliverer/LoginPage.jsx";
+import ForgotPasswordPage from "../pages/deliverer/ForgotPasswordPage.jsx";
+import ResetPasswordPage from "../pages/deliverer/ResetPasswordPage.jsx";
 import DelDashboardPage from "../pages/deliverer/DashboardPage.jsx";
 import DelAdminsPage from "../pages/deliverer/AdminsPage.jsx";
 import DelVehiclesPage from "../pages/deliverer/VehiclesPage.jsx";
@@ -41,6 +43,8 @@ import DelDashVehicleReportsPage from "../pages/deliverer/reports/DashVehicleRep
 export {
   DelRegisterPage,
   DelLoginPage,
+  ForgotPasswordPage,
+  ResetPasswordPage,
   DelDashboardPage,
   DelAdminsPage,
   DelVehiclesPage,

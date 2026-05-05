@@ -108,6 +108,32 @@ flowchart LR
 
 ---
 
-## License
+## Deploy both apps on Vercel (single project)
 
+Repo root ships:
+
+- **`vercel.json`** — installs `frontend` + `backend`, builds the CRA app into **`frontend/build`**, and routes **`/api/*`** to a serverless **`api/index.js`** entry that runs the Express app.
+- **`api/index.js`** — connects MongoDB and exports [backend/app.js](backend/app.js).
+
+Import the repo in Vercel with **project root** = repository root (no subdirectory). Override install/build commands only if needed; defaults come from **`vercel.json`**.
+
+### Environment variables on Vercel
+
+| Scope | Variables |
+|--------|-----------|
+| **Build** (CRA) | **`REACT_APP_API_ORIGIN`** — leave unset for same-origin deployments so requests use **`/api/v2`**. Only set when the browser must call another host (full origin, no trailing slash), e.g. `https://api.example.com`. |
+| **Runtime** (API) | **`DB_URL`** — Atlas or other Mongo URI (`NODE_ENV=production` selects this — see [backend/db/Database.js](backend/db/Database.js)). **JWT_SECRET_KEY**, **JWT_EXPIRES**, **ACTIVATION_SECRET**, **FRONTEND_URL** (must match where users open the SPA; used in emailed links). **Optional:** comma-separated **`ALLOWED_ORIGINS`** instead of/over **`FRONTEND_URL`** for CORS. SMTP: **`SMPT_HOST`**, **`SMPT_PORT`**, **`SMPT_SERVICE`**, **`SMPT_MAIL`**, **`SMPT_PASSWORD`**. **`PORT`** is ignored on Vercel. |
+
+MongoDB Atlas: allow **`0.0.0.0/0`** (or Vercel’s documented egress IPs) because serverless invocations move between addresses.
+
+### Limitations on Vercel
+
+- Uploaded files land in **`/tmp`** ([backend/uploadsDir.js](backend/uploadsDir.js)) and are **ephemeral**. For persistent documents or images use object storage (S3, Blob, Cloudinary).
+- Long-running workloads and traditional WebSockets are not a fit for `/api`; this stack uses polling/HTTP cookies only.
+
+Same reference for naming: [backend/config/.env.example](backend/config/.env.example).
+
+---
+
+## License
 ISC (see package.json author field).

@@ -7,7 +7,7 @@ export const createDeliverer = (newForm) => async (dispatch) => {
       type: "delivererCreateRequest",
     });
 
-    const config = { Headers: { "Content-type": "multipart/form-data" } };
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
 
     const { data } = await axios.post(
       `${server}/deliverer/create-deliverer`,

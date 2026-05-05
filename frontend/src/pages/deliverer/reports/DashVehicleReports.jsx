@@ -66,6 +66,7 @@ const DashVehicleReports = () => {
 
   vehicle = vehiclesPage && vehiclesPage.find((v) => v._id === vehicleId);
   vehicleRegNumber = vehicle && vehicle.regNumber;
+  let vehicleMake = vehicle && vehicle.make;
 
   //  console.log(pageVehicles)
   console.log(vehicleRegNumber);
@@ -129,9 +130,11 @@ const DashVehicleReports = () => {
         page,
         limit: pageSize,
         jobSearch,
+        startDate: startDate?.toISOString(),
+        endDate: endDate?.toISOString(),
       })
     );
-  }, [dispatch, vehicleId, selectedYear, page, pageSize, jobSearch]);
+  }, [dispatch, vehicleId, selectedYear, page, pageSize, jobSearch, startDate, endDate]);
 
   const handleClose = (event, reason) => {
     if (reason !== "backdropClick") {
@@ -232,93 +235,9 @@ const DashVehicleReports = () => {
   const {
     AllJobsReportVehicle,
     totalCount,
-
     isAllJobsReportVehicleLoading,
+    reportPeriodTotals,
   } = useSelector((state) => state.jobs);
-  console.log(AllJobsReportVehicle);
-
-  //
-  const reportData = useMemo(() => {
-    if (!AllJobsReportVehicle) {
-      return {
-        rows: [],
-        totalJobsCount: 0,
-        totalJobsDistance: 0,
-        totalJobsCost: 0,
-      };
-    }
-
-    const rangeStart = startDate <= endDate ? startDate : endDate;
-    const rangeEnd = startDate <= endDate ? endDate : startDate;
-    let totalJobs = [];
-    let totalJobsDistance = 0;
-    let totalJobsCost = 0;
-
-    Object.values(AllJobsReportVehicle).forEach(
-      ({
-        orderDate,
-        _id,
-        jobNumber,
-        from,
-        customer,
-        mileageOut,
-        mileageIn,
-        distance,
-        cost,
-        description,
-        deliveryType,
-        driverId,
-        contractorId,
-      }) => {
-        const dateFormatted = new Date(orderDate);
-        if (dateFormatted >= rangeStart && dateFormatted <= rangeEnd) {
-          const splitDate = dateFormatted.toLocaleDateString(undefined, {
-            day: "2-digit",
-            month: "2-digit",
-          });
-          // Format the splitDate as "dd-mm"
-          totalJobs = [
-            ...totalJobs,
-            {
-              _id: _id,
-              jobNumber: jobNumber,
-              from: from,
-              customer: customer,
-              mileageOut: mileageOut,
-              mileageIn: mileageIn,
-              distance,
-              cost: cost,
-              description: description,
-              deliveryType: deliveryType,
-              driverId: driverId,
-              contractorId: contractorId,
-              orderDate,
-            },
-          ];
-
-          totalJobsCost += cost || 0;
-          totalJobsDistance += distance || 0;
-        }
-      }
-    );
-
-    return {
-      rows: totalJobs,
-      totalJobsCount: totalJobs.length,
-      totalJobsDistance,
-      totalJobsCost,
-    };
-  }, [AllJobsReportVehicle, startDate, endDate]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  console.log(AllJobsReportVehicle);
-
-  console.log(reportData.rows);
-  console.log(AllJobsReportVehicle);
-  console.log(startDate);
-  console.log(endDate);
-
-  console.log(reportData.totalJobsCost);
-  console.log(reportData.totalJobsDistance);
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
@@ -416,23 +335,41 @@ const DashVehicleReports = () => {
             border: "none",
           },
           "& .MuiDataGrid-cell": {
-            borderBottom: "solid 0.2px",
+            borderBottom: `1px solid ${theme.palette.divider}`,
+            padding: "12px 16px",
+            fontSize: "0.875rem",
           },
           "& .MuiDataGrid-columnHeaders": {
             backgroundColor: theme.palette.background.alt,
             color: theme.palette.secondary[100],
-            borderBottom: "none",
+            fontWeight: "bold",
+            fontSize: "0.8rem",
+            letterSpacing: "0.06rem",
+            textTransform: "uppercase",
+            borderBottom: `2px solid ${theme.palette.secondary[400]}`,
+          },
+          "& .MuiDataGrid-columnHeaderTitle": {
+            fontWeight: "bold",
+            fontSize: "0.82rem",
           },
           "& .MuiDataGrid-virtualScroller": {
             backgroundColor: theme.palette.primary.light,
           },
+          "& .MuiDataGrid-row": {
+            "&:nth-of-type(even)": {
+              backgroundColor: `${theme.palette.primary.main}10`,
+            },
+            "&:hover": {
+              backgroundColor: `${theme.palette.secondary.main}15`,
+            },
+          },
           "& .MuiDataGrid-footerContainer": {
             backgroundColor: theme.palette.background.alt,
             color: theme.palette.secondary[100],
-            borderTop: "none",
+            borderTop: `1px solid ${theme.palette.divider}`,
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${theme.palette.secondary[100]} !important`,
+            color: `${theme.palette.secondary[200]} !important`,
           },
         }}
       >
@@ -440,7 +377,7 @@ const DashVehicleReports = () => {
           loading={isAllJobsReportVehicleLoading}
           Header="hello"
           getRowId={(row) => row._id}
-          rows={reportData.rows}
+          rows={AllJobsReportVehicle || []}
           columns={columns}
           rowCount={totalCount || 0}
           rowsPerPageOptions={[25, 50, 100]}
@@ -463,9 +400,9 @@ const DashVehicleReports = () => {
               setEndDate,
               defaultStartDate,
               defaultEndDate,
-              totalJobsDistance: reportData.totalJobsDistance,
-              totalJobsCost: reportData.totalJobsCost,
-              totalJobsCount: reportData.totalJobsCount,
+              totalJobsDistance: reportPeriodTotals?.totalDistance || 0,
+              totalJobsCost: reportPeriodTotals?.totalCost || 0,
+              totalJobsCount: reportPeriodTotals?.totalJobs || 0,
               vehicleRegNumber,
               selectedYear,
               setSelectedYear: (year) =>
@@ -478,6 +415,9 @@ const DashVehicleReports = () => {
                 jobSearch,
                 startDate: startDate?.toISOString(),
                 endDate: endDate?.toISOString(),
+                entityName: vehicleRegNumber,
+                vehicleMake: vehicleMake,
+                entityType: "Vehicle",
               },
             },
           }}

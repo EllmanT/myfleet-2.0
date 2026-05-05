@@ -68,7 +68,7 @@ const DashDriverAnalytics = () => {
 
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const { driverStats, isDriverStatsLoading } = useSelector(
-    (state) => state.overallStats
+    (state) => state.driverStats
   );
   const { latestJobsDeliverer, latestJobsDelivererLoading } = useSelector(
     (state) => state.jobs

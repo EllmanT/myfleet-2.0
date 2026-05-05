@@ -71,7 +71,7 @@ const DashContrAnalytics = () => {
 
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const { contractorStats, isContractorStatsLoading } = useSelector(
-    (state) => state.overallStats
+    (state) => state.contractorStats
   );
   const { latestJobsDeliverer, latestJobsDelivererLoading } = useSelector(
     (state) => state.jobs

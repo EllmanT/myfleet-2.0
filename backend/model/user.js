@@ -38,19 +38,22 @@ const userSchema = new mongoose.Schema(
     },
 
     resetPasswordToken: {
-      String,
+      type: String,
+      select: false,
     },
-    resetPasswordTime: { Date },
+    resetPasswordExpire: {
+      type: Date,
+      select: false,
+    },
   },
   { timestamps: true }
 );
 
 //hashing the password
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function () {
   if (!this.isModified("password")) {
-    next();
+    return;
   }
-
   this.password = await bcrypt.hash(this.password, 10);
 });
 

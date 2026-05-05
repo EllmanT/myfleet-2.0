@@ -7,16 +7,19 @@ import {
   MonetizationOn,
   ReceiptLongOutlined,
   RemoveRedEye,
+  SyncOutlined,
   TrendingDownOutlined,
   TrendingUpOutlined,
 } from "@mui/icons-material";
 import {
+  Alert,
   Box,
   Button,
   FormControl,
   IconButton,
   MenuItem,
   Select,
+  Snackbar,
   Typography,
   useMediaQuery,
   useTheme,
@@ -29,13 +32,13 @@ import OverviewChart from "component/deliverer/OverviewChart";
 import StatBox from "component/deliverer/Statbox";
 import YearSelect from "component/deliverer/YearSelect";
 import RevenueOverviewChart from "component/deliverer/charts/RevenueOverviewChart";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAllContractorsPage } from "redux/actions/contractor";
 import { getAllDeliverersPage } from "redux/actions/deliverer";
 import { getLatestJobsDeliverer, getLatestJobsPage } from "redux/actions/job";
-import { getAllOverallStatsDeliverer } from "redux/actions/overallStats";
+import { getAllOverallStatsDeliverer, rebuildStats } from "redux/actions/overallStats";
 import { loadUser } from "redux/actions/user";
 
 const DashboardPage = () => {
@@ -44,8 +47,9 @@ const DashboardPage = () => {
   const navigate = useNavigate();
 
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
+  const [snackOpen, setSnackOpen] = useState(false);
   const { user, delivererName, loading } = useSelector((state) => state.user);
-  const { coOverallStats, isCoOverallStatsLoading } = useSelector(
+  const { coOverallStats, isCoOverallStatsLoading, isRebuildingStats, rebuildStatsSuccess } = useSelector(
     (state) => state.overallStats
   );
   const { selectedYear } = useSelector((state) => state.filters);
@@ -78,11 +82,17 @@ const DashboardPage = () => {
     dispatch(getAllDeliverersPage());
   }, [dispatch, selectedYear]);
 
-    
-  console.log(deliverer);
-        console.log(user)
-    
-    
+  useEffect(() => {
+    if (rebuildStatsSuccess) {
+      setSnackOpen(true);
+      dispatch(getAllOverallStatsDeliverer(selectedYear));
+    }
+  }, [rebuildStatsSuccess]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleRebuildStats = () => {
+    dispatch(rebuildStats());
+  };
+
   let highestRevenue = 0;
   let topContractorRevenue = "";
   let topContractorJobs = "";
@@ -291,6 +301,21 @@ const DashboardPage = () => {
             <DownloadOutlined sx={{ mr: "10px" }} />
             Reports
           </Button>
+          <Button
+            variant="outlined"
+            color="warning"
+            disabled={isRebuildingStats}
+            onClick={handleRebuildStats}
+            sx={{
+              m: "1rem",
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+            }}
+          >
+            <SyncOutlined sx={{ mr: "10px" }} />
+            {isRebuildingStats ? "Syncing..." : "Sync Stats"}
+          </Button>
         </Box>
         <YearSelect />
         <Box>
@@ -438,29 +463,36 @@ const DashboardPage = () => {
           flexDirection="column"
           sx={{
             "& .MuiDataGrid-root": {
+              border: "none",
               width: "100%",
-              border: "solid , 0.1rem",
-              // borderWidth:"10px",
-              // borderRadius: "5rem",
             },
             "& .MuiDataGrid-cell": {
-              borderBottom: "none",
+              borderBottom: `1px solid ${theme.palette.divider}`,
+              padding: "10px 16px",
+              fontSize: "0.85rem",
             },
             "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: theme.palette.background.alt,
-              color: theme.palette.secondary[100],
-              //borderBottom: "none",
+              backgroundColor: theme.palette.primary.dark,
+              color: theme.palette.secondary[200],
+              fontWeight: "bold",
+              fontSize: "0.8rem",
+              letterSpacing: "0.05rem",
+              borderBottom: `2px solid ${theme.palette.secondary[400]}`,
+              textTransform: "uppercase",
+            },
+            "& .MuiDataGrid-columnHeaderTitle": {
+              fontWeight: "bold",
             },
             "& .MuiDataGrid-virtualScroller": {
               backgroundColor: theme.palette.background.alt,
             },
+            "& .MuiDataGrid-row:hover": {
+              backgroundColor: `${theme.palette.primary.main}22`,
+            },
             "& .MuiDataGrid-footerContainer": {
               backgroundColor: theme.palette.background.alt,
               color: theme.palette.secondary[100],
-              // borderTop: "none",
-            },
-            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-              color: `${theme.palette.secondary[200]} !important`,
+              borderTop: `1px solid ${theme.palette.divider}`,
             },
           }}
         >
@@ -473,6 +505,16 @@ const DashboardPage = () => {
           />
         </Box>
       </Box>
+      <Snackbar
+        open={snackOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert onClose={() => setSnackOpen(false)} severity="success" sx={{ width: "100%" }}>
+          Stats rebuilt successfully!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

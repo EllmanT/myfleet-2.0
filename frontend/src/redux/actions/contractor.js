@@ -7,7 +7,7 @@ export const createContractor = (newForm) => async (dispatch) => {
       type: "loadCreateContractorRequest",
     });
 
-    const config = { Headers: { "Content-Type": "multipart/form-data" } };
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data } = await axios.post(
       `${server}/contractor/create-contractor`,
       newForm,

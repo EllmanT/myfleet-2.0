@@ -1,6 +1,7 @@
 const fs = require("fs/promises");
 const path = require("path");
-const { EJSON } = require("bson");
+const { BSON } = require("mongodb");
+const { EJSON } = BSON;
 const { ImportError, ValidationError } = require("./errors");
 const { logger, timedStep } = require("./logger");
 

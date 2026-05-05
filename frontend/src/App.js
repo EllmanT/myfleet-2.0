@@ -6,8 +6,9 @@ import { themeSettings } from "theme";
 
 //getting the deliverer routes
 import {
-  DelRegisterPage,
   DelLoginPage,
+  ForgotPasswordPage,
+  ResetPasswordPage,
   DelDashboardPage,
   DelVehiclesPage,
   DelDriversPage,
@@ -49,17 +50,7 @@ import { loadUser } from "redux/actions/user";
 //getting the layouts
 import DelLayout from "component/deliverer/DelLayout";
 import DelProtectedRoutes from "route/delProtectedRoutes";
-
-
-//the analytics pages
-import { getAllCustomersDeliverer } from "redux/actions/customer";
-import { getAllContractorsDeliverer } from "redux/actions/contractor";
-import { getAllVehiclesCompany } from "redux/actions/vehicle";
-import { getAllDriversCompany } from "redux/actions/driver";
-import { getDelivererInfo } from "redux/actions/deliverer";
 import { getRates } from "redux/actions/rate";
-
-//the analytics pages
 
 const App = () => {
 //const dispatch= useDispatch();
@@ -464,6 +455,8 @@ const App = () => {
             </Route>
 
             <Route path="/login" element={<DelLoginPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route
               path="/activation/:activation_token"
               element={<ActivationPage />}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Refresh, Search } from "@mui/icons-material";
 import {
   IconButton,
@@ -38,8 +38,29 @@ const DataGridCustomToolbarReports = ({
   exportParams = {},
 }) => {
   const [view, setView] = useState("");
+  const debounceTimer = useRef(null);
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchInput(value);
+    if (debounceTimer.current) clearTimeout(debounceTimer.current);
+    debounceTimer.current = setTimeout(() => {
+      setJobSearch(value);
+    }, 400);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      if (debounceTimer.current) clearTimeout(debounceTimer.current);
+      setJobSearch(searchInput);
+    }
+    if (e.key === "Escape") {
+      handleReset();
+    }
+  };
 
   const handleReset = () => {
+    if (debounceTimer.current) clearTimeout(debounceTimer.current);
     setJobSearch("");
     setSearchInput("");
     setView("");
@@ -56,7 +77,16 @@ const DataGridCustomToolbarReports = ({
     const href = window.URL.createObjectURL(response.data);
     const link = document.createElement("a");
     link.href = href;
-    link.download = `jobs-report.${type === "csv" ? "csv" : "pdf"}`;
+    const ext = type === "csv" ? "csv" : "pdf";
+    const today = new Date().toISOString().split("T")[0];
+    const clean = (s) => String(s || "").trim().replace(/[^a-zA-Z0-9]/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
+    let filename;
+    if (exportParams?.scope === "vehicle" && exportParams?.vehicleMake) {
+      filename = `${clean(exportParams.vehicleMake)}-${clean(exportParams.entityName)}-${today}-jobs.${ext}`;
+    } else {
+      filename = `${clean(exportParams?.entityName)}-${today}-jobs.${ext}`;
+    }
+    link.download = filename;
     document.body.appendChild(link);
     link.click();
     link.remove();
@@ -161,6 +191,22 @@ const DataGridCustomToolbarReports = ({
         </FlexBetween>
 
         <FlexBetween>
+          <TextField
+            label="Search..."
+            sx={{ mr: "0.5rem", width: "220px" }}
+            onChange={handleSearchChange}
+            onKeyDown={handleKeyDown}
+            value={searchInput}
+            variant="outlined"
+            size="small"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Search fontSize="small" />
+                </InputAdornment>
+              ),
+            }}
+          />
           <Box display={"flex"}>
             <FormControl size="small" sx={{ mr: "0.5rem", minWidth: "100px" }}>
               <Select

@@ -30,8 +30,10 @@ export const jobReducer = createReducer(initialState, {
     state.jobsPage = action.payload;
   },
   setTotalCount: (state, action) => {
-    // Add this new reducer case
     state.totalCount = action.payload;
+  },
+  setReportPeriodTotals: (state, action) => {
+    state.reportPeriodTotals = action.payload;
   },
   getAllJobsPageFailed: (state, action) => {
     state.allJobsPageLoading = false;

@@ -20,6 +20,7 @@ const {
   buildJobSnapshot,
 } = require("./helpers/jobStatsSync");
 const router = express.Router();
+
 function addUniqueId(list, id) {
   const target = Array.isArray(list) ? list : [];
   const idStr = String(id);
@@ -63,6 +64,10 @@ async function runWithOptionalTransaction(work) {
 function getYearFilter(req) {
   const fallbackYear = new Date().getFullYear();
   const rawYear = req.query.year;
+
+  if (rawYear === "all") {
+    return { year: null, dateMatch: {} };
+  }
 
   if (rawYear === undefined || rawYear === null || rawYear === "") {
     const start = new Date(fallbackYear, 0, 1);
@@ -165,7 +170,7 @@ async function buildJobsForExport(req) {
   }
   const jobIds = await getScopedJobIds(req);
 
-  let sortOptions = { orderDate: -1 };
+  let sortOptions = { orderDate: 1 };
   if (sort) {
     const parsed = JSON.parse(sort);
     sortOptions = { [parsed.field]: parsed.sort === "asc" ? 1 : -1 };
@@ -472,7 +477,7 @@ router.put(
             req.body.distance !== undefined
               ? asNumber(req.body.distance)
               : asNumber(job.distance),
-          orderDate: req.body.orderDatee ?? job.orderDate,
+          orderDate: req.body.orderDate ?? job.orderDate,
         };
 
         const newContractor = await withSession(
@@ -695,7 +700,7 @@ router.get(
       }
 
       const jobIds = deliverer.job_ids;
-      const { dateMatch } = getYearFilter(req);
+      const { year: requestedYear, dateMatch } = getYearFilter(req);
 
       const pipeline = [
         ...buildBaseJobsPipeline(jobIds, dateMatch, jobSearch),
@@ -735,17 +740,40 @@ router.get(
   catchAsyncErrors(async (req, res, next) => {
     try {
       const rows = await buildJobsForExport(req);
+      const entityName = req.query.entityName || "All Jobs";
+      const entityType = req.query.entityType || "Deliverer";
+      const { year } = getYearFilter(req);
+      const { startDate, endDate } = req.query;
+
+      const periodLabel =
+        startDate && endDate
+          ? `${new Date(startDate).toLocaleDateString()} - ${new Date(endDate).toLocaleDateString()}`
+          : `Year: ${year}`;
+
+      const totalJobs = rows.length;
+      const totalDistance = rows.reduce((sum, job) => sum + asNumber(job.distance), 0);
+      const totalCost = rows.reduce((sum, job) => sum + asNumber(job.cost), 0);
+
+      const metaLines = [
+        `"${entityType}: ${entityName}"`,
+        `"Period: ${periodLabel}"`,
+        `"Total Jobs: ${totalJobs}","Total Distance: ${totalDistance.toFixed(2)} km","Total Cost: $${totalCost.toFixed(2)}"`,
+        `""`,
+      ];
+
       const headers = [
         "Job Number",
         "Delivery Type",
         "Contractor",
         "From",
         "Customer",
-        "Distance",
-        "Cost",
+        "Mileage Out",
+        "Mileage In",
+        "Distance (km)",
+        "Cost ($)",
         "Order Date",
       ];
-      const lines = [headers.map(escapeCsv).join(",")];
+      const lines = [...metaLines, headers.map(escapeCsv).join(",")];
       rows.forEach((job) => {
         lines.push(
           [
@@ -754,6 +782,8 @@ router.get(
             job.contractorId?.companyName,
             job.from?.name,
             job.customer?.name,
+            job.mileageOut ?? "",
+            job.mileageIn ?? "",
             asNumber(job.distance).toFixed(2),
             asNumber(job.cost).toFixed(2),
             new Date(job.orderDate).toISOString().split("T")[0],
@@ -762,8 +792,15 @@ router.get(
             .join(",")
         );
       });
+      const sanitizePart = (s) => String(s || "").trim().replace(/[^a-zA-Z0-9]/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
+      const scope = req.query.scope || "deliverer";
+      const vehicleMake = req.query.vehicleMake;
+      const today = new Date().toISOString().split("T")[0];
+      const csvFilename = scope === "vehicle" && vehicleMake
+        ? `${sanitizePart(vehicleMake)}-${sanitizePart(entityName)}-${today}-jobs.csv`
+        : `${sanitizePart(entityName)}-${today}-jobs.csv`;
       res.setHeader("Content-Type", "text/csv; charset=utf-8");
-      res.setHeader("Content-Disposition", 'attachment; filename="jobs-export.csv"');
+      res.setHeader("Content-Disposition", `attachment; filename="${csvFilename}"`);
       return res.status(200).send(lines.join("\n"));
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
@@ -777,22 +814,46 @@ router.get(
   catchAsyncErrors(async (req, res, next) => {
     try {
       const rows = await buildJobsForExport(req);
+      const entityName = req.query.entityName || "All Jobs";
+      const entityType = req.query.entityType || "Deliverer";
+      const { year } = getYearFilter(req);
+      const { startDate, endDate } = req.query;
+
+      const periodLabel =
+        startDate && endDate
+          ? `${new Date(startDate).toLocaleDateString()} - ${new Date(endDate).toLocaleDateString()}`
+          : `Year: ${year}`;
+
+      const totalJobs = rows.length;
+      const totalDistance = rows.reduce((sum, job) => sum + asNumber(job.distance), 0);
+      const totalCost = rows.reduce((sum, job) => sum + asNumber(job.cost), 0);
+
       const lines = [
-        "Jobs export",
-        "Job Number | Delivery Type | Contractor | Customer | Cost | Date",
+        `${entityType}: ${entityName}`,
+        `Period: ${periodLabel}`,
+        `Total Jobs: ${totalJobs} | Total Distance: ${totalDistance.toFixed(2)} km | Total Cost: $${totalCost.toFixed(2)}`,
+        `---`,
+        `Job Number | Delivery Type | Contractor | Customer | Mileage Out | Mileage In | Distance | Cost | Date`,
       ];
       rows.forEach((job) => {
         lines.push(
           `${job.jobNumber || ""} | ${job.deliveryType || ""} | ${
             job.contractorId?.companyName || ""
-          } | ${job.customer?.name || ""} | ${asNumber(job.cost).toFixed(2)} | ${
+          } | ${job.customer?.name || ""} | ${job.mileageOut ?? ""} | ${job.mileageIn ?? ""} | ${asNumber(job.distance).toFixed(2)} | ${asNumber(job.cost).toFixed(2)} | ${
             new Date(job.orderDate).toISOString().split("T")[0]
           }`
         );
       });
+      const sanitizePart = (s) => String(s || "").trim().replace(/[^a-zA-Z0-9]/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
+      const scope = req.query.scope || "deliverer";
+      const vehicleMake = req.query.vehicleMake;
+      const today = new Date().toISOString().split("T")[0];
+      const pdfFilename = scope === "vehicle" && vehicleMake
+        ? `${sanitizePart(vehicleMake)}-${sanitizePart(entityName)}-${today}-jobs.pdf`
+        : `${sanitizePart(entityName)}-${today}-jobs.pdf`;
       const pdfBuffer = buildSimplePdfBuffer(lines);
       res.setHeader("Content-Type", "application/pdf");
-      res.setHeader("Content-Disposition", 'attachment; filename="jobs-export.pdf"');
+      res.setHeader("Content-Disposition", `attachment; filename="${pdfFilename}"`);
       return res.status(200).send(pdfBuffer);
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
@@ -843,7 +904,28 @@ router.get(
 
       // Get the job IDs associated with the deliverer
       const jobIds = deliverer.job_ids;
-      const { dateMatch } = getYearFilter(req);
+      const { year: requestedYear, dateMatch: requestedDateMatch } = getYearFilter(req);
+      let effectiveYear = requestedYear;
+      let dateMatch = requestedDateMatch;
+
+      // If requested year has no jobs, fall back to the latest available job year for this company.
+      const requestedYearCount = await Job.countDocuments({
+        _id: { $in: jobIds },
+        ...requestedDateMatch,
+      });
+      if (requestedYearCount === 0 && jobIds.length > 0) {
+        const latestYearResult = await Job.aggregate([
+          { $match: { _id: { $in: jobIds } } },
+          { $project: { year: { $year: "$orderDate" } } },
+          { $group: { _id: null, maxYear: { $max: "$year" } } },
+        ]);
+        if (latestYearResult.length > 0 && Number.isInteger(latestYearResult[0].maxYear)) {
+          effectiveYear = latestYearResult[0].maxYear;
+          const start = new Date(effectiveYear, 0, 1);
+          const end = new Date(effectiveYear + 1, 0, 1);
+          dateMatch = { orderDate: { $gte: start, $lt: end } };
+        }
+      }
 
       // Update the pipeline with the revised $match stage
       const pipeline = [
@@ -974,21 +1056,47 @@ router.get(
         delivererId: req.user.companyId,
       });
 
-      if (!getContractorStats) {
-        return res.status(404).json({
-          success: false,
-          message: "Contractor Stats not found",
+      if (!getContractorStats || getContractorStats.length === 0) {
+        return res.status(200).json({
+          success: true,
+          latestContractorJobs: [],
+          totalCount: 0,
+          message: "No stats found for this contractor",
         });
       }
 
-      // Get the job IDs associated with the deliverer
-      const jobIds = getContractorStats[0].job_ids;
-      const { dateMatch } = getYearFilter(req);
+      let { dateMatch } = getYearFilter(req);
+      const requestedJobIds = getContractorStats[0]?.job_ids || [];
 
-      if (!jobIds.length === 0) {
-        res.status(201).json({
-          success: false,
-          message: "No Jobs for Contractor",
+      const requestedCount = await Job.countDocuments({
+        _id: { $in: requestedJobIds },
+        ...dateMatch,
+      });
+
+      let jobIds = requestedJobIds;
+      if (requestedCount === 0) {
+        const allIds = getContractorStats.flatMap((s) => s.job_ids || []);
+        if (allIds.length > 0) {
+          const latestYearResult = await Job.aggregate([
+            { $match: { _id: { $in: allIds } } },
+            { $project: { year: { $year: "$orderDate" } } },
+            { $group: { _id: null, maxYear: { $max: "$year" } } },
+          ]);
+          if (latestYearResult.length > 0) {
+            const fallbackYear = latestYearResult[0].maxYear;
+            const start = new Date(fallbackYear, 0, 1);
+            const end = new Date(fallbackYear + 1, 0, 1);
+            dateMatch = { orderDate: { $gte: start, $lt: end } };
+            jobIds = allIds;
+          }
+        }
+      }
+
+      if (jobIds.length === 0) {
+        return res.status(200).json({
+          success: true,
+          latestContractorJobs: [],
+          totalCount: 0,
         });
       }
       // Update the pipeline with the revised $match stage
@@ -1364,7 +1472,15 @@ router.get(
 
       // Get the customer IDs associated with the deliverer
       const jobIds = deliverer.job_ids;
-      const { dateMatch } = getYearFilter(req);
+      let { dateMatch } = getYearFilter(req);
+      const { startDate, endDate } = req.query;
+      if (startDate || endDate) {
+        const start = startDate ? new Date(startDate) : new Date(req.query.year || new Date().getFullYear(), 0, 1);
+        const end = endDate ? new Date(endDate) : new Date((parseInt(req.query.year || new Date().getFullYear())) + 1, 0, 1);
+        if (!isNaN(start.getTime()) && !isNaN(end.getTime())) {
+          dateMatch = { orderDate: { $gte: start, $lte: end } };
+        }
+      }
 
       const pipeline = [
         ...buildBaseJobsPipeline(jobIds, dateMatch, jobSearch),
@@ -1373,17 +1489,22 @@ router.get(
           $facet: {
             rows: [{ $skip: skip }, { $limit: limit }],
             totalCount: [{ $count: "total" }],
+            periodTotals: [
+              { $group: { _id: null, totalDistance: { $sum: "$distance" }, totalCost: { $sum: { $toDouble: "$cost" } }, totalJobs: { $sum: 1 } } },
+            ],
           },
         },
       ];
-      const [{ rows = [], totalCount = [] } = {}] = await Job.aggregate(pipeline);
+      const [{ rows = [], totalCount = [], periodTotals = [] } = {}] = await Job.aggregate(pipeline);
       const formattedJobs = mapJobCost(rows);
       const total = totalCount.length ? totalCount[0].total : 0;
+      const periodTotalsResult = periodTotals[0] || { totalDistance: 0, totalCost: 0, totalJobs: 0 };
       res.status(200).json({
         success: true,
         delivererWithJobsReport: formattedJobs,
         rows: formattedJobs,
         totalCount: total,
+        periodTotals: periodTotalsResult,
         page,
         limit,
       });
@@ -1415,7 +1536,15 @@ router.get(
 
       // Get the customer IDs associated with the contractor
       const jobIds = contractor.job_ids;
-      const { dateMatch } = getYearFilter(req);
+      let { dateMatch } = getYearFilter(req);
+      const { startDate, endDate } = req.query;
+      if (startDate || endDate) {
+        const start = startDate ? new Date(startDate) : new Date(req.query.year || new Date().getFullYear(), 0, 1);
+        const end = endDate ? new Date(endDate) : new Date((parseInt(req.query.year || new Date().getFullYear())) + 1, 0, 1);
+        if (!isNaN(start.getTime()) && !isNaN(end.getTime())) {
+          dateMatch = { orderDate: { $gte: start, $lte: end } };
+        }
+      }
 
       const pipeline = [
         ...buildBaseJobsPipeline(jobIds, dateMatch, jobSearch),
@@ -1424,17 +1553,22 @@ router.get(
           $facet: {
             rows: [{ $skip: skip }, { $limit: limit }],
             totalCount: [{ $count: "total" }],
+            periodTotals: [
+              { $group: { _id: null, totalDistance: { $sum: "$distance" }, totalCost: { $sum: { $toDouble: "$cost" } }, totalJobs: { $sum: 1 } } },
+            ],
           },
         },
       ];
-      const [{ rows = [], totalCount = [] } = {}] = await Job.aggregate(pipeline);
+      const [{ rows = [], totalCount = [], periodTotals = [] } = {}] = await Job.aggregate(pipeline);
       const formattedJobs = mapJobCost(rows);
       const total = totalCount.length ? totalCount[0].total : 0;
+      const periodTotalsResult = periodTotals[0] || { totalDistance: 0, totalCost: 0, totalJobs: 0 };
       res.status(200).json({
         success: true,
         contractorWithJobsReport: formattedJobs,
         rows: formattedJobs,
         totalCount: total,
+        periodTotals: periodTotalsResult,
         page,
         limit,
       });
@@ -1466,7 +1600,15 @@ router.get(
 
       // Get the customer IDs associated with the driver
       const jobIds = driver.job_ids;
-      const { dateMatch } = getYearFilter(req);
+      let { dateMatch } = getYearFilter(req);
+      const { startDate, endDate } = req.query;
+      if (startDate || endDate) {
+        const start = startDate ? new Date(startDate) : new Date(req.query.year || new Date().getFullYear(), 0, 1);
+        const end = endDate ? new Date(endDate) : new Date((parseInt(req.query.year || new Date().getFullYear())) + 1, 0, 1);
+        if (!isNaN(start.getTime()) && !isNaN(end.getTime())) {
+          dateMatch = { orderDate: { $gte: start, $lte: end } };
+        }
+      }
 
       const pipeline = [
         ...buildBaseJobsPipeline(jobIds, dateMatch, jobSearch),
@@ -1475,18 +1617,23 @@ router.get(
           $facet: {
             rows: [{ $skip: skip }, { $limit: limit }],
             totalCount: [{ $count: "total" }],
+            periodTotals: [
+              { $group: { _id: null, totalDistance: { $sum: "$distance" }, totalCost: { $sum: { $toDouble: "$cost" } }, totalJobs: { $sum: 1 } } },
+            ],
           },
         },
       ];
-      const [{ rows = [], totalCount = [] } = {}] = await Job.aggregate(pipeline);
+      const [{ rows = [], totalCount = [], periodTotals = [] } = {}] = await Job.aggregate(pipeline);
       const formattedJobs = mapJobCost(rows);
       const total = totalCount.length ? totalCount[0].total : 0;
+      const periodTotalsResult = periodTotals[0] || { totalDistance: 0, totalCost: 0, totalJobs: 0 };
 
       res.status(200).json({
         success: true,
         driverWithJobsReport: formattedJobs,
         rows: formattedJobs,
         totalCount: total,
+        periodTotals: periodTotalsResult,
         page,
         limit,
       });
@@ -1519,7 +1666,15 @@ router.get(
 
       // Get the customer IDs associated with the vehicle
       const jobIds = vehicle.job_ids;
-      const { dateMatch } = getYearFilter(req);
+      let { dateMatch } = getYearFilter(req);
+      const { startDate, endDate } = req.query;
+      if (startDate || endDate) {
+        const start = startDate ? new Date(startDate) : new Date(req.query.year || new Date().getFullYear(), 0, 1);
+        const end = endDate ? new Date(endDate) : new Date((parseInt(req.query.year || new Date().getFullYear())) + 1, 0, 1);
+        if (!isNaN(start.getTime()) && !isNaN(end.getTime())) {
+          dateMatch = { orderDate: { $gte: start, $lte: end } };
+        }
+      }
 
       const pipeline = [
         ...buildBaseJobsPipeline(jobIds, dateMatch, jobSearch),
@@ -1528,18 +1683,23 @@ router.get(
           $facet: {
             rows: [{ $skip: skip }, { $limit: limit }],
             totalCount: [{ $count: "total" }],
+            periodTotals: [
+              { $group: { _id: null, totalDistance: { $sum: "$distance" }, totalCost: { $sum: { $toDouble: "$cost" } }, totalJobs: { $sum: 1 } } },
+            ],
           },
         },
       ];
-      const [{ rows = [], totalCount = [] } = {}] = await Job.aggregate(pipeline);
+      const [{ rows = [], totalCount = [], periodTotals = [] } = {}] = await Job.aggregate(pipeline);
       const formattedJobs = mapJobCost(rows);
       const total = totalCount.length ? totalCount[0].total : 0;
+      const periodTotalsResult = periodTotals[0] || { totalDistance: 0, totalCost: 0, totalJobs: 0 };
 
       res.status(200).json({
         success: true,
         vehicleWithJobsReport: formattedJobs,
         rows: formattedJobs,
         totalCount: total,
+        periodTotals: periodTotalsResult,
         page,
         limit,
       });

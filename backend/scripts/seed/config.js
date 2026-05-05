@@ -2,15 +2,8 @@ const path = require("path");
 const { ValidationError } = require("./errors");
 
 const PROJECT_ROOT = path.resolve(__dirname, "..", "..");
-const DEFAULT_BACKUP_DIR = path.resolve(
-  PROJECT_ROOT,
-  "..",
-  "DB",
-  "backup",
-  "2026",
-  "04",
-  "18"
-);
+// Repo ships JSON under ./db-backup-2026-04-18 (not DB/backup/...).
+const DEFAULT_BACKUP_DIR = path.resolve(PROJECT_ROOT, "..", "db-backup-2026-04-18");
 
 const REQUIRED_COLLECTIONS = [
   "users",

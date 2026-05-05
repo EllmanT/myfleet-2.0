@@ -1,8 +1,8 @@
-import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
+import { Box, Button, Link, TextField, Typography, useTheme } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { server } from "server";
 
 const DelLoginPage = () => {
@@ -93,8 +93,15 @@ const DelLoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <p>Demo email : tmuranda1@gmail.com</p>
-            <p>Demo Password: tapiwa1234</p>
+            <Link
+              component={RouterLink}
+              to="/forgot-password"
+              variant="body2"
+              sx={{ alignSelf: "flex-start", mt: 0.5 }}
+              color={theme.palette.secondary[300]}
+            >
+              Forgot password?
+            </Link>
             <Box
               display={"flex"}
               flexDirection={"column"}

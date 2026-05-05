@@ -15,7 +15,7 @@ const DelRegisterPage = () => {
   const [disable, setDisable] = useState(false);
 
   console.log(disable);
-  const config = { Headers: { "Content-Type": "multipart/form-data" } };
+  const config = { headers: { "Content-Type": "multipart/form-data" } };
   const newForm = new FormData();
 
   newForm.append("name", name);

@@ -7,7 +7,8 @@
       "test": "echo \"Error: no test specified\" && exit 1",
       "dev": "nodemon backend/server.js",
       "start": "node backend/server.js",
-      "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+      "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
+      "lint": "npm run lint --prefix frontend"
     },
     "author": "Tapiwa Muranda",
     "license": "ISC",

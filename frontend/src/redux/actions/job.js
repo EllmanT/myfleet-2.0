@@ -7,7 +7,7 @@ export const createJob = (jobs) => async (dispatch) => {
       type: "loadCreateJobRequest",
     });
     const config = {
-      Headers: { "Content-Type": "multipart/form-data" },
+      headers: { "Content-Type": "application/json" },
       withCredentials: true,
     };
     const { data } = await axios.post(`${server}/job/create-job`, jobs, config);
@@ -255,7 +255,7 @@ export const getLatestJobsContractor =
 };
 
 export const getAllJobsReportDeliverer =
-  ({ year, page = 0, limit = 25, jobSearch = "" }) =>
+  ({ year, page = 0, limit = 25, jobSearch = "", startDate, endDate }) =>
   async (dispatch) => {
   try {
     dispatch({
@@ -264,7 +264,7 @@ export const getAllJobsReportDeliverer =
 
     const { data } = await axios.get(
       `${server}/job/get-all-jobsReport-deliverer`,
-      { withCredentials: true, params: { year, page, limit, pageSize: limit, jobSearch } }
+      { withCredentials: true, params: { year, page, limit, pageSize: limit, jobSearch, startDate, endDate } }
     );
     dispatch({
       type: "getAllJobsReportDelivererSuccess",
@@ -273,6 +273,10 @@ export const getAllJobsReportDeliverer =
     dispatch({
       type: "setTotalCount",
       payload: data.totalCount || 0,
+    });
+    dispatch({
+      type: "setReportPeriodTotals",
+      payload: data.periodTotals || { totalDistance: 0, totalCost: 0, totalJobs: 0 },
     });
   } catch (error) {
     dispatch({
@@ -283,7 +287,7 @@ export const getAllJobsReportDeliverer =
   };
 
 export const getAllJobsReportContr =
-  (contractorId, { year, page = 0, limit = 25, jobSearch = "" }) =>
+  (contractorId, { year, page = 0, limit = 25, jobSearch = "", startDate, endDate }) =>
   async (dispatch) => {
   try {
     dispatch({
@@ -292,7 +296,7 @@ export const getAllJobsReportContr =
 
     const { data } = await axios.get(
       `${server}/job/get-all-jobsReport-contractor/${contractorId}`,
-      { withCredentials: true, params: { year, page, limit, pageSize: limit, jobSearch } }
+      { withCredentials: true, params: { year, page, limit, pageSize: limit, jobSearch, startDate, endDate } }
     );
     dispatch({
       type: "getAllJobsReportContrSuccess",
@@ -301,6 +305,10 @@ export const getAllJobsReportContr =
     dispatch({
       type: "setTotalCount",
       payload: data.totalCount || 0,
+    });
+    dispatch({
+      type: "setReportPeriodTotals",
+      payload: data.periodTotals || { totalDistance: 0, totalCost: 0, totalJobs: 0 },
     });
   } catch (error) {
     dispatch({
@@ -311,7 +319,7 @@ export const getAllJobsReportContr =
   };
 
 export const getAllJobsReportDriver =
-  (driverId, { year, page = 0, limit = 25, jobSearch = "" }) =>
+  (driverId, { year, page = 0, limit = 25, jobSearch = "", startDate, endDate }) =>
   async (dispatch) => {
   try {
     dispatch({
@@ -320,7 +328,7 @@ export const getAllJobsReportDriver =
 
     const { data } = await axios.get(
       `${server}/job/get-all-jobsReport-driver/${driverId}`,
-      { withCredentials: true, params: { year, page, limit, pageSize: limit, jobSearch } }
+      { withCredentials: true, params: { year, page, limit, pageSize: limit, jobSearch, startDate, endDate } }
     );
     dispatch({
       type: "getAllJobsReportDriverSuccess",
@@ -329,6 +337,10 @@ export const getAllJobsReportDriver =
     dispatch({
       type: "setTotalCount",
       payload: data.totalCount || 0,
+    });
+    dispatch({
+      type: "setReportPeriodTotals",
+      payload: data.periodTotals || { totalDistance: 0, totalCost: 0, totalJobs: 0 },
     });
   } catch (error) {
     dispatch({
@@ -339,7 +351,7 @@ export const getAllJobsReportDriver =
   };
 
 export const getAllJobsReportVehicle =
-  (vehicleId, { year, page = 0, limit = 25, jobSearch = "" }) =>
+  (vehicleId, { year, page = 0, limit = 25, jobSearch = "", startDate, endDate }) =>
   async (dispatch) => {
   try {
     dispatch({
@@ -348,7 +360,7 @@ export const getAllJobsReportVehicle =
 
     const { data } = await axios.get(
       `${server}/job/get-all-jobsReport-vehicle/${vehicleId}`,
-      { withCredentials: true, params: { year, page, limit, pageSize: limit, jobSearch } }
+      { withCredentials: true, params: { year, page, limit, pageSize: limit, jobSearch, startDate, endDate } }
     );
     dispatch({
       type: "getAllJobsReportVehicleSuccess",
@@ -357,6 +369,10 @@ export const getAllJobsReportVehicle =
     dispatch({
       type: "setTotalCount",
       payload: data.totalCount || 0,
+    });
+    dispatch({
+      type: "setReportPeriodTotals",
+      payload: data.periodTotals || { totalDistance: 0, totalCost: 0, totalJobs: 0 },
     });
   } catch (error) {
     dispatch({

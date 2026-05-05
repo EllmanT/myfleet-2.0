@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllOverallStatsDeliverer } from "redux/actions/overallStats";
 import { ResponsiveLine } from "@nivo/line";
 import { getVehicleStats } from "redux/actions/vehicleStats";
+import { padMonthlyData } from "utils/chartUtils";
 const VehSingleLineChart = ({ isDashboard = false, view , vehicleId }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -37,27 +38,13 @@ const VehSingleLineChart = ({ isDashboard = false, view , vehicleId }) => {
 
 
 
-    Object.values(monthlyData).reduce(
-      (acc, { month, totalJobs, totalMileage }) => {
-        const curJobs =  totalJobs;
-        const curMileage =  totalMileage;
-
-        totalJobsLine.data = [
-          ...totalJobsLine.data,
-          { x: month, y: curJobs },
-        ];
-        totalMileageLine.data = [
-          ...totalMileageLine.data,
-          { x: month, y: curMileage },
-        ];
-
-        return { jobs: curJobs, mileage: curMileage };
-      },
-      { jobs: 0, mileage: 0 }
-    );
+    padMonthlyData(monthlyData, selectedYear).forEach(({ month, totalJobs, totalMileage }) => {
+      totalJobsLine.data = [...totalJobsLine.data, { x: month, y: totalJobs }];
+      totalMileageLine.data = [...totalMileageLine.data, { x: month, y: totalMileage }];
+    });
 
     return [[totalJobsLine], [totalMileageLine]];
-  }, [vehicleStats]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [vehicleStats, selectedYear]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!vehicleStats || isvehicleStatsLoading) return "Loading...";
 

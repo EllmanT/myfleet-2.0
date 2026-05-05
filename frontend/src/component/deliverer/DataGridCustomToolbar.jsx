@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Refresh, Search } from "@mui/icons-material";
-import { IconButton, TextField, InputAdornment, Button } from "@mui/material";
+import { TextField, InputAdornment, Button } from "@mui/material";
 import FlexBetween from "./FlexBetween";
 import axios from "axios";
 import { server } from "server";
@@ -13,7 +13,30 @@ const DataGridCustomToolbar = ({
   exportParams = {},
 }) => {
   const [view, setView] = useState("");
+  const debounceTimer = useRef(null);
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchInput(value);
+    if (debounceTimer.current) clearTimeout(debounceTimer.current);
+    debounceTimer.current = setTimeout(() => {
+      setJobSearch(value);
+    }, 400);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      if (debounceTimer.current) clearTimeout(debounceTimer.current);
+      setJobSearch(searchInput);
+    }
+    if (e.key === "Escape") {
+      handleReset();
+    }
+  };
+
   const handleReset = () => {
+    if (debounceTimer.current) clearTimeout(debounceTimer.current);
+    setSearchInput("");
     setJobSearch("");
     setView("");
   };
@@ -82,23 +105,16 @@ const DataGridCustomToolbar = ({
           </Button>
           <TextField
             label="Search..."
-            sx={{ mb: "0.5rem", width: "15rem" }}
-            onChange={(e) => setSearchInput(e.target.value)}
+            sx={{ mb: 0.5, width: "250px" }}
+            onChange={handleSearchChange}
+            onKeyDown={handleKeyDown}
             value={searchInput}
-            variant="standard"
+            variant="outlined"
+            size="small"
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton
-                    onClick={() => {
-                      setJobSearch(searchInput);
-                      setView(searchInput);
-
-                      setSearchInput("");
-                    }}
-                  >
-                    <Search />
-                  </IconButton>
+                  <Search fontSize="small" />
                 </InputAdornment>
               ),
             }}

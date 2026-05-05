@@ -453,6 +453,8 @@ const DashDriverReports = () => {
                 jobSearch,
                 startDate: startDate?.toISOString(),
                 endDate: endDate?.toISOString(),
+                entityName: driverName,
+                entityType: "Driver",
               },
             },
           }}

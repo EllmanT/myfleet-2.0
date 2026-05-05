@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\Ropafadzo Muridzi\\\\Documents\\\\tapiwa projects\\\\myfleet\" -Force)",
+      "Bash(Select-Object Name, Mode)",
+      "Bash(Format-Table -AutoSize)"
+    ]
+  }
+}

@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const express = require("express");
 const User = require("../model/user");
 const { upload } = require("../multer");
@@ -9,6 +10,18 @@ const sendMail = require("../utils/sendMail");
 const jwt = require("jsonwebtoken");
 const { isAuthenticated } = require("../middleware/auth");
 const Deliverer = require("../model/deliverer");
+
+const RESET_TOKEN_MS = 15 * 60 * 1000;
+const MIN_PASSWORD_LEN = 8;
+
+const frontendResetUrl = (rawToken) => {
+  const base =
+    process.env.FRONTEND_URL ||
+    process.env.CLIENT_URL ||
+    "http://localhost:3000";
+  const trimmed = String(base).replace(/\/$/, "");
+  return `${trimmed}/reset-password?token=${encodeURIComponent(rawToken)}`;
+};
 
 //create-user
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
@@ -184,6 +197,118 @@ router.post(
     } catch (error) {
       return next(new ErrorHandler(error.message, 400));
     }
+  })
+);
+
+// forgot-password — sends email with reset link (does not reveal if email exists)
+router.post(
+  "/forgot-password",
+  catchAsyncErrors(async (req, res, next) => {
+    const email = typeof req.body.email === "string" ? req.body.email.trim() : "";
+    if (!email) {
+      return next(new ErrorHandler("Please provide your email", 400));
+    }
+
+    const user = await User.findOne({ email });
+    const genericMessage =
+      "If an account exists for that email, you will receive a password reset link shortly.";
+
+    if (!user) {
+      return res.status(200).json({ success: true, message: genericMessage });
+    }
+
+    const rawToken = crypto.randomBytes(32).toString("hex");
+    const hashedToken = crypto.createHash("sha256").update(rawToken).digest("hex");
+
+    user.resetPasswordToken = hashedToken;
+    user.resetPasswordExpire = new Date(Date.now() + RESET_TOKEN_MS);
+    await user.save({ validateBeforeSave: false });
+
+    const resetUrl = frontendResetUrl(rawToken);
+    const devLink = process.env.RESET_PASSWORD_DEV_LINK === "true";
+    const smtpOk = sendMail.isSmtpConfigured();
+
+    if (!smtpOk && devLink) {
+      return res.status(200).json({
+        success: true,
+        message: genericMessage,
+        devResetUrl: resetUrl,
+      });
+    }
+
+    if (!smtpOk) {
+      await User.updateOne(
+        { _id: user._id },
+        { $unset: { resetPasswordToken: 1, resetPasswordExpire: 1 } }
+      );
+      return next(
+        new ErrorHandler(
+          "Email is not configured (missing SMPT_HOST or SMPT_SERVICE / credentials). Configure SMTP in backend/config/.env, or set RESET_PASSWORD_DEV_LINK=true for local development only.",
+          503
+        )
+      );
+    }
+
+    try {
+      await sendMail({
+        email: user.email,
+        subject: "myFleet — reset your password",
+        message: `Hi ${user.name},\n\nReset your password using this link (valid 15 minutes):\n\n${resetUrl}\n\nIf you did not request this, you can ignore this email.`,
+      });
+    } catch (err) {
+      await User.updateOne(
+        { _id: user._id },
+        { $unset: { resetPasswordToken: 1, resetPasswordExpire: 1 } }
+      );
+      return next(
+        new ErrorHandler(
+          err.message || "Could not send reset email. Check SMTP settings.",
+          500
+        )
+      );
+    }
+
+    return res.status(200).json({ success: true, message: genericMessage });
+  })
+);
+
+// reset-password — body: { token, password }
+router.post(
+  "/reset-password",
+  catchAsyncErrors(async (req, res, next) => {
+    const token = typeof req.body.token === "string" ? req.body.token.trim() : "";
+    const password = typeof req.body.password === "string" ? req.body.password : "";
+
+    if (!token || !password) {
+      return next(new ErrorHandler("Token and new password are required", 400));
+    }
+    if (password.length < MIN_PASSWORD_LEN) {
+      return next(
+        new ErrorHandler(`Password must be at least ${MIN_PASSWORD_LEN} characters`, 400)
+      );
+    }
+
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+    const user = await User.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpire: { $gt: new Date() },
+    }).select("+password +resetPasswordToken +resetPasswordExpire");
+
+    if (!user) {
+      return next(new ErrorHandler("Invalid or expired reset token", 400));
+    }
+
+    user.password = password;
+    await user.save();
+    await User.updateOne(
+      { _id: user._id },
+      { $unset: { resetPasswordToken: 1, resetPasswordExpire: 1 } }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Password updated. You can sign in with your new password.",
+    });
   })
 );
 

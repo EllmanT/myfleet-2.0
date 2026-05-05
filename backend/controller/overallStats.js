@@ -1,9 +1,12 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const { isAuthenticated } = require("../middleware/auth");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ErrorHandler = require("../utils/ErrorHandler");
 const OverallStats = require("../model/overallStats");
 const Contractor = require("../model/contractor");
+const { rebuildStatsFromJobs } = require("../scripts/seed/rebuildStatsFromJobs");
+const { DERIVED_COLLECTIONS } = require("../scripts/seed/config");
 const router = express.Router();
 
 const parseYear = (rawYear) => {
@@ -24,14 +27,28 @@ router.get(
   "/get-all-overallStats-company",
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
-    const year = parseYear(req.query.year);
+    const requestedYear = parseYear(req.query.year);
 
 
     try {
-      // const currentYear = new Date().getFullYear(); // Get the current year
-      const delivererWithOverallStats = await OverallStats.findOne(
-        { companyId: req.user.companyId , year }, 
+      let effectiveYear = requestedYear;
+      let delivererWithOverallStats = await OverallStats.findOne(
+        { companyId: req.user.companyId, year: effectiveYear },
       );
+
+      let yearsForCompany = [];
+      if (req.user.companyId) {
+        yearsForCompany = await OverallStats.distinct("year", {
+          companyId: req.user.companyId,
+        });
+        if (!delivererWithOverallStats && yearsForCompany.length > 0) {
+          effectiveYear = Math.max(...yearsForCompany);
+          delivererWithOverallStats = await OverallStats.findOne({
+            companyId: req.user.companyId,
+            year: effectiveYear,
+          });
+        }
+      }
 
       if (!delivererWithOverallStats) {
         return next(new ErrorHandler("Can't find deliverer", 400));
@@ -97,6 +114,20 @@ router.get(
           jobsByCategory: delivererWithOverallStats.jobsByCategory, // Return the jobsByCategory array
         });
       }
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+router.post(
+  "/rebuild-stats",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const db = mongoose.connection.db;
+      await rebuildStatsFromJobs(db, DERIVED_COLLECTIONS);
+      res.status(200).json({ success: true, message: "Stats rebuilt successfully" });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }

@@ -24,6 +24,21 @@ export const overallStatsReducer = createReducer(initialState, {
   },
 
 
+  rebuildStatsRequest: (state) => {
+    state.isRebuildingStats = true;
+    state.rebuildStatsSuccess = false;
+  },
+  rebuildStatsSuccess: (state, action) => {
+    state.isRebuildingStats = false;
+    state.rebuildStatsSuccess = true;
+    state.rebuildStatsMessage = action.payload;
+  },
+  rebuildStatsFailed: (state, action) => {
+    state.isRebuildingStats = false;
+    state.rebuildStatsSuccess = false;
+    state.error = action.payload;
+  },
+
   //clear errors
   clearErrors: (state) => {
     state.error = null;

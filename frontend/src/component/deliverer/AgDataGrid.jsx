@@ -15,24 +15,28 @@ const asMUIParams = (agParams) => ({
   row: agParams.data,
 });
 
-const mapColumn = (column) => ({
-  field: column.field,
-  headerName: column.headerName ?? column.field,
-  width: column.width,
-  flex: column.flex,
-  sortable: column.sortable !== false,
-  filter: false,
-  resizable: true,
-  valueGetter: column.valueGetter
-    ? (params) => column.valueGetter(asMUIParams(params))
-    : undefined,
-  valueFormatter: column.valueFormatter
-    ? (params) => column.valueFormatter(asMUIParams(params))
-    : undefined,
-  cellRenderer: column.renderCell
-    ? (params) => column.renderCell(asMUIParams(params))
-    : undefined,
-});
+const mapColumn = (column) => {
+  const sortable = column.sortable !== false;
+  return {
+    field: column.field,
+    headerName: column.headerName ?? column.field,
+    width: column.width,
+    flex: column.flex,
+    sortable,
+    filter: false,
+    resizable: true,
+    headerClass: sortable ? "sortable-header" : undefined,
+    valueGetter: column.valueGetter
+      ? (params) => column.valueGetter(asMUIParams(params))
+      : undefined,
+    valueFormatter: column.valueFormatter
+      ? (params) => column.valueFormatter(asMUIParams(params))
+      : undefined,
+    cellRenderer: column.renderCell
+      ? (params) => column.renderCell(asMUIParams(params))
+      : undefined,
+  };
+};
 
 export const DataGrid = ({
   loading = false,
@@ -66,7 +70,35 @@ export const DataGrid = ({
   }, [onSortModelChange]);
 
   return (
-    <Box>
+    <>
+      <style>{`
+        .ag-theme-alpine .ag-sort-indicator-icon,
+        .ag-theme-alpine-dark .ag-sort-indicator-icon,
+        .ag-theme-quartz .ag-sort-indicator-icon,
+        .ag-theme-quartz-dark .ag-sort-indicator-icon {
+          color: #90caf9 !important;
+          opacity: 1 !important;
+        }
+        .ag-theme-alpine .ag-icon-asc,
+        .ag-theme-alpine .ag-icon-desc,
+        .ag-theme-alpine-dark .ag-icon-asc,
+        .ag-theme-alpine-dark .ag-icon-desc,
+        .ag-theme-quartz .ag-icon-asc,
+        .ag-theme-quartz .ag-icon-desc,
+        .ag-theme-quartz-dark .ag-icon-asc,
+        .ag-theme-quartz-dark .ag-icon-desc {
+          color: #90caf9 !important;
+          font-size: 16px !important;
+        }
+        .ag-header-cell[aria-sort] .ag-sort-indicator-container {
+          opacity: 1 !important;
+        }
+        .sortable-header:hover {
+          background-color: rgba(144, 202, 249, 0.08) !important;
+          cursor: pointer;
+        }
+      `}</style>
+      <Box>
       {Toolbar ? <Toolbar {...(componentsProps?.toolbar ?? {})} /> : null}
       <Box position="relative">
         {loading ? (
@@ -128,6 +160,7 @@ export const DataGrid = ({
         }
       />
     </Box>
+    </>
   );
 };
 

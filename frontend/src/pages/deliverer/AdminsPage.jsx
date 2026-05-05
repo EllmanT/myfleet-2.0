@@ -240,7 +240,7 @@ const AdminsPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const config = { Headers: { "Content-type": "multipart/form-data" } };
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
 
     const newForm = new FormData();
     newForm.append("adminId", adminId);

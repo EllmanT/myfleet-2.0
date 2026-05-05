@@ -1,4 +1,12 @@
-export const server = "http://localhost:5050/api/v2";
-// export const server= "https://myfleet-server.onrender.com/api/v2"
+const trim = (s) =>
+  s === undefined || s === null ? "" : String(s).trim().replace(/\/+$/, "");
 
-// export const server ="https://myfleet-2-0.onrender.com/api/v2"
+// Production on Vercel (same-origin): leave unset so API base path is `/api/v2`.
+// Local CRA dev: overrides default `localhost:5050` when `.env.development.local` defines this.
+const fromEnv = trim(process.env.REACT_APP_API_ORIGIN);
+
+export const server = fromEnv
+  ? `${fromEnv}/api/v2`
+  : process.env.NODE_ENV === "production"
+    ? "/api/v2"
+    : "http://localhost:5050/api/v2";

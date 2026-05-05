@@ -6,7 +6,7 @@ export const createVehicle = (newForm) => async (dispatch) => {
     dispatch({
       type: "loadVehicleCreateRequest",
     });
-    const config = { Headers: { "Content-Type": "multipart/form-data" } };
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data } = await axios.post(
       `${server}/vehicle/create-vehicle`,
       newForm,

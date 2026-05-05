@@ -1,18 +1,14 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useTheme } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllOverallStatsDeliverer } from "redux/actions/overallStats";
+import { useSelector } from "react-redux";
 import { ResponsiveLine } from "@nivo/line";
+import { padMonthlyData } from "utils/chartUtils";
 const RevenueOverviewChart = ({ isDashboard = false, view }) => {
   const theme = useTheme();
-  const dispatch = useDispatch();
   const { coOverallStats, isCoOverallStatsLoading } = useSelector(
     (state) => state.overallStats
   );
-
-  useEffect(() => {
-    // dispatch(getAllOverallStatsDeliverer());
-  }, [dispatch]);
+  const { selectedYear } = useSelector((state) => state.filters);
 
   const [formattedData] = useMemo(() => {
     if (!coOverallStats) return []; // Add a check for coOverallStats
@@ -29,26 +25,15 @@ const RevenueOverviewChart = ({ isDashboard = false, view }) => {
       data: [],
     };
 
-    Object.values(monthlyData).forEach(
-      ({ month, totalRevenue, totalExpenses }) => {
-        var shortMonth = new Date(
-          Date.parse(month + " 1, 2000")
-        ).toLocaleString("default", { month: "short" });
-        // Format the splitDate as "dd-mm"
-        totalRevenueLine.data = [
-          ...totalRevenueLine.data,
-          { x: shortMonth, y: totalRevenue },
-        ];
-        totalExpensesLine.data = [
-          ...totalExpensesLine.data,
-          { x: shortMonth, y: totalExpenses },
-        ];
-      }
-    );
+    padMonthlyData(monthlyData, selectedYear).forEach(({ month, totalRevenue, totalExpenses }) => {
+      const shortMonth = new Date(Date.parse(month + " 1, 2000")).toLocaleString("default", { month: "short" });
+      totalRevenueLine.data = [...totalRevenueLine.data, { x: shortMonth, y: totalRevenue }];
+      totalExpensesLine.data = [...totalExpensesLine.data, { x: shortMonth, y: totalExpenses }];
+    });
 
     const formattedData = [totalExpensesLine, totalRevenueLine];
     return [formattedData];
-  }, [coOverallStats]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [coOverallStats, selectedYear]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!coOverallStats || isCoOverallStatsLoading) return "Loading...";
 

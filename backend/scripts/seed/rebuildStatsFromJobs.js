@@ -23,142 +23,166 @@ const sortDaily = (rows) => rows.sort((a, b) => a.date.localeCompare(b.date));
 
 async function buildOverallStats(db) {
   const jobs = db.collection("jobs");
-
-  const yearlyBase = await jobs
-    .aggregate([
-      {
-        $lookup: {
-          from: "contractors",
-          localField: "contractorId",
-          foreignField: "_id",
-          as: "contractor",
-        },
-      },
-      { $unwind: { path: "$contractor", preserveNullAndEmptyArrays: true } },
-      {
-        $group: {
-          _id: { year: { $year: "$orderDate" } },
-          yearlyJobs: { $sum: 1 },
-          yearlyMileage: { $sum: { $ifNull: ["$distance", 0] } },
-          yearlyRevenue: { $sum: { $toDouble: "$cost" } },
-          jobsByContractorPairs: {
-            $push: {
-              contractor: { $ifNull: ["$contractor.companyName", "Unknown"] },
-            },
-          },
-          revByContractorPairs: {
-            $push: {
-              contractor: { $ifNull: ["$contractor.companyName", "Unknown"] },
-              value: { $toDouble: "$cost" },
-            },
-          },
-        },
-      },
-      { $sort: { "_id.year": 1 } },
-    ])
-    .toArray();
-
-  const monthly = await jobs
-    .aggregate([
-      {
-        $group: {
-          _id: { year: { $year: "$orderDate" }, month: { $month: "$orderDate" } },
-          totalJobs: { $sum: 1 },
-          totalMileage: { $sum: { $ifNull: ["$distance", 0] } },
-          totalRevenue: { $sum: { $toDouble: "$cost" } },
-        },
-      },
-      { $sort: { "_id.year": 1, "_id.month": 1 } },
-    ])
-    .toArray();
-
-  const daily = await jobs
-    .aggregate([
-      {
-        $group: {
-          _id: {
-            year: { $year: "$orderDate" },
-            date: { $dateToString: { format: "%Y-%m-%d", date: "$orderDate" } },
-          },
-          totalJobs: { $sum: 1 },
-          totalMileage: { $sum: { $ifNull: ["$distance", 0] } },
-          totalRevenue: { $sum: { $toDouble: "$cost" } },
-        },
-      },
-      { $sort: { "_id.year": 1, "_id.date": 1 } },
-    ])
+  const deliverers = await db
+    .collection("deliverers")
+    .find({}, { projection: { _id: 1, job_ids: 1 } })
     .toArray();
 
   const totalCustomers = await db.collection("customers").countDocuments();
   const totalContractors = await db.collection("contractors").countDocuments();
 
-  const byYear = new Map();
-  for (const base of yearlyBase) {
-    const year = base._id.year;
-    const jobsByContractor = {};
-    const revenueByContractor = {};
-    for (const pair of base.jobsByContractorPairs || []) {
-      jobsByContractor[pair.contractor] = (jobsByContractor[pair.contractor] || 0) + 1;
-    }
-    for (const pair of base.revByContractorPairs || []) {
-      revenueByContractor[pair.contractor] =
-        (revenueByContractor[pair.contractor] || 0) + pair.value;
-    }
-
-    byYear.set(year, {
-      year,
-      yearlyJobs: base.yearlyJobs,
-      yearlyMileage: base.yearlyMileage,
-      yearlyRevenue: Number(base.yearlyRevenue.toFixed(2)),
-      yearlyExpenses: 0,
-      yearlyProfit: Number(base.yearlyRevenue.toFixed(2)),
-      monthlyData: [],
-      dailyData: [],
-      totalCustomers,
-      totalContractors,
-      jobsByContractor,
-      revenueByContractor: Object.fromEntries(
-        Object.entries(revenueByContractor).map(([k, v]) => [k, Number(v.toFixed(2))])
-      ),
-    });
-  }
-
-  for (const row of monthly) {
-    const target = byYear.get(row._id.year);
-    if (!target) continue;
-    target.monthlyData.push({
-      month: monthOrder[row._id.month - 1],
-      totalJobs: row.totalJobs,
-      totalMileage: row.totalMileage,
-      totalRevenue: Number(row.totalRevenue.toFixed(2)),
-      totalExpenses: 0,
-      totalProfit: Number(row.totalRevenue.toFixed(2)),
-    });
-  }
-
-  for (const row of daily) {
-    const target = byYear.get(row._id.year);
-    if (!target) continue;
-    target.dailyData.push({
-      date: row._id.date,
-      totalJobs: row.totalJobs,
-      totalMileage: row.totalMileage,
-      totalRevenue: Number(row.totalRevenue.toFixed(2)),
-    });
-  }
-
-  const deliverers = await db.collection("deliverers").find({}, { projection: { _id: 1 } }).toArray();
   const docs = [];
+
   for (const deliverer of deliverers) {
+    const jobIds = deliverer.job_ids || [];
+    if (jobIds.length === 0) continue;
+
+    const [yearlyBase, monthly, daily] = await Promise.all([
+      jobs
+        .aggregate([
+          { $match: { _id: { $in: jobIds }, orderDate: { $ne: null, $exists: true } } },
+          {
+            $lookup: {
+              from: "contractors",
+              localField: "contractorId",
+              foreignField: "_id",
+              as: "contractor",
+            },
+          },
+          { $unwind: { path: "$contractor", preserveNullAndEmptyArrays: true } },
+          {
+            $group: {
+              _id: { year: { $year: "$orderDate" } },
+              yearlyJobs: { $sum: 1 },
+              yearlyMileage: { $sum: { $ifNull: ["$distance", 0] } },
+              yearlyRevenue: { $sum: { $toDouble: "$cost" } },
+              jobsByContractorPairs: {
+                $push: {
+                  contractor: { $ifNull: ["$contractor.companyName", "Unknown"] },
+                },
+              },
+              revByContractorPairs: {
+                $push: {
+                  contractor: { $ifNull: ["$contractor.companyName", "Unknown"] },
+                  value: { $toDouble: "$cost" },
+                },
+              },
+            },
+          },
+          { $sort: { "_id.year": 1 } },
+        ])
+        .toArray(),
+
+      jobs
+        .aggregate([
+          { $match: { _id: { $in: jobIds }, orderDate: { $ne: null, $exists: true } } },
+          {
+            $group: {
+              _id: { year: { $year: "$orderDate" }, month: { $month: "$orderDate" } },
+              totalJobs: { $sum: 1 },
+              totalMileage: { $sum: { $ifNull: ["$distance", 0] } },
+              totalRevenue: { $sum: { $toDouble: "$cost" } },
+            },
+          },
+          { $sort: { "_id.year": 1, "_id.month": 1 } },
+        ])
+        .toArray(),
+
+      jobs
+        .aggregate([
+          { $match: { _id: { $in: jobIds }, orderDate: { $ne: null, $exists: true } } },
+          {
+            $group: {
+              _id: {
+                year: { $year: "$orderDate" },
+                date: { $dateToString: { format: "%Y-%m-%d", date: "$orderDate" } },
+              },
+              totalJobs: { $sum: 1 },
+              totalMileage: { $sum: { $ifNull: ["$distance", 0] } },
+              totalRevenue: { $sum: { $toDouble: "$cost" } },
+            },
+          },
+          { $sort: { "_id.year": 1, "_id.date": 1 } },
+        ])
+        .toArray(),
+    ]);
+
+    const byYear = new Map();
+
+    for (const base of yearlyBase) {
+      const year = base._id.year;
+      if (!year) continue;
+
+      const jobsByContractor = {};
+      const revenueByContractor = {};
+      for (const pair of base.jobsByContractorPairs || []) {
+        jobsByContractor[pair.contractor] = (jobsByContractor[pair.contractor] || 0) + 1;
+      }
+      for (const pair of base.revByContractorPairs || []) {
+        revenueByContractor[pair.contractor] =
+          (revenueByContractor[pair.contractor] || 0) + pair.value;
+      }
+
+      byYear.set(year, {
+        year,
+        yearlyJobs: base.yearlyJobs,
+        yearlyMileage: base.yearlyMileage,
+        yearlyRevenue: Number(base.yearlyRevenue.toFixed(2)),
+        yearlyExpenses: 0,
+        yearlyProfit: Number(base.yearlyRevenue.toFixed(2)),
+        monthlyData: [],
+        dailyData: [],
+        totalCustomers,
+        totalContractors,
+        jobsByContractor,
+        revenueByContractor: Object.fromEntries(
+          Object.entries(revenueByContractor).map(([k, v]) => [k, Number(v.toFixed(2))])
+        ),
+        companyId: deliverer._id,
+      });
+    }
+
+    for (const row of monthly) {
+      if (!row._id.year) continue;
+      const target = byYear.get(row._id.year);
+      if (!target) continue;
+      target.monthlyData.push({
+        month: monthOrder[row._id.month - 1],
+        totalJobs: row.totalJobs,
+        totalMileage: row.totalMileage,
+        totalRevenue: Number(row.totalRevenue.toFixed(2)),
+        totalExpenses: 0,
+        totalProfit: Number(row.totalRevenue.toFixed(2)),
+      });
+    }
+
+    for (const row of daily) {
+      if (!row._id.year) continue;
+      const target = byYear.get(row._id.year);
+      if (!target) continue;
+      target.dailyData.push({
+        date: row._id.date,
+        totalJobs: row.totalJobs,
+        totalMileage: row.totalMileage,
+        totalRevenue: Number(row.totalRevenue.toFixed(2)),
+      });
+    }
+
     for (const data of byYear.values()) {
       docs.push({
         ...data,
         monthlyData: sortMonthly([...data.monthlyData]),
         dailyData: sortDaily([...data.dailyData]),
-        companyId: deliverer._id,
       });
     }
+
+    logger.info("Built overallstats for deliverer", {
+      delivererId: deliverer._id,
+      years: Array.from(byYear.keys()),
+      totalDocs: byYear.size,
+    });
   }
+
   return docs;
 }
 
@@ -168,6 +192,7 @@ async function buildEntityStats(db, entityCollection, statsCollection, entityFie
     {
       $match: {
         [entityField]: { $exists: true, $ne: null },
+        orderDate: { $exists: true, $ne: null },
       },
     },
     {
@@ -208,6 +233,7 @@ async function buildEntityStats(db, entityCollection, statsCollection, entityFie
     {
       $match: {
         [entityField]: { $exists: true, $ne: null },
+        orderDate: { $exists: true, $ne: null },
       },
     },
     {
@@ -228,6 +254,7 @@ async function buildEntityStats(db, entityCollection, statsCollection, entityFie
     {
       $match: {
         [entityField]: { $exists: true, $ne: null },
+        orderDate: { $exists: true, $ne: null },
       },
     },
     {
@@ -252,6 +279,7 @@ async function buildEntityStats(db, entityCollection, statsCollection, entityFie
 
   const keyed = new Map();
   for (const row of yearly) {
+    if (!row._id.year) continue;
     const key = `${row._id.entityId}:${row._id.year}`;
     const jobsByContractor = {};
     const revenueByContractor = {};
@@ -281,6 +309,7 @@ async function buildEntityStats(db, entityCollection, statsCollection, entityFie
   }
 
   for (const row of monthly) {
+    if (!row._id.year) continue;
     const key = `${row._id.entityId}:${row._id.year}`;
     const doc = keyed.get(key);
     if (!doc) continue;
@@ -295,6 +324,7 @@ async function buildEntityStats(db, entityCollection, statsCollection, entityFie
   }
 
   for (const row of daily) {
+    if (!row._id.year) continue;
     const key = `${row._id.entityId}:${row._id.year}`;
     const doc = keyed.get(key);
     if (!doc) continue;

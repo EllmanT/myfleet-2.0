@@ -7,7 +7,7 @@ export const createVehicleExpense = (newForm) => async (dispatch) => {
       type: "loadCreateVehicleExpenseRequest",
     });
     const config = {
-      Headers: { "Content-Type": "multipart/form-data" },
+      headers: { "Content-Type": "multipart/form-data" },
       withCredentials: true,
     };
     const { data } = await axios.post(
@@ -150,7 +150,7 @@ export const creatEmployeeExpense = (newForm) => async (dispatch) => {
       type: "loadCreateEmployeeExpenseRequest",
     });
     const config = {
-      Headers: { "Content-Type": "multipart/form-data" },
+      headers: { "Content-Type": "multipart/form-data" },
       withCredentials: true,
     };
     const { data } = await axios.post(

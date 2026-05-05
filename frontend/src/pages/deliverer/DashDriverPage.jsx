@@ -484,28 +484,36 @@ const DashVehiclePage = () => {
           flexDirection="column"
           sx={{
             "& .MuiDataGrid-root": {
+              border: "none",
               width: "100%",
-              border: "solid , 0.1rem",
-              //borderWidth:"10px",
             },
             "& .MuiDataGrid-cell": {
-              borderBottom: "none",
+              borderBottom: `1px solid ${theme.palette.divider}`,
+              padding: "10px 16px",
+              fontSize: "0.85rem",
             },
             "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: theme.palette.background.alt,
-              color: theme.palette.secondary[100],
-              //borderBottom: "none",
+              backgroundColor: theme.palette.primary.dark,
+              color: theme.palette.secondary[200],
+              fontWeight: "bold",
+              fontSize: "0.8rem",
+              letterSpacing: "0.05rem",
+              borderBottom: `2px solid ${theme.palette.secondary[400]}`,
+              textTransform: "uppercase",
+            },
+            "& .MuiDataGrid-columnHeaderTitle": {
+              fontWeight: "bold",
             },
             "& .MuiDataGrid-virtualScroller": {
               backgroundColor: theme.palette.background.alt,
             },
+            "& .MuiDataGrid-row:hover": {
+              backgroundColor: `${theme.palette.primary.main}22`,
+            },
             "& .MuiDataGrid-footerContainer": {
               backgroundColor: theme.palette.background.alt,
               color: theme.palette.secondary[100],
-              // borderTop: "none",
-            },
-            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-              color: `${theme.palette.secondary[200]} !important`,
+              borderTop: `1px solid ${theme.palette.divider}`,
             },
           }}
         >

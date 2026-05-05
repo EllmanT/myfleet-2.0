@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "framework": null,
+  "installCommand": "npm install --prefix backend && npm install --prefix frontend",
+  "buildCommand": "npm run build --prefix frontend",
+  "outputDirectory": "frontend/build",
+  "build": {
+    "env": {
+      "GENERATE_SOURCEMAP": "false",
+      "NODE_OPTIONS": "--max-old-space-size=8192"
+    }
+  },
+  "functions": {
+    "api/index.js": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

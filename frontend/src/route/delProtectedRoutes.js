@@ -3,12 +3,13 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 const DelProtectedRoutes = ({ children }) => {
-  const { isAuthenticated, loading, user } = useSelector((state) => state.user);
+  const { isAuthenticated, loading } = useSelector((state) => state.user);
 
-  if (!loading) {
-    if(!isAuthenticated){
-      <Navigate to="/login"/>
-    }
+  if (loading) {
+    return null;
+  }
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
   }
 
   return children;

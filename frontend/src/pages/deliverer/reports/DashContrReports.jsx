@@ -206,10 +206,10 @@ const AllContrReportsPage = () => {
   const {
     AllJobsReportContr,
     totalCount,
-
     isAllJobsReportContrLoading,
+    reportPeriodTotals,
   } = useSelector((state) => state.jobs);
-  console.log(AllJobsReportContr);
+
   useEffect(() => {
     dispatch(
       getAllJobsReportContr(contractorId, {
@@ -217,87 +217,11 @@ const AllContrReportsPage = () => {
         page,
         limit: pageSize,
         jobSearch,
+        startDate: startDate?.toISOString(),
+        endDate: endDate?.toISOString(),
       })
     );
-  }, [dispatch, contractorId, selectedYear, page, pageSize, jobSearch]);
-
-  //
-  const reportData = useMemo(() => {
-    if (!AllJobsReportContr) {
-      return {
-        rows: [],
-        totalJobsCount: 0,
-        totalJobsDistance: 0,
-        totalJobsCost: 0,
-      };
-    }
-
-    const rangeStart = startDate <= endDate ? startDate : endDate;
-    const rangeEnd = startDate <= endDate ? endDate : startDate;
-    let totalJobs = [];
-    let totalJobsDistance = 0;
-    let totalJobsCost = 0;
-
-    Object.values(AllJobsReportContr).forEach(
-      ({
-        orderDate,
-        _id,
-        jobNumber,
-        from,
-        customer,
-        distance,
-        cost,
-        description,
-        deliveryType,
-        vehicleId,
-      }) => {
-        const dateFormatted = new Date(orderDate);
-        if (dateFormatted >= rangeStart && dateFormatted <= rangeEnd) {
-          const splitDate = dateFormatted.toLocaleDateString(undefined, {
-            day: "2-digit",
-            month: "2-digit",
-          });
-          // Format the splitDate as "dd-mm"
-          totalJobs = [
-            ...totalJobs,
-            {
-              _id: _id,
-              jobNumber: jobNumber,
-              from: from,
-              customer: customer,
-              distance: distance,
-              cost: cost,
-              description: description,
-              deliveryType: deliveryType,
-
-              vehicleId: vehicleId,
-              orderDate,
-            },
-          ];
-
-          totalJobsCost += cost || 0;
-          totalJobsDistance += distance || 0;
-        }
-      }
-    );
-
-    return {
-      rows: totalJobs,
-      totalJobsCount: totalJobs.length,
-      totalJobsDistance,
-      totalJobsCost,
-    };
-  }, [AllJobsReportContr, startDate, endDate]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  console.log(AllJobsReportContr);
-
-  console.log(reportData.rows);
-  console.log(AllJobsReportContr);
-  console.log(startDate);
-  console.log(endDate);
-
-  console.log(reportData.totalJobsCost);
-  console.log(reportData.totalJobsDistance);
+  }, [dispatch, contractorId, selectedYear, page, pageSize, jobSearch, startDate, endDate]);
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
@@ -395,23 +319,41 @@ const AllContrReportsPage = () => {
             border: "none",
           },
           "& .MuiDataGrid-cell": {
-            borderBottom: "solid 0.2px",
+            borderBottom: `1px solid ${theme.palette.divider}`,
+            padding: "12px 16px",
+            fontSize: "0.875rem",
           },
           "& .MuiDataGrid-columnHeaders": {
             backgroundColor: theme.palette.background.alt,
             color: theme.palette.secondary[100],
-            borderBottom: "none",
+            fontWeight: "bold",
+            fontSize: "0.8rem",
+            letterSpacing: "0.06rem",
+            textTransform: "uppercase",
+            borderBottom: `2px solid ${theme.palette.secondary[400]}`,
+          },
+          "& .MuiDataGrid-columnHeaderTitle": {
+            fontWeight: "bold",
+            fontSize: "0.82rem",
           },
           "& .MuiDataGrid-virtualScroller": {
             backgroundColor: theme.palette.primary.light,
           },
+          "& .MuiDataGrid-row": {
+            "&:nth-of-type(even)": {
+              backgroundColor: `${theme.palette.primary.main}10`,
+            },
+            "&:hover": {
+              backgroundColor: `${theme.palette.secondary.main}15`,
+            },
+          },
           "& .MuiDataGrid-footerContainer": {
             backgroundColor: theme.palette.background.alt,
             color: theme.palette.secondary[100],
-            borderTop: "none",
+            borderTop: `1px solid ${theme.palette.divider}`,
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${theme.palette.secondary[100]} !important`,
+            color: `${theme.palette.secondary[200]} !important`,
           },
         }}
       >
@@ -419,7 +361,7 @@ const AllContrReportsPage = () => {
           loading={isAllJobsReportContrLoading}
           Header="hello"
           getRowId={(row) => row._id}
-          rows={reportData.rows}
+          rows={AllJobsReportContr || []}
           columns={columns}
           rowCount={totalCount || 0}
           rowsPerPageOptions={[25, 50, 100]}
@@ -442,9 +384,9 @@ const AllContrReportsPage = () => {
               setEndDate,
               defaultStartDate,
               defaultEndDate,
-              totalJobsDistance: reportData.totalJobsDistance,
-              totalJobsCost: reportData.totalJobsCost,
-              totalJobsCount: reportData.totalJobsCount,
+              totalJobsDistance: reportPeriodTotals?.totalDistance || 0,
+              totalJobsCost: reportPeriodTotals?.totalCost || 0,
+              totalJobsCount: reportPeriodTotals?.totalJobs || 0,
               contractorName,
               selectedYear,
               setSelectedYear: (year) =>
@@ -457,6 +399,8 @@ const AllContrReportsPage = () => {
                 jobSearch,
                 startDate: startDate?.toISOString(),
                 endDate: endDate?.toISOString(),
+                entityName: contractorName,
+                entityType: "Contractor",
               },
             },
           }}

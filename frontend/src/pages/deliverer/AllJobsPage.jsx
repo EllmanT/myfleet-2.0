@@ -40,11 +40,15 @@ import { deleteJob, getAllJobsPage } from "redux/actions/job";
 
 const AllJobsPage = () => {
   const { user } = useSelector((state) => state.user);
-  const { selectedYear } = useSelector((state) => state.filters);
 
   const theme = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const currentYear = new Date().getFullYear();
+  const yearOptions = ["all"];
+  for (let y = currentYear; y >= 2020; y -= 1) yearOptions.push(y);
+  const [jobsYear, setJobsYear] = useState("all");
 
   const [pagee, setPagee] = useState(0);
   const [pageSizee, setPageSizee] = useState(25);
@@ -144,7 +148,7 @@ const AllJobsPage = () => {
           contractor,
           searcha,
           jobSearch,
-          selectedYear
+          jobsYear
         )
       );
       if (jobSearch === "") {
@@ -153,7 +157,7 @@ const AllJobsPage = () => {
         setResults(0);
       }
     }
-  }, [page, pageSize, sort, sorta, searcha, jobSearch, contractor, dispatch, selectedYear]);
+  }, [page, pageSize, sort, sorta, searcha, jobSearch, contractor, dispatch, jobsYear]);
 
   console.log(totalJobs);
   const handleClickOpen = () => {
@@ -203,7 +207,7 @@ const AllJobsPage = () => {
             undefined,
             undefined,
             undefined,
-            selectedYear
+            jobsYear
           )
         );
         handleDeleteDialogueClose();
@@ -240,45 +244,45 @@ const AllJobsPage = () => {
     {
       field: "jobNumber",
       headerName: "J/N",
-      flex: 0.5,
+      flex: 0.7,
     },
     {
       field: "deliveryType",
       headerName: "D/T",
-      flex: 0.5,
+      flex: 0.7,
     },
     {
       field: "contractorId",
       headerName: "Contractor",
-      flex: 1,
+      flex: 1.5,
       renderCell: (params) => <>{params.row.contractorId.companyName}</>,
     },
     {
       field: "from",
       headerName: "From",
-      flex: 1,
+      flex: 1.5,
       valueGetter: (params) => params.row.from.name,
     },
     {
       field: "customer",
       headerName: "Customer",
-      flex: 1,
+      flex: 1.5,
       valueGetter: (params) => params.row.customer.name,
     },
     {
       field: "distance",
       headerName: "Dist",
-      flex: 0.5,
+      flex: 0.6,
       sortable: false,
     },
     {
       field: "cost",
       headerName: "Cost",
-      flex: 0.5,
+      flex: 0.7,
       valueFormatter:(params)=>{
         const cost = parseFloat(params.value).toFixed(2);
         return cost;
-      },  
+      },
       sortable: false,
     },
     {
@@ -329,7 +333,7 @@ const AllJobsPage = () => {
       <FlexBetween>
         <Header title="Jobs" subtitle="See all your jobs." />
 
-        <Box>
+        <Box display="flex" alignItems="center" gap="1rem">
           <Button
             disabled
             sx={{
@@ -343,6 +347,21 @@ const AllJobsPage = () => {
             <CalendarToday sx={{ mr: "10px" }} />
             {totalCount}{" "}
           </Button>
+          <FormControl size="small" sx={{ minWidth: "110px" }}>
+            <Select
+              color="info"
+              value={jobsYear}
+              onChange={(e) => {
+                setJobsYear(e.target.value);
+                setPaginationModel({ pageSize: paginationModel.pageSize, page: 0 });
+              }}
+            >
+              <MenuItem value="all">All Years</MenuItem>
+              {yearOptions.filter((y) => y !== "all").map((y) => (
+                <MenuItem key={y} value={y}>{y}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Box>
 
         <Box>
@@ -421,20 +440,38 @@ const AllJobsPage = () => {
             border: "none",
           },
           "& .MuiDataGrid-cell": {
-            borderBottom: "none",
+            borderBottom: `1px solid ${theme.palette.divider}`,
+            padding: "12px 16px",
+            fontSize: "0.875rem",
           },
           "& .MuiDataGrid-columnHeaders": {
             backgroundColor: theme.palette.background.alt,
             color: theme.palette.secondary[100],
-            borderBottom: "none",
+            fontWeight: "bold",
+            fontSize: "0.8rem",
+            letterSpacing: "0.06rem",
+            textTransform: "uppercase",
+            borderBottom: `2px solid ${theme.palette.secondary[400]}`,
+          },
+          "& .MuiDataGrid-columnHeaderTitle": {
+            fontWeight: "bold",
+            fontSize: "0.82rem",
           },
           "& .MuiDataGrid-virtualScroller": {
             backgroundColor: theme.palette.primary.light,
           },
+          "& .MuiDataGrid-row": {
+            "&:nth-of-type(even)": {
+              backgroundColor: `${theme.palette.primary.main}10`,
+            },
+            "&:hover": {
+              backgroundColor: `${theme.palette.secondary.main}15`,
+            },
+          },
           "& .MuiDataGrid-footerContainer": {
             backgroundColor: theme.palette.background.alt,
             color: theme.palette.secondary[100],
-            borderTop: "none",
+            borderTop: `1px solid ${theme.palette.divider}`,
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
             color: `${theme.palette.secondary[200]} !important`,
@@ -466,8 +503,11 @@ const AllJobsPage = () => {
               exportParams: {
                 enabled: true,
                 scope: "deliverer",
+                year: jobsYear,
                 jobSearch,
                 sort: JSON.stringify(sorta || {}),
+                entityName: "All Jobs",
+                entityType: "Deliverer",
               },
             },
           }}
