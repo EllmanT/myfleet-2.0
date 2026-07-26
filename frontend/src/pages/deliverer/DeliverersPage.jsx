@@ -795,6 +795,7 @@ const DeliverersPage = () => {
         }}
       >
         <DataGrid
+          height="100%"
           loading={isPageDeliverersLoading || !deliverersPage}
           getRowId={(row) => row._id}
           rows={(deliverersPage && deliverersPage) || []}

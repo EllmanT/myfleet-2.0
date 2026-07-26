@@ -468,6 +468,7 @@ const DashDriverReports = () => {
         }}
       >
         <DataGrid
+          height="100%"
           loading={isAllJobsReportDriverLoading}
           Header="hello"
           getRowId={(row) => row._id}

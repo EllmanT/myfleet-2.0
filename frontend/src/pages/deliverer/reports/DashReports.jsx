@@ -490,6 +490,7 @@ const AllJobsPage = () => {
         }}
       >
         <DataGrid
+          height="100%"
           loading={isAllJobsReportDelivererLoading}
           Header="hello"
           getRowId={(row) => row._id}

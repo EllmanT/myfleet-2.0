@@ -495,9 +495,10 @@ const DashVehiclePage = () => {
           gridColumn="span 6"
           gridRow="span 3"
           backgroundColor={theme.palette.background.alt}
-          alignItems="center"
           display="flex"
           flexDirection="column"
+          height="100%"
+          minHeight={0}
           sx={{
             "& .MuiDataGrid-root": {
               border: "none",
@@ -533,13 +534,16 @@ const DashVehiclePage = () => {
             },
           }}
         >
-          <Typography fontWeight="bold">Latest Jobs</Typography>
-          <DataGrid
-            loading={latestJobsVehLoading || !latestJobsVehicle}
-            getRowId={(row) => row._id}
-            rows={(latestJobsVehicle && latestJobsVehicle) || []}
-            columns={columns}
-          />
+          <Typography fontWeight="bold" flexShrink={0}>Latest Jobs</Typography>
+          <Box flex="1 1 auto" minHeight={0} width="100%">
+            <DataGrid
+              loading={latestJobsVehLoading || !latestJobsVehicle}
+              getRowId={(row) => row._id}
+              rows={(latestJobsVehicle && latestJobsVehicle) || []}
+              columns={columns}
+              height="100%"
+            />
+          </Box>
         </Box>
       </Box>
     </Box>

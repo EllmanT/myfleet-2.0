@@ -323,6 +323,7 @@ const PaymentsPage = () => {
         }}
       >
         <DataGrid
+          height="100%"
           loading={isPageCustomerLoading || !customersPage}
           getRowId={(row) => row._id}
           rows={(customersPage && customersPage) || []}

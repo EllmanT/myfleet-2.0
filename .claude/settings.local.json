@@ -6,7 +6,9 @@
       "Bash(Format-Table -AutoSize)",
       "Bash(node -e ' *)",
       "Bash(npm -v)",
-      "Bash(npm ls *)"
+      "Bash(npm ls *)",
+      "Bash(npx eslint *)",
+      "Bash(npx react-scripts *)"
     ]
   }
 }

@@ -433,6 +433,7 @@ const DashVehicleReports = () => {
         }}
       >
         <DataGrid
+          height="100%"
           loading={isAllJobsReportVehicleLoading}
           Header="hello"
           getRowId={(row) => row._id}

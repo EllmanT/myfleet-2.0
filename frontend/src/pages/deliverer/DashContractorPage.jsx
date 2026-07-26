@@ -466,9 +466,10 @@ const DashContractorPage = () => {
           gridColumn="span 6"
           gridRow="span 3"
           backgroundColor={theme.palette.background.alt}
-          alignItems="center"
           display="flex"
           flexDirection="column"
+          height="100%"
+          minHeight={0}
           sx={{
             "& .MuiDataGrid-root": {
               border: "none",
@@ -504,15 +505,18 @@ const DashContractorPage = () => {
             },
           }}
         >
-          <Typography fontWeight="bold">Latest Jobs</Typography>
-          {latestJobsContractor !== null && (
-            <DataGrid
-              loading={latestJobsContrLoading || !latestJobsContractor}
-              getRowId={(row) => row._id}
-              rows={(latestJobsContractor && latestJobsContractor) || []}
-              columns={columns}
-            />
-          )}
+          <Typography fontWeight="bold" flexShrink={0}>Latest Jobs</Typography>
+          <Box flex="1 1 auto" minHeight={0} width="100%">
+            {latestJobsContractor !== null && (
+              <DataGrid
+                loading={latestJobsContrLoading || !latestJobsContractor}
+                getRowId={(row) => row._id}
+                rows={(latestJobsContractor && latestJobsContractor) || []}
+                columns={columns}
+                height="100%"
+              />
+            )}
+          </Box>
         </Box>
       </Box>
     </Box>

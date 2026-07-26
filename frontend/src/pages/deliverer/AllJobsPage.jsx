@@ -479,6 +479,7 @@ const AllJobsPage = () => {
         }}
       >
         <DataGrid
+          height="100%"
           loading={allJobsPageLoading || !jobsPage}
           getRowId={(row) => row._id}
           rows={(jobsPage && jobsPage) || []}

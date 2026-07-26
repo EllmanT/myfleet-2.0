@@ -416,6 +416,7 @@ const AllContrReportsPage = () => {
         }}
       >
         <DataGrid
+          height="100%"
           loading={isAllJobsReportContrLoading}
           Header="hello"
           getRowId={(row) => row._id}

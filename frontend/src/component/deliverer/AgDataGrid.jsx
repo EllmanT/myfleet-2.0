@@ -50,6 +50,7 @@ export const DataGrid = ({
   onSortModelChange,
   components,
   componentsProps,
+  height = "70vh",
 }) => {
   const page = paginationModel?.page ?? 0;
   const pageSize = paginationModel?.pageSize ?? rowsPerPageOptions[0] ?? 25;
@@ -98,9 +99,13 @@ export const DataGrid = ({
           cursor: pointer;
         }
       `}</style>
-      <Box>
-      {Toolbar ? <Toolbar {...(componentsProps?.toolbar ?? {})} /> : null}
-      <Box position="relative">
+      <Box sx={{ height, display: "flex", flexDirection: "column", minHeight: 0 }}>
+      {Toolbar ? (
+        <Box flexShrink={0}>
+          <Toolbar {...(componentsProps?.toolbar ?? {})} />
+        </Box>
+      ) : null}
+      <Box position="relative" sx={{ flex: "1 1 auto", minHeight: 0 }}>
         {loading ? (
           <Box
             sx={{
@@ -116,7 +121,7 @@ export const DataGrid = ({
             <CircularProgress size={28} />
           </Box>
         ) : null}
-        <div className="ag-theme-quartz" style={{ width: "100%", height: "70vh" }}>
+        <div className="ag-theme-quartz" style={{ width: "100%", height: "100%" }}>
           <AgGridReact
             ref={gridRef}
             rowData={rows}
@@ -145,22 +150,24 @@ export const DataGrid = ({
           />
         </div>
       </Box>
-      <TablePagination
-        component="div"
-        count={rowCount}
-        page={page}
-        rowsPerPage={pageSize}
-        rowsPerPageOptions={rowsPerPageOptions}
-        onPageChange={(_, nextPage) =>
-          onPaginationModelChange?.({ page: nextPage, pageSize })
-        }
-        onRowsPerPageChange={(event) =>
-          onPaginationModelChange?.({
-            page: 0,
-            pageSize: parseInt(event.target.value, 10),
-          })
-        }
-      />
+      <Box flexShrink={0}>
+        <TablePagination
+          component="div"
+          count={rowCount}
+          page={page}
+          rowsPerPage={pageSize}
+          rowsPerPageOptions={rowsPerPageOptions}
+          onPageChange={(_, nextPage) =>
+            onPaginationModelChange?.({ page: nextPage, pageSize })
+          }
+          onRowsPerPageChange={(event) =>
+            onPaginationModelChange?.({
+              page: 0,
+              pageSize: parseInt(event.target.value, 10),
+            })
+          }
+        />
+      </Box>
     </Box>
     </>
   );

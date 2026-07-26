@@ -870,6 +870,7 @@ const AdminsPage = () => {
         }}
       >
         <DataGrid
+          height="100%"
           loading={isPageAdminsLoading || !adminsPage}
           getRowId={(row) => row._id}
           rows={(adminsPage && adminsPage) || []}
