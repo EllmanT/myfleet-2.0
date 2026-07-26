@@ -8,7 +8,10 @@
       "Bash(npm -v)",
       "Bash(npm ls *)",
       "Bash(npx eslint *)",
-      "Bash(npx react-scripts *)"
+      "Bash(npx react-scripts *)",
+      "Bash(node -c controller/user.js)",
+      "Bash(grep -Hm1 ^description: '/c/Users/Ropafadzo Muridzi/Documents/tapiwa projects/myfleet/.claude/skills/*/SKILL.md')",
+      "Bash(npx jest *)"
     ]
   }
 }

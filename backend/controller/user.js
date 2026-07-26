@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const mongoose = require("mongoose");
 const express = require("express");
 const User = require("../model/user");
 const { upload } = require("../multer");
@@ -13,6 +14,20 @@ const Deliverer = require("../model/deliverer");
 
 const RESET_TOKEN_MS = 15 * 60 * 1000;
 const MIN_PASSWORD_LEN = 8;
+
+// Kept in sync with frontend/src/component/Roles.jsx
+const ADMIN_ROLES = [
+  "Super Admin",
+  "Site Admin",
+  "Deliverer Manager",
+  "Contractor Manager",
+  "Deliverer Admin",
+  "Contractor Admin",
+];
+// Roles allowed to create other admins, and the roles a company-scoped
+// Deliverer Admin is allowed to hand out (can't escalate to a global role)
+const ADMIN_CREATOR_ROLES = ["Deliverer Admin", "Super Admin", "Site Admin"];
+const GLOBAL_ROLES = ["Super Admin", "Site Admin"];
 
 const frontendBaseUrl = () => {
   const base =
@@ -172,6 +187,83 @@ router.post(
     } catch (error) {
       return next(new ErrorHandler(error.message, 400));
     }
+  })
+);
+
+// create-admin — used by the Admins page (deliverer/site/super admin adding a
+// new admin). Unlike /create-user, this creates the account immediately with
+// the password the creator chose, no email activation step.
+router.post(
+  "/create-admin",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    const creator = req.user;
+
+    if (!creator || !ADMIN_CREATOR_ROLES.includes(creator.role)) {
+      return next(
+        new ErrorHandler("You are not authorized to add admins", 403)
+      );
+    }
+
+    const { name, email, phoneNumber, address, city, role, password } =
+      req.body;
+    let { companyId } = req.body;
+
+    if (!name || !email || !phoneNumber || !address || !city || !role || !password) {
+      return next(new ErrorHandler("Enter all fields", 400));
+    }
+
+    if (password.length < MIN_PASSWORD_LEN) {
+      return next(
+        new ErrorHandler(`Password must be at least ${MIN_PASSWORD_LEN} characters`, 400)
+      );
+    }
+
+    if (!ADMIN_ROLES.includes(role)) {
+      return next(new ErrorHandler("Invalid role", 400));
+    }
+
+    if (creator.role === "Deliverer Admin") {
+      if (GLOBAL_ROLES.includes(role)) {
+        return next(
+          new ErrorHandler("You are not authorized to assign this role", 403)
+        );
+      }
+      companyId = creator.companyId;
+    }
+
+    if (!companyId || !mongoose.isValidObjectId(companyId)) {
+      return next(new ErrorHandler("Select a valid company", 400));
+    }
+
+    const deliverer = await Deliverer.findById(companyId);
+    if (!deliverer) {
+      return next(new ErrorHandler("Company not found", 400));
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return next(new ErrorHandler("User already exists", 400));
+    }
+
+    const admin = await User.create({
+      name,
+      email,
+      phoneNumber,
+      address,
+      city,
+      role,
+      password,
+      companyId,
+    });
+
+    deliverer.admin_ids.push(admin._id);
+    await deliverer.save();
+
+    res.status(201).json({
+      success: true,
+      message: "Admin created successfully",
+    });
   })
 );
 

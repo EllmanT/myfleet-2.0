@@ -17,6 +17,8 @@ import {
   Step,
   IconButton,
   DialogContentText,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import {
   Add,
@@ -36,8 +38,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAdmin, getAllAdminsPage, updateAdmin } from "redux/actions/user";
+import { getAllDeliverersPage } from "redux/actions/deliverer";
 import { DataGrid, GridDeleteIcon } from "component/deliverer/AgDataGrid";
 import DataGridCustomToolbar from "component/deliverer/DataGridCustomToolbar";
+
+const GLOBAL_ADMIN_ROLES = ["Super Admin", "Site Admin"];
+const ADMIN_CREATOR_ROLES = ["Deliverer Admin", ...GLOBAL_ADMIN_ROLES];
 
 let steps = [];
 const AdminsPage = () => {
@@ -55,9 +61,12 @@ const AdminsPage = () => {
   const [results, setResults] = useState("");
   const [totalAdmins, setTotalAdmins] = useState(0);
   const [searchInput, setSearchInput] = useState("");
-  const { adminsPage, totalCount, isPageAdminsLoading } = useSelector(
-    (state) => state.user
-  );
+  const { adminsPage, totalCount, isPageAdminsLoading, user, delivererName } =
+    useSelector((state) => state.user);
+  const { deliverersPage } = useSelector((state) => state.deliverer);
+
+  const isGlobalAdmin = GLOBAL_ADMIN_ROLES.includes(user?.role);
+  const canAddAdmin = ADMIN_CREATOR_ROLES.includes(user?.role);
   const [paginationModel, setPaginationModel] = React.useState({
     pageSize: 25,
     page: 0,
@@ -216,7 +225,6 @@ const AdminsPage = () => {
     setRole("");
     setCity("");
     setLastPassword("");
-    setCompanyId("");
     setAddress("");
     setDisableSelect(false);
     setDisable(false);
@@ -228,6 +236,14 @@ const AdminsPage = () => {
     steps = ["General Info", "Access", "Preview"];
     setLastStep(steps.length - 1);
     setActiveStep(0);
+
+    if (isGlobalAdmin) {
+      setCompanyId("");
+      dispatch(getAllDeliverersPage(0, 1000, null, ""));
+    } else {
+      setCompanyId(user?.companyId || "");
+    }
+
     setOpen(true);
   };
 
@@ -240,19 +256,6 @@ const AdminsPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
-
-    const newForm = new FormData();
-    newForm.append("adminId", adminId);
-    newForm.append("address", address);
-    newForm.append("city", city);
-    newForm.append("email", email);
-    newForm.append("password", password);
-    newForm.append("role", role);
-    newForm.append("companyId", companyId);
-    newForm.append("phoneNumber", phoneNumber);
-    newForm.append("name", name);
-
     setDisable(true);
 
     if (
@@ -262,7 +265,20 @@ const AdminsPage = () => {
     ) {
       if (isAddButtonn === true && isEditButtonn === false) {
         await axios
-          .post(`${server}/user/create-user`, newForm, config)
+          .post(
+            `${server}/user/create-admin`,
+            {
+              name,
+              address,
+              city,
+              email,
+              password,
+              role,
+              companyId,
+              phoneNumber,
+            },
+            { withCredentials: true }
+          )
           .then((res) => {
             toast.success(res.data.message);
             setName("");
@@ -464,24 +480,26 @@ const AdminsPage = () => {
             {totalCount}
           </Button>
         </Box>
-        <Box>
-          <Button
-            sx={{
-              backgroundColor: theme.palette.secondary.light,
-              color: theme.palette.background.alt,
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-              ":hover": {
-                backgroundColor: theme.palette.secondary[100],
-              },
-            }}
-            onClick={handleClickOpen}
-          >
-            <Add sx={{ mr: "10px" }} />
-            Add
-          </Button>
-        </Box>
+        {canAddAdmin && (
+          <Box>
+            <Button
+              sx={{
+                backgroundColor: theme.palette.secondary.light,
+                color: theme.palette.background.alt,
+                fontSize: "14px",
+                fontWeight: "bold",
+                padding: "10px 20px",
+                ":hover": {
+                  backgroundColor: theme.palette.secondary[100],
+                },
+              }}
+              onClick={handleClickOpen}
+            >
+              <Add sx={{ mr: "10px" }} />
+              Add
+            </Button>
+          </Box>
+        )}
       </FlexBetween>
       <Dialog
         open={isDelete}
@@ -583,18 +601,41 @@ const AdminsPage = () => {
                               />
                             </FormControl>
 
-                            <FormControl sx={{ m: 1, minWidth: 250 }}>
-                              <TextField
-                                disabled={disableSelect}
-                                required
-                                variant="outlined"
-                                type="text"
-                                label="Company Id"
-                                color="info"
-                                value={companyId}
-                                onChange={(e) => setCompanyId(e.target.value)}
-                              />
-                            </FormControl>
+                            {isAddButtonn && isGlobalAdmin ? (
+                              <FormControl sx={{ m: 1, minWidth: 250 }}>
+                                <InputLabel id="company-select-label">
+                                  Company
+                                </InputLabel>
+                                <Select
+                                  required
+                                  labelId="company-select-label"
+                                  label="Company"
+                                  color="info"
+                                  value={companyId}
+                                  onChange={(e) => setCompanyId(e.target.value)}
+                                >
+                                  {(deliverersPage || []).map((deliverer) => (
+                                    <MenuItem
+                                      key={deliverer._id}
+                                      value={deliverer._id}
+                                    >
+                                      {deliverer.companyName}
+                                    </MenuItem>
+                                  ))}
+                                </Select>
+                              </FormControl>
+                            ) : (
+                              <FormControl sx={{ m: 1, minWidth: 250 }}>
+                                <TextField
+                                  disabled
+                                  variant="outlined"
+                                  type="text"
+                                  label="Company"
+                                  color="info"
+                                  value={delivererName || ""}
+                                />
+                              </FormControl>
+                            )}
                             <Box display={"flex"}>
                               <FormControl sx={{ m: 1, minWidth: 200 }}>
                                 <Roles
