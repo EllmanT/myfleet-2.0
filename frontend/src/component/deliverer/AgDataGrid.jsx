@@ -124,6 +124,7 @@ export const DataGrid = ({
         <div className="ag-theme-quartz" style={{ width: "100%", height: "100%" }}>
           <AgGridReact
             ref={gridRef}
+            theme="legacy"
             rowData={rows}
             columnDefs={columnDefs}
             rowHeight={32}

@@ -63,7 +63,7 @@ const AdminsPage = () => {
   const [searchInput, setSearchInput] = useState("");
   const { adminsPage, totalCount, isPageAdminsLoading, user, delivererName } =
     useSelector((state) => state.user);
-  const { deliverersPage } = useSelector((state) => state.deliverer);
+  const { deliverersPage } = useSelector((state) => state.deliverers);
 
   const isGlobalAdmin = GLOBAL_ADMIN_ROLES.includes(user?.role);
   const canAddAdmin = ADMIN_CREATOR_ROLES.includes(user?.role);
