@@ -121,7 +121,7 @@ export const DataGrid = ({
             ref={gridRef}
             rowData={rows}
             columnDefs={columnDefs}
-            rowHeight={60}
+            rowHeight={32}
             headerHeight={48}
             animateRows
             rowSelection="single"
