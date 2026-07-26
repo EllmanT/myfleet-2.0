@@ -7,7 +7,8 @@
     "test": "jest --runInBand",
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "seed": "node scripts/seed/index.js"
+    "seed": "node scripts/seed/index.js",
+    "migrate:atlas": "node scripts/migrateToAtlas.js"
   },
   "author": "Tapiwa Muranda",
   "license": "ISC",

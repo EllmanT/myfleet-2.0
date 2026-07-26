@@ -14,14 +14,16 @@ const Deliverer = require("../model/deliverer");
 const RESET_TOKEN_MS = 15 * 60 * 1000;
 const MIN_PASSWORD_LEN = 8;
 
-const frontendResetUrl = (rawToken) => {
+const frontendBaseUrl = () => {
   const base =
     process.env.FRONTEND_URL ||
     process.env.CLIENT_URL ||
     "http://localhost:3000";
-  const trimmed = String(base).replace(/\/$/, "");
-  return `${trimmed}/reset-password?token=${encodeURIComponent(rawToken)}`;
+  return String(base).replace(/\/$/, "");
 };
+
+const frontendResetUrl = (rawToken) =>
+  `${frontendBaseUrl()}/reset-password?token=${encodeURIComponent(rawToken)}`;
 
 //create-user
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
@@ -54,8 +56,7 @@ router.post("/create-user", upload.single("file"), async (req, res, next) => {
     };
 
     const activationToken = createActivationToken(user);
-    // const activationUrl = `https://myfleet-ijfg.vercel.app/activation/${activationToken}`;
-    const activationUrl = `https://checkins-render-prod-deployment.onrender.com/activation/${activationToken}`;
+    const activationUrl = `${frontendBaseUrl()}/activation/${activationToken}`;
 
     try {
       await sendMail({
