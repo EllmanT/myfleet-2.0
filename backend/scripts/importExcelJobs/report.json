@@ -1,0 +1,1067 @@
+{
+  "generatedAt": "2026-07-26T14:27:15.696Z",
+  "summary": {
+    "filesProcessed": 49,
+    "totalAcceptedJobRows": 4269,
+    "totalDistance": 60358,
+    "totalCost": 123008.55,
+    "unresolvedRowCount": 0,
+    "duplicateLegsSkipped": 5,
+    "newCustomersToCreate": 190,
+    "filesWithHeaderMismatch": 5
+  },
+  "perFile": [
+    {
+      "file": "2025-jobs/DAF AFE APR 2025.xlsx",
+      "sheet": "React App (2)",
+      "vehicleRegNumber": "AFE5848",
+      "declared": {
+        "jobs": 78,
+        "dist": 973,
+        "cost": 2870.35
+      },
+      "parsedRowCount": 78,
+      "acceptedRowCount": 78,
+      "droppedRowCount": 0,
+      "computedDistance": 973,
+      "computedCost": 2870.35
+    },
+    {
+      "file": "2025-jobs/DAF AFE AUGUST 2025.xlsx",
+      "sheet": "React App (16)",
+      "vehicleRegNumber": "AFE5848",
+      "declared": {
+        "jobs": 58,
+        "dist": 1264,
+        "cost": 3378.1
+      },
+      "parsedRowCount": 58,
+      "acceptedRowCount": 58,
+      "droppedRowCount": 0,
+      "computedDistance": 1264,
+      "computedCost": 3378.1
+    },
+    {
+      "file": "2025-jobs/DAF AFE FEB 2025.xlsx",
+      "sheet": "React App (30)",
+      "vehicleRegNumber": "AFE5848",
+      "declared": {
+        "jobs": 44,
+        "dist": 679,
+        "cost": 1994.2
+      },
+      "parsedRowCount": 44,
+      "acceptedRowCount": 44,
+      "droppedRowCount": 0,
+      "computedDistance": 676,
+      "computedCost": 1994.2
+    },
+    {
+      "file": "2025-jobs/daf afe july 2025.xlsx",
+      "sheet": "React App (13)",
+      "vehicleRegNumber": "AFE5848",
+      "declared": {
+        "jobs": 57,
+        "dist": 1200,
+        "cost": 3540
+      },
+      "parsedRowCount": 87,
+      "acceptedRowCount": 87,
+      "droppedRowCount": 0,
+      "computedDistance": 1200,
+      "computedCost": 3540
+    },
+    {
+      "file": "2025-jobs/DAF AFE MAY 2025'.xlsx",
+      "sheet": "React App (24)",
+      "vehicleRegNumber": "AFE5848",
+      "declared": {
+        "jobs": 57,
+        "dist": 695,
+        "cost": 2050.25
+      },
+      "parsedRowCount": 57,
+      "acceptedRowCount": 57,
+      "droppedRowCount": 0,
+      "computedDistance": 695,
+      "computedCost": 2050.25
+    },
+    {
+      "file": "2025-jobs/DAF AFE SEPTEMBER 2025.xlsx",
+      "sheet": "React App (36)",
+      "vehicleRegNumber": "AFE5848",
+      "declared": {
+        "jobs": 64,
+        "dist": 1154,
+        "cost": 3404.3
+      },
+      "parsedRowCount": 64,
+      "acceptedRowCount": 64,
+      "droppedRowCount": 0,
+      "computedDistance": 1154,
+      "computedCost": 3404.3
+    },
+    {
+      "file": "2025-jobs/DAF MARCH 2025.xlsx",
+      "sheet": "React App (27)",
+      "vehicleRegNumber": "AFE5848",
+      "declared": {
+        "jobs": 74,
+        "dist": 1116,
+        "cost": 3292.2
+      },
+      "parsedRowCount": 74,
+      "acceptedRowCount": 74,
+      "droppedRowCount": 0,
+      "computedDistance": 1116,
+      "computedCost": 3292.2
+    },
+    {
+      "file": "2025-jobs/dafafe june 2025.xlsx",
+      "sheet": "React App (22)",
+      "vehicleRegNumber": "AFE5848",
+      "declared": {
+        "jobs": 46,
+        "dist": 1591,
+        "cost": 3699.1
+      },
+      "parsedRowCount": 46,
+      "acceptedRowCount": 46,
+      "droppedRowCount": 0,
+      "computedDistance": 1591,
+      "computedCost": 3699.1
+    },
+    {
+      "file": "2025-jobs/TOTA AAV MAY 2025.xlsx",
+      "sheet": "React App (26)",
+      "vehicleRegNumber": "AAV4331",
+      "declared": {
+        "jobs": 100,
+        "dist": 1202,
+        "cost": 1983.3
+      },
+      "parsedRowCount": 100,
+      "acceptedRowCount": 100,
+      "droppedRowCount": 0,
+      "computedDistance": 1202,
+      "computedCost": 1983.3
+    },
+    {
+      "file": "2025-jobs/TOYOTA AAV APRIL 2025.xlsx",
+      "sheet": "React App",
+      "vehicleRegNumber": "AAV4331",
+      "declared": {
+        "jobs": 87,
+        "dist": 930,
+        "cost": 1534.5
+      },
+      "parsedRowCount": 87,
+      "acceptedRowCount": 87,
+      "droppedRowCount": 0,
+      "computedDistance": 930,
+      "computedCost": 1534.5
+    },
+    {
+      "file": "2025-jobs/TOYOTA AAV AUGUST2025.xlsx",
+      "sheet": "React App (21)",
+      "vehicleRegNumber": "AAV4331",
+      "declared": {
+        "jobs": 116,
+        "dist": 1095,
+        "cost": 1806.75
+      },
+      "parsedRowCount": 102,
+      "acceptedRowCount": 102,
+      "droppedRowCount": 0,
+      "computedDistance": 1150,
+      "computedCost": 1897.5
+    },
+    {
+      "file": "2025-jobs/TOYOTA AAV FEB 2025.xlsx",
+      "sheet": "React App (32)",
+      "vehicleRegNumber": "AAV4331",
+      "declared": {
+        "jobs": 100,
+        "dist": 900,
+        "cost": 1485
+      },
+      "parsedRowCount": 100,
+      "acceptedRowCount": 100,
+      "droppedRowCount": 0,
+      "computedDistance": 900,
+      "computedCost": 1485
+    },
+    {
+      "file": "2025-jobs/TOYOTA AAV JAN 2025.xlsx",
+      "sheet": "React App (33)",
+      "vehicleRegNumber": "AAV4331",
+      "declared": {
+        "jobs": 117,
+        "dist": 1300,
+        "cost": 2145
+      },
+      "parsedRowCount": 117,
+      "acceptedRowCount": 117,
+      "droppedRowCount": 0,
+      "computedDistance": 1300,
+      "computedCost": 2145
+    },
+    {
+      "file": "2025-jobs/toyota aav July2025.xlsx",
+      "sheet": "React App (15)",
+      "vehicleRegNumber": "AAV4331",
+      "declared": {
+        "jobs": 99,
+        "dist": 1107,
+        "cost": 1826.55
+      },
+      "parsedRowCount": 99,
+      "acceptedRowCount": 99,
+      "droppedRowCount": 0,
+      "computedDistance": 1107,
+      "computedCost": 1826.55
+    },
+    {
+      "file": "2025-jobs/TOYOTA AAV MARCH 2025.xlsx",
+      "sheet": "React App (35)",
+      "vehicleRegNumber": "AAV4331",
+      "declared": {
+        "jobs": 139,
+        "dist": 950,
+        "cost": 1567.5
+      },
+      "parsedRowCount": 138,
+      "acceptedRowCount": 138,
+      "droppedRowCount": 0,
+      "computedDistance": 1330,
+      "computedCost": 2194.5
+    },
+    {
+      "file": "2025-jobs/TOYOTA AAV SEPTEMBER 2025.xlsx",
+      "sheet": "TOYOTA AAV SEPTEMBER 2025",
+      "vehicleRegNumber": "AAV4331",
+      "declared": {
+        "jobs": 106,
+        "dist": 1252,
+        "cost": 2065.8
+      },
+      "parsedRowCount": 106,
+      "acceptedRowCount": 106,
+      "droppedRowCount": 0,
+      "computedDistance": 1252,
+      "computedCost": 2065.8
+    },
+    {
+      "file": "2025-jobs/toyta aav june 2025.xlsx",
+      "sheet": "React App (3)",
+      "vehicleRegNumber": "AAV4331",
+      "declared": {
+        "jobs": 111,
+        "dist": 1143,
+        "cost": 1885.95
+      },
+      "parsedRowCount": 111,
+      "acceptedRowCount": 111,
+      "droppedRowCount": 0,
+      "computedDistance": 1143,
+      "computedCost": 1885.95
+    },
+    {
+      "file": "2025-jobs/TOYOTA AFO APRIL 2025.xlsx",
+      "sheet": "React App (1)",
+      "vehicleRegNumber": "AFO0724",
+      "declared": {
+        "jobs": 114,
+        "dist": 1088,
+        "cost": 1795.2
+      },
+      "parsedRowCount": 114,
+      "acceptedRowCount": 114,
+      "droppedRowCount": 0,
+      "computedDistance": 1088,
+      "computedCost": 1795.2
+    },
+    {
+      "file": "2025-jobs/TOYOTA AFO AUGUST 2025.xlsx",
+      "sheet": "React App (20)",
+      "vehicleRegNumber": "AFO0724",
+      "declared": {
+        "jobs": 80,
+        "dist": 835,
+        "cost": 1377.75
+      },
+      "parsedRowCount": 81,
+      "acceptedRowCount": 81,
+      "droppedRowCount": 0,
+      "computedDistance": 835,
+      "computedCost": 1377.75
+    },
+    {
+      "file": "2025-jobs/TOYOTA AFO FEB 2025.xlsx",
+      "sheet": "React App (31)",
+      "vehicleRegNumber": "AFO0724",
+      "declared": {
+        "jobs": 89,
+        "dist": 1422,
+        "cost": 1999.85
+      },
+      "parsedRowCount": 89,
+      "acceptedRowCount": 87,
+      "droppedRowCount": 0,
+      "computedDistance": 1391,
+      "computedCost": 1948.7
+    },
+    {
+      "file": "2025-jobs/TOYOTA AFO JAN 2025.xlsx",
+      "sheet": "React App (34)",
+      "vehicleRegNumber": "AFO0724",
+      "declared": {
+        "jobs": 71,
+        "dist": 569,
+        "cost": 938.85
+      },
+      "parsedRowCount": 71,
+      "acceptedRowCount": 71,
+      "droppedRowCount": 0,
+      "computedDistance": 569,
+      "computedCost": 938.85
+    },
+    {
+      "file": "2025-jobs/Toyota afo july 2025.xlsx",
+      "sheet": "Toyota afo july 2025",
+      "vehicleRegNumber": "AFO0724",
+      "declared": {
+        "jobs": 98,
+        "dist": 1148,
+        "cost": 1894.2
+      },
+      "parsedRowCount": 98,
+      "acceptedRowCount": 98,
+      "droppedRowCount": 0,
+      "computedDistance": 1148,
+      "computedCost": 1894.2
+    },
+    {
+      "file": "2025-jobs/TOYOTA AFO JUNE 2025.xlsx",
+      "sheet": "React App (23)",
+      "vehicleRegNumber": "AFO0724",
+      "declared": {
+        "jobs": 70,
+        "dist": 691,
+        "cost": 1140.15
+      },
+      "parsedRowCount": 70,
+      "acceptedRowCount": 70,
+      "droppedRowCount": 0,
+      "computedDistance": 691,
+      "computedCost": 1140.15
+    },
+    {
+      "file": "2025-jobs/TOYOTA AFO MARCH 2025.xlsx",
+      "sheet": "React App (28)",
+      "vehicleRegNumber": "AFO0724",
+      "declared": {
+        "jobs": 93,
+        "dist": 818,
+        "cost": 1349.7
+      },
+      "parsedRowCount": 93,
+      "acceptedRowCount": 93,
+      "droppedRowCount": 0,
+      "computedDistance": 818,
+      "computedCost": 1349.7
+    },
+    {
+      "file": "2025-jobs/TOYOTA AFO MAY 2025.xlsx",
+      "sheet": "React App (25)",
+      "vehicleRegNumber": "AFO0724",
+      "declared": {
+        "jobs": 97,
+        "dist": 897,
+        "cost": 1480.05
+      },
+      "parsedRowCount": 97,
+      "acceptedRowCount": 97,
+      "droppedRowCount": 0,
+      "computedDistance": 897,
+      "computedCost": 1480.05
+    },
+    {
+      "file": "2025-jobs/Toyota afo September 2025.xlsx",
+      "sheet": "React App (40)",
+      "vehicleRegNumber": "AFO0724",
+      "declared": {
+        "jobs": 72,
+        "dist": 1287,
+        "cost": 1758.25
+      },
+      "parsedRowCount": 75,
+      "acceptedRowCount": 72,
+      "droppedRowCount": 0,
+      "computedDistance": 1287,
+      "computedCost": 1758.25
+    },
+    {
+      "file": "2025-jobs/IVECO AEX JAN 2025.xlsx",
+      "sheet": "Iveco AEX",
+      "vehicleRegNumber": "AEX7352",
+      "declared": {
+        "jobs": 62,
+        "dist": 972,
+        "cost": 2867.4
+      },
+      "parsedRowCount": 62,
+      "acceptedRowCount": 62,
+      "droppedRowCount": 0,
+      "computedDistance": 972,
+      "computedCost": 2867.4
+    },
+    {
+      "file": "2025-jobs/IVECO AEX FEB 2025.xlsx",
+      "sheet": "Iveco AEX",
+      "vehicleRegNumber": "AEX7352",
+      "declared": {
+        "jobs": 2,
+        "dist": 66,
+        "cost": 194.7
+      },
+      "parsedRowCount": 2,
+      "acceptedRowCount": 2,
+      "droppedRowCount": 0,
+      "computedDistance": 66,
+      "computedCost": 194.7
+    },
+    {
+      "file": "2025-jobs/Fleet_Jobs_Aggregated_Oct-Dec_2025.xlsx",
+      "sheet": "DAF AFE",
+      "vehicleRegNumber": "AFE5848",
+      "declared": {
+        "jobs": null,
+        "dist": null,
+        "cost": null
+      },
+      "parsedRowCount": 191,
+      "acceptedRowCount": 191,
+      "droppedRowCount": 0,
+      "computedDistance": 4358,
+      "computedCost": 10521.6
+    },
+    {
+      "file": "2025-jobs/Fleet_Jobs_Aggregated_Oct-Dec_2025.xlsx",
+      "sheet": "TOYOTA AFO",
+      "vehicleRegNumber": "AFO0724",
+      "declared": {
+        "jobs": null,
+        "dist": null,
+        "cost": null
+      },
+      "parsedRowCount": 208,
+      "acceptedRowCount": 208,
+      "droppedRowCount": 0,
+      "computedDistance": 3216,
+      "computedCost": 4735.7
+    },
+    {
+      "file": "2025-jobs/Fleet_Jobs_Aggregated_Oct-Dec_2025.xlsx",
+      "sheet": "TOYOTA AAV",
+      "vehicleRegNumber": "AAV4331",
+      "declared": {
+        "jobs": null,
+        "dist": null,
+        "cost": null
+      },
+      "parsedRowCount": 332,
+      "acceptedRowCount": 332,
+      "droppedRowCount": 0,
+      "computedDistance": 4227,
+      "computedCost": 6953.75
+    },
+    {
+      "file": "2026-jobs/DAF AFE JAN 2026.xlsx",
+      "sheet": "React App (59)",
+      "vehicleRegNumber": "AFE5848",
+      "declared": {
+        "jobs": 35,
+        "dist": 829,
+        "cost": 2445.55
+      },
+      "parsedRowCount": 35,
+      "acceptedRowCount": 35,
+      "droppedRowCount": 0,
+      "computedDistance": 829,
+      "computedCost": 2445.55
+    },
+    {
+      "file": "2026-jobs/Daf afe march 2026.xlsx",
+      "sheet": "React App (66)",
+      "vehicleRegNumber": "AFE5848",
+      "declared": {
+        "jobs": 85,
+        "dist": 1562,
+        "cost": 4768.3
+      },
+      "parsedRowCount": 85,
+      "acceptedRowCount": 85,
+      "droppedRowCount": 0,
+      "computedDistance": 1562,
+      "computedCost": 4768.3
+    },
+    {
+      "file": "2026-jobs/Daf Feb 2026.xlsx",
+      "sheet": "React App (62)",
+      "vehicleRegNumber": "AFE5848",
+      "declared": {
+        "jobs": 61,
+        "dist": 1531,
+        "cost": 3756.65
+      },
+      "parsedRowCount": 61,
+      "acceptedRowCount": 61,
+      "droppedRowCount": 0,
+      "computedDistance": 1531,
+      "computedCost": 3756.65
+    },
+    {
+      "file": "2026-jobs/DAF-AFE5848-2026-04-30-jobs (2).xlsx",
+      "sheet": "DAF-AFE5848-2026-04-30-jobs",
+      "vehicleRegNumber": "AFE5848",
+      "declared": {
+        "jobs": null,
+        "dist": null,
+        "cost": null
+      },
+      "parsedRowCount": 64,
+      "acceptedRowCount": 64,
+      "droppedRowCount": 0,
+      "computedDistance": 1538,
+      "computedCost": 4357.1
+    },
+    {
+      "file": "2026-jobs/DAF-AFE5848-2026-06-02-jobs may .xlsx",
+      "sheet": "DAF-AFE5848-2026-06-02-jobs",
+      "vehicleRegNumber": "AFE5848",
+      "declared": {
+        "jobs": null,
+        "dist": null,
+        "cost": null
+      },
+      "parsedRowCount": 54,
+      "acceptedRowCount": 54,
+      "droppedRowCount": 0,
+      "computedDistance": 1749,
+      "computedCost": 4201.55
+    },
+    {
+      "file": "2026-jobs/DAF-AFE5848-june-jobs (1).xlsx",
+      "sheet": "DAF-AFE5848-2026-06-30-jobs",
+      "vehicleRegNumber": "AFE5848",
+      "declared": {
+        "jobs": null,
+        "dist": null,
+        "cost": null
+      },
+      "parsedRowCount": 34,
+      "acceptedRowCount": 34,
+      "droppedRowCount": 0,
+      "computedDistance": 1125,
+      "computedCost": 3023.15
+    },
+    {
+      "file": "2026-jobs/Toyota aav feb 2026.xlsx",
+      "sheet": "React App (65)",
+      "vehicleRegNumber": "AAV4331",
+      "declared": {
+        "jobs": 77,
+        "dist": 768,
+        "cost": 1267.2
+      },
+      "parsedRowCount": 77,
+      "acceptedRowCount": 77,
+      "droppedRowCount": 0,
+      "computedDistance": 768,
+      "computedCost": 1267.2
+    },
+    {
+      "file": "2026-jobs/toyota aav jan 2026.xlsx",
+      "sheet": "React App (61)",
+      "vehicleRegNumber": "AAV4331",
+      "declared": {
+        "jobs": 34,
+        "dist": 334,
+        "cost": 551.1
+      },
+      "parsedRowCount": 34,
+      "acceptedRowCount": 34,
+      "droppedRowCount": 0,
+      "computedDistance": 334,
+      "computedCost": 551.1
+    },
+    {
+      "file": "2026-jobs/toyota_aav_march_2026 (1).xlsx",
+      "sheet": "Sheet1",
+      "vehicleRegNumber": "AAV4331",
+      "declared": {
+        "jobs": 140,
+        "dist": 1760,
+        "cost": 3050.7
+      },
+      "parsedRowCount": 141,
+      "acceptedRowCount": 141,
+      "droppedRowCount": 1,
+      "computedDistance": 1760,
+      "computedCost": 3050.7
+    },
+    {
+      "file": "2026-jobs/Toyota-Dyna-AAV4331-2026-04-30-jobs (2).xlsx",
+      "sheet": "Toyota-Dyna-AAV4331-2026-05-05-",
+      "vehicleRegNumber": "AAV4331",
+      "declared": {
+        "jobs": null,
+        "dist": null,
+        "cost": null
+      },
+      "parsedRowCount": 126,
+      "acceptedRowCount": 126,
+      "droppedRowCount": 0,
+      "computedDistance": 1518,
+      "computedCost": 2960.1
+    },
+    {
+      "file": "2026-jobs/Toyota-Dyna-AAV4331-2026-06-02-jobs (1) latest may.xlsx",
+      "sheet": "Toyota-Dyna-AAV4331-2026-06-02-",
+      "vehicleRegNumber": "AAV4331",
+      "declared": {
+        "jobs": null,
+        "dist": null,
+        "cost": null
+      },
+      "parsedRowCount": 123,
+      "acceptedRowCount": 123,
+      "droppedRowCount": 0,
+      "computedDistance": 1217,
+      "computedCost": 2373.15
+    },
+    {
+      "file": "2026-jobs/Toyota-Dyna-AAV4331-june-jobs (1).xlsx",
+      "sheet": "Toyota-Dyna-AAV4331-2026-06-30-",
+      "vehicleRegNumber": "AAV4331",
+      "declared": {
+        "jobs": null,
+        "dist": null,
+        "cost": null
+      },
+      "parsedRowCount": 109,
+      "acceptedRowCount": 109,
+      "droppedRowCount": 0,
+      "computedDistance": 1209,
+      "computedCost": 2357.55
+    },
+    {
+      "file": "2026-jobs/Toyota afo feb 2026.xlsx",
+      "sheet": "React App (63)",
+      "vehicleRegNumber": "AFO0724",
+      "declared": {
+        "jobs": 58,
+        "dist": 1031,
+        "cost": 1440.5
+      },
+      "parsedRowCount": 58,
+      "acceptedRowCount": 58,
+      "droppedRowCount": 0,
+      "computedDistance": 1031,
+      "computedCost": 1440.5
+    },
+    {
+      "file": "2026-jobs/Toyota AFO Jan 2026.xlsx",
+      "sheet": "React App (60)",
+      "vehicleRegNumber": "AFO0724",
+      "declared": {
+        "jobs": 44,
+        "dist": 494,
+        "cost": 815.15
+      },
+      "parsedRowCount": 44,
+      "acceptedRowCount": 44,
+      "droppedRowCount": 0,
+      "computedDistance": 494,
+      "computedCost": 815.1
+    },
+    {
+      "file": "2026-jobs/Toyota afo march 2026.xlsx",
+      "sheet": "React App (69)",
+      "vehicleRegNumber": "AFO0724",
+      "declared": {
+        "jobs": 20,
+        "dist": 263,
+        "cost": 433.95
+      },
+      "parsedRowCount": 20,
+      "acceptedRowCount": 20,
+      "droppedRowCount": 0,
+      "computedDistance": 263,
+      "computedCost": 433.95
+    },
+    {
+      "file": "2026-jobs/Toyota-Dyna-AFO0724 April 2026 (2).xlsx",
+      "sheet": "Toyota-Dyna-AFO0724-2026-05-07-",
+      "vehicleRegNumber": "AFO0724",
+      "declared": {
+        "jobs": null,
+        "dist": null,
+        "cost": null
+      },
+      "parsedRowCount": 47,
+      "acceptedRowCount": 47,
+      "droppedRowCount": 0,
+      "computedDistance": 716,
+      "computedCost": 1285.6
+    },
+    {
+      "file": "2026-jobs/Toyota-Dyna-AFO0724-2026-06-02-jobs  may .xlsx",
+      "sheet": "Toyota-Dyna-AFO0724-2026-06-02-",
+      "vehicleRegNumber": "AFO0724",
+      "declared": {
+        "jobs": null,
+        "dist": null,
+        "cost": null
+      },
+      "parsedRowCount": 43,
+      "acceptedRowCount": 43,
+      "droppedRowCount": 0,
+      "computedDistance": 1228,
+      "computedCost": 1885.7
+    },
+    {
+      "file": "2026-jobs/Toyota-Dyna-AFO0724-june-jobs (1).xlsx",
+      "sheet": "Toyota-Dyna-AFO0724-2026-07-03-",
+      "vehicleRegNumber": "AFO0724",
+      "declared": {
+        "jobs": null,
+        "dist": null,
+        "cost": null
+      },
+      "parsedRowCount": 68,
+      "acceptedRowCount": 68,
+      "droppedRowCount": 0,
+      "computedDistance": 940,
+      "computedCost": 1833
+    }
+  ],
+  "headerMismatches": [
+    {
+      "file": "2025-jobs/DAF AFE FEB 2025.xlsx",
+      "sheet": "React App (30)",
+      "declared": {
+        "jobs": 44,
+        "dist": 679,
+        "cost": 1994.2
+      },
+      "computed": {
+        "distance": 676,
+        "cost": 1994.2
+      }
+    },
+    {
+      "file": "2025-jobs/TOYOTA AAV AUGUST2025.xlsx",
+      "sheet": "React App (21)",
+      "declared": {
+        "jobs": 116,
+        "dist": 1095,
+        "cost": 1806.75
+      },
+      "computed": {
+        "distance": 1150,
+        "cost": 1897.5
+      }
+    },
+    {
+      "file": "2025-jobs/TOYOTA AAV MARCH 2025.xlsx",
+      "sheet": "React App (35)",
+      "declared": {
+        "jobs": 139,
+        "dist": 950,
+        "cost": 1567.5
+      },
+      "computed": {
+        "distance": 1330,
+        "cost": 2194.5
+      }
+    },
+    {
+      "file": "2025-jobs/TOYOTA AFO FEB 2025.xlsx",
+      "sheet": "React App (31)",
+      "declared": {
+        "jobs": 89,
+        "dist": 1422,
+        "cost": 1999.85
+      },
+      "computed": {
+        "distance": 1391,
+        "cost": 1948.7
+      }
+    },
+    {
+      "file": "2026-jobs/Toyota AFO Jan 2026.xlsx",
+      "sheet": "React App (60)",
+      "declared": {
+        "jobs": 44,
+        "dist": 494,
+        "cost": 815.15
+      },
+      "computed": {
+        "distance": 494,
+        "cost": 815.1
+      }
+    }
+  ],
+  "newCustomers": [
+    "10 Exhall Rd Greystone",
+    "11 Bay Noakes",
+    "191 Bairnes / 10th Avenue",
+    "30 Windmill Lane",
+    "33 Lewis",
+    "A7 Borrowdale",
+    "AB Comminications",
+    "ABC Auction",
+    "ABC Bank",
+    "Access Finance",
+    "Acol Chemical",
+    "Africa Steel",
+    "Allington",
+    "Almin Metal",
+    "Apple Tree",
+    "Arundel Duck Home",
+    "Avondale",
+    "B/Brooke CFAO",
+    "BLD",
+    "BRD",
+    "BSL",
+    "Bakers Inn",
+    "Banda",
+    "Bargate",
+    "Belgravia",
+    "Beverly Court",
+    "Bhunu",
+    "Bichard",
+    "Borchard",
+    "Brian Stoole",
+    "Brown",
+    "Budget Home",
+    "Buffalo Beverages",
+    "Bulawayo",
+    "Burget",
+    "CEO Africa",
+    "CRN",
+    "CRP",
+    "Caledonia Holdings",
+    "Cardinal Electrosales",
+    "Care Zimbabwe",
+    "Chanakira",
+    "Chemonical International",
+    "Chenomics",
+    "Chinhari",
+    "Chiota",
+    "Chisipite",
+    "Clearance",
+    "Client",
+    "Clovgate",
+    "Consumer Feedback",
+    "Cythech",
+    "DRB",
+    "Dailyhill Investments",
+    "Dairyhill Investments",
+    "Dangarembizi",
+    "Defy",
+    "Diakonia",
+    "Dinson",
+    "DioKonia",
+    "Dolphin Telecoms",
+    "Dr Musemwa",
+    "Driptech",
+    "Econet Masvingo",
+    "Econet Willowvale",
+    "Epsa Zim Services",
+    "Espa Group",
+    "Fearless Center",
+    "Fusertech",
+    "Geribran Services",
+    "Glenwood (23b)",
+    "Global",
+    "Goribran Services",
+    "Goromonzi",
+    "Graceland",
+    "Greenwood",
+    "Guy Hammond",
+    "Hamilton",
+    "Harare Theological",
+    "Hatfield",
+    "Health Center",
+    "Hillchest",
+    "Hogarth",
+    "Household Brands",
+    "ICC",
+    "Isaca",
+    "Kapnek",
+    "Karo Platinum",
+    "Kasora",
+    "Khululeko",
+    "Kingsmate",
+    "Kingsmead",
+    "Kuvimba Mining",
+    "Later Day Saints",
+    "Leigh Howson",
+    "Linforth",
+    "MMC Capital",
+    "Makumbe",
+    "Mandara",
+    "Mangudya",
+    "Manje",
+    "Maphosa",
+    "Masimba Holding",
+    "Matrix",
+    "Mawere",
+    "Mazhangi",
+    "Mhandara",
+    "Mharadzirwa",
+    "Millpal",
+    "Milton Park",
+    "Mitton",
+    "Morland",
+    "Mpofu",
+    "Mrs Faith",
+    "Mrs Greaves",
+    "Muchumbi",
+    "Mudzongi",
+    "Muronda",
+    "Muswero",
+    "Mutangambiri",
+    "Muzongi",
+    "NMB Msasa",
+    "National Foods Aspindale",
+    "Nengo Builders",
+    "New Health",
+    "Newtella Investments",
+    "Ngara",
+    "Nkosana",
+    "Northern Estate",
+    "Northgate",
+    "Nova Feeds",
+    "Nyikadzino",
+    "Omini Africa",
+    "Omni Africa",
+    "Onestop Solar",
+    "Oriodan",
+    "PDC Offices",
+    "Paynow",
+    "Piers",
+    "Premier Auto",
+    "Radex",
+    "Radon",
+    "Rainbow Insurance",
+    "Rawlands",
+    "Redone",
+    "Roots Furniture",
+    "Runlog Petroleum",
+    "Safe Deposit Box",
+    "Sew Text",
+    "Shadwell",
+    "Shorthealth",
+    "Showroom",
+    "Soft Orc Solutions",
+    "Southern Granite",
+    "St Martin Drive",
+    "Surge Energy Drink",
+    "TBM",
+    "TM Properties",
+    "Tagwirei",
+    "Takura Capital",
+    "Teleious",
+    "Tiger Wheel and Tyre",
+    "Timber",
+    "Toiles Engineering",
+    "Total Energies",
+    "Total Energies Bulawayo",
+    "Town",
+    "Toyota CFO",
+    "Tsimba",
+    "Turner & Townsend",
+    "Twine and Cottage",
+    "Valiage International",
+    "Vicael Restaurant",
+    "Vico",
+    "Victoria",
+    "Village International",
+    "Virukai",
+    "WT Swan",
+    "Wattle Timbers",
+    "Waverly",
+    "Wayne",
+    "Westgate",
+    "Willey",
+    "Woolmanns Pvt Ltd",
+    "ZB",
+    "ZPC",
+    "ZimGreen",
+    "ZimSwitch",
+    "Zomba Arundel",
+    "Zororo"
+  ],
+  "unresolved": [],
+  "duplicates": [
+    {
+      "key": "AFO0724|RK0607|cprz|area 8|320676|320681|2025-02-07",
+      "first": {
+        "file": "2025-jobs/TOYOTA AFO FEB 2025.xlsx",
+        "sheet": "React App (31)"
+      },
+      "duplicate": {
+        "file": "2025-jobs/TOYOTA AFO FEB 2025.xlsx",
+        "sheet": "React App (31)"
+      }
+    },
+    {
+      "key": "AFO0724|RK0607|area 8|lammel|320681|320707|2025-02-07",
+      "first": {
+        "file": "2025-jobs/TOYOTA AFO FEB 2025.xlsx",
+        "sheet": "React App (31)"
+      },
+      "duplicate": {
+        "file": "2025-jobs/TOYOTA AFO FEB 2025.xlsx",
+        "sheet": "React App (31)"
+      }
+    },
+    {
+      "key": "AFO0724|BH0676|tpz|woodstock|349356|349359|2025-09-30",
+      "first": {
+        "file": "2025-jobs/Toyota afo September 2025.xlsx",
+        "sheet": "React App (40)"
+      },
+      "duplicate": {
+        "file": "2025-jobs/Toyota afo September 2025.xlsx",
+        "sheet": "React App (40)"
+      }
+    },
+    {
+      "key": "AFO0724|BH0676|woodstock|tpz|349359|349367|2025-09-30",
+      "first": {
+        "file": "2025-jobs/Toyota afo September 2025.xlsx",
+        "sheet": "React App (40)"
+      },
+      "duplicate": {
+        "file": "2025-jobs/Toyota afo September 2025.xlsx",
+        "sheet": "React App (40)"
+      }
+    },
+    {
+      "key": "AFO0724|BH0676|tpz|lammel|349367|349380|2025-09-30",
+      "first": {
+        "file": "2025-jobs/Toyota afo September 2025.xlsx",
+        "sheet": "React App (40)"
+      },
+      "duplicate": {
+        "file": "2025-jobs/Toyota afo September 2025.xlsx",
+        "sheet": "React App (40)"
+      }
+    }
+  ]
+}

@@ -11,7 +11,19 @@
       "Bash(npx react-scripts *)",
       "Bash(node -c controller/user.js)",
       "Bash(grep -Hm1 ^description: '/c/Users/Ropafadzo Muridzi/Documents/tapiwa projects/myfleet/.claude/skills/*/SKILL.md')",
-      "Bash(npx jest *)"
+      "Bash(npx jest *)",
+      "Bash(node -e \"console.log\\(require\\('xlsx'\\)\\)\")",
+      "Bash(node *)",
+      "Bash(powershell -Command \"Get-Service MongoDB | Select-Object Status,Name\" 2>&1)",
+      "Bash(node server.js)",
+      "Bash(echo \"started backend, pid $!\")",
+      "Bash(npm start *)",
+      "Bash(echo \"started frontend, pid $!\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:5050/api/v2 --max-time 5)",
+      "Read(//tmp/**)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000 --max-time 8)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
