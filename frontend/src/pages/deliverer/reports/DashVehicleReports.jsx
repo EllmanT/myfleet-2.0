@@ -6,7 +6,6 @@ import {
   EditSharp,
   Group,
   GroupAdd,
-  Print,
   Task,
   Visibility,
   Work,
@@ -40,6 +39,7 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import {
+  deleteJob,
   getAllJobsReportContr,
   getAllJobsReportDeliverer,
   getAllJobsReportVehicle,
@@ -141,10 +141,57 @@ const DashVehicleReports = () => {
       setIsUpdatePopup(false);
     }
   };
-  const handleDelete = () => {};
-  const handleView = () => {};
+  const handleView = (jobId) => {
+    const selectedJob =
+      AllJobsReportVehicle &&
+      AllJobsReportVehicle.find((job) => job._id === jobId);
+    setChosenJob(selectedJob);
+    setIsViewPopup(true);
+    setIsEditPopup(false);
+    setIsUpdatePopup(true);
+    setIsDisableInput(true);
+  };
+  const handleEdit = (jobId) => {
+    const selectedJob =
+      AllJobsReportVehicle &&
+      AllJobsReportVehicle.find((job) => job._id === jobId);
+    setChosenJob(selectedJob);
+    setIsEditPopup(true);
+    setIsViewPopup(false);
+    setIsUpdatePopup(true);
+    setIsDisableInput(false);
+  };
 
   const [isDelete, setIsDelete] = useState(false);
+
+  const handleDelete = (jobId) => {
+    dispatch(deleteJob(jobId))
+      .then(() => {
+        toast.success("Job deleted successfully");
+        dispatch(
+          getAllJobsReportVehicle(vehicleId, {
+            year: selectedYear,
+            page,
+            limit: pageSize,
+            jobSearch,
+            startDate: startDate?.toISOString(),
+            endDate: endDate?.toISOString(),
+          })
+        );
+        handleDeleteDialogueClose();
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      });
+  };
+  const handleDeleteDialogue = (jobId) => {
+    const selectedJob =
+      AllJobsReportVehicle &&
+      AllJobsReportVehicle.find((job) => job._id === jobId);
+    setJobId(selectedJob._id);
+    setJobNumber(selectedJob.jobNumber);
+    setIsDelete(true);
+  };
 
   const handleDeleteDialogueClose = () => {
     setIsDelete(false);
@@ -218,14 +265,26 @@ const DashVehicleReports = () => {
     {
       field: "options",
       headerName: "Options",
-      flex: 0.5,
+      flex: 1,
       renderCell: (params) => (
         <>
           <IconButton
             aria-label="View"
             onClick={() => handleView(params.row._id)}
           >
-            <Print />
+            <Visibility />
+          </IconButton>
+          <IconButton
+            aria-label="Edit"
+            onClick={() => handleEdit(params.row._id)}
+          >
+            <EditSharp />
+          </IconButton>
+          <IconButton
+            aria-label="Delete"
+            onClick={() => handleDeleteDialogue(params.row._id)}
+          >
+            <GridDeleteIcon />
           </IconButton>
         </>
       ),

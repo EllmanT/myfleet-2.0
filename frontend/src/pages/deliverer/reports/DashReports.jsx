@@ -6,7 +6,6 @@ import {
   EditSharp,
   Group,
   GroupAdd,
-  Print,
   Task,
   Visibility,
   Work,
@@ -181,32 +180,57 @@ const AllJobsPage = () => {
   };
 
   const handleView = (jobId) => {
-    const selectedJob = jobsPage && jobsPage.find((job) => job._id === jobId);
+    const selectedJob =
+      AllJobsReportDeliverer &&
+      AllJobsReportDeliverer.find((job) => job._id === jobId);
     setChosenJob(selectedJob);
     setIsViewPopup(true);
     setIsEditPopup(false);
     setIsUpdatePopup(true);
     setIsDisableInput(true);
   };
+  const handleEdit = (jobId) => {
+    const selectedJob =
+      AllJobsReportDeliverer &&
+      AllJobsReportDeliverer.find((job) => job._id === jobId);
+    setChosenJob(selectedJob);
+    setIsEditPopup(true);
+    setIsViewPopup(false);
+    setIsUpdatePopup(true);
+    setIsDisableInput(false);
+  };
 
   const [isDelete, setIsDelete] = useState(false);
 
   const handleDelete = (jobId) => {
-    const selectedJob = jobsPage && jobsPage.find((job) => job._id === jobId);
-    var drId = selectedJob.driverId;
-    var vehId = selectedJob.vehicleId;
-    var contrId = selectedJob.contractorId;
-    dispatch(deleteJob(jobId, drId, vehId, contrId))
+    dispatch(deleteJob(jobId))
       .then(() => {
         // The deleteJob action has successfully executed
         toast.success("Job deleted successfully");
-        dispatch(getAllJobsPage());
+        dispatch(
+          getAllJobsReportDeliverer({
+            year: selectedYear,
+            page,
+            limit: pageSize,
+            jobSearch,
+            startDate: startDate?.toISOString(),
+            endDate: endDate?.toISOString(),
+          })
+        );
         handleDeleteDialogueClose();
       })
       .catch((error) => {
         // An error occurred during the deleteJob action
         toast.error(error.response.data.message);
       });
+  };
+  const handleDeleteDialogue = (jobId) => {
+    const selectedJob =
+      AllJobsReportDeliverer &&
+      AllJobsReportDeliverer.find((job) => job._id === jobId);
+    setJobId(selectedJob._id);
+    setJobNumber(selectedJob.jobNumber);
+    setIsDelete(true);
   };
 
   const handleDeleteDialogueClose = () => {
@@ -285,14 +309,26 @@ const AllJobsPage = () => {
     {
       field: "options",
       headerName: "Options",
-      flex: 0.5,
+      flex: 1,
       renderCell: (params) => (
         <>
           <IconButton
             aria-label="View"
             onClick={() => handleView(params.row._id)}
           >
-            <Print />
+            <Visibility />
+          </IconButton>
+          <IconButton
+            aria-label="Edit"
+            onClick={() => handleEdit(params.row._id)}
+          >
+            <EditSharp />
+          </IconButton>
+          <IconButton
+            aria-label="Delete"
+            onClick={() => handleDeleteDialogue(params.row._id)}
+          >
+            <GridDeleteIcon />
           </IconButton>
         </>
       ),

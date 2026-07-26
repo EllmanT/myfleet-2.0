@@ -6,7 +6,6 @@ import {
   EditSharp,
   Group,
   GroupAdd,
-  Print,
   Task,
   Visibility,
   Work,
@@ -135,10 +134,55 @@ const DashDriverReports = () => {
       setIsUpdatePopup(false);
     }
   };
-  const handleDelete = () => {};
-  const handleView = () => {};
+  const handleView = (jobId) => {
+    const selectedJob =
+      AllJobsReportDriver &&
+      AllJobsReportDriver.find((job) => job._id === jobId);
+    setChosenJob(selectedJob);
+    setIsViewPopup(true);
+    setIsEditPopup(false);
+    setIsUpdatePopup(true);
+    setIsDisableInput(true);
+  };
+  const handleEdit = (jobId) => {
+    const selectedJob =
+      AllJobsReportDriver &&
+      AllJobsReportDriver.find((job) => job._id === jobId);
+    setChosenJob(selectedJob);
+    setIsEditPopup(true);
+    setIsViewPopup(false);
+    setIsUpdatePopup(true);
+    setIsDisableInput(false);
+  };
 
   const [isDelete, setIsDelete] = useState(false);
+
+  const handleDelete = (jobId) => {
+    dispatch(deleteJob(jobId))
+      .then(() => {
+        toast.success("Job deleted successfully");
+        dispatch(
+          getAllJobsReportDriver(driverId, {
+            year: selectedYear,
+            page,
+            limit: pageSize,
+            jobSearch,
+          })
+        );
+        handleDeleteDialogueClose();
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      });
+  };
+  const handleDeleteDialogue = (jobId) => {
+    const selectedJob =
+      AllJobsReportDriver &&
+      AllJobsReportDriver.find((job) => job._id === jobId);
+    setJobId(selectedJob._id);
+    setJobNumber(selectedJob.jobNumber);
+    setIsDelete(true);
+  };
 
   const handleDeleteDialogueClose = () => {
     setIsDelete(false);
@@ -196,14 +240,26 @@ const DashDriverReports = () => {
     {
       field: "options",
       headerName: "Options",
-      flex: 0.5,
+      flex: 1,
       renderCell: (params) => (
         <>
           <IconButton
             aria-label="View"
             onClick={() => handleView(params.row._id)}
           >
-            <Print />
+            <Visibility />
+          </IconButton>
+          <IconButton
+            aria-label="Edit"
+            onClick={() => handleEdit(params.row._id)}
+          >
+            <EditSharp />
+          </IconButton>
+          <IconButton
+            aria-label="Delete"
+            onClick={() => handleDeleteDialogue(params.row._id)}
+          >
+            <GridDeleteIcon />
           </IconButton>
         </>
       ),
