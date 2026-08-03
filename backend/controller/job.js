@@ -13,6 +13,7 @@ const ContractorStats = require("../model/contractorStats");
 const Driver = require("../model/driver");
 const Vehicle = require("../model/vehicle");
 const mongoose = require("mongoose");
+const PDFDocument = require("pdfkit");
 const {
   asNumber,
   roundMoney,
@@ -94,42 +95,127 @@ function escapeCsv(value) {
   return `"${text.replace(/"/g, '""')}"`;
 }
 
-function escapePdfText(value = "") {
-  return String(value).replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
+const PDF_PAGE_OPTIONS = { size: "A4", layout: "landscape", margin: 30 };
+
+// Column set mirrors the CSV export (/export-jobs-csv) so both formats show
+// the same fields in the same order.
+const PDF_TABLE_COLUMNS = [
+  { label: "Job Number", width: 70, get: (job) => job.jobNumber || "" },
+  { label: "Delivery Type", width: 80, get: (job) => job.deliveryType || "" },
+  { label: "Contractor", width: 100, get: (job) => job.contractorId?.companyName || "" },
+  { label: "From", width: 100, get: (job) => job.from?.name || "" },
+  { label: "Customer", width: 100, get: (job) => job.customer?.name || "" },
+  { label: "Mileage Out", width: 60, get: (job) => (job.mileageOut ?? "").toString() },
+  { label: "Mileage In", width: 60, get: (job) => (job.mileageIn ?? "").toString() },
+  { label: "Distance (km)", width: 65, get: (job) => asNumber(job.distance).toFixed(2) },
+  { label: "Cost ($)", width: 65, get: (job) => asNumber(job.cost).toFixed(2) },
+  {
+    label: "Order Date",
+    width: 70,
+    get: (job) => (job.orderDate ? new Date(job.orderDate).toISOString().split("T")[0] : ""),
+  },
+];
+
+function pdfStreamToBuffer(doc) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    doc.on("data", (chunk) => chunks.push(chunk));
+    doc.on("end", () => resolve(Buffer.concat(chunks)));
+    doc.on("error", reject);
+  });
 }
 
-function buildSimplePdfBuffer(lines) {
-  const bodyLines = lines.length ? lines : ["No data"];
-  const textOps = ["BT", "/F1 10 Tf", "40 800 Td"];
-  bodyLines.forEach((line, index) => {
-    if (index > 0) {
-      textOps.push("T*");
-    }
-    textOps.push(`(${escapePdfText(line)}) Tj`);
+// Draws the bold table header row (column labels) at the given y and
+// returns the y position where the first body row should start. Called
+// once per page so long tables re-show their column headers after a
+// doc.addPage().
+function drawPdfTableHeader(doc, startX, y) {
+  const headerHeight = 22;
+  let x = startX;
+  doc.font("Helvetica-Bold").fontSize(9);
+  PDF_TABLE_COLUMNS.forEach((col) => {
+    doc.rect(x, y, col.width, headerHeight).fillAndStroke("#eeeeee", "#cccccc");
+    doc
+      .fillColor("#000000")
+      .text(col.label, x + 4, y + 6, {
+        width: col.width - 8,
+        height: headerHeight - 4,
+        ellipsis: true,
+      });
+    x += col.width;
   });
-  textOps.push("ET");
-  const stream = textOps.join("\n");
-  const objects = [
-    "1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj",
-    "2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >> endobj",
-    "3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >> endobj",
-    `4 0 obj << /Length ${Buffer.byteLength(stream, "utf8")} >> stream\n${stream}\nendstream endobj`,
-    "5 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj",
-  ];
-  let pdf = "%PDF-1.4\n";
-  const offsets = [0];
-  objects.forEach((obj) => {
-    offsets.push(Buffer.byteLength(pdf, "utf8"));
-    pdf += `${obj}\n`;
+  doc.font("Helvetica").fontSize(8);
+  return y + headerHeight;
+}
+
+function drawPdfTableRow(doc, startX, y, rowHeight, job) {
+  let x = startX;
+  doc.font("Helvetica").fontSize(8);
+  PDF_TABLE_COLUMNS.forEach((col) => {
+    doc.rect(x, y, col.width, rowHeight).stroke("#e0e0e0");
+    doc
+      .fillColor("#000000")
+      .text(col.get(job), x + 4, y + 5, {
+        width: col.width - 8,
+        height: rowHeight - 4,
+        ellipsis: true,
+      });
+    x += col.width;
   });
-  const xrefStart = Buffer.byteLength(pdf, "utf8");
-  pdf += `xref\n0 ${objects.length + 1}\n`;
-  pdf += "0000000000 65535 f \n";
-  for (let index = 1; index < offsets.length; index += 1) {
-    pdf += `${String(offsets[index]).padStart(10, "0")} 00000 n \n`;
+}
+
+// Builds the jobs export PDF using pdfkit, streaming pages/rows and
+// paginating (re-drawing the table header on every new page) instead of
+// jamming everything onto a single fixed-size page.
+function buildJobsPdfBuffer(rows, meta = {}) {
+  const {
+    entityType = "Deliverer",
+    entityName = "All Jobs",
+    periodLabel = "",
+    totalJobs = rows.length,
+    totalDistance = 0,
+    totalCost = 0,
+  } = meta;
+
+  const doc = new PDFDocument(PDF_PAGE_OPTIONS);
+  const bufferPromise = pdfStreamToBuffer(doc);
+
+  const startX = doc.page.margins.left;
+  const pageBottom = doc.page.height - doc.page.margins.bottom;
+  const rowHeight = 20;
+
+  doc
+    .font("Helvetica-Bold")
+    .fontSize(14)
+    .text(`${entityType}: ${entityName}`, startX, doc.y);
+  doc
+    .font("Helvetica")
+    .fontSize(10)
+    .text(`Period: ${periodLabel}`)
+    .text(
+      `Total Jobs: ${totalJobs} | Total Distance: ${totalDistance.toFixed(2)} km | Total Cost: $${totalCost.toFixed(2)}`
+    );
+  doc.moveDown(0.75);
+
+  if (!rows.length) {
+    doc.font("Helvetica-Oblique").fontSize(11).text("No jobs found for this period.");
+    doc.end();
+    return bufferPromise;
   }
-  pdf += `trailer << /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefStart}\n%%EOF`;
-  return Buffer.from(pdf, "utf8");
+
+  let y = drawPdfTableHeader(doc, startX, doc.y);
+
+  rows.forEach((job) => {
+    if (y + rowHeight > pageBottom) {
+      doc.addPage(PDF_PAGE_OPTIONS);
+      y = drawPdfTableHeader(doc, startX, doc.page.margins.top);
+    }
+    drawPdfTableRow(doc, startX, y, rowHeight, job);
+    y += rowHeight;
+  });
+
+  doc.end();
+  return bufferPromise;
 }
 
 async function getScopedJobIds(req) {
@@ -170,11 +256,7 @@ async function buildJobsForExport(req) {
   }
   const jobIds = await getScopedJobIds(req);
 
-  let sortOptions = { orderDate: 1 };
-  if (sort) {
-    const parsed = JSON.parse(sort);
-    sortOptions = { [parsed.field]: parsed.sort === "asc" ? 1 : -1 };
-  }
+  const sortOptions = buildSortOptions(sort, { orderDate: 1, _id: 1 });
 
   const pipeline = [
     { $match: { _id: { $in: jobIds }, ...dateMatch } },
@@ -828,22 +910,6 @@ router.get(
       const totalDistance = rows.reduce((sum, job) => sum + asNumber(job.distance), 0);
       const totalCost = rows.reduce((sum, job) => sum + asNumber(job.cost), 0);
 
-      const lines = [
-        `${entityType}: ${entityName}`,
-        `Period: ${periodLabel}`,
-        `Total Jobs: ${totalJobs} | Total Distance: ${totalDistance.toFixed(2)} km | Total Cost: $${totalCost.toFixed(2)}`,
-        `---`,
-        `Job Number | Delivery Type | Contractor | Customer | Mileage Out | Mileage In | Distance | Cost | Date`,
-      ];
-      rows.forEach((job) => {
-        lines.push(
-          `${job.jobNumber || ""} | ${job.deliveryType || ""} | ${
-            job.contractorId?.companyName || ""
-          } | ${job.customer?.name || ""} | ${job.mileageOut ?? ""} | ${job.mileageIn ?? ""} | ${asNumber(job.distance).toFixed(2)} | ${asNumber(job.cost).toFixed(2)} | ${
-            new Date(job.orderDate).toISOString().split("T")[0]
-          }`
-        );
-      });
       const sanitizePart = (s) => String(s || "").trim().replace(/[^a-zA-Z0-9]/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
       const scope = req.query.scope || "deliverer";
       const vehicleMake = req.query.vehicleMake;
@@ -851,7 +917,14 @@ router.get(
       const pdfFilename = scope === "vehicle" && vehicleMake
         ? `${sanitizePart(vehicleMake)}-${sanitizePart(entityName)}-${today}-jobs.pdf`
         : `${sanitizePart(entityName)}-${today}-jobs.pdf`;
-      const pdfBuffer = buildSimplePdfBuffer(lines);
+      const pdfBuffer = await buildJobsPdfBuffer(rows, {
+        entityType,
+        entityName,
+        periodLabel,
+        totalJobs,
+        totalDistance,
+        totalCost,
+      });
       res.setHeader("Content-Type", "application/pdf");
       res.setHeader("Content-Disposition", `attachment; filename="${pdfFilename}"`);
       return res.status(200).send(pdfBuffer);
