@@ -20,6 +20,8 @@ const {
   applyJobDelta,
   buildJobSnapshot,
 } = require("./helpers/jobStatsSync");
+const { runWithOptionalTransaction } = require("./helpers/transaction");
+const { bulkCreateJobs } = require("./helpers/bulkCreateJobs");
 const router = express.Router();
 
 function addUniqueId(list, id) {
@@ -38,28 +40,6 @@ function removeId(list, id) {
 
 function withSession(query, session) {
   return session ? query.session(session) : query;
-}
-
-async function runWithOptionalTransaction(work) {
-  const session = await mongoose.startSession();
-  try {
-    await session.withTransaction(async () => {
-      await work(session);
-    });
-  } catch (error) {
-    const message = String(error?.message || "");
-    const notSupported =
-      message.includes("Transaction numbers are only allowed") ||
-      message.includes("replica set") ||
-      message.includes("Transaction support");
-
-    if (!notSupported) {
-      throw error;
-    }
-    await work(null);
-  } finally {
-    await session.endSession();
-  }
 }
 
 function getYearFilter(req) {
@@ -408,87 +388,31 @@ router.post(
         return next(new ErrorHandler("At least one job is required", 400));
       }
 
-      const createdJobs = [];
+      let createdJobs = [];
 
       await runWithOptionalTransaction(async (session) => {
-        const deliverer = await withSession(
-          Deliverer.findById(req.user.companyId),
-          session
+        createdJobs = await bulkCreateJobs(jobs, {
+          companyId: req.user.companyId,
+          session,
+        });
+
+        // One job number spans several legs, so advance each contractor's
+        // counter once per distinct job number, not once per leg.
+        const jobNumbersByContractor = new Map();
+        jobs.forEach((payload) => {
+          const key = String(payload.contractorId);
+          if (!jobNumbersByContractor.has(key)) jobNumbersByContractor.set(key, new Set());
+          jobNumbersByContractor.get(key).add(String(payload.jobNumber));
+        });
+        await Contractor.bulkWrite(
+          [...jobNumbersByContractor.entries()].map(([contractorId, numbers]) => ({
+            updateOne: {
+              filter: { _id: contractorId },
+              update: { $inc: { lastOrder: numbers.size } },
+            },
+          })),
+          session ? { session } : {}
         );
-        if (!deliverer) {
-          throw new ErrorHandler("Deliverer not found", 404);
-        }
-
-        const totalCustomers = (deliverer.customer_ids || []).length;
-        const totalContractors = (deliverer.contractor_ids || []).length;
-
-        for (const payload of jobs) {
-          const contractor = await withSession(
-            Contractor.findById(payload.contractorId),
-            session
-          );
-          const vehicle = await withSession(
-            Vehicle.findById(payload.vehicleId),
-            session
-          );
-          const driver = await withSession(
-            Driver.findById(payload.driverId),
-            session
-          );
-
-          if (!contractor || !vehicle || !driver) {
-            throw new ErrorHandler(
-              "Invalid contractor, vehicle, or driver for job",
-              400
-            );
-          }
-
-          const newJob = new Job({
-            ...payload,
-            distance: asNumber(payload.distance),
-            cost: roundMoney(payload.cost),
-          });
-          await newJob.save(session ? { session } : {});
-
-          deliverer.job_ids = addUniqueId(deliverer.job_ids, newJob._id);
-          driver.job_ids = addUniqueId(driver.job_ids, newJob._id);
-          vehicle.job_ids = addUniqueId(vehicle.job_ids, newJob._id);
-          contractor.job_ids = addUniqueId(contractor.job_ids, newJob._id);
-          contractor.lastOrder = asNumber(contractor.lastOrder) + 1;
-
-          await Promise.all([
-            deliverer.save(session ? { session } : {}),
-            driver.save(session ? { session } : {}),
-            vehicle.save(session ? { session } : {}),
-            contractor.save(session ? { session } : {}),
-          ]);
-
-          const snapshot = buildJobSnapshot({
-            job: newJob,
-            contractorName: contractor.companyName,
-          });
-          await applyJobDelta(snapshot, 1, {
-            companyId: req.user.companyId,
-            totalCustomers,
-            totalContractors,
-            session,
-          });
-
-          const contractorStats = await withSession(
-            ContractorStats.findOne({
-              contractorId: String(snapshot.contractorId),
-              delivererId: String(req.user.companyId),
-              year: snapshot.year,
-            }),
-            session
-          );
-          if (contractorStats) {
-            contractorStats.job_ids = addUniqueId(contractorStats.job_ids, newJob._id);
-            await contractorStats.save(session ? { session } : {});
-          }
-
-          createdJobs.push(newJob);
-        }
       });
 
       res.status(201).json({

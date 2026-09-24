@@ -185,76 +185,85 @@ async function ensureStatsDoc(Model, filter, defaults, session) {
 }
 
 async function applyJobDelta(snapshot, multiplier, context) {
+  return applyJobDeltas([snapshot], multiplier, context);
+}
+
+// Applies many job snapshots while loading and saving each affected stats
+// document exactly once, instead of 4 reads + 4 writes per job.
+async function applyJobDeltas(snapshots, multiplier, context) {
   const { companyId, totalCustomers, totalContractors, session } = context;
+  const docs = new Map();
 
-  const [overall, driver, vehicle, contractor] = await Promise.all([
-    ensureStatsDoc(
-      OverallStats,
-      { companyId, year: snapshot.year },
-      {
-        totalCustomers,
-        totalContractors,
-        jobsByContractor: new Map(),
-        revenueByContractor: new Map(),
-      },
-      session
-    ),
-    ensureStatsDoc(
-      DriverStats,
-      { driverId: String(snapshot.driverId), year: snapshot.year },
-      {
-        jobsByContractor: new Map(),
-        revenueByContractor: new Map(),
-      },
-      session
-    ),
-    ensureStatsDoc(
-      VehicleStats,
-      { vehicleId: String(snapshot.vehicleId), year: snapshot.year },
-      {
-        jobsByContractor: new Map(),
-        revenueByContractor: new Map(),
-      },
-      session
-    ),
-    ensureStatsDoc(
-      ContractorStats,
-      {
-        contractorId: String(snapshot.contractorId),
-        delivererId: String(companyId),
-        year: snapshot.year,
-      },
-      { job_ids: [] },
-      session
-    ),
-  ]);
+  const load = (Model, filter, defaults) => {
+    const key = `${Model.modelName}:${JSON.stringify(filter)}`;
+    if (!docs.has(key)) {
+      docs.set(key, ensureStatsDoc(Model, filter, defaults, session));
+    }
+    return docs.get(key);
+  };
 
-  mutateAggregateDoc(overall, snapshot, multiplier, {
-    includeProfit: true,
-    includeContractorMaps: true,
-  });
-  overall.totalCustomers = totalCustomers;
-  overall.totalContractors = totalContractors;
+  for (const snapshot of snapshots) {
+    const [overall, driver, vehicle, contractor] = await Promise.all([
+      load(
+        OverallStats,
+        { companyId, year: snapshot.year },
+        {
+          totalCustomers,
+          totalContractors,
+          jobsByContractor: new Map(),
+          revenueByContractor: new Map(),
+        }
+      ),
+      load(
+        DriverStats,
+        { driverId: String(snapshot.driverId), year: snapshot.year },
+        {
+          jobsByContractor: new Map(),
+          revenueByContractor: new Map(),
+        }
+      ),
+      load(
+        VehicleStats,
+        { vehicleId: String(snapshot.vehicleId), year: snapshot.year },
+        {
+          jobsByContractor: new Map(),
+          revenueByContractor: new Map(),
+        }
+      ),
+      load(
+        ContractorStats,
+        {
+          contractorId: String(snapshot.contractorId),
+          delivererId: String(companyId),
+          year: snapshot.year,
+        },
+        { job_ids: [] }
+      ),
+    ]);
 
-  mutateAggregateDoc(driver, snapshot, multiplier, {
-    includeProfit: true,
-    includeContractorMaps: true,
-  });
-  mutateAggregateDoc(vehicle, snapshot, multiplier, {
-    includeProfit: true,
-    includeContractorMaps: true,
-  });
-  mutateAggregateDoc(contractor, snapshot, multiplier, {
-    includeProfit: false,
-    includeContractorMaps: false,
-  });
+    mutateAggregateDoc(overall, snapshot, multiplier, {
+      includeProfit: true,
+      includeContractorMaps: true,
+    });
+    overall.totalCustomers = totalCustomers;
+    overall.totalContractors = totalContractors;
 
-  await Promise.all([
-    overall.save({ session }),
-    driver.save({ session }),
-    vehicle.save({ session }),
-    contractor.save({ session }),
-  ]);
+    mutateAggregateDoc(driver, snapshot, multiplier, {
+      includeProfit: true,
+      includeContractorMaps: true,
+    });
+    mutateAggregateDoc(vehicle, snapshot, multiplier, {
+      includeProfit: true,
+      includeContractorMaps: true,
+    });
+    mutateAggregateDoc(contractor, snapshot, multiplier, {
+      includeProfit: false,
+      includeContractorMaps: false,
+    });
+  }
+
+  const loaded = await Promise.all(docs.values());
+  await Promise.all(loaded.map((doc) => doc.save({ session })));
 }
 
 function buildJobSnapshot({ job, contractorName }) {
@@ -277,5 +286,6 @@ module.exports = {
   roundMoney,
   dateParts,
   applyJobDelta,
+  applyJobDeltas,
   buildJobSnapshot,
 };

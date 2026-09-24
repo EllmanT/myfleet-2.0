@@ -14,6 +14,8 @@ import {
   Select,
   TextField,
   TextareaAutosize,
+  ToggleButton,
+  ToggleButtonGroup,
   useTheme,
 } from "@mui/material";
 import {
@@ -35,6 +37,7 @@ import { useEffect } from "react";
 import { getAllVehiclesCompany } from "redux/actions/vehicle";
 import { getAllDriversCompany } from "redux/actions/driver";
 import { getRates } from "redux/actions/rate";
+import ExcelImportPanel from "component/deliverer/ExcelImportPanel";
 
 const steps = ["Order Details", "Company Info", "Preview"];
 
@@ -185,6 +188,7 @@ const AddJobPage = () => {
   const [destinations, setDestinations] = useState([]);
   const [labels, setLabels] = useState([]);
   const [mileages, setMileages] = useState([]);
+  const [entryMode, setEntryMode] = useState("manual");
 
   //Handling the destinations
   const addAutocomplete = () => {
@@ -418,7 +422,40 @@ const AddJobPage = () => {
         >
           {" "}
           <Header title="Add Job" />
+          <ToggleButtonGroup
+            exclusive
+            size="small"
+            value={entryMode}
+            onChange={(e, mode) => mode && setEntryMode(mode)}
+            aria-label="How to add jobs"
+            sx={{
+              mt: "0.75rem",
+              mb: "1rem",
+              "& .MuiToggleButton-root": {
+                px: "1rem",
+                textTransform: "none",
+                fontWeight: 600,
+                color: theme.palette.secondary[300],
+              },
+              "& .MuiToggleButton-root.Mui-selected": {
+                color: theme.palette.secondary[100],
+                backgroundColor: theme.palette.secondary[800],
+              },
+            }}
+          >
+            <ToggleButton value="manual">Manual entry</ToggleButton>
+            <ToggleButton value="excel">Import from Excel</ToggleButton>
+          </ToggleButtonGroup>
         </Box>
+        {entryMode === "excel" ? (
+          <ExcelImportPanel
+            customers={dCustomers}
+            onImported={() => {
+              dispatch(getAllContractorsDeliverer());
+              dispatch(getAllCustomersDeliverer());
+            }}
+          />
+        ) : (
         <form onSubmit={handleSubmit}>
           <Box sx={{ width: "100%" }}>
             <Stepper nonLinear activeStep={activeStep}>
@@ -1034,6 +1071,7 @@ const AddJobPage = () => {
             </div>
           </Box>
         </form>
+        )}
         <AddCustomerPopup
           open={addCustomerOpen}
           activeStep={0}
