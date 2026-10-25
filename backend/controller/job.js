@@ -22,6 +22,7 @@ const {
 } = require("./helpers/jobStatsSync");
 const { runWithOptionalTransaction } = require("./helpers/transaction");
 const { bulkCreateJobs } = require("./helpers/bulkCreateJobs");
+const { createStepTimer } = require("../utils/stepTimer");
 const router = express.Router();
 
 function addUniqueId(list, id) {
@@ -389,11 +390,15 @@ router.post(
       }
 
       let createdJobs = [];
+      const timer = createStepTimer();
+      let attempts = 0;
 
       await runWithOptionalTransaction(async (session) => {
+        attempts += 1;
         createdJobs = await bulkCreateJobs(jobs, {
           companyId: req.user.companyId,
           session,
+          timer,
         });
 
         // One job number spans several legs, so advance each contractor's
@@ -413,7 +418,12 @@ router.post(
           })),
           session ? { session } : {}
         );
+        timer.mark("lastOrder");
       });
+      timer.mark("commit");
+      console.log(
+        `[create-job] legs=${jobs.length} attempts=${attempts} ${timer.report()}`
+      );
 
       res.status(201).json({
         success: true,

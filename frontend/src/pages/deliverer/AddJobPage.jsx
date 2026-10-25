@@ -32,7 +32,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddCustomerPopup from "component/addCustomerPopup";
 import { getAllCustomersDeliverer } from "redux/actions/customer";
 import { getAllContractorsDeliverer } from "redux/actions/contractor";
-import { createJob } from "redux/actions/job";
+import { createOptimisticJob } from "redux/actions/job";
 import { useEffect } from "react";
 import { getAllVehiclesCompany } from "redux/actions/vehicle";
 import { getAllDriversCompany } from "redux/actions/driver";
@@ -59,7 +59,7 @@ const AddJobPage = () => {
 
   useEffect(() => {
     if (error) {
-      toast.error(error.message);
+      toast.error(typeof error === "string" ? error : error.message);
       dispatch({ type: "clearErrors" });
     }
     if (success) {
@@ -339,8 +339,6 @@ const AddJobPage = () => {
   }
 
   //handle the submitting of he jobs
-  const [jobs, setJobs] = useState([]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -375,15 +373,9 @@ const AddJobPage = () => {
       x = x + 1;
     }
 
-    setJobs([...jobs, ...newJobs]);
-    dispatch(createJob(newJobs))
-      .then(() => {
-        // handleResetInputs();
-        dispatch(getAllContractorsDeliverer());
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-      });
+    // Optimistic: the success toast and next job number show immediately; the
+    // save continues in the background and reports its own failure.
+    dispatch(createOptimisticJob(newJobs));
   };
 
 

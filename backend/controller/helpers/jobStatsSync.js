@@ -162,12 +162,14 @@ function mutateAggregateDoc(doc, snapshot, multiplier, options) {
     doc.jobsByContractor = jobsMap;
     doc.revenueByContractor = revMap;
   }
-
-  cleanupAggregateDoc(doc, includeProfit);
 }
 
 async function ensureStatsDoc(Model, filter, defaults, session) {
-  let doc = await Model.findOne(filter).session(session);
+  // ContractorStats.job_ids can be huge and is never changed through this
+  // path (bulkCreateJobs/job.js update it with $addToSet), so don't load it.
+  const query = Model.findOne(filter).session(session);
+  if (Model === ContractorStats) query.select("-job_ids");
+  let doc = await query;
   if (!doc) {
     doc = new Model({
       ...filter,
@@ -263,6 +265,10 @@ async function applyJobDeltas(snapshots, multiplier, context) {
   }
 
   const loaded = await Promise.all(docs.values());
+  // Prune empty buckets and re-sort once per document, not once per leg.
+  loaded.forEach((doc) => {
+    cleanupAggregateDoc(doc, !(doc instanceof ContractorStats));
+  });
   await Promise.all(loaded.map((doc) => doc.save({ session })));
 }
 

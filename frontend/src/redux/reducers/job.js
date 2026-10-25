@@ -9,6 +9,15 @@ export const jobReducer = createReducer(initialState, {
   loadCreateJobRequest: (state) => {
     state.isLoading = true;
   },
+  // job accepted locally while the server save is still in flight
+  createJobOptimistic: (state) => {
+    state.isLoading = false;
+    state.success = true;
+  },
+  // server confirmed the optimistic job; success was already announced
+  createJobConfirmed: (state, action) => {
+    state.job = action.payload;
+  },
   //load order added success
   loadCreateJobSuccess: (state, action) => {
     state.isLoading = false;

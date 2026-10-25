@@ -45,8 +45,9 @@ function addToSetOps(groups, field = "job_ids") {
  * @param {object} context     { companyId, session }
  * @returns {Promise<object[]>} the created Job documents
  */
-async function bulkCreateJobs(payloads, { companyId, session = null }) {
+async function bulkCreateJobs(payloads, { companyId, session = null, timer = null }) {
   if (!payloads.length) return [];
+  const mark = (label) => timer && timer.mark(label);
 
   const idsOf = (field) => [...new Set(payloads.map((p) => String(p[field])))];
   const contractorIds = idsOf("contractorId");
@@ -65,6 +66,7 @@ async function bulkCreateJobs(payloads, { companyId, session = null }) {
     Vehicle.countDocuments({ _id: { $in: vehicleIds } }).session(session),
     Driver.countDocuments({ _id: { $in: driverIds } }).session(session),
   ]);
+  mark("reads");
 
   if (!deliverer) {
     throw new ErrorHandler("Deliverer not found", 404);
@@ -87,6 +89,7 @@ async function bulkCreateJobs(payloads, { companyId, session = null }) {
   );
   const created = await Job.insertMany(docs, sessionOpts(session));
   const jobIds = created.map((job) => job._id);
+  mark("insert");
 
   await Promise.all([
     Deliverer.updateOne(
@@ -101,6 +104,7 @@ async function bulkCreateJobs(payloads, { companyId, session = null }) {
       sessionOpts(session)
     ),
   ]);
+  mark("jobIds");
 
   const contractorNames = new Map(
     contractors.map((c) => [String(c._id), c.companyName])
@@ -115,6 +119,7 @@ async function bulkCreateJobs(payloads, { companyId, session = null }) {
     totalContractors: (deliverer.contractor_ids || []).length,
     session,
   });
+  mark("stats");
 
   // applyJobDeltas guarantees these ContractorStats docs exist.
   const statsGroups = new Map();
@@ -138,6 +143,7 @@ async function bulkCreateJobs(payloads, { companyId, session = null }) {
     })),
     sessionOpts(session)
   );
+  mark("statsJobIds");
 
   return created;
 }

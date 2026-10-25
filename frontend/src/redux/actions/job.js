@@ -1,6 +1,59 @@
 import axios from "axios";
 import { server } from "server";
+import { getAllContractorsDeliverer } from "./contractor";
 //create the job
+// Optimistic create: the UI is told the job was added straight away and the
+// save runs in the background. If the server rejects it, the local job number
+// is rolled back and the error is raised. Resolves true/false once the server
+// has answered.
+let pendingCreates = 0;
+
+export const createOptimisticJob = (jobs) => async (dispatch) => {
+  pendingCreates += 1;
+  // one job number spans several legs, so advance once per distinct number
+  const bumps = new Map();
+  jobs.forEach((leg) => {
+    if (!bumps.has(leg.contractorId)) bumps.set(leg.contractorId, new Set());
+    bumps.get(leg.contractorId).add(String(leg.jobNumber));
+  });
+  const adjust = (sign) =>
+    bumps.forEach((numbers, contractorId) =>
+      dispatch({
+        type: "adjustContractorLastOrder",
+        payload: { contractorId, delta: sign * numbers.size },
+      })
+    );
+
+  adjust(1);
+  dispatch({ type: "createJobOptimistic" });
+
+  try {
+    const { data } = await axios.post(`${server}/job/create-job`, jobs, {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    });
+    dispatch({ type: "createJobConfirmed", payload: data.jobs });
+    // resync with the server's counter without blanking the page, but only
+    // once no other save is in flight (a stale value would reuse a number)
+    pendingCreates -= 1;
+    if (pendingCreates === 0) {
+      dispatch(getAllContractorsDeliverer({ quiet: true }));
+    }
+    return true;
+  } catch (error) {
+    pendingCreates -= 1;
+    adjust(-1);
+    dispatch({
+      type: "loadCreateJobFailed",
+      payload:
+        error.response?.data?.message ||
+        error.message ||
+        "Job could not be saved. Please try again.",
+    });
+    return false;
+  }
+};
+
 export const createJob = (jobs) => async (dispatch) => {
   try {
     dispatch({

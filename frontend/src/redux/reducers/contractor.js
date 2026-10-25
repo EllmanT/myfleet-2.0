@@ -42,6 +42,18 @@ export const contractorReducer = createReducer(initialState, {
     state.error = action.payload;
   },
 
+  // optimistic job numbering: move a contractor's lastOrder up (or back down)
+  adjustContractorLastOrder: (state, action) => {
+    const { contractorId, delta } = action.payload;
+    (state.delContractors || []).forEach((group) => {
+      (group.contractors || []).forEach((contractor) => {
+        if (contractor._id === contractorId) {
+          contractor.lastOrder = Number(contractor.lastOrder || 0) + delta;
+        }
+      });
+    });
+  },
+
   // get all Contractors deliverer request
 
   getAllContrPageReq: (state) => {

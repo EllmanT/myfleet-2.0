@@ -26,11 +26,17 @@ export const createContractor = (newForm) => async (dispatch) => {
   }
 };
 
-export const getAllContractorsDeliverer = () => async (dispatch) => {
+// `quiet` refreshes the list without flipping the loading flag, so the page
+// that is showing it doesn't blank out while the request is in flight.
+export const getAllContractorsDeliverer =
+  ({ quiet = false } = {}) =>
+  async (dispatch) => {
   try {
-    dispatch({
-      type: "getAllContrDelReq",
-    });
+    if (!quiet) {
+      dispatch({
+        type: "getAllContrDelReq",
+      });
+    }
     const { data } = await axios.get(
       `${server}/contractor/get-all-contractors-deliverer`,
       { withCredentials: true }
