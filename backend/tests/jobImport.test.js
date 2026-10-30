@@ -163,6 +163,17 @@ describe("Excel vehicle-log import", () => {
     expect(preview.canCommit).toBe(true);
   });
 
+  test("a place literally named TOTAL does not end the log", () => {
+    const { parseVehicleLog } = require("../services/jobImport/parseVehicleLog");
+    const buffer = buildWorkbook([
+      ["CHRIS", d(2), "", 1000, "LAMMEL", "TOTAL", 1003, "", 3, "LAMMEL", ""],
+      ["CHRIS", d(2), "", 1003, "TOTAL", "LAMMEL", 1006, "", 3, "LAMMEL", ""],
+      ["CHRIS", d(2), "", 1006, "LAMMEL", "SHIPPY", 1010, "", 4, "PVT", ""],
+    ]);
+    const [sheet] = parseVehicleLog(buffer, "x.xlsx").sheets;
+    expect(sheet.rows).toHaveLength(3);
+  });
+
   test("full-compound option and explicit choices are honoured", async () => {
     const { companyId } = await seedCompany();
     const preview = await buildImportPreview({

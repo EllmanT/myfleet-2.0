@@ -109,8 +109,13 @@ function parseNumber(value) {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-function isTotalRow(row) {
-  return row.some((cell) => /^total$/i.test(cleanText(cell)));
+// "Total" is also a fuel-station place name, so cells in the From / To
+// columns never mark the end of the log.
+function isTotalRow(row, columnMap) {
+  const placeCols = [columnMap.from, columnMap.to];
+  return row.some(
+    (cell, col) => !placeCols.includes(col) && /^total$/i.test(cleanText(cell))
+  );
 }
 
 function isEmptyRow(row) {
@@ -161,7 +166,7 @@ function parseSheet(sheet, { sheetName, fileName }) {
   for (let index = headerRowIndex + 1; index < rawRows.length; index += 1) {
     const row = rawRows[index] || [];
     if (isEmptyRow(row)) continue;
-    if (isTotalRow(row)) break;
+    if (isTotalRow(row, columnMap)) break;
 
     const warnings = [];
     let driverName = cleanText(cell(row, "driver"));
