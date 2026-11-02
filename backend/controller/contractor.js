@@ -6,10 +6,19 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const { isAuthenticated } = require("../middleware/auth");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Deliverer = require("../model/deliverer");
+const {
+  forceOwnCompany,
+  requireOwnership,
+} = require("../middleware/tenantAccess");
 const { default: mongoose } = require("mongoose");
 const Rate = require("../model/rate");
 
-router.post("/create-contractor", upload.none(), async (req, res, next) => {
+router.post(
+  "/create-contractor",
+  isAuthenticated,
+  upload.none(),
+  forceOwnCompany,
+  async (req, res, next) => {
   try {
     const {
       companyName,
@@ -303,6 +312,7 @@ router.get(
 router.put(
   "/update-contractor",
   isAuthenticated,
+  requireOwnership("contractor_ids", (req) => req.body.compId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const {
@@ -373,6 +383,7 @@ router.put(
 router.delete(
   "/delete-contractor/:contractorId",
   isAuthenticated,
+  requireOwnership("contractor_ids", (req) => req.params.contractorId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const contractorId = req.params.contractorId;

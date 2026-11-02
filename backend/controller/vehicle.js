@@ -5,12 +5,18 @@ const Vehicle = require("../model/vehicle");
 const { isAuthenticated } = require("../middleware/auth");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Deliverer = require("../model/deliverer");
+const {
+  forceOwnCompany,
+  requireOwnership,
+} = require("../middleware/tenantAccess");
 const { default: mongoose } = require("mongoose");
 const router = express.Router();
 
 router.post(
   "/create-vehicle",
+  isAuthenticated,
   upload.single("file"),
+  forceOwnCompany,
   async (req, res, next) => {
     try {
       const { make, regNumber, size, companyId } = req.body;
@@ -211,6 +217,7 @@ router.get(
 router.put(
   "/update-vehicle",
   isAuthenticated,
+  requireOwnership("vehicle_ids", (req) => req.body.id),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { id, make, size, regNumber } = req.body;
@@ -240,6 +247,7 @@ router.put(
 router.delete(
   "/delete-vehicle/:vehicleId",
   isAuthenticated,
+  requireOwnership("vehicle_ids", (req) => req.params.vehicleId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const vehicleId = req.params.vehicleId;

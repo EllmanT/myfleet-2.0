@@ -8,15 +8,21 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const router = express.Router();
 const fs = require("fs");
 const Deliverer = require("../model/deliverer");
+const {
+  forceOwnCompany,
+  requireOwnership,
+} = require("../middleware/tenantAccess");
 const { default: mongoose } = require("mongoose");
 
 //create driver
 router.post(
   "/create-driver",
+  isAuthenticated,
   upload.fields([
     { name: "license", maxCount: 1 },
     { name: "id", maxCount: 1 },
   ]),
+  forceOwnCompany,
   async (req, res, next) => {
     try {
       const { name, phoneNumber, address, city, idNumber, companyId } =
@@ -236,11 +242,12 @@ router.get("/get-all-drivers-page", isAuthenticated, async (req, res, next) => {
 //update driver
 router.put(
   "/update-driver",
+  isAuthenticated,
   upload.fields([
     { name: "license", maxCount: 1 },
     { name: "id", maxCount: 1 },
   ]),
-  isAuthenticated,
+  requireOwnership("driver_ids", (req) => req.body.driverId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { driverId, name, phoneNumber, city, address, idNumber } = req.body;
@@ -288,6 +295,7 @@ router.put(
 router.delete(
   "/delete-driver/:driverId",
   isAuthenticated,
+  requireOwnership("driver_ids", (req) => req.params.driverId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const driverId = req.params.driverId;

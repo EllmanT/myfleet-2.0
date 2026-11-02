@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [true, "Enter your password"],
+      select: false,
     },
     phoneNumber: {
       type: String,
@@ -46,7 +47,18 @@ const userSchema = new mongoose.Schema(
       select: false,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    // Never serialise the password hash or reset fields into an API response.
+    toJSON: {
+      transform: (doc, ret) => {
+        delete ret.password;
+        delete ret.resetPasswordToken;
+        delete ret.resetPasswordExpire;
+        return ret;
+      },
+    },
+  }
 );
 
 //hashing the password

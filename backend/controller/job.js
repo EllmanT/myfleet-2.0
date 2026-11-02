@@ -4,6 +4,7 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const Job = require("../model/job");
 const { isAuthenticated } = require("../middleware/auth");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const { requireOwnership } = require("../middleware/tenantAccess");
 const Deliverer = require("../model/deliverer");
 const Contractor = require("../model/contractor");
 const DriverStats = require("../model/driverStats");
@@ -440,6 +441,7 @@ router.post(
 router.put(
   "/update-job",
   isAuthenticated,
+  requireOwnership("job_ids", (req) => req.body.jobId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { jobId } = req.body;
@@ -615,6 +617,7 @@ router.put(
 router.delete(
   "/delete-job/:jobId",
   isAuthenticated,
+  requireOwnership("job_ids", (req) => req.params.jobId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { jobId } = req.params;

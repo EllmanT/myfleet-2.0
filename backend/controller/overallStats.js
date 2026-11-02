@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const { isAuthenticated } = require("../middleware/auth");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const { requireRole, GLOBAL_ROLES } = require("../middleware/tenantAccess");
 const ErrorHandler = require("../utils/ErrorHandler");
 const OverallStats = require("../model/overallStats");
 const Contractor = require("../model/contractor");
@@ -123,6 +124,8 @@ router.get(
 router.post(
   "/rebuild-stats",
   isAuthenticated,
+  // Rebuilds derived stats for the whole database, so platform admins only.
+  requireRole(...GLOBAL_ROLES),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const db = mongoose.connection.db;

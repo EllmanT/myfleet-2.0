@@ -43,17 +43,23 @@ const frontendResetUrl = (rawToken) =>
 //create-user
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
   try {
-    const {
-      name,
-      email,
-      phoneNumber,
-      companyId,
-      role,
-      address,
-      city,
-      password,
-    } = req.body;
-    const checkEmail = await User.findOne({ email });
+    // Public endpoint: role and companyId are deliberately NOT read from the
+    // request. Anyone could otherwise self-assign "Super Admin" or join any
+    // company. Privileged accounts are created via the authenticated
+    // /create-admin route, or by a platform admin.
+    const { name, email, phoneNumber, address, city, password } = req.body;
+    if (typeof email !== "string" || !email.trim()) {
+      return next(new ErrorHandler("Enter your email", 400));
+    }
+    if (typeof password !== "string" || password.length < MIN_PASSWORD_LEN) {
+      return next(
+        new ErrorHandler(
+          `Password must be at least ${MIN_PASSWORD_LEN} characters`,
+          400
+        )
+      );
+    }
+    const checkEmail = await User.findOne({ email: email.trim() });
 
     if (checkEmail) {
       return next(new ErrorHandler("User exists", 400));
@@ -61,10 +67,8 @@ router.post("/create-user", upload.single("file"), async (req, res, next) => {
 
     const user = {
       name: name,
-      email: email,
+      email: email.trim(),
       phoneNumber: phoneNumber,
-      companyId: companyId,
-      role: role,
       address: address,
       city: city,
       password: password,
@@ -114,16 +118,11 @@ router.post(
         return next(new ErrorHandler("Token is invalid", 400));
       }
 
-      const {
-        name,
-        email,
-        phoneNumber,
-        password,
-        address,
-        city,
-        role,
-        companyId,
-      } = checkToken;
+      // role/companyId are never taken from the token: older tokens may carry
+      // them, and a self-registered account must stay unprivileged.
+      const { name, email, phoneNumber, password, address, city } = checkToken;
+      const role = undefined;
+      const companyId = undefined;
 
       let user = await User.findOne({ email });
       if (user) {
@@ -172,17 +171,10 @@ router.post(
           password: password,
           companyId: companyId,
         });
-        //pushing the data into deliverer
-        if (isCompanyDeliverer) {
-          isCompanyDeliverer.admin_ids.push(user._id);
-          await isCompanyDeliverer.save();
-          sendToken(user, 201, res);
-
-          res.status(201).json({
-            success: true,
-            message: "Admin added successfully",
-          });
-        }
+        // Self-registered accounts have no company or privileges until an
+        // admin attaches them. (Previously this also wrote a second response
+        // after sendToken, which threw "headers already sent".)
+        return sendToken(user, 201, res);
       }
     } catch (error) {
       return next(new ErrorHandler(error.message, 400));
@@ -274,17 +266,20 @@ router.post(
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { email, password } = req.body;
-      const checkEmail = await User.findOne({ email }).select("+password");
-      if (!email || !password) {
+      if (typeof email !== "string" || typeof password !== "string" || !email || !password) {
         return next(new ErrorHandler("Enter all the fields", 400));
       }
+      const checkEmail = await User.findOne({ email }).select("+password");
+      // One message for "no such user" and "wrong password" so login can't be
+      // used to discover which emails have accounts.
+      const invalid = () => next(new ErrorHandler("Invalid email or password", 400));
       if (!checkEmail) {
-        return next(new ErrorHandler("User doesnt exist", 400));
+        return invalid();
       }
 
-      verifyPassword = await checkEmail.comparePassword(password);
+      const verifyPassword = await checkEmail.comparePassword(password);
       if (!verifyPassword) {
-        return next(new ErrorHandler("Enter correct info", 400));
+        return invalid();
       }
       sendToken(checkEmail, 201, res);
     } catch (error) {
@@ -520,13 +515,43 @@ router.put(
     try {
       const { adminId, name, email, phoneNumber, city, address, role } =
         req.body;
+      const actor = req.user;
+
+      if (!ADMIN_CREATOR_ROLES.includes(actor.role)) {
+        return next(
+          new ErrorHandler("You are not authorized to edit admins", 403)
+        );
+      }
+      if (!ADMIN_ROLES.includes(role)) {
+        return next(new ErrorHandler("Invalid role", 400));
+      }
+      // A company admin can't hand out a platform-wide role.
+      if (!GLOBAL_ROLES.includes(actor.role) && GLOBAL_ROLES.includes(role)) {
+        return next(
+          new ErrorHandler("You are not authorized to assign this role", 403)
+        );
+      }
 
       const admin = await User.findById(adminId);
 
-      if (!admin) {
-        return next(new ErrorHandler("User not found", 400));
+      // Foreign and missing users look identical, so ids can't be probed.
+      if (
+        !admin ||
+        (!GLOBAL_ROLES.includes(actor.role) &&
+          String(admin.companyId) !== String(actor.companyId))
+      ) {
+        return next(new ErrorHandler("User not found", 404));
       }
-
+      // A company admin must not edit a platform admin's account.
+      if (!GLOBAL_ROLES.includes(actor.role) && GLOBAL_ROLES.includes(admin.role)) {
+        return next(new ErrorHandler("User not found", 404));
+      }
+      if (email && email !== admin.email) {
+        const taken = await User.findOne({ email, _id: { $ne: admin._id } });
+        if (taken) {
+          return next(new ErrorHandler("That email is already in use", 400));
+        }
+      }
 
       admin.name = name;
       admin.email = email;
@@ -555,11 +580,31 @@ router.delete(
   catchAsyncErrors(async (req, res, next) => {
     try {
       const adminId = req.params.adminId;
+      const actor = req.user;
 
-      const admin = await User.findByIdAndDelete(adminId);
-      if (!admin) {
-        return next(new ErrorHandler("There is no admin with this id", 500));
+      if (!ADMIN_CREATOR_ROLES.includes(actor.role)) {
+        return next(
+          new ErrorHandler("You are not authorized to delete admins", 403)
+        );
       }
+      if (String(actor._id) === String(adminId)) {
+        return next(new ErrorHandler("You can't delete your own account", 400));
+      }
+      if (!mongoose.isValidObjectId(adminId)) {
+        return next(new ErrorHandler("There is no admin with this id", 404));
+      }
+
+      const target = await User.findById(adminId);
+      const sameCompany =
+        target && String(target.companyId) === String(actor.companyId);
+      if (
+        !target ||
+        (!GLOBAL_ROLES.includes(actor.role) &&
+          (!sameCompany || GLOBAL_ROLES.includes(target.role)))
+      ) {
+        return next(new ErrorHandler("There is no admin with this id", 404));
+      }
+      const admin = await User.findByIdAndDelete(adminId);
       const deliverer = await Deliverer.findById(req.user.companyId);
       if (!deliverer) {
         return next(

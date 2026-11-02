@@ -6,6 +6,10 @@ const Deliverer = require("../model/deliverer");
 const Contractor = require("../model/contractor");
 const { isAuthenticated } = require("../middleware/auth");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const {
+  forceOwnCompany,
+  requireOwnership,
+} = require("../middleware/tenantAccess");
 const router = express.Router();
 const mongoose = require("mongoose");
 
@@ -22,8 +26,9 @@ function parsePaginationParams(query) {
 //create customer
 router.post(
   "/create-customer",
-
+  isAuthenticated,
   upload.single("file"),
+  forceOwnCompany,
   async (req, res, next) => {
     try {
       const { name, phoneNumber, address, city, companyId } = req.body;
@@ -265,6 +270,7 @@ router.get(
 router.put(
   "/update-customer",
   isAuthenticated,
+  requireOwnership("customer_ids", (req) => req.body.id),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { id, name, phoneNumber, city, address } = req.body;
@@ -299,6 +305,7 @@ router.put(
 router.delete(
   "/delete-customer/:customerId",
   isAuthenticated,
+  requireOwnership("customer_ids", (req) => req.params.customerId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const customerId = req.params.customerId;

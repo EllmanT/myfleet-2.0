@@ -6,9 +6,12 @@ const { upload } = require("../multer");
 const ErrorHandler = require("../utils/ErrorHandler");
 const { isAuthenticated } = require("../middleware/auth");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const { requireRole, GLOBAL_ROLES } = require("../middleware/tenantAccess");
 
 router.post(
   "/create-deliverer",
+  isAuthenticated,
+  requireRole(...GLOBAL_ROLES),
   upload.single("file"),
   async (req, res, next) => {
     try {
