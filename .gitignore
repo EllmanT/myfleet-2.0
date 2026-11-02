@@ -26,3 +26,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Private data and local tooling: never commit these
+/db-backup-*/
+/blank db w basic fields/
+/uploads/
+/backend/uploads/
+/.cursor/
+/.claude/settings.local.json
+*.bak

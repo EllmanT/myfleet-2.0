@@ -1,4 +1,5 @@
 const express = require("express");
+const { escapeRegex } = require("../utils/escapeRegex");
 const Customer = require("../model/customer");
 const ErrorHandler = require("../utils/ErrorHandler");
 const { upload } = require("../multer");
@@ -241,8 +242,8 @@ router.get(
       const searchFilter = {
         _id: { $in: customerIds },
         $or: [
-          { name: { $regex: search, $options: "i" } },
-          { city: { $regex: search, $options: "i" } },
+          { name: { $regex: escapeRegex(search), $options: "i" } },
+          { city: { $regex: escapeRegex(search), $options: "i" } },
 
           // Add other fields to search on as needed
         ],

@@ -321,16 +321,16 @@ function buildSortOptions(sort, fallback = { orderDate: -1, _id: -1 }) {
 function buildJobSearchMatch(jobSearch = "") {
   return {
     $or: [
-      { "customer.name": { $regex: `.*${jobSearch}.*`, $options: "i" } },
-      { "from.name": { $regex: `.*${jobSearch}.*`, $options: "i" } },
+      { "customer.name": { $regex: `.*${escapeRegex(jobSearch)}.*`, $options: "i" } },
+      { "from.name": { $regex: `.*${escapeRegex(jobSearch)}.*`, $options: "i" } },
       {
         "contractorId.companyName": {
-          $regex: `.*${jobSearch}.*`,
+          $regex: `.*${escapeRegex(jobSearch)}.*`,
           $options: "i",
         },
       },
-      { deliveryType: { $regex: `.*${jobSearch}.*`, $options: "i" } },
-      { jobNumber: { $regex: `.*${jobSearch}.*`, $options: "i" } },
+      { deliveryType: { $regex: `.*${escapeRegex(jobSearch)}.*`, $options: "i" } },
+      { jobNumber: { $regex: `.*${escapeRegex(jobSearch)}.*`, $options: "i" } },
     ],
   };
 }
@@ -975,16 +975,16 @@ router.get(
             $or: [
               // Add your alternative search conditions here
               {
-                "customer.name": { $regex: `.*${jobSearch}.*`, $options: "i" },
+                "customer.name": { $regex: `.*${escapeRegex(jobSearch)}.*`, $options: "i" },
               }, // Example: search in field1 using regex
-              { "from.name": { $regex: `.*${jobSearch}.*`, $options: "i" } },
+              { "from.name": { $regex: `.*${escapeRegex(jobSearch)}.*`, $options: "i" } },
               {
                 "contractorId.companyName": {
-                  $regex: `.*${jobSearch}.*`,
+                  $regex: `.*${escapeRegex(jobSearch)}.*`,
                   $options: "i",
                 },
               },
-              { deliveryType: { $regex: `.*${jobSearch}.*`, $options: "i" } },
+              { deliveryType: { $regex: `.*${escapeRegex(jobSearch)}.*`, $options: "i" } },
 
               // Add more conditions as needed
             ],
@@ -1147,16 +1147,16 @@ router.get(
             $or: [
               // Add your alternative search conditions here
               {
-                "customer.name": { $regex: `.*${jobSearch}.*`, $options: "i" },
+                "customer.name": { $regex: `.*${escapeRegex(jobSearch)}.*`, $options: "i" },
               }, // Example: search in field1 using regex
-              { "from.name": { $regex: `.*${jobSearch}.*`, $options: "i" } },
+              { "from.name": { $regex: `.*${escapeRegex(jobSearch)}.*`, $options: "i" } },
               {
                 "contractorId.companyName": {
-                  $regex: `.*${jobSearch}.*`,
+                  $regex: `.*${escapeRegex(jobSearch)}.*`,
                   $options: "i",
                 },
               },
-              { deliveryType: { $regex: `.*${jobSearch}.*`, $options: "i" } },
+              { deliveryType: { $regex: `.*${escapeRegex(jobSearch)}.*`, $options: "i" } },
 
               // Add more conditions as needed
             ],
@@ -1280,16 +1280,16 @@ router.get(
             $or: [
               // Add your alternative search conditions here
               {
-                "customer.name": { $regex: `.*${jobSearch}.*`, $options: "i" },
+                "customer.name": { $regex: `.*${escapeRegex(jobSearch)}.*`, $options: "i" },
               }, // Example: search in field1 using regex
-              { "from.name": { $regex: `.*${jobSearch}.*`, $options: "i" } },
+              { "from.name": { $regex: `.*${escapeRegex(jobSearch)}.*`, $options: "i" } },
               {
                 "contractorId.companyName": {
-                  $regex: `.*${jobSearch}.*`,
+                  $regex: `.*${escapeRegex(jobSearch)}.*`,
                   $options: "i",
                 },
               },
-              { deliveryType: { $regex: `.*${jobSearch}.*`, $options: "i" } },
+              { deliveryType: { $regex: `.*${escapeRegex(jobSearch)}.*`, $options: "i" } },
 
               // Add more conditions as needed
             ],
@@ -1411,16 +1411,16 @@ router.get(
             $or: [
               // Add your alternative search conditions here
               {
-                "customer.name": { $regex: `.*${jobSearch}.*`, $options: "i" },
+                "customer.name": { $regex: `.*${escapeRegex(jobSearch)}.*`, $options: "i" },
               }, // Example: search in field1 using regex
-              { "from.name": { $regex: `.*${jobSearch}.*`, $options: "i" } },
+              { "from.name": { $regex: `.*${escapeRegex(jobSearch)}.*`, $options: "i" } },
               {
                 "contractorId.companyName": {
-                  $regex: `.*${jobSearch}.*`,
+                  $regex: `.*${escapeRegex(jobSearch)}.*`,
                   $options: "i",
                 },
               },
-              { deliveryType: { $regex: `.*${jobSearch}.*`, $options: "i" } },
+              { deliveryType: { $regex: `.*${escapeRegex(jobSearch)}.*`, $options: "i" } },
 
               // Add more conditions as needed
             ],

@@ -1,4 +1,5 @@
 const express = require("express");
+const { escapeRegex } = require("../utils/escapeRegex");
 const { upload } = require("../multer");
 const ErrorHandler = require("../utils/ErrorHandler");
 const Vehicle = require("../model/vehicle");
@@ -177,9 +178,9 @@ router.get(
       const searchFilter = {
         _id: { $in: vehicleIds },
         $or: [
-          { make: { $regex: search, $options: "i" } },
-          { size: { $regex: search, $options: "i" } },
-          { regNumber: { $regex: search, $options: "i" } },
+          { make: { $regex: escapeRegex(search), $options: "i" } },
+          { size: { $regex: escapeRegex(search), $options: "i" } },
+          { regNumber: { $regex: escapeRegex(search), $options: "i" } },
 
           // Add other fields to search on as needed
         ],

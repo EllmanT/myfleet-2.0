@@ -1,4 +1,5 @@
 const express = require("express");
+const { escapeRegex } = require("../utils/escapeRegex");
 const path = require("path");
 const Driver = require("../model/driver");
 const { upload } = require("../multer");
@@ -202,10 +203,10 @@ router.get("/get-all-drivers-page", isAuthenticated, async (req, res, next) => {
     const searchFilter = {
       _id: { $in: driverIds },
       $or: [
-        { name: { $regex: search, $options: "i" } },
-        { city: { $regex: search, $options: "i" } },
-        { address: { $regex: search, $options: "i" } },
-        { phoneNumber: { $regex: search, $options: "i" } },
+        { name: { $regex: escapeRegex(search), $options: "i" } },
+        { city: { $regex: escapeRegex(search), $options: "i" } },
+        { address: { $regex: escapeRegex(search), $options: "i" } },
+        { phoneNumber: { $regex: escapeRegex(search), $options: "i" } },
 
         // Add other fields to search on as needed
       ],

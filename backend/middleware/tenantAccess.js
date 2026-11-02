@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const ErrorHandler = require("../utils/ErrorHandler");
+const { stripOperators } = require("./security");
 
 // Phase 0 company-scoping helpers. These are an interim guard until every model
 // carries a tenantId (Phase 1). They reuse the Deliverer id arrays that the app
@@ -32,6 +33,8 @@ const requireCompany = (req, res, next) => {
 // Global admins may still name a company explicitly (they pick one in the UI).
 const forceOwnCompany = (req, res, next) => {
   if (!req.user) return next(new ErrorHandler("Login to continue!", 401));
+  // Multipart bodies are parsed after the global sanitiser has run.
+  if (req.body) stripOperators(req.body);
   if (!isGlobalAdmin(req.user)) {
     if (!req.user.companyId) {
       return next(new ErrorHandler("Your account has no company", 403));

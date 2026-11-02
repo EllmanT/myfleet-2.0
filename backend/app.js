@@ -5,7 +5,12 @@ const bodyParser = require("body-parser");
 const cors = require("cors");//
 const ErrorHandler = require("./middleware/error");
 const path = require("path");
-const { getUploadsDir } = require("./uploadsDir");
+const helmet = require("helmet");
+const {
+  sanitizeInput,
+  authLimiter,
+  apiLimiter,
+} = require("./middleware/security");
 
 function parseOriginList(raw) {
   return String(raw || "")
@@ -38,15 +43,40 @@ if (corsOrigins.length) {
   corsCfg.origin = "http://localhost:3000";
 }
 
+// Behind Vercel's proxy the real client address is in X-Forwarded-For; without
+// this every request looks like it comes from the proxy and rate limiting
+// would throttle all users together.
+app.set("trust proxy", 1);
+
+app.use(
+  helmet({
+    // The SPA is served separately; the API only returns JSON.
+    contentSecurityPolicy: false,
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  })
+);
 app.use(cors(corsCfg));
-app.use(express.json());
+app.use(express.json({ limit: "2mb" }));
 app.use(cookieParser());
-app.use("/", express.static(path.join(getUploadsDir())));
+// Uploaded driver IDs/licences are private, so the uploads folder is no
+// longer served publicly.
 app.use("/test", (req, res) => {
   res.send("Hello world!");
 });
 
-app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "2mb" }));
+app.use(sanitizeInput);
+app.use("/api", apiLimiter);
+app.use(
+  [
+    "/api/v2/user/login-user",
+    "/api/v2/user/create-user",
+    "/api/v2/user/activation",
+    "/api/v2/user/forgot-password",
+    "/api/v2/user/reset-password",
+  ],
+  authLimiter
+);
 
 // config
 

@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const { escapeRegex } = require("../utils/escapeRegex");
 const mongoose = require("mongoose");
 const express = require("express");
 const User = require("../model/user");
@@ -471,10 +472,10 @@ router.get(
       const searchFilter = {
         _id: { $in: adminIds },
         $or: [
-          { name: { $regex: search, $options: "i" } },
-          { city: { $regex: search, $options: "i" } },
-          { address: { $regex: search, $options: "i" } },
-          { role: { $regex: search, $options: "i" } },
+          { name: { $regex: escapeRegex(search), $options: "i" } },
+          { city: { $regex: escapeRegex(search), $options: "i" } },
+          { address: { $regex: escapeRegex(search), $options: "i" } },
+          { role: { $regex: escapeRegex(search), $options: "i" } },
 
           // Add other fields to search on as needed
         ],
