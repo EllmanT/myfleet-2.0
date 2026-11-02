@@ -15,7 +15,9 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
 import {
+  AccountBalanceWalletOutlined,
   AdminPanelSettingsOutlined,
+  LocalGasStationOutlined,
   CalendarMonth,
   CalendarMonthOutlined,
   ChevronLeftOutlined,
@@ -102,6 +104,21 @@ const Sidebar = ({
       text: "Breakdown",
       icon: <PieChartOutlined />,
       name: `${breakdown}`,
+    },
+    {
+      text: "Profitability",
+      icon: <TrendingUpOutlined />,
+      name: "profitability",
+    },
+    {
+      text: "Expenses",
+      icon: <AccountBalanceWalletOutlined />,
+      name: "expenses",
+    },
+    {
+      text: "Fuel Log",
+      icon: <LocalGasStationOutlined />,
+      name: "fuel-log",
     },
     //Not YET
     //{

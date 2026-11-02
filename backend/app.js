@@ -72,6 +72,8 @@ const driverStats = require("./controller/driverStats");
 const contractorStats = require("./controller/contractorStats");
 const vehicleExpenses = require("./controller/vehicleExpenses");
 const employeeExpenses = require("./controller/employeeExpenses");
+const expense = require("./controller/expense");
+const fuelLog = require("./controller/fuelLog");
 
 //using controllers
 app.use("/api/v2/user", user);
@@ -89,6 +91,8 @@ app.use("/api/v2/driverStats", driverStats);
 app.use("/api/v2/contractorStats", contractorStats);
 app.use("/api/v2/expenses/vehicle", vehicleExpenses);
 app.use("/api/v2/expenses/employee", employeeExpenses);
+app.use("/api/v2/expense", expense);
+app.use("/api/v2/fuel", fuelLog);
 
 app.use(ErrorHandler);
 

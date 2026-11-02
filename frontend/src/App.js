@@ -22,6 +22,9 @@ import {
   DelDashVehiclePage,
   DelDashContractorPage,
   DelDashRevenuePage,
+  DelExpensesPage,
+  DelProfitabilityPage,
+  DelFuelLogPage,
   DelDeliverersPage,
   ActivationPage,
   DelAddJobPage,
@@ -145,6 +148,30 @@ const App = () => {
                 element={
                   <DelProtectedRoutes>
                     <DelDashRevenuePage />
+                  </DelProtectedRoutes>
+                }
+              />
+              <Route
+                path="/del-expenses"
+                element={
+                  <DelProtectedRoutes>
+                    <DelExpensesPage />
+                  </DelProtectedRoutes>
+                }
+              />
+              <Route
+                path="/del-fuel-log"
+                element={
+                  <DelProtectedRoutes>
+                    <DelFuelLogPage />
+                  </DelProtectedRoutes>
+                }
+              />
+              <Route
+                path="/del-profitability"
+                element={
+                  <DelProtectedRoutes>
+                    <DelProfitabilityPage />
                   </DelProtectedRoutes>
                 }
               />

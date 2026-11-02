@@ -18,6 +18,9 @@ import DelAllOrdersPage from "../pages/deliverer/AllJobsPage.jsx";
 import DelDeliverersPage from "../pages/deliverer/DeliverersPage";
 import ActivationPage from "../pages/ActivationPage";
 import DelAddJobPage from "../pages/deliverer/AddJobPage";
+import DelExpensesPage from "../pages/deliverer/ExpensesPage.jsx";
+import DelProfitabilityPage from "../pages/deliverer/ProfitabilityPage.jsx";
+import DelFuelLogPage from "../pages/deliverer/FuelLogPage.jsx";
 
 
 //analytics
@@ -41,6 +44,9 @@ import DelDashVehicleReportsPage from "../pages/deliverer/reports/DashVehicleRep
 
 
 export {
+  DelExpensesPage,
+  DelProfitabilityPage,
+  DelFuelLogPage,
   DelRegisterPage,
   DelLoginPage,
   ForgotPasswordPage,

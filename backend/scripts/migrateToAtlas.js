@@ -85,7 +85,13 @@ async function main() {
     const destDb = destClient.db(destDbName);
 
     const collections = await sourceDb.listCollections().toArray();
-    const collectionNames = collections.map((c) => c.name).sort();
+    // `expenses` holds finance entries typed in on the live app. Never overwrite it
+    // from local unless explicitly asked (MIGRATE_INCLUDE_EXPENSES=1).
+    const PROTECTED = process.env.MIGRATE_INCLUDE_EXPENSES === "1" ? [] : ["expenses"];
+    const collectionNames = collections
+      .map((c) => c.name)
+      .filter((n) => !PROTECTED.includes(n))
+      .sort();
 
     if (!collectionNames.length) {
       throw new Error(`No collections found in source database "${sourceDbName}".`);
