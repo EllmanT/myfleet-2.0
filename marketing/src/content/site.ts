@@ -180,7 +180,7 @@ export const demo = {
 };
 
 // ---------------------------------------------------------------------------
-// Screenshots. Placeholders until real demo-company captures exist.
+// Screenshots. Real demo-company captures where `src` is set; the rest are placeholders.
 // To use a real image: set `src` to a path under /public (for example '/img/shots/who-owes.webp')
 // and give `width` and `height` of the file. Nothing else changes.
 // ---------------------------------------------------------------------------
@@ -232,9 +232,9 @@ export const shots: Record<string, Shot> = {
     id: 'not-invoiced',
     screen: 'Invoices: Not yet invoiced',
     alt: 'Demo company: a list of finished trips nobody has invoiced yet, with tick boxes.',
-    src: null,
-    width: 960,
-    height: 600,
+    src: '/img/shots/not-invoiced.webp',
+    width: 1280,
+    height: 546,
     columns: ['Date', 'Route', 'Customer', 'Amount'],
     rows: [
       ['04 Nov', 'Harare to Bulawayo', 'Sample Foods', '$620.00'],
@@ -247,9 +247,9 @@ export const shots: Record<string, Shot> = {
     id: 'who-owes',
     screen: 'Invoices: Who owes me',
     alt: 'Demo company: money owed, grouped by how late it is.',
-    src: null,
-    width: 960,
-    height: 600,
+    src: '/img/shots/who-owes.webp',
+    width: 1280,
+    height: 437,
     columns: ['How late', 'Invoices', 'Owed'],
     rows: [
       ['Not yet due', '4', '$1,240'],
@@ -265,9 +265,9 @@ export const shots: Record<string, Shot> = {
     id: 'documents',
     screen: 'Documents: expiry dates',
     alt: 'Demo company: Yellow Card, licence and permit expiry dates with reminders.',
-    src: null,
-    width: 960,
-    height: 600,
+    src: '/img/shots/documents.webp',
+    width: 1280,
+    height: 593,
     columns: ['Item', 'Belongs to', 'Runs out'],
     rows: [
       ['Yellow Card', 'AAV 1234', '14 Dec'],
@@ -280,9 +280,9 @@ export const shots: Record<string, Shot> = {
     id: 'fuel',
     screen: 'Fuel log: weekly check',
     alt: 'Demo company: each truck marked OK, Check or Review by fuel use.',
-    src: null,
-    width: 960,
-    height: 600,
+    src: '/img/shots/fuel.webp',
+    width: 1280,
+    height: 624,
     columns: ['Truck', 'km per litre', 'Check'],
     rows: [
       ['AAV 1234', '2.9', 'OK'],
