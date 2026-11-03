@@ -51,7 +51,7 @@ const MaintenancePage = () => {
   useEffect(() => { fetchMeta().then(setMeta).catch((e) => toast.error(apiMessage(e))); }, []);
 
   return (
-    <Box m="1.5rem 2.5rem">
+    <Box m={{ xs: "1rem 0.75rem", sm: "1.25rem 1.5rem", md: "1.5rem 2.5rem" }}>
       <Header title="MAINTENANCE" subtitle="Service reminders, workshop records, and how long your tyres last." />
       <Tabs value={tab} onChange={(e, v) => setTab(v)} sx={{ mt: "1rem" }}>
         <Tab label="Service due" /><Tab label="Workshop records" /><Tab label="Tyres" /><Tab label="Cost per km" />

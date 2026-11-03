@@ -27,7 +27,7 @@ const ModulesPage = () => {
   };
 
   return (
-    <Box m="1.5rem 2.5rem">
+    <Box m={{ xs: "1rem 0.75rem", sm: "1.25rem 1.5rem", md: "1.5rem 2.5rem" }}>
       <Header
         title="MODULES"
         subtitle="Choose which parts of myFleet your company uses. Switching one off hides it for everyone; your data is kept."

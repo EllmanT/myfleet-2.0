@@ -1,5 +1,5 @@
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
-import { useEffect, useMemo } from "react";
+import { Suspense, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { themeSettings } from "theme";
@@ -94,6 +94,7 @@ const App = () => {
         <ThemeProvider theme={theme}>
           <CssBaseline />
 
+          <Suspense fallback={null}>
           <Routes>
             <Route element={<DelLayout />}>
               <Route
@@ -570,6 +571,7 @@ const App = () => {
               element={<ActivationPage />}
             />
           </Routes>
+          </Suspense>
         </ThemeProvider>
         <ToasterProvider />
         </ClerkShell>

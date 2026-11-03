@@ -45,7 +45,7 @@ const QuotationsPage = () => {
   useEffect(() => { fetchInvoiceMeta().then(setMeta).catch(() => {}); }, []);
 
   return (
-    <Box m="1.5rem 2.5rem">
+    <Box m={{ xs: "1rem 0.75rem", sm: "1.25rem 1.5rem", md: "1.5rem 2.5rem" }}>
       <FlexBetween>
         <Header title="QUOTATIONS" subtitle="Send a price before the work. When it's accepted, turn it into an invoice." />
         <Button variant="contained" startIcon={<Add />} onClick={() => setOpenId("new")}

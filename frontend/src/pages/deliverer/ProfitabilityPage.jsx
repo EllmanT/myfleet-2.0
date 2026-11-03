@@ -67,7 +67,7 @@ const ProfitabilityPage = () => {
   );
 
   return (
-    <Box m="1.5rem 2.5rem">
+    <Box m={{ xs: "1rem 0.75rem", sm: "1.25rem 1.5rem", md: "1.5rem 2.5rem" }}>
       <FlexBetween>
         <Header title="PROFITABILITY" subtitle="Revenue minus fuel, salaries and other costs, by month and by vehicle." />
         <FormControl size="small" sx={{ minWidth: 120 }}>

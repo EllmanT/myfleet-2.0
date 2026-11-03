@@ -160,7 +160,7 @@ const FuelLogPage = () => {
   const last = form.vehicleId ? lastOdo[form.vehicleId] : null;
 
   return (
-    <Box m="1.5rem 2.5rem">
+    <Box m={{ xs: "1rem 0.75rem", sm: "1.25rem 1.5rem", md: "1.5rem 2.5rem" }}>
       <FlexBetween>
         <Header
           title="FUEL LOG"
