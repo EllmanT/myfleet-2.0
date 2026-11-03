@@ -28,6 +28,8 @@ import {
 } from "@mui/icons-material";
 import { setMode } from "state";
 import { getAllDeliverersPage } from "redux/actions/deliverer";
+import ClerkLogoutItem from "component/auth/ClerkLogoutItem";
+import { clerkEnabled } from "utils/clerk";
 
 const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const dispatch = useDispatch();
@@ -129,7 +131,11 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
             anchorEl={anchorEl}
             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           >
-            <MenuItem onClick={handleClick}>Logout</MenuItem>
+            {clerkEnabled ? (
+              <ClerkLogoutItem onDone={handleClose} />
+            ) : (
+              <MenuItem onClick={handleClick}>Logout</MenuItem>
+            )}
           </Menu>
         </FlexBetween>
       </Toolbar>

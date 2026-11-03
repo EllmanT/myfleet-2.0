@@ -14,12 +14,20 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Enter your password"],
+      // Clerk-managed accounts have no local password.
+      required: [
+        function () {
+          return !this.clerkUserId;
+        },
+        "Enter your password",
+      ],
       select: false,
     },
     phoneNumber: {
       type: String,
-      required: true,
+      required: function () {
+        return !this.clerkUserId;
+      },
     },
     role: {
       type: String,
@@ -28,11 +36,15 @@ const userSchema = new mongoose.Schema(
     },
     address: {
       type: String,
-      required: true,
+      required: function () {
+        return !this.clerkUserId;
+      },
     },
     city: {
       type: String,
-      required: true,
+      required: function () {
+        return !this.clerkUserId;
+      },
     },
     companyId: {
       type: mongoose.Types.ObjectId,
@@ -81,6 +93,8 @@ userSchema.methods.getJwtToken = function () {
 
 //comparing the passwords
 userSchema.methods.comparePassword = async function (enteredPassword) {
+  // Clerk-only accounts have no local password to compare against.
+  if (!this.password) return false;
   return await bcrypt.compare(enteredPassword, this.password);
 };
 

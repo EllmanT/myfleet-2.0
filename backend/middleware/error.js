@@ -52,5 +52,7 @@ module.exports = (err, req, res, next) => {
   res.status(err.statusCode).json({
     success: false,
     message: err.message,
+    // Lets the app tell "link my account" apart from a plain login failure.
+    ...(err.code === "NEEDS_BOOTSTRAP" ? { code: err.code } : {}),
   });
 };

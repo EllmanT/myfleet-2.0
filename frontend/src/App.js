@@ -3,6 +3,13 @@ import { useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { themeSettings } from "theme";
+import ClerkShell from "component/auth/ClerkShell";
+import { clerkEnabled } from "utils/clerk";
+import {
+  ClerkSignInPage,
+  ClerkSignUpPage,
+  CreateOrganizationPage,
+} from "pages/ClerkAuthPages";
 
 //getting the deliverer routes
 import {
@@ -59,6 +66,8 @@ const App = () => {
 //const dispatch= useDispatch();
   //making the necessary calls the db so that we get only the necessary info when we start the application.
   useEffect(() => {
+    // With Clerk on, ClerkBridge loads the user once the session token is ready.
+    if (clerkEnabled) return;
     Store.dispatch(loadUser());
   //  Store.dispatch(getDelivererInfo());
     //Store.dispatch(getAllCustomersDeliverer());
@@ -74,6 +83,7 @@ const App = () => {
   return (
     <div className="App">
       <BrowserRouter>
+        <ClerkShell>
         <ThemeProvider theme={theme}>
           <CssBaseline />
 
@@ -481,7 +491,15 @@ const App = () => {
               />
             </Route>
 
-            <Route path="/login" element={<DelLoginPage />} />
+            {clerkEnabled ? (
+              <>
+                <Route path="/login/*" element={<ClerkSignInPage />} />
+                <Route path="/sign-up/*" element={<ClerkSignUpPage />} />
+                <Route path="/create-organization" element={<CreateOrganizationPage />} />
+              </>
+            ) : (
+              <Route path="/login" element={<DelLoginPage />} />
+            )}
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route
@@ -491,6 +509,7 @@ const App = () => {
           </Routes>
         </ThemeProvider>
         <ToasterProvider />
+        </ClerkShell>
       </BrowserRouter>
     </div>
   );

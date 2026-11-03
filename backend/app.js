@@ -86,7 +86,15 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
   });
 }
 
+// Clerk session verification (only when keys are configured; the cookie login
+// keeps working either way).
+const { clerkConfigured } = require("./services/clerkAuth");
+if (clerkConfigured()) {
+  app.use(require("@clerk/express").clerkMiddleware());
+}
+
 //declaring controllers
+const authRoutes = require("./controller/auth");
 const user = require("./controller/user");
 const customer = require("./controller/customer");
 const deliverer = require("./controller/deliverer");
@@ -106,6 +114,7 @@ const expense = require("./controller/expense");
 const fuelLog = require("./controller/fuelLog");
 
 //using controllers
+app.use("/api/v2/auth", authRoutes);
 app.use("/api/v2/user", user);
 app.use("/api/v2/customer", customer);
 app.use("/api/v2/deliverer", deliverer);
