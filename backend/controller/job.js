@@ -495,7 +495,9 @@ router.put(
             req.body.distance !== undefined
               ? asNumber(req.body.distance)
               : asNumber(job.distance),
-          orderDate: req.body.orderDate ?? job.orderDate,
+          // The edit-job screen has always sent this field as "orderDatee" (typo);
+          // accept both so editing a job's date actually saves.
+          orderDate: req.body.orderDate ?? req.body.orderDatee ?? job.orderDate,
         };
 
         const newContractor = await withSession(
