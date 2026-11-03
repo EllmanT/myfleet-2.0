@@ -43,15 +43,15 @@ const MODULES = [
   {
     key: "quotations",
     label: "Quotations",
-    description: "Send quotes and turn accepted ones into jobs.",
-    available: false,
+    description: "Send quotations to customers and turn accepted ones into invoices.",
+    available: true,
     newTenantDefault: false,
   },
   {
     key: "invoices",
     label: "Invoices & payments",
     description: "Raise invoices, record payments and see what is unpaid.",
-    available: false,
+    available: true,
     newTenantDefault: false,
   },
   {

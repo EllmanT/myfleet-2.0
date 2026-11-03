@@ -4,6 +4,8 @@ const jobSchema = new mongoose.Schema(
   {
     // Owning company (Deliverer). Backfilled by scripts/backfillTenantId.js.
     tenantId: { type: mongoose.Schema.Types.ObjectId, ref: "Deliverer", index: true },
+    // set when this job is on an issued invoice, so it can't be billed twice
+    invoiceId: { type: mongoose.Schema.Types.ObjectId, ref: "Invoice", index: true },
     jobNumber: {
       type: String,
       required: true,

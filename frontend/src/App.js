@@ -6,6 +6,8 @@ import { themeSettings } from "theme";
 import ClerkShell from "component/auth/ClerkShell";
 import ModulesPage from "pages/deliverer/ModulesPage";
 import TripsPage from "pages/deliverer/TripsPage";
+import InvoicesPage from "pages/deliverer/InvoicesPage";
+import QuotationsPage from "pages/deliverer/QuotationsPage";
 import TrailersPage from "pages/deliverer/TrailersPage";
 import DocumentsPage from "pages/deliverer/DocumentsPage";
 import { clerkEnabled } from "utils/clerk";
@@ -186,6 +188,22 @@ const App = () => {
                 element={
                   <DelProtectedRoutes module="tractorUnits">
                     <DocumentsPage />
+                  </DelProtectedRoutes>
+                }
+              />
+              <Route
+                path="/del-invoices"
+                element={
+                  <DelProtectedRoutes module="invoices">
+                    <InvoicesPage />
+                  </DelProtectedRoutes>
+                }
+              />
+              <Route
+                path="/del-quotations"
+                element={
+                  <DelProtectedRoutes module="quotations">
+                    <QuotationsPage />
                   </DelProtectedRoutes>
                 }
               />

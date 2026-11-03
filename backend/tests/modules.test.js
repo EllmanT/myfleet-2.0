@@ -32,7 +32,7 @@ describe("module registry", () => {
   test("legacy companies (no settings) keep every available module on", () => {
     const m = resolveModules(undefined);
     expect(m.expenses && m.fuel && m.analytics).toBe(true);
-    expect(m.invoices).toBe(false); // not built yet
+    expect(m.aiImport).toBe(false); // not built yet
   });
   test("new tenants start lean", () => {
     expect(NEW_TENANT_MODULES).toMatchObject({ expenses: false, fuel: false, analytics: true });
@@ -40,7 +40,7 @@ describe("module registry", () => {
   test("changes are validated", () => {
     expect(applyModuleChanges({}, { nope: true }).ok).toBe(false);
     expect(applyModuleChanges({}, { fuel: "yes" }).ok).toBe(false);
-    expect(applyModuleChanges({}, { invoices: true }).ok).toBe(false);
+    expect(applyModuleChanges({}, { aiImport: true }).ok).toBe(false);
     const ok = applyModuleChanges(NEW_TENANT_MODULES, { fuel: true });
     expect(ok.ok).toBe(true);
     expect(ok.next.fuel).toBe(true);
@@ -67,7 +67,7 @@ describe("module toggles over HTTP", () => {
     const c = await company();
     const res = await request(app).get("/api/v2/tenant/me").set("Cookie", [await userFor(c._id)]);
     expect(res.status).toBe(200);
-    expect(res.body.modules).toMatchObject({ expenses: true, fuel: true, analytics: true, invoices: false });
+    expect(res.body.modules).toMatchObject({ expenses: true, fuel: true, analytics: true, aiImport: false });
     expect(res.body.plan).toBe("free");
     expect(res.body.registry.length).toBeGreaterThan(3);
   });
@@ -109,7 +109,7 @@ describe("module toggles over HTTP", () => {
     const cookie = [await userFor(c._id)];
     const unknown = await request(app).put("/api/v2/tenant/modules").set("Cookie", cookie).send({ modules: { rockets: true } });
     expect(unknown.status).toBe(400);
-    const future = await request(app).put("/api/v2/tenant/modules").set("Cookie", cookie).send({ modules: { invoices: true } });
+    const future = await request(app).put("/api/v2/tenant/modules").set("Cookie", cookie).send({ modules: { aiImport: true } });
     expect(future.status).toBe(400);
   });
 });

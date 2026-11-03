@@ -63,6 +63,8 @@ const tripSchema = new mongoose.Schema(
     deliveredAt: { type: Date },
 
     costLines: { type: [costLineSchema], default: [] },
+    // set when a trip is on an issued invoice, so it can't be billed twice
+    invoiceId: { type: mongoose.Schema.Types.ObjectId, ref: "Invoice" },
     notes: { type: String, default: "" },
     source: { type: String, default: "manual" },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

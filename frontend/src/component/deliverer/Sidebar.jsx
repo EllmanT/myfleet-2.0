@@ -36,6 +36,8 @@ import {
   TodayOutlined,
   TrendingUpOutlined,
   TuneOutlined,
+  RequestQuoteOutlined,
+  ReceiptOutlined,
   RouteOutlined,
   RvHookupOutlined,
   DescriptionOutlined,
@@ -141,6 +143,23 @@ const Sidebar = ({
     //    icon: <TrendingUpOutlined />,
     //    name: "performance",
     // },
+    {
+      text: "Billing",
+      icon: null,
+      module: ["quotations", "invoices"],
+    },
+    {
+      text: "Quotations",
+      icon: <RequestQuoteOutlined />,
+      name: "quotations",
+      module: "quotations",
+    },
+    {
+      text: "Invoices",
+      icon: <ReceiptOutlined />,
+      name: "invoices",
+      module: "invoices",
+    },
     {
       text: "Trucking",
       icon: null,
