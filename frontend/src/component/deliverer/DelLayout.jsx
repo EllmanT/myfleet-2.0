@@ -1,5 +1,5 @@
 import { Box, useMediaQuery } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
@@ -7,7 +7,11 @@ import { Outlet } from "react-router-dom";
 
 const DelLayout = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(isNonMobile);
+  // open on desktop, closed on a phone (where it covers the page)
+  useEffect(() => {
+    setIsSidebarOpen(isNonMobile);
+  }, [isNonMobile]);
   const { user } = useSelector((state) => state.user);
   return (
     <Box display={isNonMobile ? "flex" : "block"} width="100%" height="100%">

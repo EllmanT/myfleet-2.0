@@ -48,8 +48,8 @@ const ActivationPage = () => {
         justifyContent={"center"}
         borderRadius={"20px"}
         border="solid 1px"
-        borderColor={"#cca752"}
-        boxShadow={"1px 1px 2px #cca752"}
+        borderColor="divider"
+        boxShadow="none"
       >
         <Box
           display="flex"

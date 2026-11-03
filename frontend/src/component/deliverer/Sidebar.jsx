@@ -11,9 +11,10 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
+import Wordmark from "./Wordmark";
 import {
   AccountBalanceWalletOutlined,
   AdminPanelSettingsOutlined,
@@ -237,13 +238,23 @@ const Sidebar = ({
   );
 
   const { pathname } = useLocation();
-  const [active, setActive] = useState();
   const theme = useTheme();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setActive(pathname.substring(1));
-  }, [pathname]);
+  // Where each item goes. Analytics items go to a path that includes the company id.
+  const targetFor = (name) =>
+    name === daily
+      ? `/revenue-analytics/daily-data/${companyId}`
+      : name === monthly
+      ? `/revenue-analytics/monthly/${companyId}`
+      : name === breakdown
+      ? `/revenue-analytics/breakdown/${companyId}`
+      : `/del-${name}`;
+  // An item is active when the current page is its page (or one under it).
+  const isActive = (name) => {
+    const target = targetFor(name);
+    return pathname === target || pathname.startsWith(`${target}/`);
+  };
   return (
     <div component="nav">
       {isSidebarOpen && (
@@ -268,9 +279,7 @@ const Sidebar = ({
             <Box m="1rem 2rem 2rem 3rem">
               <FlexBetween color={theme.palette.secondary.main}>
                 <Box alignItems={"center"} gap="1.5rem" display={"flex"}>
-                  <Typography variant="h3" fontWeight={"bold"}>
-                    myFleet
-                  </Typography>
+                  <Wordmark width={112} />
                 </Box>
 
                 {!isNonMobile && (
@@ -290,31 +299,22 @@ const Sidebar = ({
                     </Typography>
                   );
                 }
-                const lcText = text.toLowerCase();
                 return (
                   <ListItem key={text} disablePadding>
                     <ListItemButton
+                      aria-current={isActive(name) ? "page" : undefined}
                       onClick={() => {
-                        name === daily &&
-                          navigate(
-                            `/revenue-analytics/daily-data/${companyId}`
-                          );
-                        name === monthly &&
-                          navigate(`/revenue-analytics/monthly/${companyId}`);
-                        name === breakdown &&
-                          navigate(`/revenue-analytics/breakdown/${companyId}`);
-                        name !== daily &&
-                          name !== monthly &&
-                          name !== breakdown &&
-                          navigate(`del-${name}`);
+                        navigate(targetFor(name));
+                        // on a phone the menu covers the page, so close it after choosing
+                        if (!isNonMobile) setIsSidebarOpen(false);
                       }}
                       sx={{
                         backgroundColor:
-                          active === lcText
+                          isActive(name)
                             ? theme.palette.secondary[300]
                             : "transparent",
                         color:
-                          active === lcText
+                          isActive(name)
                             ? theme.palette.primary[600]
                             : theme.palette.secondary[100],
                       }}
@@ -323,7 +323,7 @@ const Sidebar = ({
                         sx={{
                           ml: "2rem",
                           color:
-                            active === lcText
+                            isActive(name)
                               ? theme.palette.primary[600]
                               : theme.palette.secondary[100],
                         }}
@@ -360,7 +360,7 @@ const Sidebar = ({
                   fontSize={"0.9rem"}
                   sx={{ color: theme.palette.secondary[100] }}
                 >
-                  Tapiwa Muranda
+                  {user?.name || "Signed in"}
                 </Typography>
                 <Typography
                   fontSize={"0.8rem"}
