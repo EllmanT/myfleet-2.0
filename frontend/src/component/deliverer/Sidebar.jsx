@@ -36,6 +36,9 @@ import {
   TodayOutlined,
   TrendingUpOutlined,
   TuneOutlined,
+  RouteOutlined,
+  RvHookupOutlined,
+  DescriptionOutlined,
 } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 
@@ -139,6 +142,29 @@ const Sidebar = ({
     //    name: "performance",
     // },
     {
+      text: "Trucking",
+      icon: null,
+      module: ["crossBorder", "tractorUnits"],
+    },
+    {
+      text: "Trips",
+      icon: <RouteOutlined />,
+      name: "trips",
+      module: "crossBorder",
+    },
+    {
+      text: "Trailers",
+      icon: <RvHookupOutlined />,
+      name: "trailers",
+      module: "tractorUnits",
+    },
+    {
+      text: "Documents",
+      icon: <DescriptionOutlined />,
+      name: "documents",
+      module: "tractorUnits",
+    },
+    {
       text: "Management",
       icon: null,
     },
@@ -177,7 +203,11 @@ const Sidebar = ({
   // Until the settings load, optional items stay hidden to avoid a flash.
   const { modules, modulesLoaded } = useSelector((state) => state.user);
   const visibleNavItems = navItems.filter(
-    (item) => !item.module || (modulesLoaded && modules && modules[item.module])
+    (item) =>
+      !item.module ||
+      (modulesLoaded &&
+        modules &&
+        [].concat(item.module).some((key) => modules[key]))
   );
 
   const { pathname } = useLocation();

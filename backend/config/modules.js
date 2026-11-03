@@ -29,15 +29,15 @@ const MODULES = [
   {
     key: "tractorUnits",
     label: "Tractor units (horse + trailer)",
-    description: "Track horses and trailers as separate assets.",
-    available: false,
+    description: "Trailers as separate assets, plus licence, Yellow Card and permit expiry reminders.",
+    available: true,
     newTenantDefault: false,
   },
   {
     key: "crossBorder",
     label: "Cross-border trips",
-    description: "Border posts, customs documents and trip costs.",
-    available: false,
+    description: "Whole-trip records with route, price, border crossings and trip costs.",
+    available: true,
     newTenantDefault: false,
   },
   {

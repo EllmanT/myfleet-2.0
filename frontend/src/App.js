@@ -5,6 +5,9 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { themeSettings } from "theme";
 import ClerkShell from "component/auth/ClerkShell";
 import ModulesPage from "pages/deliverer/ModulesPage";
+import TripsPage from "pages/deliverer/TripsPage";
+import TrailersPage from "pages/deliverer/TrailersPage";
+import DocumentsPage from "pages/deliverer/DocumentsPage";
 import { clerkEnabled } from "utils/clerk";
 import {
   ClerkSignInPage,
@@ -159,6 +162,30 @@ const App = () => {
                 element={
                   <DelProtectedRoutes>
                     <DelDashRevenuePage />
+                  </DelProtectedRoutes>
+                }
+              />
+              <Route
+                path="/del-trips"
+                element={
+                  <DelProtectedRoutes module="crossBorder">
+                    <TripsPage />
+                  </DelProtectedRoutes>
+                }
+              />
+              <Route
+                path="/del-trailers"
+                element={
+                  <DelProtectedRoutes module="tractorUnits">
+                    <TrailersPage />
+                  </DelProtectedRoutes>
+                }
+              />
+              <Route
+                path="/del-documents"
+                element={
+                  <DelProtectedRoutes module="tractorUnits">
+                    <DocumentsPage />
                   </DelProtectedRoutes>
                 }
               />

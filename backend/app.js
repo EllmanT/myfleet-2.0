@@ -96,6 +96,9 @@ if (clerkConfigured()) {
 //declaring controllers
 const authRoutes = require("./controller/auth");
 const tenantRoutes = require("./controller/tenant");
+const tripRoutes = require("./controller/trip");
+const trailerRoutes = require("./controller/trailer");
+const complianceRoutes = require("./controller/compliance");
 const user = require("./controller/user");
 const customer = require("./controller/customer");
 const deliverer = require("./controller/deliverer");
@@ -117,6 +120,9 @@ const fuelLog = require("./controller/fuelLog");
 //using controllers
 app.use("/api/v2/auth", authRoutes);
 app.use("/api/v2/tenant", tenantRoutes);
+app.use("/api/v2/trip", tripRoutes);
+app.use("/api/v2/trailer", trailerRoutes);
+app.use("/api/v2/compliance", complianceRoutes);
 app.use("/api/v2/user", user);
 app.use("/api/v2/customer", customer);
 app.use("/api/v2/deliverer", deliverer);
