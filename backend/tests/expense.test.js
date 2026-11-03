@@ -127,3 +127,27 @@ describe("expense API", () => {
     expect(del.status).toBe(404);
   });
 });
+
+describe("expense index", () => {
+  jest.setTimeout(60000);
+  let server;
+  beforeAll(async () => {
+    server = await MongoMemoryServer.create();
+    await require("mongoose").connect(server.getUri());
+  });
+  afterAll(async () => {
+    await require("mongoose").disconnect();
+    await server.stop();
+  });
+  test("a company can save many manual expenses, but not two with the same import key", async () => {
+    const mongoose = require("mongoose");
+    const Expense = require("../model/expense");
+    await Expense.syncIndexes();
+    const companyId = new mongoose.Types.ObjectId();
+    const mk = (extra = {}) => ({ companyId, type: "expense", date: new Date(), category: "fuel", amount: 5, ...extra });
+    await Expense.create(mk());
+    await Expense.create(mk());
+    await Expense.create(mk({ importKey: "k1" }));
+    await expect(Expense.create(mk({ importKey: "k1" }))).rejects.toMatchObject({ code: 11000 });
+  });
+});

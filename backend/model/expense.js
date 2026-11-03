@@ -55,7 +55,14 @@ const ExpenseSchema = new mongoose.Schema(
 
 ExpenseSchema.index({ companyId: 1, date: 1 });
 ExpenseSchema.index({ vehicleId: 1, date: 1 });
-ExpenseSchema.index({ companyId: 1, importKey: 1 }, { unique: true, sparse: true });
+// Only expenses that HAVE an import key are kept unique. (A compound `sparse` index
+// still indexes documents missing importKey, as null, so a company's second manual
+// expense failed with a duplicate-key error.) Existing databases need
+// scripts/fixExpenseIndex.js once, because an index can't be changed in place.
+ExpenseSchema.index(
+  { companyId: 1, importKey: 1 },
+  { unique: true, partialFilterExpression: { importKey: { $type: "string" } } }
+);
 
 const Expense = mongoose.model("Expense", ExpenseSchema);
 Expense.EXPENSE_CATEGORIES = EXPENSE_CATEGORIES;

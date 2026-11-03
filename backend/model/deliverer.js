@@ -89,6 +89,9 @@ const delivererSchema = new mongoose.Schema(
     // Which optional modules are switched on. Missing on companies that existed
     // before module toggles; see config/modules.js (resolveModules).
     modules: { type: mongoose.Schema.Types.Mixed },
+    // Invented data for screenshots and demos. scripts/seedDemoTenant.js only ever
+    // creates, resets or deletes companies with this flag.
+    isDemo: { type: Boolean, default: false, index: true },
   },
   { timestamps: true }
 );
