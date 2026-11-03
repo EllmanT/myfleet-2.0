@@ -55,6 +55,13 @@ const MODULES = [
     newTenantDefault: false,
   },
   {
+    key: "maintenance",
+    label: "Maintenance & tyres",
+    description: "Service reminders, workshop records, and tyre life and cost per km.",
+    available: true,
+    newTenantDefault: false,
+  },
+  {
     key: "aiImport",
     label: "AI logbook import",
     description: "Turn photos of logbooks into jobs, with review before saving.",

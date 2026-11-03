@@ -36,6 +36,7 @@ import {
   TodayOutlined,
   TrendingUpOutlined,
   TuneOutlined,
+  BuildOutlined,
   RequestQuoteOutlined,
   ReceiptOutlined,
   RouteOutlined,
@@ -182,6 +183,12 @@ const Sidebar = ({
       icon: <DescriptionOutlined />,
       name: "documents",
       module: "tractorUnits",
+    },
+    {
+      text: "Maintenance",
+      icon: <BuildOutlined />,
+      name: "maintenance",
+      module: "maintenance",
     },
     {
       text: "Management",

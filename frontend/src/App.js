@@ -7,6 +7,7 @@ import ClerkShell from "component/auth/ClerkShell";
 import ModulesPage from "pages/deliverer/ModulesPage";
 import TripsPage from "pages/deliverer/TripsPage";
 import InvoicesPage from "pages/deliverer/InvoicesPage";
+import MaintenancePage from "pages/deliverer/MaintenancePage";
 import QuotationsPage from "pages/deliverer/QuotationsPage";
 import TrailersPage from "pages/deliverer/TrailersPage";
 import DocumentsPage from "pages/deliverer/DocumentsPage";
@@ -188,6 +189,14 @@ const App = () => {
                 element={
                   <DelProtectedRoutes module="tractorUnits">
                     <DocumentsPage />
+                  </DelProtectedRoutes>
+                }
+              />
+              <Route
+                path="/del-maintenance"
+                element={
+                  <DelProtectedRoutes module="maintenance">
+                    <MaintenancePage />
                   </DelProtectedRoutes>
                 }
               />
