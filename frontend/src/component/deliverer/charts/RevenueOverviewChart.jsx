@@ -21,7 +21,8 @@ const RevenueOverviewChart = ({ isDashboard = false, view }) => {
     };
     const totalExpensesLine = {
       id: "totalExpenses",
-      color: theme.palette.secondary[600],
+      // ochre: costs read as a different thing from revenue (green)
+      color: theme.palette.warning.main,
       data: [],
     };
 
@@ -40,6 +41,7 @@ const RevenueOverviewChart = ({ isDashboard = false, view }) => {
   return (
     <ResponsiveLine
       data={formattedData}
+      colors={{ datum: "color" }}
       margin={{ top: 20, right: 110, bottom: 50, left: 60 }}
       xScale={{ type: "point" }}
       yScale={{
