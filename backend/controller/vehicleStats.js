@@ -4,6 +4,7 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ErrorHandler = require("../utils/ErrorHandler");
 const VehicleStats = require("../model/vehicleStats");
 const Contractor = require("../model/contractor");
+const { requireOwnership } = require("../middleware/tenantAccess");
 const router = express.Router();
 
 const parseYear = (rawYear) => {
@@ -23,6 +24,7 @@ const parseYear = (rawYear) => {
 router.get(
   "/get-vehicleStats/:vehicleId",
   isAuthenticated,
+  requireOwnership("vehicle_ids", (req) => req.params.vehicleId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const currentYear = parseYear(req.query.year);

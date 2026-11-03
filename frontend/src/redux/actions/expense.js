@@ -62,10 +62,10 @@ export const deleteVehicleExpense =
       });
 
       const { data } = await axios.delete(
-        `${server}/expense/delete-vehicle-expense/${expenseId}`,
+        `${server}/expenses/vehicle/delete-vehicle-expense/${expenseId}`,
         {
           withCredentials: true,
-          vehicleId,
+          data: { vehicleId },
         }
       );
 
@@ -238,10 +238,10 @@ export const deleteEmployeeExpense =
       });
 
       const { data } = await axios.delete(
-        `${server}/expense/delete-vehicle-expense/${expenseId}`,
+        `${server}/expenses/vehicle/delete-vehicle-expense/${expenseId}`,
         {
           withCredentials: true,
-          vehicleId,
+          data: { vehicleId },
         }
       );
 

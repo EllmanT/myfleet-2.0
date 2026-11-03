@@ -3,6 +3,7 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const { upload } = require("../multer");
 const { isAuthenticated } = require("../middleware/auth");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const { requireOwnership } = require("../middleware/tenantAccess");
 const router = express.Router();
 const EmployeeExpense = require("../model/employeeExpenses");
 const OverallStats = require("../model/overallStats");
@@ -12,15 +13,16 @@ const Deliverer = require("../model/deliverer");
 //create employee expenses
 router.post(
   "/create-employee-expense",
-  upload.single("file"),
   isAuthenticated,
+  upload.single("file"),
+  requireOwnership("driver_ids", (req) => req.body.employeeId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { employeeId, cost, description, date } = req.body;
 
       const dateExp = new Date(date);
       const month = dateExp.toLocaleString("en-US", { month: "long" });
-      year = dateExp.getFullYear();
+      const year = dateExp.getFullYear();
 
       const overallStats = await OverallStats.findOne({
         companyId: req.user.companyId,
@@ -44,6 +46,7 @@ router.post(
 
       let employeeExpenses = await EmployeeExpense.findOne({
         employeeId: employeeId,
+        companyId: String(req.user.companyId),
       });
 
       if (employeeExpenses) {
@@ -58,7 +61,7 @@ router.post(
         // If employee expenses don't exist, create a new document with the expenseData array
         employeeExpenses = await EmployeeExpense.create({
           employeeId: employeeId,
-          companyId: req.user.companyId,
+          companyId: String(req.user.companyId),
           expenseData: [
             {
               date: date,
@@ -168,6 +171,7 @@ router.post(
 router.get(
   "/get-employee-expenses/:employeeId",
   isAuthenticated,
+  requireOwnership("driver_ids", (req) => req.params.employeeId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const employeeId = req.params.employeeId;

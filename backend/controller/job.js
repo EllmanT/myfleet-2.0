@@ -1033,6 +1033,7 @@ router.get(
 router.get(
   "/get-latest-jobs-contractor/:contractorId",
   isAuthenticated,
+  requireOwnership("contractor_ids", (req) => req.params.contractorId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const contractorId = req.params.contractorId;
@@ -1204,6 +1205,7 @@ router.get(
 router.get(
   "/get-latest-jobs-vehicle/:vehicleId",
   isAuthenticated,
+  requireOwnership("vehicle_ids", (req) => req.params.vehicleId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const vehicleId = req.params.vehicleId;
@@ -1335,6 +1337,7 @@ router.get(
 router.get(
   "/get-latest-jobs-driver/:driverId",
   isAuthenticated,
+  requireOwnership("driver_ids", (req) => req.params.driverId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const driverId = req.params.driverId;
@@ -1530,6 +1533,7 @@ router.get(
 router.get(
   "/get-all-jobsReport-contractor/:contractorId",
   isAuthenticated,
+  requireOwnership("contractor_ids", (req) => req.params.contractorId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const contractorId = req.params.contractorId;
@@ -1594,6 +1598,7 @@ router.get(
 router.get(
   "/get-all-jobsReport-driver/:driverId",
   isAuthenticated,
+  requireOwnership("driver_ids", (req) => req.params.driverId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const driverId = req.params.driverId;
@@ -1659,6 +1664,7 @@ router.get(
 router.get(
   "/get-all-jobsReport-vehicle/:vehicleId",
   isAuthenticated,
+  requireOwnership("vehicle_ids", (req) => req.params.vehicleId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const vehicleId = req.params.vehicleId;

@@ -4,6 +4,7 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ErrorHandler = require("../utils/ErrorHandler");
 const ContractorStats = require("../model/contractorStats");
 const Contractor = require("../model/contractor");
+const { requireOwnership } = require("../middleware/tenantAccess");
 const router = express.Router();
 
 //getting the contractorStats for the specific contractor
@@ -11,6 +12,7 @@ const router = express.Router();
 router.get(
   "/get-contractorStats/:contractorId",
   isAuthenticated,
+  requireOwnership("contractor_ids", (req) => req.params.contractorId),
   catchAsyncErrors(async (req, res, next) => {
     try {
 

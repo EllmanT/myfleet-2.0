@@ -6,6 +6,7 @@ const Deliverer = require("../model/deliverer");
 const Contractor = require("../model/contractor");
 const { isAuthenticated } = require("../middleware/auth");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const { requireOwnership, companyOwns } = require("../middleware/tenantAccess");
 const router = express.Router();
 const VehicleExpense = require("../model/vehicleExpense");
 const OverallStats = require("../model/overallStats");
@@ -14,15 +15,19 @@ const VehicleStats = require("../model/vehicleStats");
 //create vehicle expenses
 router.post(
   "/create-vehicle-expense",
-  upload.single("file"),
   isAuthenticated,
+  upload.single("file"),
+  requireOwnership("vehicle_ids", (req) => req.body.vehicleId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { vehicleId, driverId, cost, description, date } = req.body;
+      if (driverId && !(await companyOwns(req.user, "driver_ids", driverId))) {
+        return next(new ErrorHandler("Not found", 404));
+      }
 
       const dateExp = new Date(date);
       const month = dateExp.toLocaleString("en-US", { month: "long" });
-      year = dateExp.getFullYear();
+      const year = dateExp.getFullYear();
 
       const overallStats = await OverallStats.findOne({
         companyId: req.user.companyId,
@@ -47,6 +52,7 @@ router.post(
 
       let vehicleExpenses = await VehicleExpense.findOne({
         vehicleId: vehicleId,
+        companyId: String(req.user.companyId),
       });
 
       if (vehicleExpenses) {
@@ -61,7 +67,7 @@ router.post(
         // If vehicle expenses don't exist, create a new document with the expenseData array
         vehicleExpenses = await VehicleExpense.create({
           vehicleId: vehicleId,
-          companyId: req.user.companyId,
+          companyId: String(req.user.companyId),
           expenseData: [
             {
               date: date,
@@ -175,6 +181,7 @@ router.post(
 router.get(
   "/get-vehicle-expenses/:vehicleId",
   isAuthenticated,
+  requireOwnership("vehicle_ids", (req) => req.params.vehicleId),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const vehicleId = req.params.vehicleId;
@@ -248,71 +255,23 @@ router.get(
 );
 
 // update customer info
-router.put(
-  "/update-vehicle/:expenseId",
-  isAuthenticated,
-  catchAsyncErrors(async (req, res, next) => {
-    try {
-      const { id, name, phoneNumber, city, address } = req.body;
-
-      const customer = await Customer.findById(id);
-
-      if (!customer) {
-        return next(new ErrorHandler("User not found", 400));
-      }
-      if (!id) {
-        return next(new ErrorHandler("name required"));
-      }
-
-      customer.name = name;
-      customer.city = city;
-      customer.address = address;
-      customer.phoneNumber = phoneNumber;
-
-      await customer.save();
-
-      res.status(201).json({
-        success: true,
-        customer,
-      });
-    } catch (error) {
-      return next(new ErrorHandler(error.message, 500));
-    }
-  })
-);
-
 router.delete(
   "/delete-vehicle-expense/:expenseId",
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { expenseId } = req.params;
-      const { vehicleId } = req.body;
-
-      const vehicleExpenses = await VehicleExpense.find({
-        vehicleId: vehicleId,
-        companyId: req.params.companyId,
-      });
-      if (!vehicleExpenses) {
-        return next(
-          new ErrorHandler("There is no vehicleExpense with this id", 404)
-        );
-      }
-
-      // Find the index of the expense in the expensedata array
-      const expenseIndex = vehicleExpenses.expensedata.findIndex(
-        (expense) => expense._id.toString() === expenseId
+      // Only this company's expense records can ever match.
+      const result = await VehicleExpense.updateOne(
+        {
+          companyId: String(req.user.companyId),
+          "expenseData._id": expenseId,
+        },
+        { $pull: { expenseData: { _id: expenseId } } }
       );
-
-      if (expenseIndex === -1) {
+      if (!result.modifiedCount) {
         return next(new ErrorHandler("Expense not found", 404));
       }
-
-      // Remove the expense from the expensedata array
-      vehicleExpenses.expensedata.splice(expenseIndex, 1);
-
-      // Save the updated vehicleExpense document
-      await vehicleExpenses.save();
 
       res.status(200).json({
         success: true,

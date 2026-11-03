@@ -7,7 +7,7 @@ const { upload } = require("../multer");
 const ErrorHandler = require("../utils/ErrorHandler");
 const { isAuthenticated } = require("../middleware/auth");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const { requireRole, GLOBAL_ROLES } = require("../middleware/tenantAccess");
+const { requireRole, GLOBAL_ROLES, isGlobalAdmin } = require("../middleware/tenantAccess");
 const { NEW_TENANT_MODULES } = require("../config/modules");
 
 router.post(
@@ -123,7 +123,11 @@ router.get(
         ],
       };
       // Query for the customers using the search filter
-      const pageDeliverers = await Deliverer.find(searchFilter)
+      // A company only ever sees itself. Only platform admins see every company.
+      const scopedFilter = isGlobalAdmin(req.user)
+        ? searchFilter
+        : { $and: [{ _id: req.user.companyId }, searchFilter] };
+      const pageDeliverers = await Deliverer.find(scopedFilter)
         .sort(sortOptions)
         .lean();
 
@@ -135,8 +139,8 @@ router.get(
       }
 
       // Paginate the results manually based on the requested page and page size
-      const startIndex = page * pageSize;
-      const endIndex = startIndex + pageSize;
+      const startIndex = Number(page) * Number(pageSize);
+      const endIndex = startIndex + Number(pageSize);
       const paginatedDeliverers = pageDeliverers.slice(startIndex, endIndex);
 
       const totalCount = pageDeliverers.length;
@@ -155,6 +159,7 @@ router.get(
 router.put(
   "/update-deliverer",
   isAuthenticated,
+  requireRole("Deliverer Admin", ...GLOBAL_ROLES),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const {
@@ -168,19 +173,21 @@ router.put(
         vehiclesType,
       } = req.body;
 
+      // A company admin can only change their own company.
+      if (!isGlobalAdmin(req.user) && String(id) !== String(req.user.companyId)) {
+        return next(new ErrorHandler("Not found", 404));
+      }
       const deliverer = await Deliverer.findById(id);
 
       if (!deliverer) {
-        return next(new ErrorHandler("Deliverer is not found", 400));
+        return next(new ErrorHandler("Deliverer is not found", 404));
       }
 
-      deliverer.companyName = companyName;
-      deliverer.address = address;
-      deliverer.city = city;
-      deliverer.contact = contact;
-      deliverer.goodsType = goodsType;
-      deliverer.deliveryType = deliveryType;
-      deliverer.vehiclesType = vehiclesType;
+      // Only overwrite what was actually sent.
+      const changes = { companyName, address, city, contact, goodsType, deliveryType, vehiclesType };
+      for (const [key, value] of Object.entries(changes)) {
+        if (value !== undefined) deliverer[key] = value;
+      }
 
       await deliverer.save();
 
