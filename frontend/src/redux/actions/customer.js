@@ -85,7 +85,7 @@ export const getAllCustomersDeliverer = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "getAllCustomersDelivererFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -123,7 +123,7 @@ export const getAllCustomersPage =
     } catch (error) {
       dispatch({
         type: "getAllCustomersPageFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -148,7 +148,7 @@ export const updateCustomer =
     } catch (error) {
       dispatch({
         type: "updateCustomerFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -174,7 +174,7 @@ export const deleteCustomer = (customerId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "deleteCustomerFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };

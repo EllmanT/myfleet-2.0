@@ -71,7 +71,7 @@ export const createJob = (jobs) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "loadCreateJobFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -127,7 +127,7 @@ export const updateJob =
     } catch (error) {
       dispatch({
         type: "updateJobFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -154,7 +154,7 @@ export const deleteJob = (jobId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "deleteJobFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -191,7 +191,7 @@ export const getAllJobsPage =
     } catch (error) {
       dispatch({
         type: "getAllJobsPageFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -227,7 +227,7 @@ export const getLatestJobsDeliverer =
     } catch (error) {
       dispatch({
         type: "getLatestJobsDelivererFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -252,7 +252,7 @@ export const getLatestJobsVehicle = (vehicleId, year) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "getLatestJobsVehicleFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -277,7 +277,7 @@ export const getLatestJobsDriver = (driverId, year) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "getLatestJobsDriverFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -302,7 +302,7 @@ export const getLatestJobsContractor =
   } catch (error) {
     dispatch({
       type: "getLatestJobsContractorFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -334,7 +334,7 @@ export const getAllJobsReportDeliverer =
   } catch (error) {
     dispatch({
       type: "getAllJobsReportDelivererFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
   };
@@ -366,7 +366,7 @@ export const getAllJobsReportContr =
   } catch (error) {
     dispatch({
       type: "getAllJobsReportContrFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
   };
@@ -398,7 +398,7 @@ export const getAllJobsReportDriver =
   } catch (error) {
     dispatch({
       type: "getAllJobsReportDriverFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
   };
@@ -430,7 +430,7 @@ export const getAllJobsReportVehicle =
   } catch (error) {
     dispatch({
       type: "getAllJobsReportVehicleFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
   };

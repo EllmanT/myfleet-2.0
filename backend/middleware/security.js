@@ -48,11 +48,12 @@ const authLimiter = rateLimit({
   limit: 20,
 });
 
-// Everything else under /api: generous, aimed at runaway scripts.
+// Everything else under /api: generous, aimed at runaway scripts. Offices share one IP address and the
+// dashboard makes many calls per page, so this must allow several people.
 const apiLimiter = rateLimit({
   ...limiterBase,
   windowMs: 15 * 60 * 1000,
-  limit: 1500,
+  limit: 6000,
 });
 
 module.exports = { sanitizeInput, authLimiter, apiLimiter, stripOperators };

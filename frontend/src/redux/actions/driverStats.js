@@ -19,7 +19,7 @@ export const getDriverStats = (driverId, year) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "getDriverStatsFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };

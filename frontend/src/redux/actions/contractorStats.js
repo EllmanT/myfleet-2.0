@@ -23,7 +23,7 @@ export const getContractorStats = (contractorId, year) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "getContractorStatsFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };

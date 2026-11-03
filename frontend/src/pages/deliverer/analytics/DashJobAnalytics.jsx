@@ -38,7 +38,6 @@ import { getAllContractorsPage } from "redux/actions/contractor";
 import { getAllDeliverersPage } from "redux/actions/deliverer";
 import { getLatestJobsDeliverer, getLatestJobsPage } from "redux/actions/job";
 import { getAllOverallStatsDeliverer } from "redux/actions/overallStats";
-import { loadUser } from "redux/actions/user";
 
 import html2pdf from "html2pdf.js";
 
@@ -74,7 +73,6 @@ const DashJobAnalytics = () => {
     // dispatch(getAllOverallStatsDeliverer());
     dispatch(getLatestJobsDeliverer(undefined, undefined, undefined, undefined, undefined, undefined, undefined, selectedYear));
     dispatch(getAllDeliverersPage());
-    dispatch(loadUser());
   }, [dispatch, selectedYear]);
 
   let highestRevenue = 0;

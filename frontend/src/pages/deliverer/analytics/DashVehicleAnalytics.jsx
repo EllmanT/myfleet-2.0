@@ -42,7 +42,6 @@ import {
   getLatestJobsVehicle,
 } from "redux/actions/job";
 import { getAllOverallStatsDeliverer } from "redux/actions/overallStats";
-import { loadUser } from "redux/actions/user";
 import { getAllVehiclesPage } from "redux/actions/vehicle";
 import { getVehicleStats } from "redux/actions/vehicleStats";
 import html2pdf from "html2pdf.js";
@@ -84,7 +83,6 @@ const DashVehicleAnalytics = () => {
     dispatch(getVehicleStats(vehicleId, selectedYear));
     dispatch(getLatestJobsVehicle(vehicleId, selectedYear));
     dispatch(getAllVehiclesPage());
-    dispatch(loadUser());
   }, [dispatch, vehicleId, selectedYear]);
 
   let highestRevenue = 0;

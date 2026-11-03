@@ -42,7 +42,6 @@ import {
   getLatestJobsDriver,
 } from "redux/actions/job";
 import { getAllOverallStatsDeliverer } from "redux/actions/overallStats";
-import { loadUser } from "redux/actions/user";
 import { getAllDriversPage } from "redux/actions/driver";
 import { getDriverStats } from "redux/actions/driverStats";
 import html2pdf from "html2pdf.js";
@@ -85,7 +84,6 @@ const DashDriverAnalytics = () => {
     dispatch(getDriverStats(driverId, selectedYear));
     dispatch(getLatestJobsDriver(driverId, selectedYear));
     dispatch(getAllDriversPage());
-    dispatch(loadUser());
   }, [dispatch, driverId, selectedYear]);
 
   let highestRevenue = 0;

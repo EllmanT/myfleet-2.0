@@ -22,7 +22,7 @@ export const createDeliverer = (newForm) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "createDelivererFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -43,7 +43,7 @@ export const getDelivererInfo = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "getDelivererInfoFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -77,7 +77,7 @@ export const getAllDeliverersPage =
     } catch (error) {
       dispatch({
         type: "getAllDeliverersPageFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -125,7 +125,7 @@ export const updateDeliverer =
     } catch (error) {
       dispatch({
         type: "updateDelivererFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };

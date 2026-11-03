@@ -19,7 +19,7 @@ export const getVehicleStats = (vehicleId, year) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "getVehicleStatsFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };

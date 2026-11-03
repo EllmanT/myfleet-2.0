@@ -6,7 +6,9 @@ const initialState = {
 
 export const userReducer = createReducer(initialState, {
   loadUserRequest: (state) => {
-    state.loading = true;
+    // Only blank the page while the very first load is happening. A refresh of
+    // an already-loaded user must not unmount the page that asked for it.
+    if (!state.isAuthenticated) state.loading = true;
   },
   loadUserSuccess: (state, action) => {
     state.user = action.payload;

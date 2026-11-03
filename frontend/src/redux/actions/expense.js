@@ -22,7 +22,7 @@ export const createVehicleExpense = (newForm) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "loadCreateVehicleExpenseFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -48,7 +48,7 @@ export const updateVehicleExpense =
     } catch (error) {
       dispatch({
         type: "updateExpenseFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -76,7 +76,7 @@ export const deleteVehicleExpense =
     } catch (error) {
       dispatch({
         type: "deleteExpenseFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -109,7 +109,7 @@ export const getAllExpensesVehicle =
     } catch (error) {
       dispatch({
         type: "getVehicleExpensesFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -139,7 +139,7 @@ export const getAllExpensesDeliverer =
     } catch (error) {
       dispatch({
         type: "getAllExpensesFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -165,7 +165,7 @@ export const creatEmployeeExpense = (newForm) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "loadCreateEmployeeExpenseFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -198,7 +198,7 @@ export const getAllExpensesEmployee =
     } catch (error) {
       dispatch({
         type: "getEmployeeExpensesFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -224,7 +224,7 @@ export const updateEmployeeExpense =
     } catch (error) {
       dispatch({
         type: "updateExpenseFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -252,7 +252,7 @@ export const deleteEmployeeExpense =
     } catch (error) {
       dispatch({
         type: "deleteExpenseFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };

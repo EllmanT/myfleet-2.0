@@ -21,7 +21,7 @@ export const createContractor = (newForm) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "loadCreateContractorFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -48,7 +48,7 @@ export const getAllContractorsDeliverer =
   } catch (error) {
     dispatch({
       type: "getAllContrDelFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -78,7 +78,7 @@ export const getAllContractorsPage =
     } catch (error) {
       dispatch({
         type: "getAllContrPageFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -130,7 +130,7 @@ export const updateContractor =
     } catch (error) {
       dispatch({
         type: "updateContractorFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -156,7 +156,7 @@ export const deleteContractor = (contractorId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "deleteContractorFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };

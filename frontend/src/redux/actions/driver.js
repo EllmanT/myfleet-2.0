@@ -21,7 +21,7 @@ export const createDriver = (newForm) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "loadCreateDriverFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -43,7 +43,7 @@ export const getAllDriversCompany = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "getAllDriversCompanyFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -74,7 +74,7 @@ export const getAllDriversPage =
     } catch (error) {
       dispatch({
         type: "getAllDriversPageFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -109,7 +109,7 @@ export const updateDriver =
     } catch (error) {
       dispatch({
         type: "updateDriverFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -135,7 +135,7 @@ export const deleteDriver = (driverId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "deleteDriverFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };

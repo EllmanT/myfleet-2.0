@@ -41,7 +41,7 @@ export const getAllOverallStatsDeliverer = (year) => async (dispatch) => {
     } catch (error) {
       dispatch({
         type: "getAllOverallStatsDelivererFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };

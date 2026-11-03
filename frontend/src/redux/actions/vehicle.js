@@ -19,7 +19,7 @@ export const createVehicle = (newForm) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "loadVehicleCreateFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -41,7 +41,7 @@ export const getAllVehiclesCompany = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "getAllVehiclesCompanyFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -72,7 +72,7 @@ export const getAllVehiclesPage =
     } catch (error) {
       dispatch({
         type: "getAllVehiclesPageFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -102,7 +102,7 @@ export const updateVehicle =
     } catch (error) {
       dispatch({
         type: "updateVehicleFailed",
-        payload: error.response.data.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
@@ -128,7 +128,7 @@ export const deleteVehicle = (vehicleId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "deleteVehicleFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };

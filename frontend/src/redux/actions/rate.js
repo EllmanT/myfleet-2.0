@@ -17,7 +17,7 @@ export const getRates = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "getRatesFailed",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };

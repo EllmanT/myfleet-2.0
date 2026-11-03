@@ -43,7 +43,6 @@ import {
   getLatestJobsVehicle,
 } from "redux/actions/job";
 import { getAllOverallStatsDeliverer } from "redux/actions/overallStats";
-import { loadUser } from "redux/actions/user";
 import { getAllVehiclesPage } from "redux/actions/vehicle";
 import { getVehicleStats } from "redux/actions/vehicleStats";
 import html2pdf from "html2pdf.js";
@@ -88,7 +87,6 @@ console.log(contractor)
     dispatch(getContractorStats(contractorId, selectedYear));
     dispatch(getLatestJobsContractor(contractorId, selectedYear));
     dispatch(getAllContractorsPage());
-    dispatch(loadUser());
   }, [dispatch, contractorId, selectedYear]);
 
   let highestRevenue = 0;
