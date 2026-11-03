@@ -11,6 +11,7 @@ const {
   forceOwnCompany,
   requireOwnership,
 } = require("../middleware/tenantAccess");
+const { ownCustomerFilter } = require("../services/customerScope");
 const router = express.Router();
 const mongoose = require("mongoose");
 
@@ -40,8 +41,6 @@ router.post(
         return next(new ErrorHandler("Name and address are required", 400));
       }
 
-      let checkCustomer = await Customer.findOne({ name: normalizedName });
-
       const isCompanyDeliverer = await Deliverer.findById(companyId);
 
       const isCompanyContractor = await Contractor.findById(companyId);
@@ -49,6 +48,19 @@ router.post(
       if (!isCompanyDeliverer && !isCompanyContractor) {
         return next(new ErrorHandler("Company not found", 404));
       }
+
+      // Only look among THIS company's customers. Matching by name across all
+      // companies would hand one company another company's customer record.
+      const ownerTenant = isCompanyDeliverer
+        ? isCompanyDeliverer._id
+        : isCompanyContractor.tenantId;
+      const linkedIds = isCompanyDeliverer
+        ? isCompanyDeliverer.customer_ids
+        : isCompanyContractor.customers;
+      let checkCustomer = await Customer.findOne({
+        name: normalizedName,
+        ...ownCustomerFilter(ownerTenant, linkedIds),
+      });
 
       if (checkCustomer) {
         //checking to see if customer exists in the deliverers customers array list
@@ -103,7 +115,7 @@ router.post(
         //return next(new ErrorHandler("The customer already exists", 400));
       } else {
         checkCustomer = await Customer.create({
-          tenantId: isCompanyDeliverer ? isCompanyDeliverer._id : undefined,
+          tenantId: ownerTenant || undefined,
           name: normalizedName,
           phoneNumber: phoneNumber,
           city: city,

@@ -1,5 +1,6 @@
 const Customer = require("../../model/customer");
 const Deliverer = require("../../model/deliverer");
+const { ownCustomerFilter } = require("../customerScope");
 const Contractor = require("../../model/contractor");
 const ErrorHandler = require("../../utils/ErrorHandler");
 const { runWithOptionalTransaction } = require("../../controller/helpers/transaction");
@@ -20,7 +21,8 @@ async function createMissingCustomers(names, session, tenantId) {
   if (!names.length) return { idByName, createdNames: [] };
 
   // Reuse an existing customer with the same name rather than duplicate it.
-  const existing = await Customer.find({})
+  const owner = await Deliverer.findById(tenantId).select("customer_ids").lean();
+  const existing = await Customer.find(ownCustomerFilter(tenantId, owner && owner.customer_ids))
     .select("name")
     .session(session)
     .lean();

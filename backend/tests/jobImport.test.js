@@ -88,7 +88,7 @@ async function seedCompany() {
     companyName: "Allea",
     address: "x",
     city: "Harare",
-    customer_ids: [shippy._id, lammelPlace._id],
+    customer_ids: [shippy._id, lammelPlace._id, cabs._id],
     contractor_ids: [lammel._id, romeo._id, besthule._id],
   });
   const companyId = String(deliverer._id);

@@ -83,6 +83,8 @@ function pickFromRanked(ranked, autoScore = AUTO_SCORE) {
   return { status: "unresolved", value: null };
 }
 
+const { ownCustomerFilter } = require("../customerScope");
+
 async function loadReferenceData(companyId) {
   const deliverer = await Deliverer.findById(companyId).lean();
   if (!deliverer) {
@@ -106,7 +108,7 @@ async function loadReferenceData(companyId) {
     })
       .select("make regNumber size")
       .lean(),
-    Customer.find({}).select("name").lean(),
+    Customer.find(ownCustomerFilter(companyId, deliverer.customer_ids)).select("name").lean(),
     Rate.find({ deliverer: companyId }).lean(),
   ]);
 
