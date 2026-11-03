@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import { legal } from '../content/site';
+const { doc, path } = Astro.props as { doc: { title: string; sections: { id: string; h: string; p: string }[] }; path: string };
+---
+<Base title={`${doc.title} (draft) | myfleet`} description={`${doc.title} for myfleet. Draft, pending legal review.`} path={path} noindex>
+  <Header home={false} />
+  <main id="main" class="wrap legal">
+    <div class="draft" role="note">
+      <p>{legal.draftBanner}</p>
+      <p>{legal.draftNote}</p>
+    </div>
+    <h1>{doc.title}</h1>
+    {doc.sections.map((s) => (
+      <section id={s.id} aria-labelledby={`${s.id}-h`}>
+        <h2 id={`${s.id}-h`}>{s.h}</h2>
+        <p>{s.p}</p>
+      </section>
+    ))}
+  </main>
+  <Footer />
+</Base>

@@ -1,0 +1,30 @@
+---
+// Inline SVG QR, generated at build time (qrcode is a dev dependency, nothing ships to the browser).
+import QRCode from 'qrcode';
+import { waQr } from '../lib/links';
+import { hero } from '../content/site';
+
+const qr = QRCode.create(waQr, { errorCorrectionLevel: 'L' });
+const n = qr.modules.size;
+const data = qr.modules.data;
+let d = '';
+for (let y = 0; y < n; y++) {
+  let x = 0;
+  while (x < n) {
+    if (data[y * n + x]) {
+      let w = 1;
+      while (x + w < n && data[y * n + x + w]) w++;
+      d += `M${x} ${y}h${w}v1h-${w}z`;
+      x += w;
+    } else x++;
+  }
+}
+---
+<div class="qr">
+  <figure>
+    <svg viewBox={`-2 -2 ${n + 4} ${n + 4}`} role="img" aria-label="QR code that opens a WhatsApp chat with myfleet" shape-rendering="crispEdges">
+      <path d={d} fill="currentColor" />
+    </svg>
+  </figure>
+  <p>{hero.qrCaption}</p>
+</div>

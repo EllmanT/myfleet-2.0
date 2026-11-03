@@ -1,0 +1,20 @@
+---
+import Wordmark from './Wordmark.astro';
+import { footer } from '../content/site';
+import { signInUrl, waQuestion } from '../lib/links';
+---
+<footer class="foot-main wrap">
+  <div class="row">
+    <div>
+      <Wordmark width={96} />
+      <p class="small">{footer.tagline}</p>
+      <p class="small">{footer.small} {footer.lastUpdated}.</p>
+    </div>
+    <nav class="links" aria-label="Footer">
+      {footer.links.map((l) => {
+        const href = l.kind === 'wa' ? waQuestion : l.kind === 'signin' ? signInUrl : l.href;
+        return <a href={href}>{l.label}</a>;
+      })}
+    </nav>
+  </div>
+</footer>

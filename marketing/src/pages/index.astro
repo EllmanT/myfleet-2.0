@@ -1,0 +1,316 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyBar from '../components/StickyBar.astro';
+import LogbookToInvoice from '../components/LogbookToInvoice.astro';
+import WhatsAppQr from '../components/WhatsAppQr.astro';
+import DeviceFrame from '../components/DeviceFrame.astro';
+import RouteLine from '../components/RouteLine.astro';
+import AiNotice from '../components/AiNotice.astro';
+import ChatIcon from '../components/ChatIcon.astro';
+import alleaLogo from '../assets/allea-logo.png';
+import {
+  brand, hero, proof, problem, steps, demo, features, offer, pricing, caseStudy, faq, finalCta, cta, flags,
+} from '../content/site';
+import { signUpUrl, waHero, waPricing, waQuestion, siteUrl } from '../lib/links';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'myfleet',
+  url: siteUrl,
+  description: brand.description,
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web browser',
+  // Real launch prices only. No ratings or review counts.
+  offers: pricing.plans.map((p) => ({
+    '@type': 'Offer',
+    name: p.name,
+    description: `${p.trucks}, per month. ${p.free}.`,
+    price: p.price.replace('$', ''),
+    priceCurrency: 'USD',
+  })),
+};
+---
+<Base jsonLd={jsonLd}>
+  <Header />
+  <main id="main">
+    <!-- 1. Hero -->
+    <section class="hero" aria-labelledby="h1">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">{hero.eyebrow}</p>
+          <h1 id="h1">{hero.h1}</h1>
+          <p class="lead">{hero.sub}</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" href={signUpUrl}>{cta.primary}</a>
+            <a class="btn btn-ghost" href={waHero} rel="noopener"><ChatIcon />{cta.whatsappLong}</a>
+          </div>
+          <WhatsAppQr />
+          <p class="small">{hero.small}</p>
+        </div>
+        <LogbookToInvoice />
+      </div>
+    </section>
+
+    <!-- 2. Proof bar -->
+    <div class="proof">
+      <div class="wrap">
+        <ul>
+          {proof.map((p) => <li>{p}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <!-- 3. Problem -->
+    <section class="sec" aria-labelledby="problem">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="eyebrow">The problem</p>
+          <h2 id="problem">{problem.h2}</h2>
+        </div>
+        <ul class="quotes">
+          {problem.quotes.map((q) => (
+            <li class="reveal">
+              <blockquote>&ldquo;{q.text}&rdquo;</blockquote>
+              <span class="eyebrow tag">{q.tag}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="small">{problem.note}</p>
+        <p class="close">{problem.close}</p>
+      </div>
+    </section>
+
+    <!-- 4. How it works -->
+    <section class="sec" id="how" aria-labelledby="how-h">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="eyebrow">How it works</p>
+          <h2 id="how-h">{steps.h2}</h2>
+        </div>
+        <ol class="steps">
+          {steps.items.map((s) => (
+            <li class="step reveal">
+              <div class="num"><b>{s.n}</b><span class="eyebrow">{s.label}</span></div>
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+              <DeviceFrame id={s.shot} />
+            </li>
+          ))}
+        </ol>
+        <p class="small foot">{steps.footnote}</p>
+        <AiNotice />
+      </div>
+    </section>
+
+    <!-- 5. Photo to invoice demo -->
+    <section class="sec" aria-labelledby="demo-h">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="eyebrow">See it work</p>
+          <h2 id="demo-h">{demo.h2}</h2>
+        </div>
+        <ol class="captions">
+          {demo.captions.map((c) => <li>{c}</li>)}
+        </ol>
+        <div class="demo-grid">
+          <div class="frame reveal" role="img" aria-label="A logbook page with four rows. The fourth row, Harare to Bulawayo on 04 Nov, is the one used for the invoice.">
+            <div class="frame-bar" aria-hidden="true"><span>Logbook page, as photographed</span><span class="demo-tag">Demo company</span></div>
+            <div class="ph-table" aria-hidden="true" style="font-family: var(--font-mono); background: var(--paper); color: var(--paper-ink); padding: 8px 4px;">
+              <table class="ph-table" style="color: inherit;">
+                <thead><tr>{demo.columns.map((c) => <th style="color: inherit; opacity: .75;">{c}</th>)}</tr></thead>
+                <tbody>
+                  {demo.rows.map((r) => <tr>{r.cells.map((c) => <td style="color: inherit; border-color: rgba(60,70,120,.2);">{c}</td>)}</tr>)}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="reveal">
+            <div class="frame">
+              <div class="frame-bar"><span>Photo import: check before saving</span><span class="demo-tag">Demo company</span></div>
+              <div class="review">
+                <table>
+                  <thead><tr>{demo.columns.map((c) => <th>{c}</th>)}</tr></thead>
+                  <tbody>
+                    {demo.rows.map((r) => (
+                      <tr>
+                        {r.cells.map((c, i) => (
+                          <td>
+                            {r.flag && i === r.flagCol ? (
+                              <span class={`cell-flag ${r.flag}`}>
+                                <span aria-hidden="true">{r.flag === 'yellow' ? '?' : '!'}</span>
+                                {c}
+                                <span class="sr">{r.flag === 'yellow' ? ', hard to read' : ', does not add up'}</span>
+                              </span>
+                            ) : c}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="legend">
+              <p><i class="y"></i>{demo.yellowLabel}</p>
+              <p><i class="o"></i>{demo.orangeLabel}</p>
+            </div>
+          </div>
+        </div>
+        <AiNotice />
+        <div class="demo-foot">
+          <a class="btn btn-primary" href={waHero} rel="noopener"><ChatIcon />{cta.demo}</a>
+          <p class="small" style="max-width: 56ch">{demo.small}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Features by outcome -->
+    <section class="sec" aria-labelledby="feat-h">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="eyebrow">Features</p>
+          <h2 id="feat-h">{features.h2}</h2>
+        </div>
+        <div>
+          {features.groups.map((g) => (
+            <article class={`feat${g.visual.kind === 'none' ? ' novis' : ''}`}>
+              <div class="txt reveal">
+                <h3>{g.title}</h3>
+                <dl>
+                  {g.items.map((i) => (<><dt>{i.name}</dt><dd>{i.text}</dd></>))}
+                </dl>
+                {g.note && <p class="small">{g.note}</p>}
+              </div>
+              {g.visual.kind === 'shot' && <div class="vis reveal"><DeviceFrame id={g.visual.id} /></div>}
+              {g.visual.kind === 'route' && <div class="vis reveal"><RouteLine /></div>}
+            </article>
+          ))}
+        </div>
+        <p class="soon">
+          <span>{features.comingSoonLabel}:</span>
+          {features.comingSoon.map((c) => <span class="pill">{c}</span>)}
+        </p>
+      </div>
+    </section>
+
+    <!-- 7. Offer stack -->
+    <section class="sec" aria-labelledby="offer-h">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="eyebrow">The start</p>
+          <h2 id="offer-h">{offer.h2}</h2>
+          <p style="margin-top:16px">{offer.intro}</p>
+        </div>
+        <div class="offer-grid">
+          <div class="receipt reveal">
+            <ol>
+              {offer.stack.map((s) => <li><b>{s.what}</b><span>{s.why}</span></li>)}
+            </ol>
+            <a class="btn btn-primary" href={signUpUrl}>{offer.button}</a>
+          </div>
+          <div class="promises reveal">
+            <h3>{offer.guaranteeTitle}</h3>
+            <dl>
+              {offer.guarantee.map((g) => (<div><dt>{g.title}</dt><dd>{g.text}</dd></div>))}
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Pricing -->
+    <section class="sec" id="price" aria-labelledby="price-h">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="eyebrow">Price</p>
+          <h2 id="price-h">{pricing.h2}</h2>
+          <p style="margin-top:16px">{pricing.sub}</p>
+        </div>
+        <div class="plans">
+          {pricing.plans.map((p) => (
+            <div class="plan reveal">
+              <span class="free">{p.free}</span>
+              <h3>{p.name}</h3>
+              <p class="trucks">{p.trucks}</p>
+              <p class="price">{p.price}<small>{pricing.perMonth}</small></p>
+              <a class="btn btn-primary" href={signUpUrl}>{p.cta}</a>
+            </div>
+          ))}
+        </div>
+        <div class="price-notes">
+          <p class="small">{pricing.launchNote}</p>
+          <p class="small">{pricing.includes} <a href={waPricing} rel="noopener">{pricing.moreThan}</a></p>
+          <p class="small">{pricing.payment} {pricing.currency}</p>
+        </div>
+        <p class="disclosure">{pricing.disclosure}</p>
+      </div>
+    </section>
+
+    <!-- 9. Allea case study -->
+    <section class="sec" aria-labelledby="case-h">
+      <div class="wrap case">
+        <div class="reveal">
+          <p class="eyebrow" style="margin-bottom:16px">Proof</p>
+          <h2 id="case-h" style="margin-bottom:24px">{caseStudy.h2}</h2>
+          <p class="disc">{caseStudy.disclosure}</p>
+          <p class="honest">{caseStudy.honest}</p>
+          {flags.showCaseStudyStructure && (
+            <dl>
+              {caseStudy.rows.map((r) => (
+                <div><dt>{r.label}</dt><dd class={r.text.startsWith('To be added') ? 'todo' : ''}>{r.text}</dd></div>
+              ))}
+            </dl>
+          )}
+          <div class="quote-ph"><b>Placeholder</b>{caseStudy.quotePlaceholder}</div>
+        </div>
+        <div class="reveal">
+          <div class="logo-tile">
+            <Image src={alleaLogo} width={320} format="webp" quality={70} alt={caseStudy.logoAlt} loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. FAQ -->
+    <section class="sec" id="questions" aria-labelledby="faq-h">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="eyebrow">Questions</p>
+          <h2 id="faq-h">{faq.h2}</h2>
+        </div>
+        <div class="faq">
+          {faq.items.map((f, i) => (
+            <details open={i < faq.openFirst}>
+              <summary>{f.q}</summary>
+              <div class="a">
+                <p>{f.a}{f.links && f.links.map((l) => <a href={l.href}>{l.label}</a>)}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+        <div class="faq-foot">
+          <a class="btn btn-ghost" href={waQuestion} rel="noopener"><ChatIcon />{cta.stillNotSure}</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. Final CTA -->
+    <section class="band" aria-labelledby="final-h">
+      <div class="wrap">
+        <h2 id="final-h">{finalCta.h2}</h2>
+        <p class="body">{finalCta.body}</p>
+        <div class="btn-row">
+          <a class="btn btn-light" href={waHero} rel="noopener"><ChatIcon />{finalCta.primary}</a>
+          <a class="btn btn-line" href={signUpUrl}>{finalCta.secondary}</a>
+        </div>
+        <p class="small">{finalCta.small}</p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <StickyBar />
+</Base>

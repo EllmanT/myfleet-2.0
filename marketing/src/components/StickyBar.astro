@@ -1,0 +1,9 @@
+---
+import ChatIcon from './ChatIcon.astro';
+import { cta } from '../content/site';
+import { signUpUrl, waHero } from '../lib/links';
+---
+<div class="sticky" role="region" aria-label="Quick actions">
+  <a class="btn btn-ghost" href={waHero} rel="noopener"><ChatIcon />{cta.stickyChat}</a>
+  <a class="btn btn-primary" href={signUpUrl}>{cta.stickyStart}</a>
+</div>

@@ -1,0 +1,39 @@
+---
+// A screenshot in a plain frame. While `src` is null in src/content/site.ts the frame draws a
+// labelled "Demo company" placeholder. To use a real capture, set that one `src` path
+// (for example '/img/shots/who-owes.webp', file in marketing/public/img/shots/) and make sure
+// width and height match the file. Optional `sources` adds AVIF/WebP via <picture>.
+import { shots } from '../content/site';
+const { id, eager = false } = Astro.props as { id: string; eager?: boolean };
+const shot = shots[id];
+const numeric = (v: string) => /^[$\d]/.test(v);
+const last = shot.columns.length - 1;
+---
+<figure class="frame" role="img" aria-label={shot.alt}>
+  <div class="frame-bar" aria-hidden="true">
+    <span>{shot.screen}</span>
+    <span class="demo-tag">Demo company</span>
+  </div>
+  {shot.src ? (
+    <picture>
+      {shot.sources?.avif && <source srcset={shot.sources.avif} type="image/avif" />}
+      {shot.sources?.webp && <source srcset={shot.sources.webp} type="image/webp" />}
+      <img src={shot.src} alt="" width={shot.width} height={shot.height} loading={eager ? 'eager' : 'lazy'} decoding="async" />
+    </picture>
+  ) : (
+    <table class="ph-table" aria-hidden="true">
+      <thead>
+        <tr>{shot.columns.map((c, i) => <th class={i === last && numeric(shot.rows[0][i]) ? 'num' : ''}>{c}</th>)}</tr>
+      </thead>
+      <tbody>
+        {shot.rows.map((r, ri) => (
+          <tr class={ri === shot.mark ? 'mark' : ''}>
+            {r.map((c, i) => (
+              <td class={i === last && numeric(c) ? 'num' : ''}>{id === 'not-invoiced' && i === 0 && <span class="tick" />}{c}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )}
+</figure>

@@ -1,0 +1,20 @@
+---
+import Wordmark from './Wordmark.astro';
+import { nav } from '../content/site';
+import { signUpUrl, waQuestion } from '../lib/links';
+const { home = true } = Astro.props;
+---
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="myfleet home"><Wordmark width={112} /></a>
+    {home && (
+      <nav aria-label="Main">
+        {nav.links.map((l) => <a href={l.href}>{l.label}</a>)}
+      </nav>
+    )}
+    <div class="right">
+      <a class="btn btn-ghost wa-link" href={waQuestion} rel="noopener">{nav.whatsapp}</a>
+      <a class="btn btn-primary" href={signUpUrl}>{nav.start}</a>
+    </div>
+  </div>
+</header>
