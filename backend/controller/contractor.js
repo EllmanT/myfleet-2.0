@@ -104,6 +104,7 @@ router.post(
       }
     } else {
       checkCompany = await Contractor.create({
+        tenantId: isCompanyDeliverer ? isCompanyDeliverer._id : undefined,
         companyName: companyName,
         address: address,
         contact: contact,

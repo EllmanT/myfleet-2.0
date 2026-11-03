@@ -82,6 +82,8 @@ const delivererSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    // Linked Clerk organization once the company signs in through Clerk.
+    clerkOrgId: { type: String, index: { unique: true, sparse: true } },
   },
   { timestamps: true }
 );

@@ -57,6 +57,7 @@ router.post(
         //return next(new ErrorHandler("The customer already exists", 400));
       } else {
         checkVehicle = await Vehicle.create({
+          tenantId: isCompanyDeliverer ? isCompanyDeliverer._id : undefined,
           make: make,
           regNumber: regNumber,
           size: size,

@@ -103,6 +103,7 @@ router.post(
         //return next(new ErrorHandler("The customer already exists", 400));
       } else {
         checkCustomer = await Customer.create({
+          tenantId: isCompanyDeliverer ? isCompanyDeliverer._id : undefined,
           name: normalizedName,
           phoneNumber: phoneNumber,
           city: city,

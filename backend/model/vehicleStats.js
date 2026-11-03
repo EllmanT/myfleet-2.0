@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const VehicleStatsSchema = new mongoose.Schema(
   {
+    tenantId: { type: mongoose.Schema.Types.ObjectId, ref: "Deliverer", index: true },
     vehicleId: String,
     yearlyJobs: {
       type: Number,

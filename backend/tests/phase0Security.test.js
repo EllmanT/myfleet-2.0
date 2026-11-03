@@ -150,6 +150,30 @@ describe("Phase 0 security", () => {
     expect(res.status).toBe(201);
   });
 
+  test("tenantId wins over the id lists: a record stamped for another company is never ours", async () => {
+    const a = await makeCompany("A");
+    const b = await makeCompany("B");
+    // Listed on A's vehicle_ids by mistake, but stamped as B's.
+    const stolen = await Vehicle.create({ make: "X", regNumber: "STL0001", size: "horse", companyId: String(b._id), tenantId: b._id });
+    a.vehicle_ids.push(stolen._id);
+    await a.save();
+    // Stamped as A's but not on any list yet.
+    const mine = await Vehicle.create({ make: "Y", regNumber: "MIN0001", size: "horse", companyId: String(a._id), tenantId: a._id });
+    const { token } = await makeUser({ role: "Deliverer Admin", companyId: a._id, email: "tenant@test.com" });
+
+    const denied = await request(app)
+      .delete("/api/v2/vehicle/delete-vehicle/" + stolen._id)
+      .set("Cookie", cookie(token));
+    expect(denied.status).toBe(404);
+    expect(await Vehicle.findById(stolen._id)).toBeTruthy();
+
+    const allowed = await request(app)
+      .put("/api/v2/vehicle/update-vehicle")
+      .set("Cookie", cookie(token))
+      .send({ id: mine._id.toString(), make: "Y2", size: "horse", regNumber: "MIN0001" });
+    expect(allowed.status).toBe(201);
+  });
+
   test("update-admin: cannot escalate to Super Admin or edit another company's user", async () => {
     const a = await makeCompany("A");
     const b = await makeCompany("B");

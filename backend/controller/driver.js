@@ -79,6 +79,7 @@ router.post(
         }
       } else {
         checkDriver = await Driver.create({
+          tenantId: isCompanyDeliverer ? isCompanyDeliverer._id : undefined,
           name: name,
           phoneNumber: phoneNumber,
           address: address,

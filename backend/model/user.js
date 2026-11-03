@@ -38,6 +38,9 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
     },
 
+    // Linked Clerk user once the person signs in through Clerk.
+    clerkUserId: { type: String, index: { unique: true, sparse: true } },
+
     resetPasswordToken: {
       type: String,
       select: false,

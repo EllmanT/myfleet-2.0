@@ -83,6 +83,8 @@ async function bulkCreateJobs(payloads, { companyId, session = null, timer = nul
     (payload) =>
       new Job({
         ...payload,
+        // Always the caller's company, even if the payload names another.
+        tenantId: companyId,
         distance: asNumber(payload.distance),
         cost: roundMoney(payload.cost),
       })

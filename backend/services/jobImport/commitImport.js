@@ -15,7 +15,7 @@ const NEW_CUSTOMER_DEFAULTS = {
   phoneNumber: "N/A",
 };
 
-async function createMissingCustomers(names, session) {
+async function createMissingCustomers(names, session, tenantId) {
   const idByName = new Map();
   if (!names.length) return { idByName, createdNames: [] };
 
@@ -32,7 +32,7 @@ async function createMissingCustomers(names, session) {
     if (existingByName.has(key)) {
       idByName.set(name, existingByName.get(key));
     } else if (!toCreate.some((doc) => normalizeName(doc.name) === key)) {
-      toCreate.push({ name, ...NEW_CUSTOMER_DEFAULTS });
+      toCreate.push({ name, tenantId, ...NEW_CUSTOMER_DEFAULTS });
     }
   });
 
@@ -83,7 +83,8 @@ async function commitImport({ files, companyId, choices = {}, options = {} }) {
   await runWithOptionalTransaction(async (session) => {
     const { idByName, createdNames } = await createMissingCustomers(
       preview.newCustomerNames,
-      session
+      session,
+      companyId
     );
     const customerId = (value) =>
       value.startsWith(NEW_PREFIX)

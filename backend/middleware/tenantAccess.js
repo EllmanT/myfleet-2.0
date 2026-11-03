@@ -52,10 +52,30 @@ async function companyOwns(user, field, id) {
   if (isGlobalAdmin(user)) return true;
   if (!user || !user.companyId) return false;
   if (!mongoose.isValidObjectId(id)) return false;
+  // Preferred: the record carries its owner (set on create, backfilled for
+  // older data by scripts/backfillTenantId.js).
+  const modelName = TENANT_MODELS[field];
+  if (modelName) {
+    const Model = require(`../model/${modelName}`);
+    const owned = await Model.exists({ _id: id, tenantId: user.companyId });
+    if (owned) return true;
+    // A record that names a DIFFERENT owner is never ours, whatever the lists say.
+    const stamped = await Model.exists({ _id: id, tenantId: { $exists: true } });
+    if (stamped) return false;
+  }
+  // Fallback for records not yet backfilled: the company's id lists.
   const Deliverer = require("../model/deliverer");
   const found = await Deliverer.exists({ _id: user.companyId, [field]: id });
   return Boolean(found);
 }
+
+const TENANT_MODELS = {
+  vehicle_ids: "vehicle",
+  driver_ids: "driver",
+  customer_ids: "customer",
+  contractor_ids: "contractor",
+  job_ids: "job",
+};
 
 // Jobs are also owned if they were driven by one of the company's vehicles
 // (covers jobs created before job_ids was reliably maintained).

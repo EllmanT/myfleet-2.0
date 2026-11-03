@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 const contractorSchema = new mongoose.Schema(
   {
+    // Owning company (Deliverer). Backfilled by scripts/backfillTenantId.js.
+    tenantId: { type: mongoose.Schema.Types.ObjectId, ref: "Deliverer", index: true },
     companyName: {
       type: String,
       required: true,
