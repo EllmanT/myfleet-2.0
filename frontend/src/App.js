@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { themeSettings } from "theme";
 import ClerkShell from "component/auth/ClerkShell";
+import ModulesPage from "pages/deliverer/ModulesPage";
 import { clerkEnabled } from "utils/clerk";
 import {
   ClerkSignInPage,
@@ -162,9 +163,17 @@ const App = () => {
                 }
               />
               <Route
-                path="/del-expenses"
+                path="/del-modules"
                 element={
                   <DelProtectedRoutes>
+                    <ModulesPage />
+                  </DelProtectedRoutes>
+                }
+              />
+              <Route
+                path="/del-expenses"
+                element={
+                  <DelProtectedRoutes module="expenses">
                     <DelExpensesPage />
                   </DelProtectedRoutes>
                 }
@@ -172,7 +181,7 @@ const App = () => {
               <Route
                 path="/del-fuel-log"
                 element={
-                  <DelProtectedRoutes>
+                  <DelProtectedRoutes module="fuel">
                     <DelFuelLogPage />
                   </DelProtectedRoutes>
                 }
@@ -180,7 +189,7 @@ const App = () => {
               <Route
                 path="/del-profitability"
                 element={
-                  <DelProtectedRoutes>
+                  <DelProtectedRoutes module="expenses">
                     <DelProfitabilityPage />
                   </DelProtectedRoutes>
                 }
@@ -311,7 +320,7 @@ const App = () => {
               <Route
                 path="/revenue-analytics/breakdown/:companyId"
                 element={
-                  <DelProtectedRoutes>
+                  <DelProtectedRoutes module="analytics">
                     <DelDashRevenueBreakdownPage />
                   </DelProtectedRoutes>
                 }
@@ -319,7 +328,7 @@ const App = () => {
               <Route
                 path="/revenue-analytics/monthly/:companyId"
                 element={
-                  <DelProtectedRoutes>
+                  <DelProtectedRoutes module="analytics">
                     <DelDashRevenueMonthlyPage />
                   </DelProtectedRoutes>
                 }
@@ -327,7 +336,7 @@ const App = () => {
               <Route
                 path="/revenue-analytics/daily-data/:companyId"
                 element={
-                  <DelProtectedRoutes>
+                  <DelProtectedRoutes module="analytics">
                     <DelDashRevenueDailyDataPage />
                   </DelProtectedRoutes>
                 }
@@ -435,7 +444,7 @@ const App = () => {
               <Route
                 path="/revenue-analytics/breakdown/:companyId"
                 element={
-                  <DelProtectedRoutes>
+                  <DelProtectedRoutes module="analytics">
                     <DelDashRevenueBreakdownPage />
                   </DelProtectedRoutes>
                 }
@@ -443,7 +452,7 @@ const App = () => {
               <Route
                 path="/revenue-analytics/monthly/:companyId"
                 element={
-                  <DelProtectedRoutes>
+                  <DelProtectedRoutes module="analytics">
                     <DelDashRevenueMonthlyPage />
                   </DelProtectedRoutes>
                 }
@@ -451,7 +460,7 @@ const App = () => {
               <Route
                 path="/revenue-analytics/daily-data/:companyId"
                 element={
-                  <DelProtectedRoutes>
+                  <DelProtectedRoutes module="analytics">
                     <DelDashRevenueDailyDataPage />
                   </DelProtectedRoutes>
                 }

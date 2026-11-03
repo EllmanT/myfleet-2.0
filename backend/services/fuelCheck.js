@@ -5,11 +5,15 @@
 // Compare that with what the truck normally does.
 
 const EXPECTED_KMPL_BY_SIZE = { smallVehicle: 9.6, mediumVehicle: 7.4, largeVehicle: 5.0, horse: 3.5 };
+// Legacy fallback for trucks that don't have their own value yet. New companies
+// should set expectedKmPerLitre on each vehicle instead; remove this once the
+// three original trucks have it set.
 const EXPECTED_KMPL_BY_REG = { AFE5848: 7.4, AAV4331: 9.6, AFO0724: 9.6 };
 const CHECK_PCT = 0.15; // 15% worse than normal: ask for an explanation
 const REVIEW_PCT = 0.3; // 30% worse than normal: review with the owner
 
 const expectedKmpl = (vehicle) =>
+  (Number(vehicle.expectedKmPerLitre) > 0 ? Number(vehicle.expectedKmPerLitre) : null) ||
   EXPECTED_KMPL_BY_REG[String(vehicle.regNumber || "").replace(/\s/g, "").toUpperCase()] ||
   EXPECTED_KMPL_BY_SIZE[vehicle.size] ||
   8;

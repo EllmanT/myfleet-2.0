@@ -4,6 +4,7 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const { isAuthenticated } = require("../middleware/auth");
 const { requireFinance } = require("../middleware/financeAccess");
+const { requireModule } = require("../middleware/moduleAccess");
 const Expense = require("../model/expense");
 const FuelFill = require("../model/fuelFill");
 const Vehicle = require("../model/vehicle");
@@ -61,6 +62,8 @@ router.post(
   "/create-expense",
   isAuthenticated,
   requireFinance,
+
+  requireModule("expenses"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const doc = await cleanBody(req.body, req.user.companyId);
@@ -80,6 +83,8 @@ router.get(
   "/get-expenses",
   isAuthenticated,
   requireFinance,
+
+  requireModule("expenses"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { from, to, category, vehicleId, type } = req.query;
@@ -109,6 +114,8 @@ router.put(
   "/update-expense/:id",
   isAuthenticated,
   requireFinance,
+
+  requireModule("expenses"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       if (!mongoose.isValidObjectId(req.params.id)) return next(new ErrorHandler("Invalid id", 400));
@@ -129,6 +136,8 @@ router.delete(
   "/delete-expense/:id",
   isAuthenticated,
   requireFinance,
+
+  requireModule("expenses"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       if (!mongoose.isValidObjectId(req.params.id)) return next(new ErrorHandler("Invalid id", 400));
@@ -146,6 +155,8 @@ router.get(
   "/profitability",
   isAuthenticated,
   requireFinance,
+
+  requireModule("expenses"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const year = parseInt(req.query.year, 10) || new Date().getUTCFullYear();
@@ -257,6 +268,8 @@ router.get(
   "/meta",
   isAuthenticated,
   requireFinance,
+
+  requireModule("expenses"),
   catchAsyncErrors(async (req, res, next) => {
     const vehicles = await Vehicle.find({ companyId: String(req.user.companyId) }).select("make regNumber").lean();
     res.status(200).json({

@@ -8,6 +8,7 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const { isAuthenticated } = require("../middleware/auth");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const { requireRole, GLOBAL_ROLES } = require("../middleware/tenantAccess");
+const { NEW_TENANT_MODULES } = require("../config/modules");
 
 router.post(
   "/create-deliverer",
@@ -43,6 +44,7 @@ router.post(
         goodsType: goodssType,
         vehiclesType: vehiclessType,
         deliveryType: deliveryyType,
+        modules: NEW_TENANT_MODULES,
       });
 
       res.status(201).json({

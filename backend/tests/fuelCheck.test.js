@@ -92,3 +92,14 @@ describe("weekly summary", () => {
     expect(text).toMatch(/Toyota Dyna AFO0724: 14 L/);
   });
 });
+
+describe("expectedKmpl per-vehicle value", () => {
+  const { expectedKmpl } = require("../services/fuelCheck");
+  test("a vehicle's own expectedKmPerLitre wins over registration and size defaults", () => {
+    expect(expectedKmpl({ regNumber: "AFE5848", size: "horse", expectedKmPerLitre: 6.1 })).toBe(6.1);
+  });
+  test("falls back to the size default for any other company's truck", () => {
+    expect(expectedKmpl({ regNumber: "ZZZ9999", size: "horse" })).toBe(3.5);
+    expect(expectedKmpl({ regNumber: "ZZZ9999", size: "horse", expectedKmPerLitre: 0 })).toBe(3.5);
+  });
+});

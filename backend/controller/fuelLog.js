@@ -4,6 +4,7 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const { isAuthenticated } = require("../middleware/auth");
 const { requireFinance } = require("../middleware/financeAccess");
+const { requireModule } = require("../middleware/moduleAccess");
 const FuelFill = require("../model/fuelFill");
 const Vehicle = require("../model/vehicle");
 const { analyseFills, weekRange, weekSummary, whatsappText, expectedKmpl } = require("../services/fuelCheck");
@@ -68,6 +69,7 @@ router.post(
   "/create-fill",
   isAuthenticated,
   requireFinance,
+  requireModule("fuel"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const doc = await cleanBody(req.body, req.user.companyId);
@@ -83,6 +85,7 @@ router.put(
   "/update-fill/:id",
   isAuthenticated,
   requireFinance,
+  requireModule("fuel"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       if (!mongoose.isValidObjectId(req.params.id)) return next(new ErrorHandler("Invalid id", 400));
@@ -102,6 +105,7 @@ router.delete(
   "/delete-fill/:id",
   isAuthenticated,
   requireFinance,
+  requireModule("fuel"),
   catchAsyncErrors(async (req, res, next) => {
     if (!mongoose.isValidObjectId(req.params.id)) return next(new ErrorHandler("Invalid id", 400));
     const r = await FuelFill.deleteOne({ _id: req.params.id, companyId: req.user.companyId });
@@ -115,6 +119,7 @@ router.get(
   "/get-fills",
   isAuthenticated,
   requireFinance,
+  requireModule("fuel"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { from, to, vehicleId } = req.query;
@@ -137,6 +142,7 @@ router.get(
   "/weekly",
   isAuthenticated,
   requireFinance,
+  requireModule("fuel"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const date = toDate(req.query.date) || new Date();
@@ -159,6 +165,7 @@ router.get(
   "/meta",
   isAuthenticated,
   requireFinance,
+  requireModule("fuel"),
   catchAsyncErrors(async (req, res) => {
     const vehicles = await Vehicle.find({ companyId: String(req.user.companyId) }).lean();
     res.status(200).json({

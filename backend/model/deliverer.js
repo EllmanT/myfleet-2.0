@@ -84,6 +84,11 @@ const delivererSchema = new mongoose.Schema(
     },
     // Linked Clerk organization once the company signs in through Clerk.
     clerkOrgId: { type: String, index: { unique: true, sparse: true } },
+    // Billing plan (free during the launch period).
+    plan: { type: String, default: "free" },
+    // Which optional modules are switched on. Missing on companies that existed
+    // before module toggles; see config/modules.js (resolveModules).
+    modules: { type: mongoose.Schema.Types.Mixed },
   },
   { timestamps: true }
 );

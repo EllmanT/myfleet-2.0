@@ -222,7 +222,7 @@ router.put(
   requireOwnership("vehicle_ids", (req) => req.body.id),
   catchAsyncErrors(async (req, res, next) => {
     try {
-      const { id, make, size, regNumber } = req.body;
+      const { id, make, size, regNumber, expectedKmPerLitre } = req.body;
 
       const vehicle = await Vehicle.findById(id);
 
@@ -233,6 +233,13 @@ router.put(
       (vehicle.make = make),
         (vehicle.size = size),
         (vehicle.regNumber = regNumber);
+      if (expectedKmPerLitre !== undefined && expectedKmPerLitre !== "") {
+        const kmpl = Number(expectedKmPerLitre);
+        if (!Number.isFinite(kmpl) || kmpl <= 0 || kmpl > 100) {
+          return next(new ErrorHandler("Expected km per litre must be a number above 0", 400));
+        }
+        vehicle.expectedKmPerLitre = kmpl;
+      }
 
       await vehicle.save();
 

@@ -1,5 +1,6 @@
 const User = require("../model/user");
 const Deliverer = require("../model/deliverer");
+const { NEW_TENANT_MODULES } = require("../config/modules");
 
 // Clerk keeps the publishable key under different names depending on the
 // framework. The server SDK reads CLERK_PUBLISHABLE_KEY.
@@ -115,6 +116,7 @@ async function resolveLocalIdentity(identity) {
         city: "N/A",
         goodsType: ["general"],
         clerkOrgId: orgId,
+        modules: NEW_TENANT_MODULES,
       });
     }
   }

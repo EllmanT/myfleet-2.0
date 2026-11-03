@@ -53,6 +53,6 @@ module.exports = (err, req, res, next) => {
     success: false,
     message: err.message,
     // Lets the app tell "link my account" apart from a plain login failure.
-    ...(err.code === "NEEDS_BOOTSTRAP" ? { code: err.code } : {}),
+    ...(["NEEDS_BOOTSTRAP", "MODULE_DISABLED"].includes(err.code) ? { code: err.code } : {}),
   });
 };

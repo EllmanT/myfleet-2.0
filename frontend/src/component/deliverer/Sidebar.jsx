@@ -35,6 +35,7 @@ import {
   ReceiptLongOutlined,
   TodayOutlined,
   TrendingUpOutlined,
+  TuneOutlined,
 } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 
@@ -94,31 +95,37 @@ const Sidebar = ({
       text: "Daily",
       icon: <TodayOutlined />,
       name: `${daily}`,
+      module: "analytics",
     },
     {
       text: "Monthly",
       icon: <CalendarMonthOutlined />,
       name: `${monthly}`,
+      module: "analytics",
     },
     {
       text: "Breakdown",
       icon: <PieChartOutlined />,
       name: `${breakdown}`,
+      module: "analytics",
     },
     {
       text: "Profitability",
       icon: <TrendingUpOutlined />,
       name: "profitability",
+      module: "expenses",
     },
     {
       text: "Expenses",
       icon: <AccountBalanceWalletOutlined />,
       name: "expenses",
+      module: "expenses",
     },
     {
       text: "Fuel Log",
       icon: <LocalGasStationOutlined />,
       name: "fuel-log",
+      module: "fuel",
     },
     //Not YET
     //{
@@ -150,12 +157,28 @@ const Sidebar = ({
       icon: <GroupOutlined />,
       name: "drivers",
     },
+    {
+      text: "Settings",
+      icon: null,
+    },
+    {
+      text: "Modules",
+      icon: <TuneOutlined />,
+      name: "modules",
+    },
     // {
     //   text: "Deliverers",
     //   icon: <GroupWorkOutlined />,
     //   name: "deliverers",
     // },
   ];
+
+  // Items tied to an optional module only show when the company has it on.
+  // Until the settings load, optional items stay hidden to avoid a flash.
+  const { modules, modulesLoaded } = useSelector((state) => state.user);
+  const visibleNavItems = navItems.filter(
+    (item) => !item.module || (modulesLoaded && modules && modules[item.module])
+  );
 
   const { pathname } = useLocation();
   const [active, setActive] = useState();
@@ -203,7 +226,7 @@ const Sidebar = ({
             </Box>
 
             <List>
-              {navItems.map(({ text, icon, name }) => {
+              {visibleNavItems.map(({ text, icon, name }) => {
                 if (!icon) {
                   return (
                     <Typography key={text} m="1.5rem 2rem 0rem 3rem">

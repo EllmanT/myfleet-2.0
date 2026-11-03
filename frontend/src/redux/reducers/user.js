@@ -13,6 +13,19 @@ export const userReducer = createReducer(initialState, {
     state.isAuthenticated = true;
     state.loading = false;
   },
+  loadTenantSuccess: (state, action) => {
+    state.modules = action.payload.modules;
+    state.plan = action.payload.plan;
+    state.moduleRegistry = action.payload.registry;
+    state.modulesLoaded = true;
+  },
+  loadTenantFailed: (state) => {
+    state.modules = {};
+    state.modulesLoaded = true;
+  },
+  setModules: (state, action) => {
+    state.modules = action.payload;
+  },
   loadCompanyName: (state, action) => {
     state.delivererName = action.payload;
     state.loading = false;
