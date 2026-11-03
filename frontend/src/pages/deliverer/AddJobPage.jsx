@@ -38,6 +38,7 @@ import { getAllVehiclesCompany } from "redux/actions/vehicle";
 import { getAllDriversCompany } from "redux/actions/driver";
 import { getRates } from "redux/actions/rate";
 import ExcelImportPanel from "component/deliverer/ExcelImportPanel";
+import PhotoImportPanel from "component/deliverer/PhotoImportPanel";
 
 const steps = ["Order Details", "Company Info", "Preview"];
 
@@ -189,6 +190,8 @@ const AddJobPage = () => {
   const [labels, setLabels] = useState([]);
   const [mileages, setMileages] = useState([]);
   const [entryMode, setEntryMode] = useState("manual");
+  const { modules } = useSelector((state) => state.user);
+  const aiImportOn = Boolean(modules && modules.aiImport);
 
   //Handling the destinations
   const addAutocomplete = () => {
@@ -437,9 +440,18 @@ const AddJobPage = () => {
           >
             <ToggleButton value="manual">Manual entry</ToggleButton>
             <ToggleButton value="excel">Import from Excel</ToggleButton>
+            {aiImportOn && <ToggleButton value="photo">Import from photo</ToggleButton>}
           </ToggleButtonGroup>
         </Box>
-        {entryMode === "excel" ? (
+        {entryMode === "photo" && aiImportOn ? (
+          <PhotoImportPanel
+            customers={dCustomers}
+            onImported={() => {
+              dispatch(getAllContractorsDeliverer());
+              dispatch(getAllCustomersDeliverer());
+            }}
+          />
+        ) : entryMode === "excel" ? (
           <ExcelImportPanel
             customers={dCustomers}
             onImported={() => {

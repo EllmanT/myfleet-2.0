@@ -58,7 +58,7 @@ const MODULES = [
     key: "aiImport",
     label: "AI logbook import",
     description: "Turn photos of logbooks into jobs, with review before saving.",
-    available: false,
+    available: true,
     newTenantDefault: false,
   },
 ];
@@ -85,13 +85,14 @@ function resolveModules(stored) {
 
 // Validates a change request. Returns { ok, error, next } where `next` is the full
 // settings object to store.
-function applyModuleChanges(stored, changes) {
+function applyModuleChanges(stored, changes, registry = MODULES) {
+  const byKey = registry === MODULES ? BY_KEY : new Map(registry.map((m) => [m.key, m]));
   if (!changes || typeof changes !== "object" || Array.isArray(changes)) {
     return { ok: false, error: "Send the modules you want to change" };
   }
   const current = resolveModules(stored);
   for (const [key, value] of Object.entries(changes)) {
-    const module = BY_KEY.get(key);
+    const module = byKey.get(key);
     if (!module) return { ok: false, error: `Unknown module: ${key}` };
     if (typeof value !== "boolean") return { ok: false, error: `${key} must be true or false` };
     if (!module.available && value) {

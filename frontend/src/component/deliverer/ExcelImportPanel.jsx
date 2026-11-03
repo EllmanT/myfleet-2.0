@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import {
@@ -115,7 +115,9 @@ const PlaceField = ({ decision, customers, disabled, onChange }) => {
   );
 };
 
-const ExcelImportPanel = ({ onImported, customers = [] }) => {
+// `injectedFile`: a workbook built elsewhere (the photo import's reviewed rows).
+// It goes through exactly the same preview and import steps as an uploaded file.
+const ExcelImportPanel = ({ onImported, customers = [], injectedFile = null }) => {
   const theme = useTheme();
   const inputRef = useRef(null);
   const requestId = useRef(0);
@@ -168,6 +170,17 @@ const ExcelImportPanel = ({ onImported, customers = [] }) => {
     setPreview(null);
     runPreview(picked, {}, useFirstName);
   };
+
+  useEffect(() => {
+    if (!injectedFile) return;
+    setFiles([injectedFile]);
+    setChoices({});
+    setResult(null);
+    setPreview(null);
+    runPreview([injectedFile], {}, true);
+    // run once per injected file
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [injectedFile]);
 
   const setChoice = (key, value) => {
     const next = { ...choices, [key]: value };
