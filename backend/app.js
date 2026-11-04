@@ -1,3 +1,5 @@
+// Registers the tenant query guard before any model is compiled (see services/tenantGuard.js).
+require("./services/tenantGuard").install();
 const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");

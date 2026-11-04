@@ -25,6 +25,7 @@ const app = require("../app");
 const Deliverer = require("../model/deliverer");
 const User = require("../model/user");
 const { seedDemo } = require("../scripts/seedDemoTenant");
+const guard = require("../services/tenantGuard");
 
 jest.setTimeout(600000);
 
@@ -203,6 +204,12 @@ describe("tenant isolation matrix", () => {
   }, 180000);
 
   afterAll(async () => {
+    if (String(process.env.TENANT_GUARD).toLowerCase() === "log") {
+      const rows = guard.getViolations().filter((v) => v.kind !== "by-id");
+      const lines = rows.map((v) => `  ${v.kind} ${v.model}.${v.op}  <-  ${v.route}  (x${v.count})`).sort();
+      // eslint-disable-next-line no-console
+      console.log("TENANT-GUARD (log): " + rows.length + " unscoped query site(s)\n" + lines.join("\n"));
+    }
     await mongoose.disconnect();
     await mongod.stop();
   });

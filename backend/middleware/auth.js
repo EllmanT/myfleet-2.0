@@ -3,6 +3,12 @@ const catchAsyncErrors = require("./catchAsyncErrors");
 const jwt = require("jsonwebtoken");
 const User = require("../model/user");
 const { clerkConfigured, companyIdForOrg } = require("../services/clerkAuth");
+const { enterRequest } = require("../services/tenantContext");
+
+// "GET /api/v2/job/get-latest-jobs-vehicle/:vehicleId": the route pattern, not the URL,
+// so the same route is one entry however many ids it is called with.
+const routeLabel = (req) =>
+  `${req.method} ${req.baseUrl || ""}${(req.route && req.route.path) || req.path}`;
 
 const hasBearer = (req) =>
   typeof req.headers.authorization === "string" &&
@@ -49,6 +55,7 @@ async function authenticateWithClerk(req, res, next) {
 
   req.user = user;
   req.authSource = "clerk";
+  enterRequest(user, routeLabel(req));
   next();
 }
 
@@ -72,6 +79,7 @@ async function authenticateWithCookie(req, res, next) {
   }
   req.user = user;
   req.authSource = "cookie";
+  enterRequest(user, routeLabel(req));
   next();
 }
 
