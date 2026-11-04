@@ -239,6 +239,13 @@ router.post(
       return next(new ErrorHandler("User already exists", 400));
     }
 
+    const room = await require("../services/billing").allowAnotherUser(deliverer);
+    if (!room.ok) {
+      const err = new ErrorHandler(room.error, 402);
+      err.code = "BAND_LIMIT";
+      return next(err);
+    }
+
     const admin = await User.create({
       name,
       email,

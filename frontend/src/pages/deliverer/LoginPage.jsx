@@ -29,7 +29,10 @@ const DelLoginPage = () => {
       )
       .then((res) => {
         toast.success("Login successfull!");
-        navigate("/del-dashboard");
+        // A platform admin with no company has no dashboard of their own: start at the console.
+        const u = res.data && res.data.user;
+        const platformOnly = u && ["Super Admin", "Site Admin"].includes(u.role) && !u.companyId;
+        navigate(platformOnly ? "/del-admin-console" : "/del-dashboard");
         window.location.reload(false);
         setDisable(false);
       })

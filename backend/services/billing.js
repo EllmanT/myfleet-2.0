@@ -66,6 +66,18 @@ async function allowAnotherTruck(company) {
   return { ok: true };
 }
 
+// Adding one more login: refuse above the band's user allowance. Companies without billing are not limited.
+async function allowAnotherUser(company) {
+  if (!company || !company.billing || !company.billing.band) return { ok: true };
+  const limits = BANDS[company.billing.band] || BANDS.starter;
+  const User = require("../model/user");
+  const current = await User.countDocuments({ companyId: company._id });
+  if (current + 1 > limits.maxUsers) {
+    return { ok: false, error: `Your plan includes ${limits.maxUsers} users. Contact us to add more; nothing has been changed.` };
+  }
+  return { ok: true };
+}
+
 // What the app may show about billing (never internal notes).
 function publicBilling(billing) {
   const s = billingState(billing);
@@ -83,4 +95,4 @@ function publicBilling(billing) {
   };
 }
 
-module.exports = { publicBilling, stateForCompany, clearBillingCache, readOnlyError, allowAnotherTruck };
+module.exports = { publicBilling, stateForCompany, clearBillingCache, readOnlyError, allowAnotherTruck, allowAnotherUser };

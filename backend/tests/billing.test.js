@@ -126,6 +126,20 @@ describe("billing over HTTP", () => {
     expect(full.body.message).toMatch(/up to 25 trucks/);
   });
 
+  test("a band's user allowance stops new logins; legacy companies are unlimited", async () => {
+    const addUser = (ck, n) =>
+      request(app).post("/api/v2/user/create-admin").set("Cookie", ck).send({ name: "N", email: `n${n}@x.test`, phoneNumber: "1", address: "S", city: "H", role: "Deliverer Admin", password: "password123" });
+    const c = await company({ billing: { band: "starter", status: "trial", trialEndsAt: days(20) } });
+    const ck = await cookieFor(c._id); // 1 user of 3
+    expect((await addUser(ck, 1)).status).toBe(201);
+    expect((await addUser(ck, 2)).status).toBe(201);
+    const full = await addUser(ck, 3);
+    expect(full.status).toBe(402);
+    expect(full.body.message).toMatch(/includes 3 users/);
+    const legacy = await cookieFor((await company())._id);
+    for (let i = 10; i < 15; i++) expect((await addUser(legacy, i)).status).toBe(201);
+  });
+
   test("only platform admins set plans; changes are audited; a legacy company can be put on a plan", async () => {
     const c = await company();
     const owner = await cookieFor(c._id);
