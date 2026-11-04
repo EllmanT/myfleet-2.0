@@ -6,7 +6,7 @@ process.env.NODE_ENV = "test";
 
 const Deliverer = require("../model/deliverer");
 const User = require("../model/user");
-const { noticesDue, sendDueNotices } = require("../services/billingEmails");
+const { noticesDue, sendDueNotices, shouldAutoDelete } = require("../services/billingEmails");
 
 jest.setTimeout(120000);
 const DAY = 86400000;
@@ -80,5 +80,62 @@ describe("sendDueNotices", () => {
     });
     expect(res[0].error).toBe("smtp down");
     expect((await Deliverer.findById(c._id).lean()).billing.notices).toBeUndefined();
+  });
+});
+
+describe("deleting companies that stopped paying", () => {
+  test("only after 30 days read-only; trials and grace count from their own end", () => {
+    expect(shouldAutoDelete({ band: "starter", status: "trial", trialEndsAt: days(-29) })).toBe(false);
+    expect(shouldAutoDelete({ band: "starter", status: "trial", trialEndsAt: days(-31) })).toBe(true);
+    expect(shouldAutoDelete({ band: "fleet", status: "active", paidUntil: days(-35) })).toBe(false); // 7 grace + 28
+    expect(shouldAutoDelete({ band: "fleet", status: "active", paidUntil: days(-40) })).toBe(true);
+    expect(shouldAutoDelete({ band: "fleet", status: "suspended", trialEndsAt: days(-90) })).toBe(false);
+    expect(shouldAutoDelete(undefined)).toBe(false);
+  });
+
+  describe("scheduling", () => {
+    let mongod;
+    beforeAll(async () => {
+      mongod = await MongoMemoryServer.create();
+      await mongoose.connect(mongod.getUri());
+    }, 60000);
+    afterAll(async () => {
+      await mongoose.disconnect();
+      await mongod.stop();
+    });
+    beforeEach(() => mongoose.connection.db.dropDatabase());
+    const make = async (name, billing) => {
+      const c = await Deliverer.create({ companyName: name, address: "S", city: "H", goodsType: ["g"], vehiclesType: ["small"], deliveryType: ["standard"], ...(billing ? { billing } : {}) });
+      await User.create({ name: "O", email: `${name}@x.test`, password: "password123", phoneNumber: "5", role: "Deliverer Admin", address: "S", city: "H", companyId: c._id });
+      return c;
+    };
+
+    test("schedules with the normal cooling-off, emails the owner, lifts it on payment, spares legacy", async () => {
+      const sent = [];
+      const mailer = async (m) => sent.push(m);
+      const lapsed = await make("Lapsed", { band: "starter", status: "trial", trialEndsAt: days(-40) });
+      const legacy = await make("Legacy");
+      await sendDueNotices(new Date(), mailer);
+      const after = await Deliverer.findById(lapsed._id).lean();
+      expect(after.deletionAuto).toBe(true);
+      const left = Math.round((new Date(after.deletionScheduledFor) - Date.now()) / DAY);
+      expect(left).toBe(30);
+      expect(sent.some((m) => /scheduled for deletion/.test(m.subject) && m.email === "Lapsed@x.test")).toBe(true);
+      expect((await Deliverer.findById(legacy._id).lean()).deletionScheduledFor).toBeUndefined();
+
+      // they pay: the next run lifts it
+      await Deliverer.updateOne({ _id: lapsed._id }, { "billing.status": "active", "billing.paidUntil": days(30) });
+      await sendDueNotices(new Date(), mailer);
+      const paid = await Deliverer.findById(lapsed._id).lean();
+      expect(paid.deletionScheduledFor).toBeUndefined();
+      expect(paid.deletionAuto).toBeUndefined();
+    });
+
+    test("a deletion the owner asked for is never lifted by the job", async () => {
+      const c = await make("Chosen", { band: "starter", status: "active", paidUntil: days(20) });
+      await Deliverer.updateOne({ _id: c._id }, { deletionScheduledFor: days(10), deletionRequestedAt: new Date() });
+      await sendDueNotices(new Date(), async () => {});
+      expect((await Deliverer.findById(c._id).lean()).deletionScheduledFor).toBeTruthy();
+    });
   });
 });

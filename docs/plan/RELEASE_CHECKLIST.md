@@ -69,3 +69,9 @@ node scripts/verifyTenantStamps.js --target=live
 
 - **Public sign-up stays closed** until the lawyer has returned the Terms and Privacy comments, the POTRAZ application is filed, and the beta tenants have been through steps 2 to 4 with you watching.
 - New companies created after this release start a 30-day trial automatically. Your existing company never does.
+
+
+## Added after the checklist was written
+- The live backfill has been run (2026-11-04). `verifyTenantStamps --target=live` reports 0 unstamped on all 10 collections.
+- Auto-deletion: a company read-only for 30 days is emailed and scheduled for deletion with the usual 30-day cooling-off; paying (or the daily job noticing it can write again) cancels it. Never applies to legacy companies or to deletions an owner asked for.
+- Subscription reminder emails quote EcoCash `+263 778 115 084` (`PAYMENT_ECOCASH_NUMBER` overrides it). Not VAT registered: nothing VAT-related is shown.

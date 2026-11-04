@@ -103,6 +103,8 @@ const delivererSchema = new mongoose.Schema(
     deletionRequestedAt: { type: Date },
     deletionScheduledFor: { type: Date },
     deletionRequestedBy: { type: mongoose.Types.ObjectId },
+    // true when WE scheduled it because the company stayed read-only; cancelled automatically on payment
+    deletionAuto: { type: Boolean },
     // Which optional modules are switched on. Missing on companies that existed
     // before module toggles; see config/modules.js (resolveModules).
     modules: { type: mongoose.Schema.Types.Mixed },

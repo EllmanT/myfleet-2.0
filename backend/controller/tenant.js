@@ -84,6 +84,13 @@ router.put(
     company.billing = next_;
     await company.save();
     clearBillingCache(company._id);
+    // a deletion WE scheduled for non-payment is lifted the moment the company can write again
+    if (company.deletionAuto && publicBilling(company.billing).writable) {
+      await Deliverer.updateOne(
+        { _id: company._id },
+        { $unset: { deletionScheduledFor: 1, deletionRequestedAt: 1, deletionRequestedBy: 1, deletionAuto: 1 } }
+      );
+    }
     await require("mongoose").connection.collection("auditlogs").insertOne({
       at: new Date(),
       by: req.user._id,

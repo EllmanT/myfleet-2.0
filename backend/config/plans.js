@@ -13,6 +13,8 @@ const BANDS = {
   fleet: { label: "3-10 trucks", maxTrucks: 10, priceUsd: 29, trialDays: 60, maxUsers: 10, aiPagesPerMonth: 200 },
   pro: { label: "11-25 trucks", maxTrucks: 25, priceUsd: 59, trialDays: 90, maxUsers: 25, aiPagesPerMonth: 500 },
 };
+// Where subscriptions are paid (EcoCash, same number as the WhatsApp line). Change it here only.
+const PAYMENT_ECOCASH = process.env.PAYMENT_ECOCASH_NUMBER || "+263 778 115 084";
 const BAND_ORDER = ["starter", "fleet", "pro"];
 const MAX_TRUCKS = BANDS.pro.maxTrucks;
 const PAYMENT_GRACE_DAYS = 7; // after paidUntil passes, still writable this long
@@ -60,4 +62,4 @@ function billingState(billing, now = new Date()) {
   return { ...out, state: "read_only", writable: false, readOnlyReason: "trial_ended", daysLeft };
 }
 
-module.exports = { BANDS, BAND_ORDER, MAX_TRUCKS, PAYMENT_GRACE_DAYS, bandForTrucks, newTenantBilling, billingState };
+module.exports = { PAYMENT_ECOCASH, BANDS, BAND_ORDER, MAX_TRUCKS, PAYMENT_GRACE_DAYS, bandForTrucks, newTenantBilling, billingState };
