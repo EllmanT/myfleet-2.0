@@ -86,6 +86,12 @@ const delivererSchema = new mongoose.Schema(
     clerkOrgId: { type: String, index: { unique: true, sparse: true } },
     // Billing plan (free during the launch period).
     plan: { type: String, default: "free" },
+    // Set when the company's admin asks for the company and all its data to be deleted. The data
+    // is kept until deletionScheduledFor so the request can be cancelled; see
+    // services/companyDeletion.js.
+    deletionRequestedAt: { type: Date },
+    deletionScheduledFor: { type: Date },
+    deletionRequestedBy: { type: mongoose.Types.ObjectId },
     // Which optional modules are switched on. Missing on companies that existed
     // before module toggles; see config/modules.js (resolveModules).
     modules: { type: mongoose.Schema.Types.Mixed },

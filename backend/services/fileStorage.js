@@ -68,6 +68,21 @@ const blobDriver = {
     const { del } = require("@vercel/blob");
     await del(key);
   },
+  async delPrefix(prefix) {
+    const { list, del } = require("@vercel/blob");
+    let cursor;
+    let count = 0;
+    do {
+      const page = await list({ prefix, cursor, limit: 500 });
+      const urls = page.blobs.map((b) => b.pathname);
+      if (urls.length) {
+        await del(urls);
+        count += urls.length;
+      }
+      cursor = page.hasMore ? page.cursor : undefined;
+    } while (cursor);
+    return count;
+  },
 };
 
 // ---- local disk (development and tests) -----------------------------------------------------
@@ -89,6 +104,25 @@ const diskDriver = {
   },
   async del(key) {
     await fsp.rm(diskPath(key), { force: true });
+  },
+  async delPrefix(prefix) {
+    const dir = diskPath(prefix.replace(/\/$/, ""));
+    let count = 0;
+    const walk = async (d) => {
+      let entries = [];
+      try {
+        entries = await fsp.readdir(d, { withFileTypes: true });
+      } catch (error) {
+        return;
+      }
+      for (const e of entries) {
+        if (e.isDirectory()) await walk(path.join(d, e.name));
+        else count += 1;
+      }
+    };
+    await walk(dir);
+    await fsp.rm(dir, { recursive: true, force: true });
+    return count;
   },
 };
 
@@ -130,4 +164,10 @@ async function deleteFile(key) {
   }
 }
 
-module.exports = { saveFile, readFile, deleteFile, parseKey, isStoredKey, sniffType, MAX_FILE_BYTES };
+// Remove every file a company has stored (used when a company is deleted). Returns how many.
+async function deleteTenantFiles(tenantId) {
+  if (!/^[a-f0-9]{24}$/.test(String(tenantId))) throw new Error("Invalid company id");
+  return driver().delPrefix(`tenants/${tenantId}/`);
+}
+
+module.exports = { deleteTenantFiles, saveFile, readFile, deleteFile, parseKey, isStoredKey, sniffType, MAX_FILE_BYTES };

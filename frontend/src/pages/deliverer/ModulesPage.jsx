@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import Header from "component/deliverer/Header";
 import { saveModules, loadTenant } from "redux/actions/tenant";
+import DeleteCompanySection from "component/deliverer/DeleteCompanySection";
 import { downloadCompanyExport } from "utils/downloadExport";
 
 const ADMIN_ROLES = ["Deliverer Admin", "Super Admin", "Site Admin"];
@@ -114,6 +115,10 @@ const ModulesPage = () => {
             {exporting ? "Preparing your download…" : "Download all company data"}
           </Button>
         </Box>
+      )}
+
+      {canEdit && user.role === "Deliverer Admin" && (
+        <DeleteCompanySection onExport={exportData} />
       )}
     </Box>
   );

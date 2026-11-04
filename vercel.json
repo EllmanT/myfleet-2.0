@@ -16,6 +16,7 @@
       "maxDuration": 30
     }
   },
+  "crons": [{ "path": "/api/v2/tenant/purge-due", "schedule": "0 2 * * *" }],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api" },
     { "source": "/(.*)", "destination": "/index.html" }

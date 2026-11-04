@@ -8,6 +8,7 @@ const { isGlobalAdmin, requireRole } = require("../middleware/tenantAccess");
 const { clearModuleCache } = require("../middleware/moduleAccess");
 const { MODULES, resolveModules, applyModuleChanges } = require("../config/modules");
 const { streamCompanyExport } = require("../services/dataExport");
+const deletion = require("../services/companyDeletion");
 
 const registry = () =>
   MODULES.map(({ key, label, description, available }) => ({ key, label, description, available }));
@@ -21,7 +22,7 @@ router.get(
       return next(new ErrorHandler("Your account has no company", 403));
     }
     const company = await Deliverer.findById(req.user.companyId)
-      .select("companyName plan modules")
+      .select("companyName plan modules deletionRequestedAt deletionScheduledFor")
       .lean();
     if (!company) return next(new ErrorHandler("Company not found", 404));
 
@@ -31,6 +32,7 @@ router.get(
       plan: company.plan || "free",
       modules: resolveModules(company.modules),
       registry: registry(),
+      deletion: deletion.statusOf(company),
     });
   })
 );
@@ -104,6 +106,66 @@ router.get(
     } finally {
       exporting.delete(companyId);
     }
+  })
+);
+
+// Deleting the company. Company admins of their own company only; nothing is removed until the
+// date has passed, and until then the request can be cancelled.
+const ownCompanyAdmin = (req, res, next) => {
+  if (!req.user.companyId) return next(new ErrorHandler("Your account has no company", 403));
+  next();
+};
+
+// POST /api/v2/tenant/deletion { confirmName }
+router.post(
+  "/deletion",
+  isAuthenticated,
+  requireRole("Deliverer Admin"),
+  ownCompanyAdmin,
+  catchAsyncErrors(async (req, res, next) => {
+    const result = await deletion.requestDeletion({
+      companyId: req.user.companyId,
+      userId: req.user._id,
+      confirmName: req.body && req.body.confirmName,
+    });
+    if (!result.ok) return next(new ErrorHandler(result.error, result.status || 400));
+    // eslint-disable-next-line no-console
+    console.info("[company-deletion] requested", String(req.user.companyId), "by", String(req.user._id));
+    res.status(200).json({ success: true, deletion: result });
+  })
+);
+
+// DELETE /api/v2/tenant/deletion - change of mind
+router.delete(
+  "/deletion",
+  isAuthenticated,
+  requireRole("Deliverer Admin"),
+  ownCompanyAdmin,
+  catchAsyncErrors(async (req, res, next) => {
+    const result = await deletion.cancelDeletion(req.user.companyId);
+    if (!result.ok) return next(new ErrorHandler(result.error, result.status || 400));
+    res.status(200).json({ success: true, deletion: result });
+  })
+);
+
+// GET /api/v2/tenant/purge-due - the daily scheduled job (Vercel cron sends
+// "Authorization: Bearer <CRON_SECRET>"). Without CRON_SECRET set it does nothing.
+router.get(
+  "/purge-due",
+  catchAsyncErrors(async (req, res, next) => {
+    const secret = process.env.CRON_SECRET;
+    if (!secret) return next(new ErrorHandler("Not available", 404));
+    const given = String(req.headers.authorization || "");
+    const expected = `Bearer ${secret}`;
+    const a = Buffer.from(given);
+    const b = Buffer.from(expected);
+    if (a.length !== b.length || !require("crypto").timingSafeEqual(a, b)) {
+      return next(new ErrorHandler("Not authorized", 401));
+    }
+    const results = await deletion.purgeDueCompanies();
+    // eslint-disable-next-line no-console
+    console.info("[company-deletion] purge run", JSON.stringify(results));
+    res.status(200).json({ success: true, purged: results.length, results });
   })
 );
 

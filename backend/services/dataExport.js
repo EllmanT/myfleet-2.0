@@ -95,8 +95,7 @@ function toCsv(rows) {
 
 // ---------- gathering a company's rows ----------
 
-async function rowsFor(kind, company) {
-  const Model = reqModel(kind.model);
+function companyFilter(kind, company) {
   const clauses = [];
   if (kind.scope === "tenantId") {
     clauses.push({ tenantId: company._id });
@@ -108,7 +107,12 @@ async function rowsFor(kind, company) {
   if (kind.ids && company[kind.ids] && company[kind.ids].length) {
     clauses.push({ _id: { $in: company[kind.ids] } });
   }
-  const filter = clauses.length === 1 ? clauses[0] : { $or: clauses };
+  return clauses.length === 1 ? clauses[0] : { $or: clauses };
+}
+
+async function rowsFor(kind, company) {
+  const Model = reqModel(kind.model);
+  const filter = companyFilter(kind, company);
   // Always the raw collection: the filter above is the company's own, and raw rows are exported
   // exactly as stored.
   return Model.collection.find(filter).sort({ _id: 1 }).toArray();
@@ -247,4 +251,14 @@ async function streamCompanyExport({ companyId, requestedBy, out, onError }) {
   }
 }
 
-module.exports = { streamCompanyExport, KINDS, toCsv, csvField };
+// Records the app keeps for a company that are not exported (they can be recalculated) but
+// must be removed when the company is deleted.
+const DERIVED_KINDS = [
+  { name: "vehicle-stats", model: "vehicleStats", scope: "tenantId" },
+  { name: "driver-stats", model: "driverStats", scope: "tenantId" },
+  { name: "overall-stats", model: "overallStats", scope: "companyId" },
+  { name: "counters", model: "counter", scope: "tenantId" },
+  { name: "ai-usage", model: "aiUsage", scope: "tenantId" },
+];
+
+module.exports = { streamCompanyExport, KINDS, DERIVED_KINDS, companyFilter, toCsv, csvField };
