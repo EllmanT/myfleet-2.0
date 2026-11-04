@@ -79,6 +79,14 @@ function streamDocumentPdf(res, { kind, doc, company, filename }) {
   const tail = [doc.notes, doc.terms].filter(Boolean).join("\n\n");
   if (tail) pdf.text(tail, left, y + 30, { width: right - left });
 
+  // Always at the foot of the page: these are business documents, not fiscalised tax invoices.
+  pdf.font("Helvetica").fontSize(8).fillColor("#666").text(
+    `${kind === "Invoice" ? "Invoice" : "Quotation"} prepared with myfleet. This is a business document, not a ZIMRA fiscalised tax invoice.`,
+    left,
+    780,
+    { width: right - left, align: "center", lineBreak: false }
+  );
+
   pdf.end();
 }
 
