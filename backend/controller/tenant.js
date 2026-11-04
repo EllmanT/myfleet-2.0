@@ -253,4 +253,21 @@ router.get(
   })
 );
 
+// GET /api/v2/tenant/billing-notices - daily cron: trial-ending / payment reminder emails.
+router.get(
+  "/billing-notices",
+  catchAsyncErrors(async (req, res, next) => {
+    const secret = process.env.CRON_SECRET;
+    if (!secret) return next(new ErrorHandler("Not available", 404));
+    const a = Buffer.from(String(req.headers.authorization || ""));
+    const b = Buffer.from(`Bearer ${secret}`);
+    if (a.length !== b.length || !require("crypto").timingSafeEqual(a, b)) {
+      return next(new ErrorHandler("Not authorized", 401));
+    }
+    const results = await require("../services/billingEmails").sendDueNotices();
+    console.info("[billing-notices] run", JSON.stringify(results));
+    res.status(200).json({ success: true, results });
+  })
+);
+
 module.exports = router;

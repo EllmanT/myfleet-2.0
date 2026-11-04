@@ -58,6 +58,8 @@ node scripts/verifyTenantStamps.js --target=live
 
 ## 5. After the release
 
+- [ ] Vercel Production also has the mail settings: `SMPT_HOST`, `SMPT_PORT`, `SMPT_MAIL`, `SMPT_PASSWORD` (the same four as in `backend/config/.env`). Without them the trial and payment reminder emails fail quietly and retry next day.
+- [ ] The 06:00 job `/api/v2/tenant/billing-notices` is listed under Cron Jobs. It emails company owners when a trial has 7 days left, when it ends, 3 days before a subscription is due, and when it is overdue; once per date, never to the first customer.
 - [ ] The daily purge job: Vercel, project, Cron Jobs, shows `/api/v2/tenant/purge-due`. It only acts on companies that asked to be deleted, so it will report "purged: 0" for now. A 404 means `CRON_SECRET` is missing; a 401 means it does not match.
 - [ ] Sign in as a throwaway platform admin and open the admin console (once built) to confirm your company shows as `legacy`.
 - [ ] Delete leftover test files from the Blob store if you want a clean start (Vercel, Storage, Browse).

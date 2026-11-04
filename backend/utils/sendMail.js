@@ -34,6 +34,7 @@ const sendMail = async (options) => {
     transportOpts.host = host;
     if (process.env.SMPT_PORT) {
       transportOpts.port = Number(process.env.SMPT_PORT);
+      transportOpts.secure = transportOpts.port === 465; // implicit TLS on 465
     }
   }
 

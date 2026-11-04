@@ -97,6 +97,8 @@ const delivererSchema = new mongoose.Schema(
       trialEndsAt: { type: Date },
       paidUntil: { type: Date },
       note: { type: String },
+      // which clock date each reminder email was last sent for (services/billingEmails.js)
+      notices: { type: mongoose.Schema.Types.Mixed },
     },
     deletionRequestedAt: { type: Date },
     deletionScheduledFor: { type: Date },
