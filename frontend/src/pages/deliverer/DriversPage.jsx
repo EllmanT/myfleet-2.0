@@ -32,6 +32,7 @@ import {
 import FlexBetween from "component/deliverer/FlexBetween";
 import Header from "component/deliverer/Header";
 import Cities from "component/Cities";
+import DocumentField from "component/deliverer/DocumentField";
 import { MuiFileInput } from "mui-file-input";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -118,7 +119,7 @@ const DriversPage = () => {
 
   useEffect(() => {
     if (error) {
-      toast.error(error.message);
+      toast.error(typeof error === "string" ? error : error.message);
     }
     if (success) {
       toast.success("Driver added successfully");
@@ -128,23 +129,13 @@ const DriversPage = () => {
     }
   }, [dispatch, error, success]);
 
-  const handleIdInputChange = (e) => {
-    const file = e.target.files[0];
-    setId(file);
-  };
-
-  const handleLicenseInputChange = (e) => {
-    const file = e.target.files[0];
-    setLicense(file);
-  };
-
   const handleClickOpen = () => {
     setName("");
     setAddress("");
     setPhoneNumber("");
     setCity("");
-    setId("");
-    setLicense("");
+    setId(null);
+    setLicense(null);
     setAddress("");
     setIdNumber("");
     setIdLink("");
@@ -165,6 +156,8 @@ const DriversPage = () => {
     setIdNumber(selectedDriver.idNumber);
     setIdLink(selectedDriver.id);
     setLicenseLink(selectedDriver.license);
+    setId(null);
+    setLicense(null);
     setIsAddButtonn(false);
     setIsEditButtonn(false);
     setDisable(false);
@@ -188,6 +181,8 @@ const DriversPage = () => {
     setIdNumber(selectedDriver.idNumber);
     setIdLink(selectedDriver.id);
     setLicenseLink(selectedDriver.license);
+    setId(null);
+    setLicense(null);
     setIsEditButtonn(true);
     setIsAddButtonn(false);
     setDisable(false);
@@ -222,19 +217,16 @@ const DriversPage = () => {
     newForm.append("city", city);
     newForm.append("address", address);
     newForm.append("idNumber", idNumber);
-    newForm.append("id", id);
-    newForm.append("license", license);
+    if (id) newForm.append("id", id);
+    if (license) newForm.append("license", license);
     newForm.append("companyId", user.companyId);
 
-    if (
-      name !== "" &&
-      phoneNumber !== "" &&
-      city !== "" &&
-      address !== "" &&
-      idNumber !== "" &&
-      id !== null &&
-      license !== null
-    ) {
+    const textComplete =
+      name !== "" && phoneNumber !== "" && city !== "" && address !== "" && idNumber !== "";
+    // a new driver needs both documents; when editing, a document is only sent if replaced
+    const filesComplete = isEditButtonn ? true : Boolean(id && license);
+
+    if (textComplete && filesComplete) {
       if (isAddButtonn && !isEditButtonn) {
         dispatch(createDriver(newForm)).then(() => {
           dispatch(getAllDriversPage());
@@ -243,30 +235,22 @@ const DriversPage = () => {
         });
       }
       if (!isAddButtonn && isEditButtonn) {
-        dispatch(
-          updateDriver(
-            driverId,
-            name,
-            phoneNumber,
-            city,
-            address,
-            idNumber
-            // id,
-            //  license
-          )
-        )
-          .then((res) => {
+        newForm.append("driverId", driverId);
+        dispatch(updateDriver(newForm))
+          .then(() => {
             toast.success("Driver updated successfully");
             dispatch(getAllDriversPage());
             dispatch({ type: "clearMessages" });
             setOpen(false);
           })
           .catch((error) => {
-            toast.error(error.response.data.message);
+            toast.error(error.message);
           });
       }
     } else {
-      toast.error("fill in all fields");
+      toast.error(
+        textComplete ? "Add both the driver's licence and ID" : "Fill in all the fields"
+      );
       setDisable(false);
     }
   };
@@ -411,40 +395,22 @@ const DriversPage = () => {
                     />
                   </FormControl>
 
-                  <FormControl sx={{ m: 1, maxWidth: 250 }}>
-                    <Box>
-                      <span>Driver's Licence : </span>
-                      <br />
-                      {licenseLink}
-                      {(isAddButtonn || isEditButtonn) && (
-                        <input
-                          type="file"
-                          name="id"
-                          id="file-input"
-                          accept=".jpg,.jpeg,.png"
-                          onChange={handleLicenseInputChange}
-                          className="sr-only"
-                        />
-                      )}
-                    </Box>
-                  </FormControl>
-                  <FormControl sx={{ m: 1, maxWidth: 250 }}>
-                    <Box>
-                      <span>Drivers ID : </span>
-                      <br />
-                      {idLink}
-                      {(isAddButtonn || isEditButtonn) && (
-                        <input
-                          type="file"
-                          name="id"
-                          id="file-input"
-                          accept=".jpg,.jpeg,.png"
-                          onChange={handleIdInputChange}
-                          className="sr-only"
-                        />
-                      )}
-                    </Box>
-                  </FormControl>
+                  <DocumentField
+                    label="Driver's licence"
+                    storedKey={licenseLink}
+                    file={license}
+                    onChange={setLicense}
+                    editable={isAddButtonn || isEditButtonn}
+                    required
+                  />
+                  <DocumentField
+                    label="Driver's ID"
+                    storedKey={idLink}
+                    file={id}
+                    onChange={setId}
+                    editable={isAddButtonn || isEditButtonn}
+                    required
+                  />
 
                   <Box display={"flex"} sx={{ m: "1rem 3rem " }}>
                     <Button
@@ -453,7 +419,7 @@ const DriversPage = () => {
                       variant="contained"
                       size="large"
                       sx={{
-                        color: theme.palette.secondary[300],
+                        color: theme.palette.background.alt,
 
                         margin: "1rem",
                         border: "solid 1px",

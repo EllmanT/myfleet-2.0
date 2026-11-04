@@ -12,6 +12,8 @@ const app = require("../app");
 const Deliverer = require("../model/deliverer");
 const User = require("../model/user");
 const Customer = require("../model/customer");
+const Vehicle = require("../model/vehicle");
+const Contractor = require("../model/contractor");
 const { ownCustomerFilter } = require("../services/customerScope");
 
 jest.setTimeout(120000);
@@ -99,6 +101,51 @@ describe("customers are per company", () => {
     const body = { name: "Same Co", phoneNumber: "1", address: "x", city: "Harare" };
     expect((await request(app).post("/api/v2/customer/create-customer").set("Cookie", cookieA).send(body)).status).toBe(201);
     expect((await request(app).post("/api/v2/customer/create-customer").set("Cookie", cookieA).send(body)).status).toBe(409);
+  });
+
+  test("two companies can each register a truck with the same plate, as separate vehicles", async () => {
+    const a = await company("A");
+    const b = await company("B");
+    const cookieA = await admin(a._id, "a@x.test");
+    const cookieB = await admin(b._id, "b@x.test");
+    const mk = (cookie) =>
+      request(app).post("/api/v2/vehicle/create-vehicle").set("Cookie", cookie).send({ make: "DAF", regNumber: "AFE5848", size: "horse" });
+
+    expect((await mk(cookieA)).status).toBe(201);
+    expect((await mk(cookieB)).status).toBe(201);
+    const vehicles = await Vehicle.find({ regNumber: "AFE5848" }).lean();
+    expect(vehicles).toHaveLength(2);
+    expect(new Set(vehicles.map((v) => String(v.tenantId)))).toEqual(new Set([String(a._id), String(b._id)]));
+    expect((await Deliverer.findById(b._id)).vehicle_ids.map(String)).toEqual([String(vehicles.find((v) => String(v.tenantId) === String(b._id))._id)]);
+    // the same company adding the same plate twice is still refused
+    expect((await mk(cookieA)).status).toBe(500);
+  });
+
+  test("two companies can each add a contractor with the same name, as separate records", async () => {
+    const a = await company("A");
+    const b = await company("B");
+    const cookieA = await admin(a._id, "a@x.test");
+    const cookieB = await admin(b._id, "b@x.test");
+    const mk = (cookie) =>
+      request(app)
+        .post("/api/v2/contractor/create-contractor")
+        .set("Cookie", cookie)
+        .field("companyName", "Zambezi Building Supplies")
+        .field("address", "1 Road")
+        .field("city", "Harare")
+        .field("contact", "0771")
+        .field("goodsTypes", "general")
+        .field("vehiclesTypes", "small")
+        .field("deliveryTypes", "standard")
+        .field("prefix", "ZB")
+        .field("lastOrder", "0")
+        .field("vrates", "[]");
+
+    expect((await mk(cookieA)).status).toBeLessThan(300);
+    expect((await mk(cookieB)).status).toBeLessThan(300);
+    const contractors = await Contractor.find({ companyName: "Zambezi Building Supplies" }).lean();
+    expect(contractors).toHaveLength(2);
+    expect(new Set(contractors.map((c) => String(c.tenantId)))).toEqual(new Set([String(a._id), String(b._id)]));
   });
 
   test("the filter finds legacy unstamped customers only through the company's own list", () => {

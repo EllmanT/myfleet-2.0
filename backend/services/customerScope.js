@@ -11,4 +11,5 @@ function ownCustomerFilter(tenantId, linkedIds = []) {
   return or.length ? { $or: or } : { _id: { $in: [] } };
 }
 
-module.exports = { ownCustomerFilter };
+// The same rule applies to any record a company keeps in its own list (customers, drivers).
+module.exports = { ownCustomerFilter, ownRecordFilter: ownCustomerFilter };

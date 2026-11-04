@@ -2,6 +2,7 @@ const express = require("express");
 const { escapeRegex } = require("../utils/escapeRegex");
 const Contractor = require("../model/contractor");
 const { upload } = require("../multer");
+const { ownRecordFilter } = require("../services/customerScope");
 const router = express.Router();
 const ErrorHandler = require("../utils/ErrorHandler");
 const { isAuthenticated } = require("../middleware/auth");
@@ -46,8 +47,14 @@ router.post(
       return next(new ErrorHandler("Invalid JSON format for rates", 400));
     }
 
-    let checkCompany = await Contractor.findOne({ companyName });
     const isCompanyDeliverer = await Deliverer.findById(companyId);
+    // Only this company's own contractors count as duplicates, never another company's.
+    let checkCompany = isCompanyDeliverer
+      ? await Contractor.findOne({
+          companyName,
+          ...ownRecordFilter(isCompanyDeliverer._id, isCompanyDeliverer.contractor_ids),
+        })
+      : null;
 
     if (checkCompany) {
       //checking the deliverer table
@@ -59,7 +66,7 @@ router.post(
         if (isDeliveryContractor) {
           return next(
             new ErrorHandler(
-              `  ${checkCompany.name} is already your contractor`,
+              `${checkCompany.companyName} is already your contractor`,
               500
             )
           );

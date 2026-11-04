@@ -7,7 +7,10 @@ export const createDriver = (newForm) => async (dispatch) => {
       type: "loadCreateDriverRequest",
     });
 
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
+    const config = {
+      withCredentials: true,
+      headers: { "Content-Type": "multipart/form-data" },
+    };
     const { data } = await axios.post(
       `${server}/driver/create-driver`,
       newForm,
@@ -79,40 +82,32 @@ export const getAllDriversPage =
     }
   };
 
-export const updateDriver =
-  (driverId, name, phoneNumber, city, address, idNumber, id, license) =>
-  async (dispatch) => {
-    try {
-      dispatch({
-        type: "updateDriverRequest",
-      });
+// Takes the form (text fields, plus a new licence and/or ID file only when they are replaced).
+// Rejects with the server's message so the page can show it.
+export const updateDriver = (form) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "updateDriverRequest",
+    });
 
-      const { data } = await axios.put(
-        `${server}/driver/update-driver`,
-        {
-          driverId,
-          name,
-          phoneNumber,
-          city,
-          address,
-          idNumber,
-          id,
-          license,
-        },
-        { withCredentials: true }
-      );
+    const { data } = await axios.put(`${server}/driver/update-driver`, form, {
+      withCredentials: true,
+      headers: { "Content-Type": "multipart/form-data" },
+    });
 
-      dispatch({
-        type: "updateDriverSuccess",
-        payload: data.driver,
-      });
-    } catch (error) {
-      dispatch({
-        type: "updateDriverFailed",
-        payload: error.response?.data?.message || error.message,
-      });
-    }
-  };
+    dispatch({
+      type: "updateDriverSuccess",
+      payload: data.driver,
+    });
+  } catch (error) {
+    const message = error.response?.data?.message || error.message;
+    dispatch({
+      type: "updateDriverFailed",
+      payload: message,
+    });
+    throw new Error(message);
+  }
+};
 
   // delete Driver of a shop
 export const deleteDriver = (driverId) => async (dispatch) => {

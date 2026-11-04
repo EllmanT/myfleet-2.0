@@ -11,6 +11,7 @@ const {
   requireOwnership,
 } = require("../middleware/tenantAccess");
 const { default: mongoose } = require("mongoose");
+const { ownRecordFilter } = require("../services/customerScope");
 const router = express.Router();
 
 router.post(
@@ -22,9 +23,16 @@ router.post(
     try {
       const { make, regNumber, size, companyId } = req.body;
 
-      let checkVehicle = await Vehicle.findOne({ regNumber });
-
       const isCompanyDeliverer = await Deliverer.findById(companyId);
+
+      // Only this company's own vehicles count as duplicates. Matching a plate across every
+      // company would link one company to another company's vehicle.
+      let checkVehicle = isCompanyDeliverer
+        ? await Vehicle.findOne({
+            regNumber,
+            ...ownRecordFilter(isCompanyDeliverer._id, isCompanyDeliverer.vehicle_ids),
+          })
+        : null;
 
       if (checkVehicle) {
         //checking to see if customer exists in the deliverers customers array list
