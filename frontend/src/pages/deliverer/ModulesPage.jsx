@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Box, Chip, Switch, Typography, useTheme } from "@mui/material";
+import { Box, Button, Chip, Switch, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import Header from "component/deliverer/Header";
 import { saveModules, loadTenant } from "redux/actions/tenant";
+import { downloadCompanyExport } from "utils/downloadExport";
 
 const ADMIN_ROLES = ["Deliverer Admin", "Super Admin", "Site Admin"];
 
@@ -13,6 +14,19 @@ const ModulesPage = () => {
   const { user, modules, moduleRegistry, modulesLoaded } = useSelector((s) => s.user);
   const [saving, setSaving] = useState("");
   const canEdit = Boolean(user && ADMIN_ROLES.includes(user.role));
+  const [exporting, setExporting] = useState(false);
+
+  const exportData = async () => {
+    setExporting(true);
+    try {
+      await downloadCompanyExport();
+      toast.success("Your data has been downloaded");
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setExporting(false);
+    }
+  };
 
   const toggle = async (key, value) => {
     setSaving(key);
@@ -85,6 +99,20 @@ const ModulesPage = () => {
               />
             </Box>
           ))}
+        </Box>
+      )}
+
+      {canEdit && (
+        <Box mt="3rem" maxWidth="720px">
+          <Typography fontWeight="bold">Your data</Typography>
+          <Typography variant="body2" sx={{ opacity: 0.75, mt: 0.5, mb: 1.5 }}>
+            Download everything your company has entered: jobs, customers, vehicles, drivers, invoices,
+            expenses and uploaded documents. You get spreadsheets you can open in Excel, and a copy in
+            a format other systems can read.
+          </Typography>
+          <Button variant="outlined" onClick={exportData} disabled={exporting}>
+            {exporting ? "Preparing your download…" : "Download all company data"}
+          </Button>
         </Box>
       )}
     </Box>

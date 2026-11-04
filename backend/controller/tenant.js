@@ -7,6 +7,7 @@ const { isAuthenticated } = require("../middleware/auth");
 const { isGlobalAdmin, requireRole } = require("../middleware/tenantAccess");
 const { clearModuleCache } = require("../middleware/moduleAccess");
 const { MODULES, resolveModules, applyModuleChanges } = require("../config/modules");
+const { streamCompanyExport } = require("../services/dataExport");
 
 const registry = () =>
   MODULES.map(({ key, label, description, available }) => ({ key, label, description, available }));
@@ -61,6 +62,48 @@ router.put(
       success: true,
       modules: resolveModules(company.modules),
     });
+  })
+);
+
+// GET /api/v2/tenant/export - the whole company's data as one ZIP (spreadsheets, JSON, documents).
+// Company admins only. One export at a time per company.
+const exporting = new Set();
+router.get(
+  "/export",
+  isAuthenticated,
+  requireRole("Deliverer Admin", "Super Admin", "Site Admin"),
+  catchAsyncErrors(async (req, res, next) => {
+    const companyId =
+      isGlobalAdmin(req.user) && req.query.companyId ? String(req.query.companyId) : String(req.user.companyId || "");
+    if (!companyId || !require("mongoose").isValidObjectId(companyId)) {
+      return next(new ErrorHandler("Your account has no company", 403));
+    }
+    if (exporting.has(companyId)) {
+      return next(new ErrorHandler("An export is already being prepared. Try again in a minute.", 429));
+    }
+    exporting.add(companyId);
+    try {
+      const stamp = new Date().toISOString().slice(0, 10);
+      res.status(200);
+      res.setHeader("Content-Type", "application/zip");
+      res.setHeader("Content-Disposition", `attachment; filename="myfleet-export-${stamp}.zip"`);
+      res.setHeader("Cache-Control", "private, no-store");
+      res.setHeader("X-Content-Type-Options", "nosniff");
+      const manifest = await streamCompanyExport({ companyId, requestedBy: req.user._id, out: res });
+      // eslint-disable-next-line no-console
+      console.info("[data-export]", JSON.stringify({ company: companyId, by: String(req.user._id), counts: manifest.counts }));
+    } catch (error) {
+      if (!res.headersSent) {
+        res.removeHeader("Content-Disposition");
+        res.removeHeader("Content-Type");
+        return next(new ErrorHandler(error.status === 404 ? "Company not found" : "The export failed. Try again.", error.status || 500));
+      }
+      // Already streaming: cut the connection so the browser shows a failed download
+      // rather than a truncated file that looks complete.
+      res.destroy(error);
+    } finally {
+      exporting.delete(companyId);
+    }
   })
 );
 
