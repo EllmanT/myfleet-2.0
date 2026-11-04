@@ -479,6 +479,8 @@ const AllJobsPage = () => {
         }}
       >
         <DataGrid
+          emptyTitle="No jobs yet"
+          emptyText="Record your first job with + job, or import past jobs from Excel."
           height="100%"
           loading={allJobsPageLoading || !jobsPage}
           getRowId={(row) => row._id}

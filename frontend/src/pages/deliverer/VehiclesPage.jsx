@@ -27,6 +27,7 @@ import {
 } from "@mui/icons-material";
 import FlexBetween from "component/deliverer/FlexBetween";
 import Header from "component/deliverer/Header";
+import EmptyState from "component/deliverer/EmptyState";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createVehicle,
@@ -540,7 +541,9 @@ const VehiclesPage = () => {
         </Box>
       </Box>
       {/**Content starts here */}
-      {dVehicles && !isPageVehLoading ? (
+      {dVehicles && !isPageVehLoading && dVehicles.length === 0 ? (
+        <EmptyState title="No vehicles to show" text="Add your first truck with the Add button. If you are searching, clear the search." />
+      ) : dVehicles && !isPageVehLoading ? (
         <Box
           mt="20px"
           display="grid"

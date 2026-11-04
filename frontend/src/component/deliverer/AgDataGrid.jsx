@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from "react";
-import { Box, CircularProgress, TablePagination } from "@mui/material";
+import { Box, CircularProgress, TablePagination, Typography } from "@mui/material";
 import { DeleteOutline, Search, VisibilityOff } from "@mui/icons-material";
 import { AgGridReact } from "ag-grid-react";
 import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
@@ -51,6 +51,9 @@ export const DataGrid = ({
   components,
   componentsProps,
   height = "70vh",
+  // What to say when there are no rows (and nothing is loading). Pages pass wording that fits.
+  emptyTitle = "Nothing here yet",
+  emptyText = "",
 }) => {
   const page = paginationModel?.page ?? 0;
   const pageSize = paginationModel?.pageSize ?? rowsPerPageOptions[0] ?? 25;
@@ -121,12 +124,37 @@ export const DataGrid = ({
             <CircularProgress size={28} />
           </Box>
         ) : null}
+        {!loading && rows.length === 0 ? (
+          <Box
+            sx={{
+              position: "absolute",
+              inset: 0,
+              top: 48, // below the column headers
+              zIndex: 1,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+              px: 3,
+              pointerEvents: "none",
+            }}
+          >
+            <Typography fontWeight="bold">{emptyTitle}</Typography>
+            {emptyText ? (
+              <Typography variant="body2" sx={{ opacity: 0.7, mt: 0.5, maxWidth: 360 }}>
+                {emptyText}
+              </Typography>
+            ) : null}
+          </Box>
+        ) : null}
         <div className="ag-theme-quartz" style={{ width: "100%", height: "100%" }}>
           <AgGridReact
             ref={gridRef}
             theme="legacy"
             rowData={rows}
             columnDefs={columnDefs}
+            overlayNoRowsTemplate="<span></span>"
             rowHeight={32}
             headerHeight={48}
             animateRows

@@ -31,6 +31,7 @@ import {
 } from "@mui/icons-material";
 import FlexBetween from "component/deliverer/FlexBetween";
 import Header from "component/deliverer/Header";
+import EmptyState from "component/deliverer/EmptyState";
 import Cities from "component/Cities";
 import DocumentField from "component/deliverer/DocumentField";
 import { MuiFileInput } from "mui-file-input";
@@ -550,7 +551,9 @@ const DriversPage = () => {
       </Box>
       {/**This is where the content starts */}
       <Box>
-        {dDrivers && !isPageDrLoading ? (
+        {dDrivers && !isPageDrLoading && dDrivers.length === 0 ? (
+        <EmptyState title="No drivers to show" text="Add a driver with the Add button. If you are searching, clear the search." />
+      ) : dDrivers && !isPageDrLoading ? (
           <Box
             mt="20px"
             display="grid"

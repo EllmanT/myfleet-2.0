@@ -325,6 +325,8 @@ const CustomersPage = () => {
         }}
       >
         <DataGrid
+          emptyTitle="No customers yet"
+          emptyText="Use Add to enter the people and companies you haul for."
           height="100%"
           loading={isPageCustomerLoading || !customersPage}
           getRowId={(row) => row._id}

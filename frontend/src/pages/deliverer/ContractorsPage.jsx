@@ -32,6 +32,7 @@ import {
 } from "@mui/icons-material";
 import FlexBetween from "component/deliverer/FlexBetween";
 import Header from "component/deliverer/Header";
+import EmptyState from "component/deliverer/EmptyState";
 import GoodsTypes from "component/deliverer/GoodsType";
 import Cities from "component/Cities";
 import { useDispatch, useSelector } from "react-redux";
@@ -1159,7 +1160,9 @@ const ContractorsPage = () => {
 
       {/**Where the info goes */}
       <Box>
-        {dContractors && !isContrPageLoading ? (
+        {dContractors && !isContrPageLoading && dContractors.length === 0 ? (
+        <EmptyState title="No contractors to show" text="Add the companies you work with using the Add button. If you are searching, clear the search." />
+      ) : dContractors && !isContrPageLoading ? (
           <Box
             mt="20px"
             display="grid"
