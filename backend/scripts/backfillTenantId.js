@@ -157,6 +157,37 @@ async function backfill(db, { apply }) {
   return report;
 }
 
+// What the normal backfill cannot place: records that no company lists (old imports, statistics
+// of vehicles that were later deleted). With exactly ONE company in the database they can only
+// belong to it. With more than one this refuses, because guessing would hand one company
+// another's records.
+async function adoptLeftovers(db, companyHex, { apply }) {
+  const companies = await db.collection("deliverers").find({}, { projection: { _id: 1 } }).toArray();
+  if (companies.length !== 1) {
+    throw new Error(`Adopting leftovers is only allowed when there is exactly one company (found ${companies.length})`);
+  }
+  if (String(companies[0]._id) !== String(companyHex)) {
+    throw new Error("That is not the company in this database");
+  }
+  const tenantId = companies[0]._id;
+  const plan = [
+    ["customers", { tenantId: { $exists: false } }, { tenantId }],
+    ["contractors", { tenantId: { $exists: false } }, { tenantId }],
+    ["vehicles", { tenantId: { $exists: false } }, { tenantId }],
+    ["drivers", { tenantId: { $exists: false } }, { tenantId }],
+    ["jobs", { tenantId: { $exists: false } }, { tenantId }],
+    ["vehiclestats", { tenantId: { $exists: false } }, { tenantId }],
+    ["driverstats", { tenantId: { $exists: false } }, { tenantId }],
+    ["contractorstats", { $or: [{ delivererId: "" }, { delivererId: { $exists: false } }, { delivererId: null }] }, { delivererId: String(tenantId) }],
+  ];
+  const report = {};
+  for (const [name, filter, set] of plan) {
+    const coll = db.collection(name);
+    report[name] = apply ? (await coll.updateMany(filter, { $set: set })).modifiedCount : await coll.countDocuments(filter);
+  }
+  return report;
+}
+
 async function main() {
   require("dotenv").config({ path: path.join(__dirname, "..", "config", ".env") });
   const args = process.argv.slice(2);
@@ -179,6 +210,13 @@ async function main() {
     console.log(`Target: ${target} | database: ${db.databaseName} | mode: ${apply ? "APPLY" : "DRY RUN"}`);
     const report = await backfill(db, { apply });
     console.log(JSON.stringify(report, null, 2));
+    const adopt = opt("adopt-leftovers-into");
+    if (adopt) {
+      const adopted = await adoptLeftovers(db, adopt, { apply });
+      console.log(`
+Leftovers ${apply ? "adopted" : "that would be adopted"} by company ${adopt}:`);
+      console.log(JSON.stringify(adopted, null, 2));
+    }
     if (report.conflicts.length) {
       console.log(`\n${report.conflicts.length} record(s) are claimed by more than one company and were NOT stamped.`);
     }
@@ -194,4 +232,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { computeAssignments, backfill };
+module.exports = { computeAssignments, backfill, adoptLeftovers };

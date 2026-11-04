@@ -19,9 +19,28 @@ Platform admins ("Super Admin", "Site Admin") and anything running outside a req
 5. **Staging, enforce:** set `TENANT_GUARD=enforce`, repeat the click-through. Nothing the owner uses should be missing.
 6. **Production:** after the live backfill and the same gate check, set `TENANT_GUARD=enforce`. To roll back, set it to `off` (an environment change, no deploy of code needed beyond Vercel's redeploy).
 
+## Rehearsal on a copy of live data (4 Nov 2026)
+
+`scripts/copyLiveToLocal.js` makes a read-only copy of live into a local scratch database (it refuses any destination that is not this machine). Results on the real data (1 company, 7,920 jobs, 761 customers):
+
+- `backfillTenantId.js` stamped all jobs, vehicles, drivers and contractors with no conflicts.
+- It left **184 customers** (never linked to the company, used by no job) and **7 statistics rows** (2023 stats of vehicles and drivers that no longer exist, and contractor stats with a blank owner) with no owner. Enforce would have hidden them, so the gate correctly said "NOT SAFE".
+- New option `--adopt-leftovers-into=<companyId>` gives those to the company. It refuses unless there is exactly one company in the database. After it, `verifyTenantStamps.js` reports every record stamped.
+- `splitSharedCustomers.js` found nothing to split (one company, no shared customers).
+- With the copy loaded, 48 list endpoints were called as the real admin with the guard off and then enforcing: identical answers, apart from float rounding order, a timestamp and list ordering.
+
+Commands used (against the copy, not live):
+
+```
+OFFLINE_DB_URL=mongodb://127.0.0.1:27018/myfleet-rehearsal node scripts/backfillTenantId.js --target=local --apply --adopt-leftovers-into=<companyId>
+OFFLINE_DB_URL=... node scripts/verifyTenantStamps.js --target=local
+```
+
+For live, the same with `--target=live --apply --confirm-live` after a backup. As the live copy was taken on 4 Nov and live keeps changing, run the dry run on live first and compare.
+
 ## What it does not cover
 
-- `User`, `Deliverer`, `rate` and `ContractorStats` have no company field of their own. Their routes guard them.
+- `User` and `Deliverer` are the owners themselves. Their routes guard them. (`rate` and `ContractorStats` are covered through `deliverer` and `delivererId`.)
 - Inside `$lookup` stages of an aggregate. Log mode reports these as `lookup-not-covered` so each can be reviewed.
 - `insertMany` and raw collection access (`Model.collection`). Use `save()` or `create()` inside a request.
 
