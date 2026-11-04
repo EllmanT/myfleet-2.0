@@ -66,4 +66,21 @@ async function allowAnotherTruck(company) {
   return { ok: true };
 }
 
-module.exports = { stateForCompany, clearBillingCache, readOnlyError, allowAnotherTruck };
+// What the app may show about billing (never internal notes).
+function publicBilling(billing) {
+  const s = billingState(billing);
+  return {
+    state: s.state,
+    band: s.band,
+    bandLabel: s.limits ? s.limits.label : null,
+    priceUsd: s.limits ? s.limits.priceUsd : null,
+    writable: s.writable,
+    readOnlyReason: s.readOnlyReason,
+    daysLeft: s.daysLeft,
+    trialEndsAt: s.trialEndsAt || null,
+    paidUntil: s.paidUntil || null,
+    limits: s.limits ? { trucks: s.limits.maxTrucks, users: s.limits.maxUsers, aiPagesPerMonth: s.limits.aiPagesPerMonth } : null,
+  };
+}
+
+module.exports = { publicBilling, stateForCompany, clearBillingCache, readOnlyError, allowAnotherTruck };

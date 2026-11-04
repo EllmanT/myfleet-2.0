@@ -2,9 +2,11 @@ import axios from "axios";
 import { server } from "server";
 
 // Fetches the company export with the app's own sign-in and saves it as a file.
-export async function downloadCompanyExport() {
+// companyId is only for platform admins exporting another company.
+export async function downloadCompanyExport(companyId) {
   try {
     const response = await axios.get(`${server}/tenant/export`, {
+      params: companyId ? { companyId } : undefined,
       responseType: "blob",
       withCredentials: true,
       timeout: 5 * 60 * 1000,

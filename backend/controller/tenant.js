@@ -9,28 +9,11 @@ const { clearModuleCache } = require("../middleware/moduleAccess");
 const { MODULES, resolveModules, applyModuleChanges } = require("../config/modules");
 const { streamCompanyExport } = require("../services/dataExport");
 const deletion = require("../services/companyDeletion");
-const { billingState, BAND_ORDER } = require("../config/plans");
-const { clearBillingCache } = require("../services/billing");
+const { BAND_ORDER } = require("../config/plans");
+const { clearBillingCache, publicBilling } = require("../services/billing");
 
 const registry = () =>
   MODULES.map(({ key, label, description, available }) => ({ key, label, description, available }));
-
-// What the app may show about billing (never internal notes).
-function publicBilling(billing) {
-  const s = billingState(billing);
-  return {
-    state: s.state,
-    band: s.band,
-    bandLabel: s.limits ? s.limits.label : null,
-    priceUsd: s.limits ? s.limits.priceUsd : null,
-    writable: s.writable,
-    readOnlyReason: s.readOnlyReason,
-    daysLeft: s.daysLeft,
-    trialEndsAt: s.trialEndsAt || null,
-    paidUntil: s.paidUntil || null,
-    limits: s.limits ? { trucks: s.limits.maxTrucks, users: s.limits.maxUsers, aiPagesPerMonth: s.limits.aiPagesPerMonth } : null,
-  };
-}
 
 // GET /api/v2/tenant/me - the company's plan and which modules are on.
 router.get(

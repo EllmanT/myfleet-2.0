@@ -219,6 +219,12 @@ const Sidebar = ({
       icon: <TuneOutlined />,
       name: "modules",
     },
+    {
+      text: "Admin console",
+      icon: <AdminPanelSettingsOutlined />,
+      name: "admin-console",
+      platformOnly: true,
+    },
     // {
     //   text: "Deliverers",
     //   icon: <GroupWorkOutlined />,
@@ -231,10 +237,11 @@ const Sidebar = ({
   const { modules, modulesLoaded } = useSelector((state) => state.user);
   const visibleNavItems = navItems.filter(
     (item) =>
-      !item.module ||
-      (modulesLoaded &&
-        modules &&
-        [].concat(item.module).some((key) => modules[key]))
+      (!item.platformOnly || ["Super Admin", "Site Admin"].includes(user && user.role)) &&
+      (!item.module ||
+        (modulesLoaded &&
+          modules &&
+          [].concat(item.module).some((key) => modules[key])))
   );
 
   const { pathname } = useLocation();

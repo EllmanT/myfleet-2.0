@@ -5,6 +5,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { themeSettings } from "theme";
 import ClerkShell from "component/auth/ClerkShell";
 import ModulesPage from "pages/deliverer/ModulesPage";
+import AdminConsolePage from "pages/deliverer/AdminConsolePage";
 import TripsPage from "pages/deliverer/TripsPage";
 import InvoicesPage from "pages/deliverer/InvoicesPage";
 import MaintenancePage from "pages/deliverer/MaintenancePage";
@@ -214,6 +215,14 @@ const App = () => {
                 element={
                   <DelProtectedRoutes module="quotations">
                     <QuotationsPage />
+                  </DelProtectedRoutes>
+                }
+              />
+              <Route
+                path="/del-admin-console"
+                element={
+                  <DelProtectedRoutes>
+                    <AdminConsolePage />
                   </DelProtectedRoutes>
                 }
               />

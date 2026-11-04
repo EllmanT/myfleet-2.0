@@ -411,12 +411,14 @@ router.get(
       if (!user) {
         return next(new ErrorHandler("User doesnt exist", 400));
       }
-      const deliverer = await Deliverer.findById(user.companyId);
-      if (!deliverer) {
+      const deliverer = user.companyId ? await Deliverer.findById(user.companyId) : null;
+      // A platform admin may have no company of their own (they work in the admin console).
+      const platformAdmin = ["Super Admin", "Site Admin"].includes(user.role);
+      if (!deliverer && !(platformAdmin && !user.companyId)) {
         return next(new ErrorHandler("Error , Deliverer not found", 400));
       }
 
-      const delivererName = deliverer.companyName;
+      const delivererName = deliverer ? deliverer.companyName : "";
 
       res.status(200).json({
         success: true,
