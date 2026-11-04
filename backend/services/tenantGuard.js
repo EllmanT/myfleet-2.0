@@ -18,9 +18,8 @@
  * Platform admins and code running outside a request (scripts, tests, seeds) are
  * never touched. Use tenantContext.runUnscoped(fn) for a deliberate cross-company task.
  *
- * Not covered, on purpose: User, Deliverer, rate and ContractorStats (they have no
- * tenant field of their own and are guarded by their routes), and the inside of
- * $lookup stages (reported in log mode).
+ * Not covered, on purpose: User and Deliverer (they are the owners themselves, guarded by
+ * their routes), and the inside of $lookup stages (reported in log mode).
  */
 const mongoose = require("mongoose");
 const { current } = require("./tenantContext");
@@ -51,6 +50,8 @@ const GUARDED = {
   OverallStats: "companyId",
   VehicleExpense: "companyId",
   employeeExpense: "companyId",
+  rate: "deliverer",
+  ContractorStats: "delivererId",
 };
 
 const QUERY_OPS = [

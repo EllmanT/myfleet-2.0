@@ -12,6 +12,8 @@ const Job = require("../model/job");
 const Customer = require("../model/customer");
 const VehicleExpense = require("../model/vehicleExpense");
 const OverallStats = require("../model/overallStats");
+const Rate = require("../model/rate");
+const ContractorStats = require("../model/contractorStats");
 
 jest.setTimeout(120000);
 
@@ -177,5 +179,34 @@ describe("tenant guard", () => {
     ]);
     const rows = await runAsTenant(A, () => Job.find({}));
     expect(rows.map((j) => j.jobNumber)).toEqual(["J1"]);
+  });
+
+  describe("rates and contractor statistics", () => {
+    beforeEach(async () => {
+      await Rate.collection.insertMany([
+        { contractor: oid(), deliverer: A, rateTypes: [] },
+        { contractor: oid(), deliverer: B, rateTypes: [] },
+      ]);
+      await ContractorStats.collection.insertMany([
+        { contractorId: "c1", delivererId: String(A), year: 2026 },
+        { contractorId: "c2", delivererId: String(B), year: 2026 },
+      ]);
+    });
+
+    test("enforce: a query that forgets the company only sees its own", async () => {
+      process.env.TENANT_GUARD = "enforce";
+      const rates = await runAsTenant(A, () => Rate.find({}).lean());
+      const stats = await runAsTenant(A, () => ContractorStats.find({}).lean());
+      expect(rates).toHaveLength(1);
+      expect(String(rates[0].deliverer)).toBe(String(A));
+      expect(stats.map((s) => s.contractorId)).toEqual(["c1"]);
+    });
+
+    test("log: the forgotten filter is reported, nothing is changed", async () => {
+      process.env.TENANT_GUARD = "log";
+      const rates = await runAsTenant(A, () => Rate.find({}).lean());
+      expect(rates).toHaveLength(2);
+      expect(guard.getViolations()).toEqual([expect.objectContaining({ kind: "unscoped", model: "rate", op: "find" })]);
+    });
   });
 });
