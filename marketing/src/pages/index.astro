@@ -7,7 +7,6 @@ import StickyBar from '../components/StickyBar.astro';
 import LogbookToInvoice from '../components/LogbookToInvoice.astro';
 import WhatsAppQr from '../components/WhatsAppQr.astro';
 import Shot from '../components/Shot.astro';
-import AiNotice from '../components/AiNotice.astro';
 import ChatIcon from '../components/ChatIcon.astro';
 import alleaLogo from '../assets/allea-logo.png';
 import { brand, hero, story, shots, proof, pricing, faq, finalCta, cta } from '../content/site';
@@ -36,7 +35,12 @@ const jsonLd = {
     <!-- The pain, then the way out -->
     <section class="hero" aria-labelledby="h1">
       <div class="wrap">
-        <h1 id="h1" class="rise">{hero.h1}</h1>
+        <h1 id="h1" class="rise" data-rotate-ms={hero.rotateMs}>
+          <span class="h1-lead">{hero.h1Lead}</span>
+          <span class="rotor">
+            {hero.h1Pains.map((t, i) => <span class:list={['pain', { on: i === 0 }]} aria-hidden={i === 0 ? undefined : 'true'}>{t}</span>)}
+          </span>
+        </h1>
         <p class="lede rise" style="--d: 80ms">{hero.sub}</p>
         <div class="btn-row center rise" style="--d: 160ms">
           <a class="btn btn-primary btn-lg" href={signUpUrl}>{cta.primary}</a>
@@ -55,7 +59,6 @@ const jsonLd = {
         <div data-reveal>
           <h2 id="s-logbook">{story.logbook.pain}</h2>
           <p>{story.logbook.body}</p>
-          <AiNotice />
         </div>
         <div data-reveal class="d1"><LogbookToInvoice /></div>
       </div>

@@ -65,5 +65,21 @@ const canonical = `${siteUrl}${path === '/' ? '' : path}`;
         }
       })();
     </script>
-  </body>
+      <script is:inline>
+      // Hero headline: swap the pain line. Stops for reduced motion and when the tab is hidden.
+      (function () {
+        var h = document.getElementById('h1');
+        if (!h || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var p = h.querySelectorAll('.pain'), i = 0;
+        if (p.length < 2) return;
+        var gap = parseInt(h.getAttribute('data-rotate-ms'), 10) || 4200;
+        setInterval(function () {
+          if (document.hidden) return;
+          p[i].classList.remove('on'); p[i].setAttribute('aria-hidden', 'true');
+          i = (i + 1) % p.length;
+          p[i].classList.add('on'); p[i].removeAttribute('aria-hidden');
+        }, gap);
+      })();
+    </script>
+</body>
 </html>

@@ -854,3 +854,25 @@ body {
     display: block;
   }
 }
+
+/* ---------- Hero headline rotor: all pain lines share one grid cell, so the height never jumps ---------- */
+.h1-lead {
+  display: block;
+}
+.rotor {
+  display: grid;
+}
+.rotor .pain {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateY(0.18em);
+  transition: opacity 360ms var(--ease), transform 360ms var(--ease);
+  color: var(--accent);
+}
+.rotor .pain.on {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rotor .pain { transition: none; }
+}

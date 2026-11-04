@@ -45,7 +45,17 @@ export const cta = {
 // Hero: the pain first, then what ends it.
 // ---------------------------------------------------------------------------
 export const hero = {
-  h1: 'Stop wondering which trips you never billed.',
+  // The headline is "Stop" plus one pain line at a time; the pains rotate. The first one is what search engines,
+  // screen readers and visitors without JavaScript see. Written from the research, not customer quotes.
+  h1Lead: 'Stop',
+  h1Pains: [
+    'wondering which trips you never billed.',
+    'chasing customers who still owe you.',
+    'guessing what each truck really made.',
+    "squinting at logbooks you can't trust.",
+    'wondering where the fuel money went.',
+  ],
+  rotateMs: 4200,
   sub: "Your drivers' logbooks, your invoices and the money customers still owe you, in one place. Photograph a logbook page and myfleet turns it into a trip you can check and bill.",
   small: 'Free for your first month with 1 to 2 trucks, up to 3 months for bigger fleets. We never ask for a card.',
   qrCaption: 'Scan to chat on your phone',
@@ -176,13 +186,6 @@ export const shots = {
   vehicles: shot('vehicles', 1600, 592, 'The vehicles screen: each truck with its registration and make.'),
 };
 
-// Notice shown wherever photo upload is mentioned.
-export const aiNotice = {
-  text: 'Photos you upload to photo import are sent to our AI provider, Anthropic (USA), to read the handwriting. The result is a suggestion and it can be wrong. You review everything before it is saved. Photo import is optional: you can type or use Excel instead.',
-  link: 'How we handle this',
-  href: '/privacy#ai',
-};
-
 // ---------------------------------------------------------------------------
 // Proof: Allea. Words only, no numbers we cannot show.
 // ---------------------------------------------------------------------------
@@ -263,7 +266,7 @@ export const faq = {
     },
     {
       q: 'Is my information safe? Who sees my photos?',
-      a: 'Each company sees only its own data, and you sign in through Clerk. Logbook photos you upload to photo import are sent to our AI provider, Anthropic (USA), to read the handwriting. Their terms say the data is not used to train their models by default, and it is deleted within up to 30 days. You review everything before it is saved, and you can skip photo import and type or use Excel instead. We do not claim any security certifications.',
+      a: 'Each company sees only its own data, and you sign in through Clerk. Photo import uses a third-party AI service to read the handwriting. You check everything before it is saved, and you can skip photo import and type or use Excel instead. Who handles your data, and where, is listed in the Privacy Policy. We do not claim any security certifications.',
       links: [{ label: 'Privacy Policy', href: '/privacy' }],
     },
     {
