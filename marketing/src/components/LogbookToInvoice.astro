@@ -1,38 +1,23 @@
 ---
-// The hero sequence: a logbook page gets four fields underlined, then turns into the invoice
-// with the same values. Pure HTML and CSS, plays once (about 3.4 s), ends on the invoice.
-// With prefers-reduced-motion (or reduced data) it shows the page and the invoice side by side, static.
-//
-// REAL PHOTO SLOT: to use a real photo of a dummy logbook page, pass it as the "photo" slot:
-//   wrap a picture element with slot="photo" (width, height and fetchpriority="high" set) inside this component.
-// The slot replaces the drawn page. Position the underline marks (.mark) for your photo with the
-// --mx / --my / --mw custom properties on each .mark element below.
-import { demoTrip as t, hero } from '../content/site';
+// A logbook page gets four fields underlined, then turns into the invoice with the same values.
+// Pure HTML and CSS. It plays once, when it scrolls into view, and ends on the invoice.
+// Without JavaScript or with reduced motion it shows the page and the invoice side by side.
+import { demoTrip as t, logbookFigure as lf } from '../content/site';
 ---
-<figure class="stage" role="img" aria-label={hero.logbookAlt}>
+<figure class="stage" role="img" aria-label={lf.alt}>
   <div class="sheet logbook" aria-hidden="true">
-    <slot name="photo">
-      <div class="lb-head">
-        <span>Daily vehicle log</span>
-        <span>Veh. <u>{t.vehicle}</u></span>
-      </div>
-      <div class="lb-grid lb-cols">
-        <span>Date</span><span>Driver</span><span>Out</span><span>In</span><span>From</span><span>To</span>
-      </div>
-      <div class="lb-grid"><span>01 Nov</span><span>T. Moyo</span><span>183 540</span><span>183 972</span><span>Harare</span><span>Mutare</span></div>
-      <div class="lb-grid"><span>02 Nov</span><span>T. Moyo</span><span>183 972</span><span>184 058</span><span>Mutare</span><span>Harare</span></div>
-      <div class="lb-grid"><span>03 Nov</span><span>B. Dube</span><span>184 410</span><span>184 640</span><span>Harare</span><span>Gweru</span></div>
-      <div class="lb-grid target">
-        <span class="f f-date">{t.date}<i class="mark"></i></span>
-        <span>{t.driver}</span>
-        <span class="f f-km">{t.out}<i class="mark"></i></span>
-        <span class="f f-km2">{t.in}<i class="mark"></i></span>
-        <span class="f f-route">{t.from}<i class="mark"></i></span>
-        <span class="f f-route2">{t.to}<i class="mark"></i></span>
-      </div>
-      <div class="lb-grid lb-blank"><span></span><span></span><span></span><span></span><span></span><span></span></div>
-      <div class="lb-grid lb-blank"><span></span><span></span><span></span><span></span><span></span><span></span></div>
-    </slot>
+    <div class="lb-head"><span>{lf.head}</span><span>Veh. <u>{t.vehicle}</u></span></div>
+    <div class="lb-grid lb-cols">{lf.columns.map((c) => <span>{c}</span>)}</div>
+    {lf.rows.map((r) => <div class="lb-grid">{r.map((c) => <span>{c}</span>)}</div>)}
+    <div class="lb-grid target">
+      <span class="f f-date">{t.date}<i class="mark"></i></span>
+      <span>{t.driver}</span>
+      <span class="f f-km">{t.out}<i class="mark"></i></span>
+      <span class="f f-km2">{t.in}<i class="mark"></i></span>
+      <span class="f f-route">{t.from}<i class="mark"></i></span>
+      <span class="f f-route2">{t.to}<i class="mark"></i></span>
+    </div>
+    <div class="lb-grid lb-blank"><span></span></div>
   </div>
 
   <div class="arrow" aria-hidden="true">
@@ -40,10 +25,7 @@ import { demoTrip as t, hero } from '../content/site';
   </div>
 
   <div class="sheet invoice" aria-hidden="true">
-    <div class="inv-top">
-      <b>Invoice</b>
-      <span>{t.invoiceNo}</span>
-    </div>
+    <div class="inv-top"><b>Invoice</b><span>{t.invoiceNo}</span></div>
     <div class="inv-parties">
       <div><span class="k">From</span>{t.company}</div>
       <div><span class="k">Bill to</span>{t.customer}</div>
@@ -56,34 +38,32 @@ import { demoTrip as t, hero } from '../content/site';
       <span class="amt">{t.amount}</span>
     </div>
     <div class="inv-total"><span>Total due</span><b>{t.amount}</b></div>
-    <p class="inv-note">Business document, not a ZIMRA fiscal tax invoice.</p>
+    <p class="inv-note">{lf.invoiceNote}</p>
   </div>
-  <figcaption class="cap"><span>{hero.figLabel}</span><span>{hero.demoCaption}</span></figcaption>
 </figure>
 
 <style>
   .stage {
     margin: 0;
     display: grid;
-    gap: 16px;
+    gap: 20px;
     container-type: inline-size;
   }
   .sheet {
-    container-type: inline-size;
-    border-radius: 4px;
+    border-radius: 14px;
     font-size: 13px;
     line-height: 1.35;
+    box-shadow: var(--shadow-lg);
+    container-type: inline-size;
   }
   .logbook {
-    background: var(--paper);
-    color: var(--paper-ink);
-    font-family: var(--font-mono);
-    padding: 16px 14px 14px;
-    border: 1px solid #cfc7b2;
-    transform: rotate(-1deg);
-    /* ruled lines */
-    background-image: repeating-linear-gradient(to bottom, transparent 0 25px, rgba(60, 70, 120, 0.16) 25px 26px);
-    background-position: 0 30px;
+    background: #fbf8ef;
+    color: #2a2a3a;
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    padding: 18px 16px 14px;
+    transform: rotate(-1.2deg);
+    background-image: repeating-linear-gradient(to bottom, transparent 0 25px, rgba(60, 70, 120, 0.15) 25px 26px);
+    background-position: 0 32px;
   }
   .lb-head {
     display: flex;
@@ -91,8 +71,7 @@ import { demoTrip as t, hero } from '../content/site';
     font-size: 11px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding-bottom: 10px;
-    height: 30px;
+    height: 32px;
   }
   .lb-head u {
     text-decoration: none;
@@ -112,7 +91,7 @@ import { demoTrip as t, hero } from '../content/site';
     font-size: 9px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    opacity: 0.8;
+    opacity: 0.75;
   }
   .f {
     position: relative;
@@ -124,31 +103,27 @@ import { demoTrip as t, hero } from '../content/site';
     right: -2px;
     bottom: -3px;
     height: 2px;
-    background: #0e5a43;
+    background: var(--accent);
     transform-origin: left;
-    transform: scaleX(1);
   }
   .target span {
     font-weight: 700;
   }
-
   .invoice {
-    background: var(--surface);
+    background: #fff;
     color: var(--text);
-    border: 1px solid var(--border-strong);
+    padding: 20px 20px 16px;
     font-family: var(--font-sans);
-    padding: 18px 18px 14px;
   }
   .inv-top {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     padding-bottom: 12px;
-    border-bottom: 2px solid var(--text);
   }
   .inv-top b {
-    font: 400 26px/1 var(--font-display);
-    letter-spacing: -0.01em;
+    font: 600 24px/1 var(--font-display);
+    letter-spacing: -0.03em;
   }
   .inv-top span {
     color: var(--text-2);
@@ -159,13 +134,13 @@ import { demoTrip as t, hero } from '../content/site';
     grid-template-columns: 1fr 1fr;
     gap: 12px;
     padding-block: 12px;
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 1.4;
   }
   .k {
     display: block;
     font-size: 10px;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--text-3);
   }
@@ -173,8 +148,10 @@ import { demoTrip as t, hero } from '../content/site';
     display: flex;
     justify-content: space-between;
     gap: 12px;
-    padding-block: 12px;
-    border-block: 1px solid var(--border);
+    padding: 14px 12px;
+    margin-inline: -12px;
+    background: var(--tint);
+    border-radius: 10px;
     font-size: 13px;
   }
   .inv-line small {
@@ -184,24 +161,24 @@ import { demoTrip as t, hero } from '../content/site';
     color: var(--text-2);
   }
   .amt {
-    font-weight: 500;
+    font-weight: 600;
     white-space: nowrap;
   }
   .inv-total {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    padding-block: 12px 6px;
+    padding-block: 14px 6px;
   }
   .inv-total b {
-    font: 400 28px/1 var(--font-display);
+    font: 600 28px/1 var(--font-display);
+    letter-spacing: -0.03em;
     color: var(--accent);
   }
   .inv-note {
     font-size: 10.5px;
     color: var(--text-3);
-    padding-top: 8px;
-    border-top: 1px dashed var(--border);
+    padding-top: 6px;
   }
   .arrow {
     display: none;
@@ -212,17 +189,9 @@ import { demoTrip as t, hero } from '../content/site';
     width: 36px;
     height: 14px;
   }
-  .cap {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
-    font-size: 12px;
-    color: var(--text-3);
-  }
 
-  /* Static layout (default, reduced motion, reduced data): page and invoice side by side when wide. */
-  @container (min-width: 540px) {
+  /* Static layout: page and invoice side by side when wide. */
+  @container (min-width: 560px) {
     .stage {
       grid-template-columns: 1fr auto 1fr;
       align-items: center;
@@ -230,75 +199,56 @@ import { demoTrip as t, hero } from '../content/site';
     .arrow {
       display: block;
     }
-    .cap {
-      grid-column: 1 / -1;
-    }
   }
 
-  /* The play-once sequence. */
+  /* The play-once sequence: starts when the figure scrolls into view (.in is added by the page script). */
   @media (prefers-reduced-motion: no-preference) {
-    .stage {
+    :global(html.js) .stage {
       grid-template-columns: 1fr;
       align-items: start;
     }
-    .logbook,
-    .invoice {
+    :global(html.js) .logbook,
+    :global(html.js) .invoice {
       grid-area: 1 / 1;
-      width: min(100%, 440px);
+      width: min(100%, 460px);
     }
-    .logbook {
+    :global(html.js) .logbook {
       justify-self: start;
-      animation: page-out 640ms var(--ease-move) 2.4s both;
     }
-    .invoice {
+    :global(html.js) .invoice {
       justify-self: end;
-      animation: inv-in 560ms var(--ease) 2.65s both;
+      opacity: 0;
     }
-    .arrow {
-      display: none !important;
+    :global(html.js) .arrow {
+      display: none;
     }
-    .cap {
-      grid-area: 2 / 1;
+    :global(html.js) .mark {
+      transform: scaleX(0);
     }
-    .mark {
-      animation: underline 360ms var(--ease) both;
+    .stage.in .mark {
+      animation: underline 420ms var(--ease) both;
     }
-    .f-date .mark {
-      animation-delay: 600ms;
+    .stage.in .f-date .mark { animation-delay: 700ms; }
+    .stage.in .f-route .mark,
+    .stage.in .f-route2 .mark { animation-delay: 1200ms; }
+    .stage.in .f-km .mark,
+    .stage.in .f-km2 .mark { animation-delay: 1700ms; }
+    .stage.in .logbook {
+      animation: page-out 700ms var(--ease-move) 2.8s both;
     }
-    .f-route .mark,
-    .f-route2 .mark {
-      animation-delay: 1050ms;
-    }
-    .f-km .mark,
-    .f-km2 .mark {
-      animation-delay: 1500ms;
+    .stage.in .invoice {
+      animation: inv-in 640ms var(--ease) 3.05s both;
     }
     @keyframes underline {
-      from {
-        transform: scaleX(0);
-      }
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
     }
     @keyframes page-out {
-      to {
-        opacity: 0;
-        transform: translateX(-24px) rotate(-1deg);
-        visibility: hidden;
-      }
+      to { opacity: 0; transform: translateX(-28px) rotate(-1.2deg); visibility: hidden; }
     }
     @keyframes inv-in {
-      from {
-        opacity: 0;
-        transform: translateX(24px);
-      }
-    }
-  }
-  /* Save-Data / reduced data where supported: skip the sequence. */
-  @media (prefers-reduced-data: reduce) {
-    .logbook,
-    .invoice,
-    .mark {
-      animation: none !important;
+      from { opacity: 0; transform: translateX(28px) scale(0.98); }
+      to { opacity: 1; transform: none; }
     }
   }
 </style>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Logo } from "component/deliverer/Wordmark";
 import { SignIn, SignUp, CreateOrganization, OrganizationSwitcher } from "@clerk/clerk-react";
 
 const Center = ({ children }) => (
@@ -13,6 +14,7 @@ const Center = ({ children }) => (
       padding: 16,
     }}
   >
+    <Logo width={150} />
     {children}
   </div>
 );

@@ -6,14 +6,11 @@ import Footer from '../components/Footer.astro';
 import StickyBar from '../components/StickyBar.astro';
 import LogbookToInvoice from '../components/LogbookToInvoice.astro';
 import WhatsAppQr from '../components/WhatsAppQr.astro';
-import DeviceFrame from '../components/DeviceFrame.astro';
-import RouteLine from '../components/RouteLine.astro';
+import Shot from '../components/Shot.astro';
 import AiNotice from '../components/AiNotice.astro';
 import ChatIcon from '../components/ChatIcon.astro';
 import alleaLogo from '../assets/allea-logo.png';
-import {
-  brand, hero, proof, problem, steps, demo, features, offer, pricing, caseStudy, faq, finalCta, cta, flags,
-} from '../content/site';
+import { brand, hero, story, shots, proof, pricing, faq, finalCta, cta } from '../content/site';
 import { signUpUrl, waHero, waPricing, waQuestion, siteUrl } from '../lib/links';
 
 const jsonLd = {
@@ -24,7 +21,6 @@ const jsonLd = {
   description: brand.description,
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web browser',
-  // Real launch prices only. No ratings or review counts.
   offers: pricing.plans.map((p) => ({
     '@type': 'Offer',
     name: p.name,
@@ -37,202 +33,139 @@ const jsonLd = {
 <Base jsonLd={jsonLd}>
   <Header />
   <main id="main">
-    <!-- 1. Hero -->
+    <!-- The pain, then the way out -->
     <section class="hero" aria-labelledby="h1">
-      <div class="wrap hero-grid">
-        <div>
-          <p class="eyebrow">{hero.eyebrow}</p>
-          <h1 id="h1">{hero.h1}</h1>
-          <p class="lead">{hero.sub}</p>
-          <div class="btn-row">
-            <a class="btn btn-primary" href={signUpUrl}>{cta.primary}</a>
-            <a class="btn btn-ghost" href={waHero} rel="noopener"><ChatIcon />{cta.whatsappLong}</a>
-          </div>
-          <WhatsAppQr />
-          <p class="small">{hero.small}</p>
+      <div class="wrap">
+        <h1 id="h1" class="rise">{hero.h1}</h1>
+        <p class="lede rise" style="--d: 80ms">{hero.sub}</p>
+        <div class="btn-row center rise" style="--d: 160ms">
+          <a class="btn btn-primary btn-lg" href={signUpUrl}>{cta.primary}</a>
+          <a class="btn btn-quiet btn-lg" href={waHero} rel="noopener"><ChatIcon />{cta.whatsappLong}</a>
         </div>
-        <LogbookToInvoice />
+        <p class="small center rise" style="--d: 220ms">{hero.small}</p>
+      </div>
+      <div class="hero-shot wrap rise" style="--d: 300ms">
+        <Shot id="hero" eager sizes="(min-width: 1180px) 1120px, 100vw" />
       </div>
     </section>
 
-    <!-- 2. Proof bar -->
-    <div class="proof">
-      <div class="wrap">
-        <ul>
-          {proof.map((p) => <li>{p}</li>)}
-        </ul>
-      </div>
-    </div>
-
-    <!-- 3. Problem -->
-    <section class="sec" aria-labelledby="problem">
-      <div class="wrap">
-        <div class="sec-head reveal">
-          <p class="eyebrow">The problem</p>
-          <h2 id="problem">{problem.h2}</h2>
+    <!-- 1. The logbook -->
+    <section class="scene" aria-labelledby="s-logbook">
+      <div class="wrap split">
+        <div data-reveal>
+          <h2 id="s-logbook">{story.logbook.pain}</h2>
+          <p>{story.logbook.body}</p>
+          <AiNotice />
         </div>
-        <ul class="quotes">
-          {problem.quotes.map((q) => (
-            <li class="reveal">
-              <blockquote>&ldquo;{q.text}&rdquo;</blockquote>
-              <span class="eyebrow tag">{q.tag}</span>
-            </li>
-          ))}
-        </ul>
-        <p class="small">{problem.note}</p>
-        <p class="close">{problem.close}</p>
+        <div data-reveal class="d1"><LogbookToInvoice /></div>
       </div>
+      <div class="wrap narrow-shot" data-reveal>
+        <Shot id="import" />
+        <p class="caption">{story.logbook.excel}</p>
+      </div>
+      <div class="wrap"><p class="handoff" data-reveal>{story.logbook.lead}</p></div>
     </section>
 
-    <!-- 4. How it works -->
-    <section class="sec" id="how" aria-labelledby="how-h">
+    <!-- 2. Never billed -->
+    <section class="scene" aria-labelledby="s-unbilled">
       <div class="wrap">
-        <div class="sec-head reveal">
-          <p class="eyebrow">How it works</p>
-          <h2 id="how-h">{steps.h2}</h2>
+        <div class="head" data-reveal>
+          <h2 id="s-unbilled">{story.unbilled.pain}</h2>
+          <p>{story.unbilled.body}</p>
         </div>
-        <ol class="steps">
-          {steps.items.map((s) => (
-            <li class="step reveal">
-              <div class="num"><b>{s.n}</b><span class="eyebrow">{s.label}</span></div>
-              <h3>{s.title}</h3>
-              <p>{s.body}</p>
-              <DeviceFrame id={s.shot} />
-            </li>
-          ))}
-        </ol>
-        <p class="small foot">{steps.footnote}</p>
-        <AiNotice />
+        <div class="stack" data-reveal>
+          <Shot id="notInvoiced" />
+          <div class="over"><Shot id="invoices" sizes="(min-width: 1080px) 640px, 80vw" /></div>
+        </div>
+        <p class="small center" data-reveal>{story.unbilled.note}</p>
       </div>
+      <div class="wrap"><p class="handoff" data-reveal>{story.unbilled.lead}</p></div>
     </section>
 
-    <!-- 5. Photo to invoice demo -->
-    <section class="sec" aria-labelledby="demo-h">
+    <!-- 3. Paid late -->
+    <section class="scene" aria-labelledby="s-owed">
       <div class="wrap">
-        <div class="sec-head reveal">
-          <p class="eyebrow">See it work</p>
-          <h2 id="demo-h">{demo.h2}</h2>
+        <div class="head" data-reveal>
+          <h2 id="s-owed">{story.owed.pain}</h2>
+          <p>{story.owed.body}</p>
         </div>
-        <ol class="captions">
-          {demo.captions.map((c) => <li>{c}</li>)}
-        </ol>
-        <div class="demo-grid">
-          <div class="frame reveal" role="img" aria-label="A logbook page with four rows. The fourth row, Harare to Bulawayo on 04 Nov, is the one used for the invoice.">
-            <div class="frame-bar" aria-hidden="true"><span>Logbook page, as photographed</span><span class="demo-tag">Demo company</span></div>
-            <div class="ph-table" aria-hidden="true" style="font-family: var(--font-mono); background: var(--paper); color: var(--paper-ink); padding: 8px 4px;">
-              <table class="ph-table" style="color: inherit;">
-                <thead><tr>{demo.columns.map((c) => <th style="color: inherit; opacity: .75;">{c}</th>)}</tr></thead>
-                <tbody>
-                  {demo.rows.map((r) => <tr>{r.cells.map((c) => <td style="color: inherit; border-color: rgba(60,70,120,.2);">{c}</td>)}</tr>)}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="reveal">
-            <div class="frame">
-              <div class="frame-bar"><span>Photo import: check before saving</span><span class="demo-tag">Demo company</span></div>
-              <div class="review">
-                <table>
-                  <thead><tr>{demo.columns.map((c) => <th>{c}</th>)}</tr></thead>
-                  <tbody>
-                    {demo.rows.map((r) => (
-                      <tr>
-                        {r.cells.map((c, i) => (
-                          <td>
-                            {r.flag && i === r.flagCol ? (
-                              <span class={`cell-flag ${r.flag}`}>
-                                <span aria-hidden="true">{r.flag === 'yellow' ? '?' : '!'}</span>
-                                {c}
-                                <span class="sr">{r.flag === 'yellow' ? ', hard to read' : ', does not add up'}</span>
-                              </span>
-                            ) : c}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="legend">
-              <p><i class="y"></i>{demo.yellowLabel}</p>
-              <p><i class="o"></i>{demo.orangeLabel}</p>
-            </div>
-          </div>
-        </div>
-        <AiNotice />
-        <div class="demo-foot">
-          <a class="btn btn-primary" href={waHero} rel="noopener"><ChatIcon />{cta.demo}</a>
-          <p class="small" style="max-width: 56ch">{demo.small}</p>
-        </div>
+        <div class="wide-shot" data-reveal><Shot id="whoOwes" sizes="(min-width: 1080px) 1040px, 100vw" /></div>
       </div>
+      <div class="wrap"><p class="handoff" data-reveal>{story.owed.lead}</p></div>
     </section>
 
-    <!-- 6. Features by outcome -->
-    <section class="sec" aria-labelledby="feat-h">
+    <!-- 4. What each trip really made -->
+    <section class="scene" aria-labelledby="s-profit">
       <div class="wrap">
-        <div class="sec-head reveal">
-          <p class="eyebrow">Features</p>
-          <h2 id="feat-h">{features.h2}</h2>
+        <div class="head" data-reveal>
+          <h2 id="s-profit">{story.profit.pain}</h2>
+          <p>{story.profit.body}</p>
         </div>
-        <div>
-          {features.groups.map((g) => (
-            <article class={`feat${g.visual.kind === 'none' ? ' novis' : ''}`}>
-              <div class="txt reveal">
-                <h3>{g.title}</h3>
-                <dl>
-                  {g.items.map((i) => (<><dt>{i.name}</dt><dd>{i.text}</dd></>))}
-                </dl>
-                {g.note && <p class="small">{g.note}</p>}
-              </div>
-              {g.visual.kind === 'shot' && <div class="vis reveal"><DeviceFrame id={g.visual.id} /></div>}
-              {g.visual.kind === 'route' && <div class="vis reveal"><RouteLine /></div>}
+        <div class="pair" data-reveal>
+          <Shot id="trips" sizes="(min-width: 1080px) 560px, 100vw" />
+          <Shot id="profitability" sizes="(min-width: 1080px) 480px, 100vw" />
+        </div>
+      </div>
+      <div class="wrap"><p class="handoff" data-reveal>{story.profit.lead}</p></div>
+    </section>
+
+    <!-- 5. The small leaks -->
+    <section class="scene" aria-labelledby="s-leaks">
+      <div class="wrap">
+        <div class="head" data-reveal>
+          <h2 id="s-leaks">{story.leaks.pain}</h2>
+          <p>{story.leaks.intro}</p>
+        </div>
+        <div class="cards">
+          {story.leaks.items.map((item, i) => (
+            <article class="card" data-reveal style={`--d: ${i * 70}ms`}>
+              <Shot id={item.id as keyof typeof shots} sizes="(min-width: 1080px) 520px, 100vw" />
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
             </article>
           ))}
         </div>
-        <p class="soon">
-          <span>{features.comingSoonLabel}:</span>
-          {features.comingSoon.map((c) => <span class="pill">{c}</span>)}
-        </p>
+      </div>
+      <div class="wrap"><p class="handoff" data-reveal>{story.leaks.lead}</p></div>
+    </section>
+
+    <!-- 6. Only what you need -->
+    <section class="scene" aria-labelledby="s-modules">
+      <div class="wrap split">
+        <div data-reveal>
+          <h2 id="s-modules">{story.modules.pain}</h2>
+          <p>{story.modules.body}</p>
+        </div>
+        <div data-reveal class="d1 fade-bottom"><Shot id="modules" sizes="(min-width: 1080px) 560px, 100vw" /></div>
       </div>
     </section>
 
-    <!-- 7. Offer stack -->
-    <section class="sec" aria-labelledby="offer-h">
+    <!-- 7. Proof -->
+    <section class="scene" aria-labelledby="s-proof">
       <div class="wrap">
-        <div class="sec-head reveal">
-          <p class="eyebrow">The start</p>
-          <h2 id="offer-h">{offer.h2}</h2>
-          <p style="margin-top:16px">{offer.intro}</p>
-        </div>
-        <div class="offer-grid">
-          <div class="receipt reveal">
-            <ol>
-              {offer.stack.map((s) => <li><b>{s.what}</b><span>{s.why}</span></li>)}
-            </ol>
-            <a class="btn btn-primary" href={signUpUrl}>{offer.button}</a>
+        <div class="proof" data-reveal>
+          <div>
+            <h2 id="s-proof">{proof.h2}</h2>
+            {proof.body.map((p) => <p>{p}</p>)}
+            <p class="small">{proof.disclosure}</p>
           </div>
-          <div class="promises reveal">
-            <h3>{offer.guaranteeTitle}</h3>
-            <dl>
-              {offer.guarantee.map((g) => (<div><dt>{g.title}</dt><dd>{g.text}</dd></div>))}
-            </dl>
+          <div class="logo-tile">
+            <Image src={alleaLogo} width={320} format="webp" quality={70} alt={proof.logoAlt} loading="lazy" />
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 8. Pricing -->
-    <section class="sec" id="price" aria-labelledby="price-h">
+    <!-- 8. Price -->
+    <section class="scene" id="price" aria-labelledby="s-price">
       <div class="wrap">
-        <div class="sec-head reveal">
-          <p class="eyebrow">Price</p>
-          <h2 id="price-h">{pricing.h2}</h2>
-          <p style="margin-top:16px">{pricing.sub}</p>
+        <div class="head center-head" data-reveal>
+          <h2 id="s-price">{pricing.h2}</h2>
+          <p>{pricing.sub}</p>
         </div>
         <div class="plans">
-          {pricing.plans.map((p) => (
-            <div class="plan reveal">
+          {pricing.plans.map((p, i) => (
+            <div class="plan" data-reveal style={`--d: ${i * 70}ms`}>
               <span class="free">{p.free}</span>
               <h3>{p.name}</h3>
               <p class="trucks">{p.trucks}</p>
@@ -241,73 +174,50 @@ const jsonLd = {
             </div>
           ))}
         </div>
-        <div class="price-notes">
-          <p class="small">{pricing.launchNote}</p>
-          <p class="small">{pricing.includes} <a href={waPricing} rel="noopener">{pricing.moreThan}</a></p>
-          <p class="small">{pricing.payment} {pricing.currency}</p>
-        </div>
-        <p class="disclosure">{pricing.disclosure}</p>
+        <ul class="included" data-reveal>
+          {pricing.included.map((i) => <li><b>{i.title}</b><span>{i.text}</span></li>)}
+        </ul>
+        <ul class="promises" data-reveal>
+          {pricing.promises.map((i) => <li><b>{i.title}</b> {i.text}</li>)}
+        </ul>
+        <p class="small center">{pricing.currency} <a href={waPricing} rel="noopener">{pricing.more}</a></p>
       </div>
     </section>
 
-    <!-- 9. Allea case study -->
-    <section class="sec" aria-labelledby="case-h">
-      <div class="wrap case">
-        <div class="reveal">
-          <p class="eyebrow" style="margin-bottom:16px">Proof</p>
-          <h2 id="case-h" style="margin-bottom:24px">{caseStudy.h2}</h2>
-          <p class="disc">{caseStudy.disclosure}</p>
-          <p class="honest">{caseStudy.honest}</p>
-          {flags.showCaseStudyStructure && (
-            <dl>
-              {caseStudy.rows.map((r) => (
-                <div><dt>{r.label}</dt><dd class={r.text.startsWith('To be added') ? 'todo' : ''}>{r.text}</dd></div>
-              ))}
-            </dl>
-          )}
-          <div class="quote-ph"><b>Placeholder</b>{caseStudy.quotePlaceholder}</div>
-        </div>
-        <div class="reveal">
-          <div class="logo-tile">
-            <Image src={alleaLogo} width={320} format="webp" quality={70} alt={caseStudy.logoAlt} loading="lazy" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 10. FAQ -->
-    <section class="sec" id="questions" aria-labelledby="faq-h">
-      <div class="wrap">
-        <div class="sec-head reveal">
-          <p class="eyebrow">Questions</p>
-          <h2 id="faq-h">{faq.h2}</h2>
-        </div>
-        <div class="faq">
+    <!-- 9. Questions -->
+    <section class="scene" id="questions" aria-labelledby="s-faq">
+      <div class="wrap narrow">
+        <h2 id="s-faq" data-reveal>{faq.h2}</h2>
+        <div class="faq" data-reveal>
           {faq.items.map((f, i) => (
             <details open={i < faq.openFirst}>
               <summary>{f.q}</summary>
               <div class="a">
-                <p>{f.a}{f.links && f.links.map((l) => <a href={l.href}>{l.label}</a>)}</p>
+                <p>{f.a}{f.links && f.links.map((l) => <> <a href={l.href}>{l.label}</a></>)}</p>
               </div>
             </details>
           ))}
         </div>
-        <div class="faq-foot">
-          <a class="btn btn-ghost" href={waQuestion} rel="noopener"><ChatIcon />{cta.stillNotSure}</a>
-        </div>
+        <p class="center" data-reveal style="margin-top: 28px">
+          <a class="btn btn-quiet" href={waQuestion} rel="noopener"><ChatIcon />{cta.stillNotSure}</a>
+        </p>
       </div>
     </section>
 
-    <!-- 11. Final CTA -->
-    <section class="band" aria-labelledby="final-h">
-      <div class="wrap">
-        <h2 id="final-h">{finalCta.h2}</h2>
-        <p class="body">{finalCta.body}</p>
-        <div class="btn-row">
-          <a class="btn btn-light" href={waHero} rel="noopener"><ChatIcon />{finalCta.primary}</a>
-          <a class="btn btn-line" href={signUpUrl}>{finalCta.secondary}</a>
+    <!-- 10. Close -->
+    <section class="close" aria-labelledby="s-final">
+      <div class="wrap center">
+        <h2 id="s-final" data-reveal>{finalCta.h2}</h2>
+        <p class="lede" data-reveal>{finalCta.body}</p>
+        <div class="btn-row center" data-reveal>
+          <a class="btn btn-primary btn-lg" href={waHero} rel="noopener"><ChatIcon />{finalCta.primary}</a>
+          <a class="btn btn-quiet btn-lg" href={signUpUrl}>{finalCta.secondary}</a>
         </div>
-        <p class="small">{finalCta.small}</p>
+        <p class="small" data-reveal>{finalCta.small}</p>
+        <div class="qr-wrap" data-reveal><WhatsAppQr /></div>
+      </div>
+      <div class="wrap close-shot fade-bottom" data-reveal>
+        <Shot id="dashboard" sizes="(min-width: 1180px) 1000px, 100vw" />
       </div>
     </section>
   </main>

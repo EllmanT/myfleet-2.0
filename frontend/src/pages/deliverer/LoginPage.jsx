@@ -1,6 +1,7 @@
-import { Box, Button, Link, TextField, Typography, useTheme } from "@mui/material";
+import { Box, Button, Link, TextField, useTheme } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
+import { Logo } from "component/deliverer/Wordmark";
 import { toast } from "react-hot-toast";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { server } from "server";
@@ -66,13 +67,7 @@ const DelLoginPage = () => {
             alignItems={"center"}
             justifyContent={"center"}
           >
-            <Typography
-              variant="h2"
-              fontWeight={"bold"}
-              color={theme.palette.secondary[100]}
-            >
-              myFleet
-            </Typography>
+            <Logo width={150} />
           </Box>
           <Box display={"flex"} flexDirection={"column"}>
             <TextField

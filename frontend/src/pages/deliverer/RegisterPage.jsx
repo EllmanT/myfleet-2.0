@@ -1,6 +1,7 @@
-import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
+import { Box, Button, TextField, useTheme } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
+import { Logo } from "component/deliverer/Wordmark";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { server } from "server";
@@ -77,9 +78,7 @@ const DelRegisterPage = () => {
             alignItems={"center"}
             justifyContent={"center"}
           >
-            <Typography variant="h2" fontWeight={"bold"} color={theme.palette.secondary[100]}>
-              myFleet
-            </Typography>
+            <Logo width={150} />
           </Box>
           <Box display={"flex"} flexDirection={"column"}>
             <TextField

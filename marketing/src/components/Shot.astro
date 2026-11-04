@@ -1,0 +1,9 @@
+---
+// A product screenshot in a soft frame. Real captures only, from marketing/public/img/app/.
+import { shots } from '../content/site';
+const { id, eager = false, sizes = '(min-width: 1080px) 1040px, 100vw' } = Astro.props as { id: keyof typeof shots; eager?: boolean; sizes?: string };
+const s = shots[id];
+---
+<figure class="shot">
+  <img src={s.src} alt={s.alt} width={s.width} height={s.height} sizes={sizes} loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : 'auto'} />
+</figure>

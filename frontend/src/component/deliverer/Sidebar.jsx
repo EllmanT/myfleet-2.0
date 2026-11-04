@@ -14,7 +14,7 @@ import {
 import React from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import FlexBetween from "./FlexBetween";
-import Wordmark from "./Wordmark";
+import { Logo } from "./Wordmark";
 import {
   AccountBalanceWalletOutlined,
   AdminPanelSettingsOutlined,
@@ -279,7 +279,7 @@ const Sidebar = ({
             <Box m="1rem 2rem 2rem 3rem">
               <FlexBetween color={theme.palette.secondary.main}>
                 <Box alignItems={"center"} gap="1.5rem" display={"flex"}>
-                  <Wordmark width={112} />
+                  <Logo width={140} variant="text" />
                 </Box>
 
                 {!isNonMobile && (

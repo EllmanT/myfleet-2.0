@@ -11,6 +11,7 @@
     "check:size": "node scripts/measure-size.mjs"
   },
   "dependencies": {
+    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
     "@fontsource/instrument-serif": "^5.3.0",
     "@fontsource/inter": "^5.3.0",
     "astro": "^7.4.5"

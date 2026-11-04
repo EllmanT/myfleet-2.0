@@ -18,7 +18,7 @@
  */
 const path = require("path");
 
-const DEMO_NAME = "Kudu Haulage (Demo)";
+const DEMO_NAME = "Kudu Haulage";
 const DEMO_EMAIL = "demo@myfleet.app";
 const DEMO_PASSWORD = "demo-password-1";
 

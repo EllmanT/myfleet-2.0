@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import serifUrl from '../../node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2?url';
+import fontUrl from '../../node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2?url';
 import { brand } from '../content/site';
 import { siteUrl, plausibleDomain } from '../lib/links';
 
@@ -21,8 +21,8 @@ const canonical = `${siteUrl}${path === '/' ? '' : path}`;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#faf8f3" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0e0e0c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="color-scheme" content="light" />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta property="og:type" content="website" />
@@ -31,13 +31,39 @@ const canonical = `${siteUrl}${path === '/' ? '' : path}`;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" href={serifUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="48x48" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
+    <script is:inline>document.documentElement.classList.add('js');</script>
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     {plausibleDomain && <script defer data-domain={plausibleDomain} src="https://plausible.io/js/script.js"></script>}
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
     <slot />
+    <script is:inline>
+      // Scroll reveals and the header's scroll edge. Everything stays visible if this never runs.
+      (function () {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var els = document.querySelectorAll('[data-reveal], .stage');
+        if (reduce || !('IntersectionObserver' in window)) {
+          els.forEach(function (e) { e.classList.add('in'); });
+        } else {
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+              if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+            });
+          }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+          els.forEach(function (e) { io.observe(e); });
+        }
+        var top = document.querySelector('.top');
+        if (top) {
+          var onScroll = function () { top.classList.toggle('scrolled', window.scrollY > 8); };
+          onScroll();
+          window.addEventListener('scroll', onScroll, { passive: true });
+        }
+      })();
+    </script>
   </body>
 </html>

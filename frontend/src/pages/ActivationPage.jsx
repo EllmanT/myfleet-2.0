@@ -1,6 +1,7 @@
 import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Logo } from "component/deliverer/Wordmark";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -59,13 +60,7 @@ const ActivationPage = () => {
           alignItems={"center"}
           justifyContent={"center"}
         >
-          <Typography
-            variant="h2"
-            fontWeight={"bold"}
-            color={theme.palette.secondary[100]}
-          >
-            myFleet
-          </Typography>
+          <Logo width={150} />
         </Box>
 
         <Box

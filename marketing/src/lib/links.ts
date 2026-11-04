@@ -3,9 +3,9 @@ import { wa } from '../content/site';
 const env = import.meta.env;
 const trim = (s: string) => s.replace(/\/+$/, '');
 
-export const appUrl = trim(env.PUBLIC_APP_URL || 'https://app.example.com');
+export const appUrl = trim(env.PUBLIC_APP_URL || (env.DEV ? 'http://localhost:3000' : 'https://app.example.com'));
 export const siteUrl = trim(env.PUBLIC_SITE_URL || 'https://myfleet.example.com');
-export const whatsappNumber = String(env.PUBLIC_WHATSAPP_NUMBER || '263000000000').replace(/\D/g, '');
+export const whatsappNumber = String(env.PUBLIC_WHATSAPP_NUMBER || '263778115084').replace(/\D/g, '');
 export const plausibleDomain: string = env.PUBLIC_PLAUSIBLE_DOMAIN || '';
 
 /** Sign-up is a plain link to the app. */

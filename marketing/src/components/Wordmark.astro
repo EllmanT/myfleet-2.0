@@ -1,9 +1,11 @@
 ---
-// MYFLEET wordmark: single-weight straight strokes, drawn in the current text colour.
-// Same path as frontend/src/component/deliverer/Wordmark.jsx.
-const { width = 112 } = Astro.props;
-const height = Math.round((width * 24) / 186);
+// myfleet logo. Two artworks, swapped by screen width so the name never gets squeezed:
+// the stacked mark (M over FLEET) on narrow screens, the MYFLEET text logo from 640px up.
+// `size` is the height of the text logo in px; the stacked one is scaled to match visually.
+const { size = 22 } = Astro.props;
+const stackedH = Math.round(size * 2.4);
 ---
-<svg role="img" aria-label="myfleet" width={width} height={height} viewBox="0 0 186 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="miter">
-  <path d="M0 24V0L9 13L18 0V24M28 0L37 12L46 0M37 12V24M56 24V0H74M56 11H70M84 0V24H102M130 0H112V24H130M112 12H127M158 0H140V24H158M140 12H155M168 0H186M177 0V24" />
-</svg>
+<span class="logo" style={`--logo-h:${size}px;--logo-stacked-h:${stackedH}px`}>
+  <img class="logo-stacked" src="/brand/myfleet-logo-stacked.png" width="470" height="387" alt="myfleet" decoding="async" />
+  <img class="logo-text" src="/brand/myfleet-logo-text.png" width="418" height="51" alt="myfleet" decoding="async" />
+</span>
