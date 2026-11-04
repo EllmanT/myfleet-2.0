@@ -33,6 +33,7 @@ Anthropic (commercial terms and DPA), Clerk, Vercel, MongoDB Atlas, Vercel Blob 
 7. USD pricing: any VAT or levy on a software subscription sold to Zimbabwean businesses? (accountant)
 8. Liability cap wording, the trial and refund wording, and the "we never charge you on our own" promise.
 
-## Not true yet, so not promised in the policy
-- "Read-only for 30 days after you stop paying, then deleted." Needs billing (not built). The Terms and FAQ still say this; remove or build before public launch.
-- "Logbook images are deleted 60 days after import." No retention job exists yet. This sentence was removed from the Privacy Policy on 4 Nov until the job is built.
+## Promises kept honest (4 Nov)
+- Terms and FAQ now say: if you stop, the account becomes read-only, you can still see and download everything, and we contact you before deleting anything. That matches what is built (read-only state, export, deletion on request).
+- Automatic deletion some days after a company stops paying is NOT built. If you want it, decide the number of days with the lawyer, then add it as a scheduled step before the daily purge.
+- "Logbook images are deleted 60 days after import" was removed from the Privacy Policy: no retention job exists yet.

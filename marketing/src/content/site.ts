@@ -231,7 +231,7 @@ export const faq = {
   items: [
     {
       q: 'Is it really free? What is the catch?',
-      a: 'There is no catch. The first month is free if you run 1 to 2 trucks, the first 2 months for 3 to 10 trucks, and the first 3 months for 11 to 25. We do not ask for a card or any payment details, and we tell you before your free time ends. Then you decide: pay by EcoCash or bank transfer, or stop. We never charge you on our own, we send you an invoice. If you stop, your account becomes read-only for 30 days so you can download your data, then it is deleted as set out in our Privacy Policy.',
+      a: 'There is no catch. The first month is free if you run 1 to 2 trucks, the first 2 months for 3 to 10 trucks, and the first 3 months for 11 to 25. We do not ask for a card or any payment details, and we tell you before your free time ends. Then you decide: pay by EcoCash or bank transfer, or stop. We never charge you on our own, we send you an invoice. If you stop, your account becomes read-only: you can still see and download all your data. We will contact you before anything is deleted, and you can ask us to delete it at any time.',
     },
     {
       q: 'I am not good with computers. Will my drivers and staff cope?',
@@ -322,13 +322,13 @@ export const legal = {
       {
         id: 'others',
         h: 'Who else sees your data',
-        p: 'Our service providers: Clerk (sign-in), Vercel (hosting), MongoDB Atlas (database) and Anthropic (logbook reading). We do not sell your data.',
+        p: 'Our service providers (sub-processors): Clerk (sign-in), Vercel (hosting, and private file storage for uploaded driver documents), MongoDB Atlas (database) and Anthropic (logbook reading). We do not sell your data.',
       },
       { id: 'abroad', h: 'Sending data abroad', p: 'Our providers store data outside Zimbabwe, including in the United States. We use written terms with them to protect it.' },
       {
         id: 'long',
         h: 'How long we keep it',
-        p: 'We keep data while your account is active and for 90 days after it closes, unless the law requires longer. Logbook images are deleted 60 days after import. You can ask us to delete earlier.',
+        p: 'We keep your data while your account is active. You can download all of it at any time from the Modules page. When an admin asks to delete the company, we wait 30 days (you can cancel in that time), then delete the company’s records, uploaded files and sign-ins. Copies in our database backups are removed as the backups expire. Your own tax records are your responsibility: Zimbabwe law expects a business to keep its books for at least six years, so keep your download.',
       },
       {
         id: 'rights',
@@ -354,7 +354,7 @@ export const legal = {
       {
         id: 'trial',
         h: 'Free time and payment',
-        p: 'Your free period depends on the number of trucks: 1 to 2 trucks, the first month; 3 to 10 trucks, the first 2 months; 11 to 25 trucks, the first 3 months. No card and no payment details are needed. We will tell you before your free time ends, and you choose whether to keep going. We never charge you on our own: we send an invoice, payable by EcoCash or bank transfer. If you stop, your account becomes read-only for 30 days so you can export your data, then it is deleted as described in the Privacy Policy. Prices are in US dollars. We give 30 days’ notice of a price change. If you think you were charged in error, tell us and we will put it right.',
+        p: 'Your free period depends on the number of trucks: 1 to 2 trucks, the first month; 3 to 10 trucks, the first 2 months; 11 to 25 trucks, the first 3 months. No card and no payment details are needed. We will tell you before your free time ends, and you choose whether to keep going. We never charge you on our own: we send an invoice, payable by EcoCash or bank transfer. If you stop, your account becomes read-only so you can still see and export your data. We will contact you before anything is deleted, and you can ask us to delete it at any time, as described in the Privacy Policy. Prices are in US dollars. We give 30 days’ notice of a price change. If you think you were charged in error, tell us and we will put it right.',
       },
       { id: 'ai', h: 'AI features', p: 'AI suggestions may contain mistakes. You are responsible for checking them before relying on them.' },
       {
