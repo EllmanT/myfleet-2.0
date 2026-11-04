@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/user");
 const { clerkConfigured, companyIdForOrg } = require("../services/clerkAuth");
 const { enterRequest } = require("../services/tenantContext");
+const { readOnlyError } = require("../services/billing");
 
 // "GET /api/v2/job/get-latest-jobs-vehicle/:vehicleId": the route pattern, not the URL,
 // so the same route is one entry however many ids it is called with.
@@ -56,6 +57,8 @@ async function authenticateWithClerk(req, res, next) {
   req.user = user;
   req.authSource = "clerk";
   enterRequest(user, routeLabel(req));
+  const blocked = await readOnlyError(req);
+  if (blocked) return next(blocked);
   next();
 }
 
@@ -80,6 +83,8 @@ async function authenticateWithCookie(req, res, next) {
   req.user = user;
   req.authSource = "cookie";
   enterRequest(user, routeLabel(req));
+  const blocked = await readOnlyError(req);
+  if (blocked) return next(blocked);
   next();
 }
 

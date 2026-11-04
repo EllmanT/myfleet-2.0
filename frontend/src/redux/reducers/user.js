@@ -18,6 +18,7 @@ export const userReducer = createReducer(initialState, {
   loadTenantSuccess: (state, action) => {
     state.modules = action.payload.modules;
     state.plan = action.payload.plan;
+    state.billing = action.payload.billing || null;
     state.moduleRegistry = action.payload.registry;
     state.modulesLoaded = true;
   },

@@ -7,7 +7,7 @@ export const loadTenant = () => async (dispatch) => {
     const { data } = await axios.get(`${server}/tenant/me`, { withCredentials: true });
     dispatch({
       type: "loadTenantSuccess",
-      payload: { modules: data.modules, plan: data.plan, registry: data.registry },
+      payload: { modules: data.modules, plan: data.plan, registry: data.registry, billing: data.billing },
     });
   } catch (error) {
     // Don't hide the whole app if this one call fails; treat everything as off

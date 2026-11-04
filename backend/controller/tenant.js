@@ -9,9 +9,28 @@ const { clearModuleCache } = require("../middleware/moduleAccess");
 const { MODULES, resolveModules, applyModuleChanges } = require("../config/modules");
 const { streamCompanyExport } = require("../services/dataExport");
 const deletion = require("../services/companyDeletion");
+const { billingState, BAND_ORDER } = require("../config/plans");
+const { clearBillingCache } = require("../services/billing");
 
 const registry = () =>
   MODULES.map(({ key, label, description, available }) => ({ key, label, description, available }));
+
+// What the app may show about billing (never internal notes).
+function publicBilling(billing) {
+  const s = billingState(billing);
+  return {
+    state: s.state,
+    band: s.band,
+    bandLabel: s.limits ? s.limits.label : null,
+    priceUsd: s.limits ? s.limits.priceUsd : null,
+    writable: s.writable,
+    readOnlyReason: s.readOnlyReason,
+    daysLeft: s.daysLeft,
+    trialEndsAt: s.trialEndsAt || null,
+    paidUntil: s.paidUntil || null,
+    limits: s.limits ? { trucks: s.limits.maxTrucks, users: s.limits.maxUsers, aiPagesPerMonth: s.limits.aiPagesPerMonth } : null,
+  };
+}
 
 // GET /api/v2/tenant/me - the company's plan and which modules are on.
 router.get(
@@ -22,7 +41,7 @@ router.get(
       return next(new ErrorHandler("Your account has no company", 403));
     }
     const company = await Deliverer.findById(req.user.companyId)
-      .select("companyName plan modules deletionRequestedAt deletionScheduledFor")
+      .select("companyName plan modules billing deletionRequestedAt deletionScheduledFor")
       .lean();
     if (!company) return next(new ErrorHandler("Company not found", 404));
 
@@ -33,7 +52,64 @@ router.get(
       modules: resolveModules(company.modules),
       registry: registry(),
       deletion: deletion.statusOf(company),
+      billing: publicBilling(company.billing),
     });
+  })
+);
+
+// PUT /api/v2/tenant/billing { companyId, band?, status?, trialEndsAt?, paidUntil?, extendTrialDays?, note? }
+// Platform admins only: set a company's plan, mark it paid until a date, extend a trial, suspend.
+// Every change is written to the audit log.
+router.put(
+  "/billing",
+  isAuthenticated,
+  requireRole("Super Admin", "Site Admin"),
+  catchAsyncErrors(async (req, res, next) => {
+    const b = req.body || {};
+    if (!require("mongoose").isValidObjectId(b.companyId)) return next(new ErrorHandler("Say which company (companyId)", 400));
+    const company = await Deliverer.findById(b.companyId);
+    if (!company) return next(new ErrorHandler("Company not found", 404));
+
+    const next_ = { ...(company.billing ? company.billing.toObject() : {}) };
+    const bad = (m) => next(new ErrorHandler(m, 400));
+    if (b.band !== undefined) {
+      if (!BAND_ORDER.includes(b.band)) return bad(`band must be one of ${BAND_ORDER.join(", ")}`);
+      next_.band = b.band;
+    }
+    if (b.status !== undefined) {
+      if (!["trial", "active", "suspended", "cancelled"].includes(b.status)) return bad("status must be trial, active, suspended or cancelled");
+      next_.status = b.status;
+    }
+    for (const field of ["trialEndsAt", "paidUntil"]) {
+      if (b[field] !== undefined) {
+        const d = b[field] === null ? null : new Date(b[field]);
+        if (d !== null && Number.isNaN(d.getTime())) return bad(`${field} is not a date`);
+        next_[field] = d;
+      }
+    }
+    if (b.extendTrialDays !== undefined) {
+      const n = Number(b.extendTrialDays);
+      if (!Number.isFinite(n) || n < -365 || n > 365) return bad("extendTrialDays must be between -365 and 365");
+      const base = next_.trialEndsAt && new Date(next_.trialEndsAt) > new Date() ? new Date(next_.trialEndsAt) : new Date();
+      next_.trialEndsAt = new Date(base.getTime() + n * 86400000);
+    }
+    if (b.note !== undefined) next_.note = String(b.note).slice(0, 500);
+    if (!next_.band) next_.band = "starter"; // giving a legacy company any plan field puts it on a plan
+    if (!next_.status) next_.status = "trial";
+
+    const before = company.billing ? company.billing.toObject() : null;
+    company.billing = next_;
+    await company.save();
+    clearBillingCache(company._id);
+    await require("mongoose").connection.collection("auditlogs").insertOne({
+      at: new Date(),
+      by: req.user._id,
+      action: "billing.update",
+      companyId: company._id,
+      before,
+      after: next_,
+    });
+    res.status(200).json({ success: true, billing: publicBilling(company.billing) });
   })
 );
 

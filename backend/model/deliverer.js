@@ -89,6 +89,15 @@ const delivererSchema = new mongoose.Schema(
     // Set when the company's admin asks for the company and all its data to be deleted. The data
     // is kept until deletionScheduledFor so the request can be cancelled; see
     // services/companyDeletion.js.
+    // Plan band, trial clock and payment state. Absent on companies that existed before billing:
+    // those are "legacy" (always active, no limits). See config/plans.js.
+    billing: {
+      band: { type: String, enum: ["starter", "fleet", "pro"] },
+      status: { type: String, enum: ["trial", "active", "suspended", "cancelled"] },
+      trialEndsAt: { type: Date },
+      paidUntil: { type: Date },
+      note: { type: String },
+    },
     deletionRequestedAt: { type: Date },
     deletionScheduledFor: { type: Date },
     deletionRequestedBy: { type: mongoose.Types.ObjectId },

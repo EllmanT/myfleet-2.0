@@ -1,6 +1,7 @@
 const express = require("express");
 const { escapeRegex } = require("../utils/escapeRegex");
 const Path = require("path");
+const { newTenantBilling } = require("../config/plans");
 const Deliverer = require("../model/deliverer");
 const router = express.Router();
 const { upload } = require("../multer");
@@ -45,6 +46,7 @@ router.post(
         vehiclesType: vehiclessType,
         deliveryType: deliveryyType,
         modules: NEW_TENANT_MODULES,
+        billing: newTenantBilling(),
       });
 
       res.status(201).json({

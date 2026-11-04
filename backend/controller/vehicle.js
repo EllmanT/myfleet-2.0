@@ -12,6 +12,7 @@ const {
 } = require("../middleware/tenantAccess");
 const { default: mongoose } = require("mongoose");
 const { ownRecordFilter } = require("../services/customerScope");
+const { allowAnotherTruck } = require("../services/billing");
 const router = express.Router();
 
 router.post(
@@ -64,6 +65,12 @@ router.post(
 
         //return next(new ErrorHandler("The customer already exists", 400));
       } else {
+        const room = await allowAnotherTruck(isCompanyDeliverer);
+        if (!room.ok) {
+          const err = new ErrorHandler(room.error, 402);
+          err.code = "BAND_LIMIT";
+          return next(err);
+        }
         checkVehicle = await Vehicle.create({
           tenantId: isCompanyDeliverer ? isCompanyDeliverer._id : undefined,
           make: make,

@@ -1,3 +1,4 @@
+const { newTenantBilling } = require("../config/plans");
 const User = require("../model/user");
 const Deliverer = require("../model/deliverer");
 const { NEW_TENANT_MODULES } = require("../config/modules");
@@ -117,6 +118,7 @@ async function resolveLocalIdentity(identity) {
         goodsType: ["general"],
         clerkOrgId: orgId,
         modules: NEW_TENANT_MODULES,
+        billing: newTenantBilling(),
       });
     }
   }

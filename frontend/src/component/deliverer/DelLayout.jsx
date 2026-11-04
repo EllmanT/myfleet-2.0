@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import { Outlet } from "react-router-dom";
 import PageLoading from "./PageLoading";
+import BillingBanner from "./BillingBanner";
 
 const DelLayout = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -29,6 +30,7 @@ const DelLayout = () => {
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
         />
+        <BillingBanner />
         {/* each page loads on demand; the sidebar and top bar stay put meanwhile */}
         <Suspense fallback={<PageLoading />}>
           <Outlet />
