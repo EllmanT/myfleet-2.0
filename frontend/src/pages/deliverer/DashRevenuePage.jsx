@@ -42,6 +42,11 @@ import { loadUser } from "redux/actions/user";
 
 import html2pdf from "html2pdf.js";
 
+// "+12.50" / "-3.00", or nothing when there is no earlier month to compare with (divide by zero).
+const signedPercent = (value) =>
+  Number.isFinite(value) ? (value > 0 ? "+" : "") + value.toFixed(2) : "";
+
+
 const DashRevenuePage = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -125,7 +130,7 @@ const DashRevenuePage = () => {
   let textColorProfit="";
   let textColorExpense="";
 
-  if (coOverallStats && coOverallStats.monthlyData) {
+  if (coOverallStats && coOverallStats.monthlyData && coOverallStats.monthlyData.length > 0) {
     let numberofMonths = 0;
     let findSecondLatestMonth = 0;
     let secondLatestMonthRevenue = 0;
@@ -200,21 +205,9 @@ const DashRevenuePage = () => {
       percentageRevenue = (changeRevenue / thirdLatestMonthRevenue) * 100;
       percentageProfit = (changeProfit / thirdLatestMonthProfit) * 100;
 
-      if (percentageRevenue > 0) {
-        percentageRevenue = "+" + percentageRevenue.toFixed(2);
-      } else {
-        percentageRevenue = "-" + percentageRevenue.toFixed(2);
-      }
-      if (percentageProfit > 0) {
-        percentageProfit = "+" + percentageProfit.toFixed(2);
-      } else {
-        percentageProfit = "-" + percentageProfit.toFixed(2);
-      }
-      if (percentageExpenses > 0) {
-        percentageExpenses = "+" + percentageExpenses.toFixed(2);
-      } else {
-        percentageExpenses = "-" + percentageExpenses.toFixed(2);
-      }
+      percentageRevenue = signedPercent(percentageRevenue);
+      percentageProfit = signedPercent(percentageProfit);
+      percentageExpenses = signedPercent(percentageExpenses);
 
        textColorRevenue = percentageRevenue > 0 ? 'green' : 'red';
        textColorProfit = percentageProfit > 0 ? 'green' : 'red';

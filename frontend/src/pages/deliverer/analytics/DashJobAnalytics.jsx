@@ -119,7 +119,7 @@ const DashJobAnalytics = () => {
   let isPercentage = false;
   let latestMonthJobs = 0;
 
-  if (coOverallStats && coOverallStats.monthlyData) {
+  if (coOverallStats && coOverallStats.monthlyData && coOverallStats.monthlyData.length > 0) {
     let numberofMonths = 0;
     let findSecondLatestMonth = 0;
     let secondLatestMonthJobs = 0;

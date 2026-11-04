@@ -133,7 +133,7 @@ console.log(contractor)
   let isPercentage = false;
   let latestMonthJobs = 0;
 
-  if (contractorStats && contractorStats.monthlyData) {
+  if (contractorStats && contractorStats.monthlyData && contractorStats.monthlyData.length > 0) {
     let numberofMonths = 0;
     let findSecondLatestMonth = 0;
     let secondLatestMonthJobs = 0;

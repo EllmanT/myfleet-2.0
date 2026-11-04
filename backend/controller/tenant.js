@@ -37,6 +37,31 @@ router.get(
   })
 );
 
+// GET /api/v2/tenant/setup - what the company has set up so far, for the first-run checklist.
+router.get(
+  "/setup",
+  isAuthenticated,
+  catchAsyncErrors(async (req, res, next) => {
+    if (!req.user.companyId) return next(new ErrorHandler("Your account has no company", 403));
+    const company = await Deliverer.findById(req.user.companyId)
+      .select("vehicle_ids driver_ids customer_ids job_ids")
+      .lean();
+    if (!company) return next(new ErrorHandler("Company not found", 404));
+    const Invoice = require("../model/invoice");
+    const invoices = await Invoice.countDocuments({ tenantId: req.user.companyId });
+    res.status(200).json({
+      success: true,
+      counts: {
+        vehicles: (company.vehicle_ids || []).length,
+        drivers: (company.driver_ids || []).length,
+        customers: (company.customer_ids || []).length,
+        jobs: (company.job_ids || []).length,
+        invoices,
+      },
+    });
+  })
+);
+
 // PUT /api/v2/tenant/modules  { modules: { fuel: true, expenses: false } }
 // A company admin changes their own company's modules. Platform admins may name
 // another company with companyId.

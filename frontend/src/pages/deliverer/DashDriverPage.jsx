@@ -34,6 +34,11 @@ import { getAllContractorsPage } from "redux/actions/contractor";
 import { getAllDriversPage } from "redux/actions/driver";
 import { getDriverStats } from "redux/actions/driverStats";
 import { getLatestJobsDriver } from "redux/actions/job";
+// "+12.50" / "-3.00", or nothing when there is no earlier month to compare with (divide by zero).
+const signedPercent = (value) =>
+  Number.isFinite(value) ? (value > 0 ? "+" : "") + value.toFixed(2) : "";
+
+
 const DashVehiclePage = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -122,7 +127,7 @@ const DashVehiclePage = () => {
   let lastMonthDistance = 0;
   let lastMonthJobs = 0;
 
-  if (driverStats && driverStats.monthlyData) {
+  if (driverStats && driverStats.monthlyData && driverStats.monthlyData.length > 0) {
     let numberofMonths = 0;
     let findSecondLatestMonth = 0;
     let secondLatestMonthJobs = 0;
@@ -189,11 +194,7 @@ const DashVehiclePage = () => {
 
       console.log(change);
 
-      if (percentage > 0) {
-        percentage = "+" + percentage.toFixed(2);
-      } else {
-        percentage = "-" + percentage.toFixed(2);
-      }
+      percentage = signedPercent(percentage);
     }
   }
 

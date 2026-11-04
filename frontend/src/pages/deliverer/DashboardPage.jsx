@@ -28,6 +28,7 @@ import { DataGrid } from "component/deliverer/AgDataGrid";
 import BreakdownChart from "component/deliverer/BreakdownChart";
 import FlexBetween from "component/deliverer/FlexBetween";
 import Header from "component/deliverer/Header";
+import GettingStarted from "component/deliverer/GettingStarted";
 import OverviewChart from "component/deliverer/OverviewChart";
 import StatBox from "component/deliverer/Statbox";
 import YearSelect from "component/deliverer/YearSelect";
@@ -40,6 +41,11 @@ import { getAllDeliverersPage } from "redux/actions/deliverer";
 import { getLatestJobsDeliverer, getLatestJobsPage } from "redux/actions/job";
 import { getAllOverallStatsDeliverer, rebuildStats } from "redux/actions/overallStats";
 import { loadUser } from "redux/actions/user";
+
+// "+12.50" / "-3.00", or nothing when there is no earlier month to compare with (divide by zero).
+const signedPercent = (value) =>
+  Number.isFinite(value) ? (value > 0 ? "+" : "") + value.toFixed(2) : "";
+
 
 const DashboardPage = () => {
   const theme = useTheme();
@@ -138,7 +144,7 @@ const DashboardPage = () => {
   let latestMonthJobs = 0;
   let textColor="";
 
-  if (coOverallStats && coOverallStats.monthlyData) {
+  if (coOverallStats && coOverallStats.monthlyData && coOverallStats.monthlyData.length > 0) {
     let numberofMonths = 0;
     let findSecondLatestMonth = 0;
     let secondLatestMonthJobs = 0;
@@ -190,11 +196,7 @@ const DashboardPage = () => {
 
     //  console.log(change);
 
-      if (percentage > 0) {
-        percentage = "+" + percentage.toFixed(2);
-      } else {
-        percentage = "-" + percentage.toFixed(2);
-      }
+      percentage = signedPercent(percentage);
       textColor = percentage > 0 ? 'green' : 'red';
 
     }
@@ -264,6 +266,7 @@ const DashboardPage = () => {
   const handleDownloadSLC = () => {};
   return (
     <Box m={{ xs: "1rem 0.75rem", sm: "1.25rem 1.5rem", md: "1.5rem 2.5rem" }}>
+      <GettingStarted />
       <FlexBetween>
         <Header title={delivererName} />
         <Box>

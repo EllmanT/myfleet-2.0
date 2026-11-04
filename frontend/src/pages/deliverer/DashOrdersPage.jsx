@@ -34,6 +34,11 @@ import { getAllDeliverersPage } from "redux/actions/deliverer";
 import { getLatestJobsDeliverer, getLatestJobsPage } from "redux/actions/job";
 import { getAllOverallStatsDeliverer } from "redux/actions/overallStats";
 
+// "+12.50" / "-3.00", or nothing when there is no earlier month to compare with (divide by zero).
+const signedPercent = (value) =>
+  Number.isFinite(value) ? (value > 0 ? "+" : "") + value.toFixed(2) : "";
+
+
 const DashOrdersPage = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -122,7 +127,7 @@ const DashOrdersPage = () => {
   let isPercentage = false;
   let latestMonthJobs = 0;
 
-  if (coOverallStats && coOverallStats.monthlyData) {
+  if (coOverallStats && coOverallStats.monthlyData && coOverallStats.monthlyData.length > 0) {
     let numberofMonths = 0;
     let findSecondLatestMonth = 0;
     let secondLatestMonthJobs = 0;
@@ -174,11 +179,7 @@ const DashOrdersPage = () => {
 
       console.log(change);
 
-      if (percentage > 0) {
-        percentage = "+" + percentage.toFixed(2);
-      } else {
-        percentage = "-" + percentage.toFixed(2);
-      }
+      percentage = signedPercent(percentage);
       textColor = percentage > 0 ? 'green' : 'red';
     }
   }

@@ -130,7 +130,7 @@ const DashDriverAnalytics = () => {
   let isPercentage = false;
   let latestMonthJobs = 0;
 
-  if (driverStats && driverStats.monthlyData) {
+  if (driverStats && driverStats.monthlyData && driverStats.monthlyData.length > 0) {
     let numberofMonths = 0;
     let findSecondLatestMonth = 0;
     let secondLatestMonthJobs = 0;

@@ -22,6 +22,26 @@ const parseYear = (rawYear) => {
   return year;
 };
 
+// A company with no statistics yet (brand new, or no jobs in that year) is not an error: the
+// dashboard gets zeros and empty lists and shows its empty state.
+const emptyStats = (companyId, year) => ({
+  companyId,
+  year,
+  empty: true,
+  yearlyJobs: 0,
+  yearlyMileage: 0,
+  yearlyRevenue: 0,
+  yearlyExpenses: 0,
+  yearlyProfit: 0,
+  monthlyData: [],
+  dailyData: [],
+  totalCustomers: 0,
+  totalContractors: 0,
+  jobsByContractor: {},
+  jobsContractor: {},
+  revenueByContractor: {},
+});
+
 //getting all the overall stats info 
 router.get(
   "/get-all-overallStats-company",
@@ -50,6 +70,12 @@ router.get(
         }
       }
 
+      if (!delivererWithOverallStats && req.user.companyId) {
+        return res.status(201).json({
+          success: true,
+          delivererWithOverallStats: emptyStats(req.user.companyId, effectiveYear),
+        });
+      }
       if (!delivererWithOverallStats) {
         return next(new ErrorHandler("Can't find deliverer", 400));
       } else {
@@ -80,6 +106,9 @@ router.get(
         { jobsByContractor: 1 } // Specify the fields to include in the resultc
       );
 
+      if (!delivererWithOverallStatstj && req.user.companyId) {
+        return res.status(201).json({ success: true, jobsByContractor: {} });
+      }
       if (!delivererWithOverallStatstj) {
         return next(new ErrorHandler("Can't find deliverer", 400));
       } else {
@@ -105,6 +134,9 @@ router.get(
         { revenueByContractor: 1 } // Specify the fields to include in the result
       );
 
+      if (!delivererWithOverallStats && req.user.companyId) {
+        return res.status(201).json({ success: true, jobsByCategory: [] });
+      }
       if (!delivererWithOverallStats) {
         return next(new ErrorHandler("Can't find deliverer", 400));
       } else {
