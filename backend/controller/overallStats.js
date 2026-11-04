@@ -6,8 +6,7 @@ const { requireRole, GLOBAL_ROLES } = require("../middleware/tenantAccess");
 const ErrorHandler = require("../utils/ErrorHandler");
 const OverallStats = require("../model/overallStats");
 const Contractor = require("../model/contractor");
-const { rebuildStatsFromJobs } = require("../scripts/seed/rebuildStatsFromJobs");
-const { DERIVED_COLLECTIONS } = require("../scripts/seed/config");
+const { rebuildStatsForCompany } = require("../scripts/seed/rebuildStatsFromJobs");
 const router = express.Router();
 
 const parseYear = (rawYear) => {
@@ -121,18 +120,26 @@ router.get(
   })
 );
 
+// Rebuilds ONE company's statistics from its jobs. Platform admins only, and the company must be
+// named: there is no "rebuild everything" route any more.
 router.post(
   "/rebuild-stats",
   isAuthenticated,
-  // Rebuilds derived stats for the whole database, so platform admins only.
   requireRole(...GLOBAL_ROLES),
   catchAsyncErrors(async (req, res, next) => {
+    const companyId = req.body && req.body.companyId;
+    if (!mongoose.isValidObjectId(companyId)) {
+      return next(new ErrorHandler("Say which company to rebuild (companyId)", 400));
+    }
     try {
-      const db = mongoose.connection.db;
-      await rebuildStatsFromJobs(db, DERIVED_COLLECTIONS);
-      res.status(200).json({ success: true, message: "Stats rebuilt successfully" });
+      const results = await rebuildStatsForCompany(
+        mongoose.connection.db,
+        new mongoose.Types.ObjectId(companyId)
+      );
+      res.status(200).json({ success: true, message: "Stats rebuilt successfully", results });
     } catch (error) {
-      return next(new ErrorHandler(error.message, 500));
+      const notFound = /Company not found/.test(error.message);
+      return next(new ErrorHandler(notFound ? "Company not found" : error.message, notFound ? 404 : 500));
     }
   })
 );

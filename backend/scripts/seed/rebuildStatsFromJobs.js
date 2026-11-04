@@ -21,15 +21,20 @@ const sortMonthly = (rows) =>
 
 const sortDaily = (rows) => rows.sort((a, b) => a.date.localeCompare(b.date));
 
-async function buildOverallStats(db) {
+// `scope` (optional) limits the work to one company: { company } where company is its Deliverer
+// document. Without it every company is rebuilt (seed scripts only).
+async function buildOverallStats(db, scope) {
   const jobs = db.collection("jobs");
-  const deliverers = await db
-    .collection("deliverers")
-    .find({}, { projection: { _id: 1, job_ids: 1 } })
-    .toArray();
+  const deliverers = scope
+    ? [scope.company]
+    : await db.collection("deliverers").find({}, { projection: { _id: 1, job_ids: 1 } }).toArray();
 
-  const totalCustomers = await db.collection("customers").countDocuments();
-  const totalContractors = await db.collection("contractors").countDocuments();
+  const totalCustomers = scope
+    ? (scope.company.customer_ids || []).length
+    : await db.collection("customers").countDocuments();
+  const totalContractors = scope
+    ? (scope.company.contractor_ids || []).length
+    : await db.collection("contractors").countDocuments();
 
   const docs = [];
 
@@ -186,11 +191,13 @@ async function buildOverallStats(db) {
   return docs;
 }
 
-async function buildEntityStats(db, entityCollection, statsCollection, entityField) {
+async function buildEntityStats(db, entityCollection, statsCollection, entityField, scope) {
   const jobs = db.collection("jobs");
+  const onlyThisCompany = scope ? { _id: { $in: scope.company.job_ids || [] } } : {};
   const pipeline = [
     {
       $match: {
+        ...onlyThisCompany,
         [entityField]: { $exists: true, $ne: null },
         orderDate: { $exists: true, $ne: null },
       },
@@ -232,6 +239,7 @@ async function buildEntityStats(db, entityCollection, statsCollection, entityFie
   const monthlyPipeline = [
     {
       $match: {
+        ...onlyThisCompany,
         [entityField]: { $exists: true, $ne: null },
         orderDate: { $exists: true, $ne: null },
       },
@@ -253,6 +261,7 @@ async function buildEntityStats(db, entityCollection, statsCollection, entityFie
   const dailyPipeline = [
     {
       $match: {
+        ...onlyThisCompany,
         [entityField]: { $exists: true, $ne: null },
         orderDate: { $exists: true, $ne: null },
       },
@@ -342,11 +351,12 @@ async function buildEntityStats(db, entityCollection, statsCollection, entityFie
       ...value,
       monthlyData: sortMonthly(value.monthlyData),
       dailyData: sortDaily(value.dailyData),
-      ...(statsCollection === "contractorstats" ? { delivererId: "" } : {}),
+      ...(statsCollection === "contractorstats" ? { delivererId: scope ? String(scope.company._id) : "" } : {}),
+      ...(scope && statsCollection !== "contractorstats" ? { tenantId: scope.company._id } : {}),
     });
   }
 
-  if (statsCollection === "contractorstats") {
+  if (statsCollection === "contractorstats" && !scope) {
     const contractors = await db.collection(entityCollection).find({}, { projection: { _id: 1 } }).toArray();
     const deliverers = await db.collection("deliverers").find({}, { projection: { _id: 1 } }).toArray();
     const delivererId = deliverers[0]?._id?.toString() || "";
@@ -410,6 +420,42 @@ async function rebuildStatsFromJobs(db, derivedCollections) {
   }
 }
 
+// Rebuild the statistics of ONE company and nothing else. Other companies' statistics are not
+// read, changed or dropped. Returns what was written.
+async function rebuildStatsForCompany(db, companyId) {
+  const company = await db.collection("deliverers").findOne({ _id: companyId });
+  if (!company) throw new StatsRebuildError("Company not found", { cause: String(companyId) });
+  const scope = { company };
+
+  try {
+    const [overall, vehicle, driver, contractor] = await Promise.all([
+      buildOverallStats(db, scope),
+      buildEntityStats(db, "vehicles", "vehiclestats", "vehicleId", scope),
+      buildEntityStats(db, "drivers", "driverstats", "driverId", scope),
+      buildEntityStats(db, "contractors", "contractorstats", "contractorId", scope),
+    ]);
+
+    const ids = (list) => (company[list] || []).map(String);
+    const plan = [
+      ["overallstats", overall, { companyId: company._id }],
+      ["vehiclestats", vehicle, { $or: [{ tenantId: company._id }, { vehicleId: { $in: ids("vehicle_ids") } }] }],
+      ["driverstats", driver, { $or: [{ tenantId: company._id }, { driverId: { $in: ids("driver_ids") } }] }],
+      ["contractorstats", contractor, { contractorId: { $in: ids("contractor_ids") } }],
+    ];
+    const results = [];
+    for (const [name, docs, ownRows] of plan) {
+      // Only this company's rows are swapped; a failure before here has changed nothing.
+      const removed = await db.collection(name).deleteMany(ownRows);
+      if (docs.length) await db.collection(name).insertMany(docs, { ordered: false });
+      results.push({ collection: name, removed: removed.deletedCount, inserted: docs.length });
+    }
+    return results;
+  } catch (error) {
+    throw new StatsRebuildError("Failed to rebuild stats from jobs", { cause: error.message });
+  }
+}
+
 module.exports = {
   rebuildStatsFromJobs,
+  rebuildStatsForCompany,
 };
