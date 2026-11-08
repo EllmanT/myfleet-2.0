@@ -8,7 +8,9 @@
       "dev": "nodemon backend/server.js",
       "start": "node backend/server.js",
       "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
-      "lint": "npm run lint --prefix frontend"
+      "lint": "npm run lint --prefix frontend",
+      "test:e2e": "npm run test --prefix e2e",
+      "test:e2e:smoke": "npm run test:smoke --prefix e2e"
     },
     "author": "Tapiwa Muranda",
     "license": "ISC",

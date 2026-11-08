@@ -1,0 +1,16 @@
+{
+  "name": "myfleet-e2e",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Playwright end-to-end suite for MyFleet (throwaway in-memory database, never touches real services)",
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:full": "playwright test",
+    "build:web": "node scripts/build-web.js",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.0"
+  }
+}
