@@ -134,6 +134,11 @@ function guardQuery() {
   }
   // enforce: always add the caller's company (and keep whatever else was asked for)
   const scope = a.ctx.tenantId ? { [a.field]: a.ctx.tenantId } : { _id: { $in: [] } };
+  // Already pinned to exactly the caller's company at the top level: wrapping it again
+  // would make Mongo reject upserts ("path 'tenantId' is matched twice", e.g. document numbers).
+  const pinned = filter && filter[a.field];
+  if (a.ctx.tenantId && pinned && typeof pinned !== "object" && String(pinned) === String(a.ctx.tenantId)) return;
+  if (a.ctx.tenantId && pinned && pinned._bsontype === "ObjectId" && String(pinned) === String(a.ctx.tenantId)) return;
   this.setQuery({ $and: [scope, filter] });
 }
 

@@ -200,7 +200,7 @@ router.get("/get-all-drivers-page", isAuthenticated, async (req, res, next) => {
 
     // Paginate the results manually based on the requested page and page size
     const startIndex = (page - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
+    const endIndex = startIndex + Number(pageSize);
     const paginatedDrivers = pageDrivers.slice(startIndex, endIndex);
 
     const totalCount = pageDrivers.length;

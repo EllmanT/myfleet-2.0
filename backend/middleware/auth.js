@@ -63,6 +63,9 @@ async function authenticateWithClerk(req, res, next) {
 }
 
 async function authenticateWithCookie(req, res, next) {
+  if (process.env.LEGACY_LOGIN !== "on") {
+    return next(new ErrorHandler("Login to continue!", 401));
+  }
   const { token } = req.cookies;
 
   if (!token) {

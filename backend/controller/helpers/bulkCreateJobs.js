@@ -5,6 +5,7 @@ const Driver = require("../../model/driver");
 const Vehicle = require("../../model/vehicle");
 const ContractorStats = require("../../model/contractorStats");
 const ErrorHandler = require("../../utils/ErrorHandler");
+const { companyOwns } = require("../../middleware/tenantAccess");
 const {
   asNumber,
   roundMoney,
@@ -53,6 +54,23 @@ async function bulkCreateJobs(payloads, { companyId, session = null, timer = nul
   const contractorIds = idsOf("contractorId");
   const vehicleIds = idsOf("vehicleId");
   const driverIds = idsOf("driverId");
+
+  // Every referenced record must belong to the caller's company (not merely exist).
+  const asCaller = { companyId };
+  const customerIds = [...new Set(payloads.flatMap((p) => [p.customer, p.from]).filter(Boolean).map(String))];
+  const mustOwn = [
+    ["contractor_ids", contractorIds],
+    ["vehicle_ids", vehicleIds],
+    ["driver_ids", driverIds],
+    ["customer_ids", customerIds],
+  ];
+  for (const [field, ids] of mustOwn) {
+    for (const id of ids) {
+      if (!(await companyOwns(asCaller, field, id))) {
+        throw new ErrorHandler("Invalid contractor, vehicle, driver or customer for job", 400);
+      }
+    }
+  }
 
   const [deliverer, contractors, vehicleCount, driverCount] = await Promise.all([
     Deliverer.findById(companyId)

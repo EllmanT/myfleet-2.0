@@ -4,7 +4,7 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const Job = require("../model/job");
 const { isAuthenticated } = require("../middleware/auth");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const { requireOwnership } = require("../middleware/tenantAccess");
+const { requireOwnership, companyOwns } = require("../middleware/tenantAccess");
 const Deliverer = require("../model/deliverer");
 const Contractor = require("../model/contractor");
 const DriverStats = require("../model/driverStats");
@@ -73,7 +73,9 @@ function escapeRegex(value = "") {
 }
 
 function escapeCsv(value) {
-  const text = value === undefined || value === null ? "" : String(value);
+  let text = value === undefined || value === null ? "" : String(value);
+  // Stop spreadsheets running a cell that starts like a formula.
+  if (/^[=+\-@\t\r]/.test(text) && Number.isNaN(Number(text))) text = `'${text}`;
   return `"${text.replace(/"/g, '""')}"`;
 }
 
@@ -200,8 +202,16 @@ function buildJobsPdfBuffer(rows, meta = {}) {
   return bufferPromise;
 }
 
+// Every id a request names must belong to the caller's company; a foreign or unknown id
+// answers 404 so ids can't be probed. (The tenant guard is a second layer, not the only one.)
+async function assertOwns(user, field, id) {
+  if (!(await companyOwns(user, field, id))) throw new ErrorHandler("Not found", 404);
+}
+
 async function getScopedJobIds(req) {
   const { scope = "deliverer", entityId } = req.query;
+  const scopeField = { contractor: "contractor_ids", driver: "driver_ids", vehicle: "vehicle_ids" }[scope];
+  if (scopeField && entityId) await assertOwns(req.user, scopeField, entityId);
 
   if (scope === "contractor" && entityId) {
     const contractor = await Contractor.findById(entityId);
@@ -500,6 +510,19 @@ router.put(
           orderDate: req.body.orderDate ?? req.body.orderDatee ?? job.orderDate,
         };
 
+        // Anything the edit points the job at must be this company's own.
+        for (const [field, value] of [
+          ["contractor_ids", req.body.contractorId],
+          ["driver_ids", req.body.driverId],
+          ["vehicle_ids", req.body.vehicleId],
+          ["customer_ids", req.body.pageCustomerId],
+          ["customer_ids", req.body.fromId],
+        ]) {
+          if (value !== undefined && value !== null && value !== "") {
+            await assertOwns(req.user, field, value);
+          }
+        }
+
         const newContractor = await withSession(
           Contractor.findById(nextValues.contractorId),
           session
@@ -610,7 +633,7 @@ router.put(
         job: updatedJob,
       });
     } catch (error) {
-      return next(new ErrorHandler(error.message || error, 500));
+      return next(error instanceof ErrorHandler ? error : new ErrorHandler(error.message || error, 500));
     }
   })
 );
@@ -824,7 +847,7 @@ router.get(
       res.setHeader("Content-Disposition", `attachment; filename="${csvFilename}"`);
       return res.status(200).send(lines.join("\n"));
     } catch (error) {
-      return next(new ErrorHandler(error.message, 500));
+      return next(error instanceof ErrorHandler ? error : new ErrorHandler(error.message, 500));
     }
   })
 );
@@ -868,7 +891,7 @@ router.get(
       res.setHeader("Content-Disposition", `attachment; filename="${pdfFilename}"`);
       return res.status(200).send(pdfBuffer);
     } catch (error) {
-      return next(new ErrorHandler(error.message, 500));
+      return next(error instanceof ErrorHandler ? error : new ErrorHandler(error.message, 500));
     }
   })
 );

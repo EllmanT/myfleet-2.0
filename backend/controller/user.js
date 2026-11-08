@@ -216,6 +216,10 @@ router.post(
       return next(new ErrorHandler("Invalid role", 400));
     }
 
+    if (role === "Super Admin" && creator.role !== "Super Admin") {
+      return next(new ErrorHandler("Only a Super Admin can create a Super Admin", 403));
+    }
+
     if (creator.role === "Deliverer Admin") {
       if (GLOBAL_ROLES.includes(role)) {
         return next(
@@ -295,6 +299,15 @@ router.post(
     }
   })
 );
+
+// logout: the session cookie is httpOnly, so only the server can remove it. Public on purpose
+// (it can only ever clear the caller's own cookie) and always allowed, even for a read-only company.
+router.post("/logout", (req, res) => {
+  res
+    .status(200)
+    .clearCookie("token", { httpOnly: true, sameSite: "none", secure: true })
+    .json({ success: true, message: "Logged out" });
+});
 
 // forgot-password — sends email with reset link (does not reveal if email exists)
 router.post(
@@ -500,8 +513,8 @@ router.get(
       }
 
       // Paginate the results manually based on the requested page and page size
-      const startIndex = page * pageSize;
-      const endIndex = startIndex + pageSize;
+      const startIndex = Number(page) * Number(pageSize);
+      const endIndex = startIndex + Number(pageSize);
       const paginatedAdmins = pageAdmins.slice(startIndex, endIndex);
 
       const totalCount = pageAdmins.length;
@@ -614,22 +627,15 @@ router.delete(
       ) {
         return next(new ErrorHandler("There is no admin with this id", 404));
       }
-      const admin = await User.findByIdAndDelete(adminId);
-      const deliverer = await Deliverer.findById(req.user.companyId);
-      if (!deliverer) {
-        return next(
-          new ErrorHandler("There is no deliverer with this id", 500)
+      await User.findByIdAndDelete(adminId);
+      // Clean up the list of the company the user belonged to (a platform admin acting from
+      // outside any company has none of their own).
+      if (target.companyId) {
+        await Deliverer.updateOne(
+          { _id: target.companyId },
+          { $pull: { admin_ids: target._id } }
         );
       }
-
-      // Remove the adminId from the deliverer's array of adminIds
-      const updatedAdminIds = deliverer.admin_ids.filter(
-        (id) => id.toString() !== adminId
-      );
-
-      // Update the deliverer's adminIds array with the updated array
-      deliverer.admin_ids = updatedAdminIds;
-      await deliverer.save();
 
       res.status(201).json({
         success: true,

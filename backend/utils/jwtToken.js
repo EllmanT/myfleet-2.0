@@ -7,7 +7,8 @@ const sendToken = (user, statusCode, res) => {
     expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
     httpOnly: true,
     sameSite: "none",
-    secure: true,
+    // Browsers drop Secure cookies on plain http; only localhost is exempt.
+    secure: /^production$/i.test(process.env.NODE_ENV || "") || process.env.COOKIE_SECURE === "true",
   };
 
   res.status(statusCode).cookie("token", token, options).json({

@@ -215,7 +215,7 @@ router.get(
 
       // Paginate the results manually based on the requested page and page size
       const startIndex = (page - 1) * pageSize;
-      const endIndex = startIndex + pageSize;
+      const endIndex = startIndex + Number(pageSize);
       const paginatedVehicles = pageVehicles.slice(startIndex, endIndex);
 
       const totalCount = pageVehicles.length;

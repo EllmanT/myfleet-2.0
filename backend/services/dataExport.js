@@ -259,6 +259,7 @@ const DERIVED_KINDS = [
   { name: "overall-stats", model: "overallStats", scope: "companyId" },
   { name: "counters", model: "counter", scope: "tenantId" },
   { name: "ai-usage", model: "aiUsage", scope: "tenantId" },
+  { name: "rates", model: "rate", scope: "deliverer" }, // contractor price lists
 ];
 
 module.exports = { streamCompanyExport, KINDS, DERIVED_KINDS, companyFilter, toCsv, csvField };

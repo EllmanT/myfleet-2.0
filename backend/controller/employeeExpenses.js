@@ -4,6 +4,11 @@ const { upload } = require("../multer");
 const { isAuthenticated } = require("../middleware/auth");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const { requireOwnership } = require("../middleware/tenantAccess");
+const { asNumber, roundMoney } = require("./helpers/jobStatsSync");
+
+// Stats money fields read back as text ("10.00"), so `+=` would join strings ("10.00" + 5 =
+// "10.005"). Always add as numbers.
+const addMoney = (current, delta) => roundMoney(asNumber(current) + asNumber(delta));
 const router = express.Router();
 const EmployeeExpense = require("../model/employeeExpenses");
 const OverallStats = require("../model/overallStats");
@@ -97,17 +102,17 @@ router.post(
           totalExpenses: cost,
         };
         // Update the employeeStats fields
-        overallStats.yearlyProfit -= parseFloat(cost);
-        overallStats.yearlyExpenses += parseFloat(cost);
+        overallStats.yearlyProfit = addMoney(overallStats.yearlyProfit, -asNumber(cost));
+        overallStats.yearlyExpenses = addMoney(overallStats.yearlyExpenses, cost);
         overallStats.monthlyData.push(monthlyData);
       } else {
         // Update the totalexpenses and profit for the given month
-        monthlyData.totalExpenses += parseFloat(cost);
-        monthlyData.totalProfit -= parseFloat(cost);
+        monthlyData.totalExpenses = addMoney(monthlyData.totalExpenses, cost);
+        monthlyData.totalProfit = addMoney(monthlyData.totalProfit, -asNumber(cost));
 
         // Update the overallStats fields
-        overallStats.yearlyProfit -= parseFloat(cost);
-        overallStats.yearlyExpenses += parseFloat(cost);
+        overallStats.yearlyProfit = addMoney(overallStats.yearlyProfit, -asNumber(cost));
+        overallStats.yearlyExpenses = addMoney(overallStats.yearlyExpenses, cost);
       }
 
       // Find the monthlyData for the given month for employeestas
@@ -125,17 +130,17 @@ router.post(
           totalExpenses: cost,
         };
         // Update the driverStats fields
-        driverStats.yearlyProfit -= parseFloat(cost);
-        driverStats.yearlyExpenses += parseFloat(cost);
+        driverStats.yearlyProfit = addMoney(driverStats.yearlyProfit, -asNumber(cost));
+        driverStats.yearlyExpenses = addMoney(driverStats.yearlyExpenses, cost);
         driverStats.monthlyData.push(monthlyData);
       } else {
         // Update the totalexpenses and profit for the given month
-        monthlyDataD.totalExpenses += parseFloat(cost);
-        monthlyDataD.totalProfit -= parseFloat(cost);
+        monthlyDataD.totalExpenses = addMoney(monthlyDataD.totalExpenses, cost);
+        monthlyDataD.totalProfit = addMoney(monthlyDataD.totalProfit, -asNumber(cost));
 
         // Update the driverStats fields
-        driverStats.yearlyProfit -= parseFloat(cost);
-        driverStats.yearlyExpenses += parseFloat(cost);
+        driverStats.yearlyProfit = addMoney(driverStats.yearlyProfit, -asNumber(cost));
+        driverStats.yearlyExpenses = addMoney(driverStats.yearlyExpenses, cost);
       }
       // Sort the monthlyData based on the month
       driverStats.monthlyData.sort((a, b) => {
@@ -230,7 +235,7 @@ router.get(
       // Paginate the filtered results manually based on the requested page and page size
       const totalCount = filteredExpenses.length;
       const startIndex = (page - 1) * pageSize;
-      const endIndex = startIndex + pageSize;
+      const endIndex = startIndex + Number(pageSize);
       const paginatedExpenses = filteredExpenses.slice(startIndex, endIndex);
 
       res.status(200).json({

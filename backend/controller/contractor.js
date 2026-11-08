@@ -11,6 +11,7 @@ const Deliverer = require("../model/deliverer");
 const {
   forceOwnCompany,
   requireOwnership,
+  isGlobalAdmin,
 } = require("../middleware/tenantAccess");
 const { default: mongoose } = require("mongoose");
 const Rate = require("../model/rate");
@@ -302,7 +303,7 @@ router.get(
 
       // Paginate the results manually based on the requested page and page size
       const startIndex = (page - 1) * pageSize;
-      const endIndex = startIndex + pageSize;
+      const endIndex = startIndex + Number(pageSize);
       const paginatedContractors = pageContractors.slice(startIndex, endIndex);
 
       const totalCount = pageContractors.length;
@@ -359,7 +360,10 @@ router.put(
       contractor.vehiclesTypes = vehiclesTypes;
 
       //updating the rates
-      let checkRate = await Rate.findById(rateId);
+      // The rate must be this contractor's rate for this company, never just any rate id.
+      const rateFilter = { _id: mongoose.isValidObjectId(rateId) ? rateId : null, contractor: compId };
+      if (!isGlobalAdmin(req.user)) rateFilter.deliverer = req.user.companyId;
+      let checkRate = await Rate.findOne(rateFilter);
       if (!checkRate) {
         return next(new ErrorHandler("Error finding the rate", 400));
       } else {

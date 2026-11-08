@@ -7,6 +7,12 @@ const Contractor = require("../model/contractor");
 const { isAuthenticated } = require("../middleware/auth");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const { requireOwnership, companyOwns } = require("../middleware/tenantAccess");
+const { asNumber, roundMoney } = require("./helpers/jobStatsSync");
+
+// Stats money fields read back as text ("10.00"), so `+=` would join strings ("10.00" + 5 =
+// "10.005"). Always add as numbers.
+const addMoney = (current, delta) => roundMoney(asNumber(current) + asNumber(delta));
+const mongoose = require("mongoose");
 const router = express.Router();
 const VehicleExpense = require("../model/vehicleExpense");
 const OverallStats = require("../model/overallStats");
@@ -37,7 +43,6 @@ router.post(
         vehicleId: vehicleId,
         year: year,
       });
-      console.log(vehicleStats);
 
       if (!overallStats) {
         return next(
@@ -104,17 +109,17 @@ router.post(
           totalExpenses: cost,
         };
         // Update the vehicleStats fields
-        overallStats.yearlyProfit -= parseFloat(cost);
-        overallStats.yearlyExpenses += parseFloat(cost);
+        overallStats.yearlyProfit = addMoney(overallStats.yearlyProfit, -asNumber(cost));
+        overallStats.yearlyExpenses = addMoney(overallStats.yearlyExpenses, cost);
         overallStats.monthlyData.push(monthlyData);
       } else {
         // Update the totalexpenses and profit for the given month
-        monthlyData.totalExpenses += parseFloat(cost);
-        monthlyData.totalProfit -= parseFloat(cost);
+        monthlyData.totalExpenses = addMoney(monthlyData.totalExpenses, cost);
+        monthlyData.totalProfit = addMoney(monthlyData.totalProfit, -asNumber(cost));
 
         // Update the overallStats fields
-        overallStats.yearlyProfit -= parseFloat(cost);
-        overallStats.yearlyExpenses += parseFloat(cost);
+        overallStats.yearlyProfit = addMoney(overallStats.yearlyProfit, -asNumber(cost));
+        overallStats.yearlyExpenses = addMoney(overallStats.yearlyExpenses, cost);
       }
 
       // Find the monthlyData for the given month for vehiclestas
@@ -134,17 +139,17 @@ router.post(
           totalExpenses: cost,
         };
         // Update the vehicleStats fields
-        vehicleStats.yearlyProfit -= parseFloat(cost);
-        vehicleStats.yearlyExpenses += parseFloat(cost);
+        vehicleStats.yearlyProfit = addMoney(vehicleStats.yearlyProfit, -asNumber(cost));
+        vehicleStats.yearlyExpenses = addMoney(vehicleStats.yearlyExpenses, cost);
         vehicleStats.monthlyData.push(monthlyData);
       } else {
         // Update the totalexpenses and profit for the given month
-        monthlyDataV.totalExpenses += parseFloat(cost);
-        monthlyDataV.totalProfit -= parseFloat(cost);
+        monthlyDataV.totalExpenses = addMoney(monthlyDataV.totalExpenses, cost);
+        monthlyDataV.totalProfit = addMoney(monthlyDataV.totalProfit, -asNumber(cost));
 
         // Update the vehicleStats fields
-        vehicleStats.yearlyProfit -= parseFloat(cost);
-        vehicleStats.yearlyExpenses += parseFloat(cost);
+        vehicleStats.yearlyProfit = addMoney(vehicleStats.yearlyProfit, -asNumber(cost));
+        vehicleStats.yearlyExpenses = addMoney(vehicleStats.yearlyExpenses, cost);
       }
 
       // Sort the monthlyData based on the month
@@ -240,7 +245,7 @@ router.get(
       // Paginate the filtered results manually based on the requested page and page size
       const totalCount = filteredExpenses.length;
       const startIndex = (page - 1) * pageSize;
-      const endIndex = startIndex + pageSize;
+      const endIndex = startIndex + Number(pageSize);
       const paginatedExpenses = filteredExpenses.slice(startIndex, endIndex);
 
       res.status(200).json({
@@ -261,16 +266,47 @@ router.delete(
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { expenseId } = req.params;
+      if (!mongoose.isValidObjectId(expenseId)) return next(new ErrorHandler("Expense not found", 404));
       // Only this company's expense records can ever match.
+      const owner = await VehicleExpense.findOne({
+        companyId: String(req.user.companyId),
+        "expenseData._id": expenseId,
+      });
+      const item = owner && owner.expenseData.id(expenseId);
+      if (!item) return next(new ErrorHandler("Expense not found", 404));
+      const cost = asNumber(item.cost);
+      const when = new Date(item.date);
+
       const result = await VehicleExpense.updateOne(
-        {
-          companyId: String(req.user.companyId),
-          "expenseData._id": expenseId,
-        },
+        { _id: owner._id, companyId: String(req.user.companyId) },
         { $pull: { expenseData: { _id: expenseId } } }
       );
       if (!result.modifiedCount) {
         return next(new ErrorHandler("Expense not found", 404));
+      }
+
+      // Take the amount back out of the statistics it was added to when it was created.
+      if (!Number.isNaN(when.getTime()) && cost) {
+        const month = when.toLocaleString("en-US", { month: "long" });
+        const year = when.getFullYear();
+        const reverse = (stats) => {
+          if (!stats) return;
+          stats.yearlyExpenses = addMoney(stats.yearlyExpenses, -cost);
+          stats.yearlyProfit = addMoney(stats.yearlyProfit, cost);
+          const m = stats.monthlyData.find((data) => data.month === month);
+          if (m) {
+            m.totalExpenses = addMoney(m.totalExpenses, -cost);
+            m.totalProfit = addMoney(m.totalProfit, cost);
+          }
+        };
+        const [overallStats, vehicleStats] = await Promise.all([
+          OverallStats.findOne({ companyId: req.user.companyId, year }),
+          VehicleStats.findOne({ vehicleId: owner.vehicleId, year }),
+        ]);
+        reverse(overallStats);
+        reverse(vehicleStats);
+        if (overallStats) await overallStats.save();
+        if (vehicleStats) await vehicleStats.save();
       }
 
       res.status(200).json({

@@ -21,7 +21,7 @@ const vehicleSchema = new mongoose.Schema(
     },
     regNumber: {
       type: String,
-      requried: true,
+      required: true,
     },
     job_ids: {
       type: [mongoose.Types.ObjectId],

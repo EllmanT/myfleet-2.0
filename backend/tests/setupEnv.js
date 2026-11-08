@@ -3,3 +3,6 @@
 process.env.BLOB_READ_WRITE_TOKEN = "";
 process.env.BLOB_STORE_ID = "";
 process.env.CRON_SECRET = "";
+
+// Cookie login stays switched on for the tests; production leaves it off.
+process.env.LEGACY_LOGIN = "on";

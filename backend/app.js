@@ -62,6 +62,7 @@ app.use(express.json({ limit: "2mb" }));
 app.use(cookieParser());
 // Uploaded driver IDs/licences are private, so the uploads folder is no
 // longer served publicly.
+app.get("/api/health", (req, res) => res.json({ ok: true, time: new Date().toISOString() }));
 app.use("/test", (req, res) => {
   res.send("Hello world!");
 });
@@ -69,6 +70,19 @@ app.use("/test", (req, res) => {
 app.use(bodyParser.urlencoded({ extended: true, limit: "2mb" }));
 app.use(sanitizeInput);
 app.use("/api", apiLimiter);
+// Password login is retired in production (Clerk only). The routes answer 404 and cookie
+// sessions are refused unless LEGACY_LOGIN=on is set explicitly (tests and local dev).
+const legacyLoginOn = () => process.env.LEGACY_LOGIN === "on";
+app.use(
+  [
+    "/api/v2/user/login-user",
+    "/api/v2/user/create-user",
+    "/api/v2/user/activation",
+    "/api/v2/user/forgot-password",
+    "/api/v2/user/reset-password",
+  ],
+  (req, res, next) => (legacyLoginOn() ? next() : res.status(404).json({ success: false, message: "Not found" }))
+);
 app.use(
   [
     "/api/v2/user/login-user",

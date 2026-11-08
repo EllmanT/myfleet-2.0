@@ -69,6 +69,9 @@ router.get(
       const delivererInfo = await Deliverer.findById(req.user.companyId, {
         customer_ids: 0,
         contractor_ids: 0,
+        // platform-only fields: the admin's private note and the reminder bookkeeping
+        "billing.note": 0,
+        "billing.notices": 0,
       });
       // check to see if deliverer
       if (!delivererInfo) {
@@ -129,9 +132,10 @@ router.get(
       const scopedFilter = isGlobalAdmin(req.user)
         ? searchFilter
         : { $and: [{ _id: req.user.companyId }, searchFilter] };
-      const pageDeliverers = await Deliverer.find(scopedFilter)
-        .sort(sortOptions)
-        .lean();
+      // Company users never see the platform's private billing note or reminder bookkeeping.
+      const query = Deliverer.find(scopedFilter).sort(sortOptions);
+      if (!isGlobalAdmin(req.user)) query.select("-billing.note -billing.notices");
+      const pageDeliverers = await query.lean();
 
       if (pageDeliverers.length === 0) {
         return res.status(200).json({
