@@ -114,7 +114,7 @@ const Driver = ({
           {/* Age : 34 */}
           <IconButton
             variant="contained"
-            sx={{ color: "lightblue", ml: 6 }}
+            sx={{ color: "primary.main", ml: 6 }} aria-label="View"
             size="small"
             onClick={() => handleViewDriver(driverId)}
           >
@@ -130,7 +130,7 @@ const Driver = ({
           </IconButton>
           <IconButton
             variant="contained"
-            sx={{ color: "lightblue" }}
+            sx={{ color: "error.main" }} aria-label="Delete"
             size="small"
             onClick={() => handleDeleteDialogue()}
           >
@@ -151,7 +151,7 @@ const Driver = ({
           variant="outlined"
           color="inherit"
           size="small"
-          sx={{ mr: 4 }}
+          sx={{ mr: 4, color: "text.primary", borderColor: "text.secondary" }}
           onClick={() => setIsExpanded(!isExpanded)}
         >
           {!isExpanded ? "See More" : "See Less"}
@@ -159,7 +159,7 @@ const Driver = ({
         <Button
           variant="contained"
           size="small"
-          sx={{ color: theme.palette.secondary[200] }}
+          
           onClick={() => handleViewDriverDash(driverId)}
         >
           View Trips

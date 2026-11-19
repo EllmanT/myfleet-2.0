@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from "react";
+import { chartColors, nivoTheme } from "./chartColors";
 import { useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOverallStatsDeliverer } from "redux/actions/overallStats";
@@ -27,12 +28,12 @@ const VehSingleLineChart = ({ isDashboard = false, view , vehicleId }) => {
   
     const totalJobsLine = {
       id: "totalJobs",
-      color: theme.palette.secondary.main,
+      color: chartColors(theme, 3)[0],
       data: [],
     };
     const totalMileageLine = {
       id: "totalMileage",
-      color: theme.palette.secondary[600],
+      color: chartColors(theme, 3)[1],
       data: [],
     };
 
@@ -51,39 +52,7 @@ const VehSingleLineChart = ({ isDashboard = false, view , vehicleId }) => {
   return (
     <ResponsiveLine
       data={view === "jobs" ? totalJobsLine : totalMileageLine}
-      theme={{
-        axis: {
-          domain: {
-            line: {
-              stroke: theme.palette.secondary[200],
-            },
-          },
-          legend: {
-            text: {
-              fill: theme.palette.secondary[200],
-            },
-          },
-          ticks: {
-            line: {
-              stroke: theme.palette.secondary[200],
-              strokeWidth: 1,
-            },
-            text: {
-              fill: theme.palette.secondary[200],
-            },
-          },
-        },
-        legends: {
-          text: {
-            fill: theme.palette.secondary[200],
-          },
-        },
-        tooltip: {
-          container: {
-            color: theme.palette.primary[100],
-          },
-        },
-      }}
+      theme={nivoTheme(theme)}
       margin={{ top: 20, right: 50, bottom: 50, left: 70 }}
       xScale={{ type: "point" }}
       yScale={{

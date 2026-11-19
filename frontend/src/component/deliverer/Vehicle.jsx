@@ -98,7 +98,7 @@ const Vehicle = ({
           {regNumber}
           <IconButton
             variant="contained"
-            sx={{ color: "lightblue", ml: 3 }}
+            sx={{ color: "primary.main", ml: 3 }} aria-label="View"
             size="small"
             onClick={() => handleViewVehicle(vehicleId)}
           >
@@ -114,7 +114,7 @@ const Vehicle = ({
           </IconButton>
           <IconButton
             variant="contained"
-            sx={{ color: "lightblue" }}
+            sx={{ color: "error.main" }} aria-label="Delete"
             size="small"
             onClick={() => handleDeleteDialogue()}
           >
@@ -169,7 +169,7 @@ const Vehicle = ({
           variant="outlined"
           color="inherit"
           size="small"
-          sx={{ mr: 4 }}
+          sx={{ mr: 4, color: "text.primary", borderColor: "text.secondary" }}
           onClick={() => setIsExpanded(!isExpanded)}
         >
           {!isExpanded ? "See More" : "See Less"}
@@ -177,7 +177,7 @@ const Vehicle = ({
         <Button
           variant="contained"
           size="small"
-          sx={{ color: theme.palette.secondary[200] }}
+          
           onClick={()=>handleViewVehicleDash(vehicleId)}
         >
           View Trips

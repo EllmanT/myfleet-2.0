@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
-import { Box, Typography, useTheme } from "@mui/material";
-import { ResponsivePie } from "@nivo/pie";
+import { Box, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOverallStatsDeliverer } from "redux/actions/overallStats";
-import { getAllContractorsPage } from "redux/actions/contractor";
-import { getContractorStats } from "redux/actions/contractorStats";
-import { useParams } from "react-router-dom";
 import { ResponsiveBar } from "@nivo/bar";
+import { chartColors, nivoTheme } from "./chartColors";
 
 const JobsBarChart = ({ isDashboard = false , view}) => {
   const theme = useTheme();
@@ -43,7 +40,10 @@ const JobsBarChart = ({ isDashboard = false , view}) => {
         margin={{ top: 30, right: 0, bottom: 70, left: 60 }}
         padding={0.4}
         valueScale={{ type: "linear" }}
-        colors={{ scheme: "category10" }}
+        theme={nivoTheme(theme)}
+        colors={chartColors(theme, 1)}
+        borderRadius={3}
+        enableGridX={false}
         animate={true}
         enableLabel={false}
         

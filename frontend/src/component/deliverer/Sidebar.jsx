@@ -273,7 +273,7 @@ const Sidebar = ({
           sx={{
             width: drawerWidth,
             "& .MuiDrawer-paper": {
-              color: theme.palette.secondary[300],
+              color: theme.palette.text.secondary,
               backgroundColor: theme.palette.background.alt,
               boxSizing: "border-box",
               borderWidth: isNonMobile ? 0 : "1.5px",
@@ -316,23 +316,32 @@ const Sidebar = ({
                         if (!isNonMobile) setIsSidebarOpen(false);
                       }}
                       sx={{
-                        backgroundColor:
-                          isActive(name)
-                            ? theme.palette.secondary[300]
-                            : "transparent",
-                        color:
-                          isActive(name)
-                            ? theme.palette.primary[600]
-                            : theme.palette.secondary[100],
+                        // Every state sets BOTH background and text colour, so MUI's default
+                        // hover background can never land under the wrong text colour.
+                        // active: accent fill + on-accent text; idle: card surface + main text.
+                        backgroundColor: isActive(name)
+                          ? theme.palette.primary.main
+                          : "transparent",
+                        color: isActive(name)
+                          ? theme.palette.primary.contrastText
+                          : theme.palette.text.primary,
+                        "& .MuiListItemIcon-root": {
+                          color: "inherit",
+                        },
+                        "&:hover, &.Mui-focusVisible": {
+                          backgroundColor: isActive(name)
+                            ? theme.palette.primary.dark
+                            : theme.palette.action.hover,
+                          color: isActive(name)
+                            ? theme.palette.primary.contrastText
+                            : theme.palette.text.primary,
+                        },
                       }}
                     >
                       <ListItemIcon
                         sx={{
                           ml: "2rem",
-                          color:
-                            isActive(name)
-                              ? theme.palette.primary[600]
-                              : theme.palette.secondary[100],
+                          color: "inherit",
                         }}
                       >
                         {icon}

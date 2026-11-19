@@ -2,48 +2,53 @@ import React, { useEffect } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
 import { ResponsivePie } from "@nivo/pie";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllOverallStatsDeliverer } from "redux/actions/overallStats";
 import { getAllContractorsPage } from "redux/actions/contractor";
 import { getDriverStats } from "redux/actions/driverStats";
 import { useParams } from "react-router-dom";
+import { chartColors, pieProps, pieLegendText } from "./chartColors";
+
+const truncate = (s, n = 12) => {
+  const str = String(s ?? "");
+  return str.length > n ? `${str.slice(0, n - 1)}…` : str;
+};
 
 const DriverBreakdownChart = ({ isDashboard = false }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { driverId } = useParams();
-  const { driverStats, isDriverStatsLoading } = useSelector(
-    (state) => state.driverStats
-  );
+  const { driverStats, isDriverStatsLoading } = useSelector((state) => state.driverStats);
   const { selectedYear } = useSelector((state) => state.filters);
 
-  console.log(driverStats)
   useEffect(() => {
     dispatch(getDriverStats(driverId, selectedYear));
     dispatch(getAllContractorsPage());
   }, [dispatch, driverId, selectedYear]);
-  let formattedData;
-  
 
-  if (!driverStats || isDriverStatsLoading) return "Loading...";
+  if (!driverStats || isDriverStatsLoading) return <Typography color="text.secondary">Loading...</Typography>;
 
-  if (!isDriverStatsLoading && driverStats && driverStats.jobsByContractor) {
-    const colors = [
-      theme.palette.secondary[200],
-      theme.palette.secondary[400],
-      theme.palette.secondary[300],
-      theme.palette.secondary[800],
-    ];
+  const entries = Object.entries(driverStats.jobsByContractor || {}).filter(([, v]) => Number(v) > 0);
+  const palette = chartColors(theme, entries.length);
+  const data = entries.map(([contractor, value], i) => ({
+    id: contractor,
+    label: contractor,
+    value: Number(value),
+    color: palette[i],
+  }));
 
-    formattedData = Object.entries(driverStats.jobsByContractor).map(
-      ([contractor, jobs], i) => ({
-        id: contractor,
-        label: contractor,
-        value: jobs,
-        color: colors[i],
-      })
+  if (data.length === 0) {
+    return (
+      <Box height={isDashboard ? "400px" : "100%"} minHeight={isDashboard ? "325px" : undefined} display="flex" alignItems="center" justifyContent="center">
+        <Typography color="text.secondary">No data for this period</Typography>
+      </Box>
     );
   }
-  console.log(formattedData)
+
+  const margin = isDashboard
+    ? { top: 30, right: 60, bottom: 20, left: 50 }
+    : { top: 40, right: 90, bottom: 20, left: 90 };
+  const legendColor = pieLegendText(theme);
+  // link labels collide with many slices, the legend below covers those cases
+  const showLinks = !isDashboard && data.length <= 8;
 
   return (
     <Box
@@ -51,105 +56,63 @@ const DriverBreakdownChart = ({ isDashboard = false }) => {
       width={undefined}
       minHeight={isDashboard ? "325px" : undefined}
       minWidth={isDashboard ? "325px" : undefined}
-      position="relative"
+      display="flex"
+      flexDirection="column"
     >
-      <ResponsivePie
-        data={formattedData}
-        theme={{
-          axis: {
-            domain: {
-              line: {
-                stroke: theme.palette.secondary[200],
-              },
-            },
-            legend: {
-              text: {
-                fill: theme.palette.secondary[200],
-              },
-            },
-            ticks: {
-              line: {
-                stroke: theme.palette.secondary[200],
-                strokeWidth: 1,
-              },
-              text: {
-                fill: theme.palette.secondary[200],
-              },
-            },
-          },
-          legends: {
-            text: {
-              fill: theme.palette.secondary[200],
-            },
-          },
-          tooltip: {
-            container: {
-              color: theme.palette.primary,
-            },
-          },
-        }}
-        colors={{ datum: "data.color" }}
-        margin={
-          isDashboard
-            ? { top: 40, right: 80, bottom: 100, left: 50 }
-            : { top: 40, right: 80, bottom: 80, left: 80 }
-        }
-        sortByValue={true}
-        innerRadius={0.45}
-        activeOuterRadiusOffset={8}
-        borderWidth={1}
-        borderColor={{
-          from: "color",
-          modifiers: [["darker", 0.2]],
-        }}
-        enableArcLinkLabels={!isDashboard}
-        arcLinkLabelsTextColor={theme.palette.secondary[200]}
-        arcLinkLabelsThickness={2}
-        arcLinkLabelsColor={{ from: "color" }}
-        arcLabelsSkipAngle={10}
-        arcLabelsTextColor={{
-          from: "color",
-          modifiers: [["darker", 2]],
-        }}
-        legends={[
-          {
-            anchor: "bottom",
-            direction: "row",
-            justify: false,
-            translateX: isDashboard ? 20 : 0,
-            translateY: isDashboard ? 50 : 56,
-            itemsSpacing: 15,
-            itemWidth: 85,
-            itemHeight: 18,
-            itemTextColor: "#000",
-            itemDirection: "left-to-right",
-            itemOpacity: 1,
-            symbolSize: 12,
-            symbolShape: "circle",
-            effects: [
-              {
-                on: "hover",
-                style: {
-                  itemTextColor: theme.palette.primary[500],
-                },
-              },
-            ],
-          },
-        ]}
-      />
+      <Box position="relative" flex="1 1 0" minHeight={0}>
+        <ResponsivePie
+          data={data}
+          {...pieProps(theme)}
+          margin={margin}
+          innerRadius={0.55}
+          enableArcLinkLabels={showLinks}
+          arcLinkLabel={(d) => truncate(d.label)}
+          arcLinkLabelsSkipAngle={12}
+          legends={[]}
+        />
+        {/* centre label: same box as the plot area so it sits in the donut hole */}
+        <Box
+          position="absolute"
+          top={margin.top}
+          right={margin.right}
+          bottom={margin.bottom}
+          left={margin.left}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+          sx={{ pointerEvents: "none" }}
+        >
+          <Typography variant="h6" color="text.primary">
+            {driverStats.yearlyJobs ?? 0} jobs
+          </Typography>
+        </Box>
+      </Box>
+      {/* wrapping legend: never clips or overlaps, however many contractors */}
       <Box
-        position="absolute"
-        top="50%"
-        left="50%"
-        textAlign="center"
-        pointerEvents="none"
-        sx={{
-          transform: isDashboard
-            ? "translate(-75%, -170%)"
-            : "translate(-50%, -100%)",
-        }}
+        display="flex"
+        flexWrap="wrap"
+        justifyContent="center"
+        gap="6px 16px"
+        px={1}
+        pb={1}
+        maxHeight={96}
+        sx={{ overflowY: "auto" }}
       >
-        <Typography variant="h6">{driverStats.yearlyJobs} jobs</Typography>
+        {data.map((d) => (
+          <Box key={d.id} display="flex" alignItems="center" gap="6px" maxWidth="100%" title={`${d.label}: ${d.value}`}>
+            <Box
+              sx={{ width: 12, height: 12, borderRadius: "50%", flexShrink: 0, backgroundColor: d.color }}
+            />
+            <Typography
+              variant="caption"
+              noWrap
+              sx={{ color: legendColor, maxWidth: 140, fontSize: 12 }}
+            >
+              {d.label}
+            </Typography>
+          </Box>
+        ))}
       </Box>
     </Box>
   );

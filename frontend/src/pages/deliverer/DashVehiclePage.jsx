@@ -512,7 +512,7 @@ const DashVehiclePage = () => {
             },
             "& .MuiDataGrid-columnHeaders": {
               backgroundColor: theme.palette.primary.dark,
-              color: theme.palette.secondary[200],
+              color: theme.palette.primary.contrastText,
               fontWeight: "bold",
               fontSize: "0.8rem",
               letterSpacing: "0.05rem",

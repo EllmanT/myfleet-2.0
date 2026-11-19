@@ -173,10 +173,13 @@ app.use("/api/v2/fuel", fuelLog);
 
 app.use(ErrorHandler);
 
-if (!process.env.VERCEL) {
-  app.use(express.static(path.resolve("./frontend/build")));
+// Serve the production React build only when one exists (not in local dev,
+// where the CRA dev server on :3000 serves the UI).
+const frontendBuild = path.resolve("./frontend/build");
+if (!process.env.VERCEL && require("fs").existsSync(path.join(frontendBuild, "index.html"))) {
+  app.use(express.static(frontendBuild));
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve("./", "frontend", "build", "index.html"));
+    res.sendFile(path.join(frontendBuild, "index.html"));
   });
 }
 

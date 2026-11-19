@@ -1,12 +1,8 @@
 import React, { useEffect } from "react";
-import { Box, Typography, useTheme } from "@mui/material";
-import { ResponsivePie } from "@nivo/pie";
+import { Box, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllOverallStatsDeliverer } from "redux/actions/overallStats";
-import { getAllContractorsPage } from "redux/actions/contractor";
-import { getContractorStats } from "redux/actions/contractorStats";
-import { useParams } from "react-router-dom";
 import { ResponsiveBar } from "@nivo/bar";
+import { chartColors, nivoTheme } from "./chartColors";
 
 const RevenueBarChart = ({ isDashboard = false, view }) => {
   const theme = useTheme();
@@ -50,7 +46,10 @@ const RevenueBarChart = ({ isDashboard = false, view }) => {
         margin={{ top: 50, right: 0, bottom: 50, left: 60 }}
         padding={0.4}
         valueScale={{ type: "linear" }}
-        colors={{ scheme: "category10" }}
+        theme={nivoTheme(theme)}
+        colors={chartColors(theme, 3)}
+        borderRadius={3}
+        enableGridX={false}
         animate={true}
         enableLabel={false}
         axisTop={null}
@@ -89,15 +88,15 @@ const RevenueBarChart = ({ isDashboard = false, view }) => {
             itemWidth: 80,
             itemHeight: 20,
             
-            itemOpacity: 0.75,
+            itemOpacity: 1,
             symbolSize: 12,
             symbolShape: "circle",
-            symbolBorderColor: "rgba(0, 0, 0, .5)",
+            symbolBorderColor: "transparent",
             effects: [
               {
                 on: "hover",
                 style: {
-                  itemBackground: "rgba(0, 0, 0, .03)",
+                  itemBackground: theme.palette.action.hover,
                   itemOpacity: 1,
                 },
               },

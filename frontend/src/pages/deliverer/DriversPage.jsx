@@ -265,8 +265,12 @@ const DriversPage = () => {
           <Button
             disabled
             sx={{
-              backgroundColor: theme.palette.secondary.light,
-              color: theme.palette.background.alt,
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.primary.contrastText,
+              "&.Mui-disabled": {
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.primary.contrastText,
+              },
               fontSize: "16px",
               fontWeight: "bold",
               padding: "10px 20px",
@@ -280,13 +284,17 @@ const DriversPage = () => {
           <Button
             onClick={handleClickOpen}
             sx={{
-              backgroundColor: theme.palette.secondary.light,
-              color: theme.palette.background.alt,
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.primary.contrastText,
+              "&.Mui-disabled": {
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.primary.contrastText,
+              },
               fontSize: "14px",
               fontWeight: "bold",
               padding: "10px 20px",
               ":hover": {
-                backgroundColor: theme.palette.secondary[100],
+                backgroundColor: theme.palette.primary.dark,
               },
             }}
           >
@@ -420,16 +428,8 @@ const DriversPage = () => {
                       variant="contained"
                       size="large"
                       sx={{
-                        color: theme.palette.background.alt,
-
                         margin: "1rem",
                         border: "solid 1px",
-                        ":hover": {
-                          backgroundColor: theme.palette.secondary[900],
-                        },
-                        ":disabled": {
-                          backgroundColor: theme.palette.secondary[900],
-                        },
                       }}
                     >
                       Close
@@ -446,13 +446,6 @@ const DriversPage = () => {
                           //backgroundColor: theme.palette.secondary[300],
                           margin: "1rem  ",
                           border: "solid 0.5px",
-                          ":hover": {
-                            //700 looks nicest for the dark theme and 300 best for light mode fix//
-                            backgroundColor: theme.palette.secondary[300],
-                          },
-                          ":disabled": {
-                            backgroundColor: theme.palette.secondary[300],
-                          },
                         }}
                       >
                         {isAddButtonn && !isEditButtonn && <>Add Driver</>}

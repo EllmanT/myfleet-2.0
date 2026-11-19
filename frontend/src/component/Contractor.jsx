@@ -105,7 +105,7 @@ const Contractor = ({
           {companyName}
           <IconButton
             variant="contained"
-            sx={{ color: "lightblue" }}
+            sx={{ color: "primary.main" }} aria-label="View"
             size="small"
             onClick={() => handleViewContr(_id)}
           >
@@ -122,7 +122,7 @@ const Contractor = ({
 
           <IconButton
             variant="contained"
-            sx={{ color: "lightblue" }}
+            sx={{ color: "error.main" }} aria-label="Delete"
             size="small"
             onClick={() => handleDeleteDialogue()}
           >
@@ -147,7 +147,7 @@ const Contractor = ({
           variant="outlined"
           color="inherit"
           size="small"
-          sx={{ mr: 4 }}
+          sx={{ mr: 4, color: "text.primary", borderColor: "text.secondary" }}
           onClick={() => setIsExpanded(!isExpanded)}
         >
           {!isExpanded ? "See More" : "See Less"}
@@ -155,7 +155,7 @@ const Contractor = ({
         <Button
           variant="contained"
           size="small"
-          sx={{ color: theme.palette.secondary[200] }}
+          
           onClick={() => handleViewContractorDash(_id)}
         >
           View Jobs

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { chartColors, nivoTheme } from "./chartColors";
 import { Box, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOverallStatsDeliverer } from "redux/actions/overallStats";
@@ -35,12 +36,12 @@ const DriverDailyLineChart = ({
     const { dailyData } = driverStats;
     const totalJobsLine = {
       id: "totalJobs",
-      color: theme.palette.secondary.main,
+      color: chartColors(theme, 3)[0],
       data: [],
     };
     const totalMileageLine = {
       id: "totalMileage",
-      color: theme.palette.secondary[600],
+      color: chartColors(theme, 3)[1],
       data: [],
     };
 
@@ -102,37 +103,7 @@ const DriverDailyLineChart = ({
         {driverStats ? (
           <ResponsiveLine
             data={formattedData}
-            theme={{
-              axis: {
-                domain: {
-                  line: {
-                    stroke: theme.palette.secondary[200],
-                  },
-                },
-                legend: {
-                  text: {
-                    fill: theme.palette.secondary[200],
-                  },
-                },
-                ticks: {
-                  line: {
-                    stroke: theme.palette.secondary[200],
-                    strokeWidth: 1,
-                  },
-                  text: {
-                    fill: theme.palette.secondary[200],
-                  },
-                },
-              },
-              legends: {
-                text: {
-                  fill: theme.palette.secondary[200],
-                },
-              },
-              tooltip: {
-                container: {},
-              },
-            }}
+            theme={nivoTheme(theme)}
             colors={{ datum: "color" }}
             margin={{ top: 50, right: 50, bottom: 70, left: 60 }}
             xScale={{ type: "point" }}

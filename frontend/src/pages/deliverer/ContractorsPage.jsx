@@ -570,8 +570,12 @@ const ContractorsPage = () => {
           <Button
             disabled
             sx={{
-              backgroundColor: theme.palette.secondary.light,
-              color: theme.palette.background.alt,
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.primary.contrastText,
+              "&.Mui-disabled": {
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.primary.contrastText,
+              },
               fontSize: "16px",
               fontWeight: "bold",
               padding: "10px 20px",
@@ -585,13 +589,17 @@ const ContractorsPage = () => {
         <Box>
           <Button
             sx={{
-              backgroundColor: theme.palette.secondary.light,
-              color: theme.palette.background.alt,
+              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.primary.contrastText,
+              "&.Mui-disabled": {
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.primary.contrastText,
+              },
               fontSize: "14px",
               fontWeight: "bold",
               padding: "10px 20px",
               ":hover": {
-                backgroundColor: theme.palette.secondary[100],
+                backgroundColor: theme.palette.primary.dark,
               },
             }}
             onClick={handleClickOpen}
@@ -995,16 +1003,8 @@ const ContractorsPage = () => {
                             variant="contained"
                             size="large"
                             sx={{
-                              color: theme.palette.secondary[300],
-
                               margin: "0.5rem",
                               border: "solid 1px",
-                              ":hover": {
-                                backgroundColor: theme.palette.secondary[800],
-                              },
-                              ":disabled": {
-                                backgroundColor: theme.palette.secondary[800],
-                              },
                             }}
                           >
                             Back
@@ -1019,12 +1019,6 @@ const ContractorsPage = () => {
                                 // backgroundColor: theme.palette.secondary[300],
                                 margin: "0.5rem  ",
                                 border: "solid 0.5px",
-                                ":hover": {
-                                  backgroundColor: theme.palette.secondary[300],
-                                },
-                                ":disabled": {
-                                  backgroundColor: theme.palette.secondary[300],
-                                },
                               }}
                             >
                               Next
@@ -1043,14 +1037,6 @@ const ContractorsPage = () => {
                                   // backgroundColor: theme.palette.secondary[300],
                                   margin: "0.5rem  ",
                                   border: "solid 0.5px",
-                                  ":hover": {
-                                    backgroundColor:
-                                      theme.palette.secondary[300],
-                                  },
-                                  ":disabled": {
-                                    backgroundColor:
-                                      theme.palette.secondary[300],
-                                  },
                                 }}
                               >
                                 {isAddButtonn && !isEditButtonn && (
