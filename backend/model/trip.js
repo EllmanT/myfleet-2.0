@@ -62,6 +62,13 @@ const tripSchema = new mongoose.Schema(
     driverId: { type: mongoose.Schema.Types.ObjectId, ref: "driver" },
     deliveredAt: { type: Date },
 
+    // Optional paperwork. A trip never needs either to exist or to be invoiced.
+    purchaseOrderId: { type: mongoose.Schema.Types.ObjectId, ref: "PurchaseOrder", index: true },
+    deliveryNoteNo: { type: String, default: "" },
+    deliveryNoteDate: { type: Date },
+    // stored-file key of the signed delivery note (photo or PDF)
+    signedCopy: { type: String, default: "" },
+
     costLines: { type: [costLineSchema], default: [] },
     // set when a trip is on an issued invoice, so it can't be billed twice
     invoiceId: { type: mongoose.Schema.Types.ObjectId, ref: "Invoice" },

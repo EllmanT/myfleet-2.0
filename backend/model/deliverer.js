@@ -73,6 +73,16 @@ const delivererSchema = new mongoose.Schema(
     contact: {
       type: "String",
     },
+    // Printed on quotations, purchase orders, delivery notes and invoices. All optional.
+    // `logo` is a stored-file key (services/fileStorage.js), never the image itself.
+    letterhead: {
+      phone: { type: String, default: "" },
+      email: { type: String, default: "" },
+      tin: { type: String, default: "" },
+      bankDetails: { type: String, default: "" },
+      paymentTermsDays: { type: Number, min: 0, max: 365 },
+      logo: { type: String, default: "" },
+    },
 
     prefix: {
       type: String,

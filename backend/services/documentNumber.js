@@ -1,6 +1,6 @@
 const Counter = require("../model/counter");
 
-const PREFIX = { invoice: "INV", quotation: "QUO", creditNote: "CN" };
+const PREFIX = { invoice: "INV", quotation: "QUO", creditNote: "CN", deliveryNote: "DN" };
 
 // Atomically takes the next number for a company, e.g. INV-0007. Numbers are only
 // taken when a document is issued, so issued numbers have no gaps.

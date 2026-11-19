@@ -121,10 +121,13 @@ describe("trips, trailers and documents over HTTP", () => {
     expect((await post(baseTrip({ customerName: "" }))).status).toBe(400);
     expect((await post(baseTrip({ stops: [{ place: "Harare" }] }))).status).toBe(400);
     expect((await post(baseTrip({ price: -5 }))).status).toBe(400);
-    expect((await post(baseTrip({ price: undefined }))).status).toBe(400);
     expect((await post(baseTrip({ date: "not a date" }))).status).toBe(400);
     expect((await post(baseTrip({ deliveredAt: "2026-09-01" }))).status).toBe(400);
     expect((await post(baseTrip({ costLines: [{ type: "fuel", amount: -1 }] }))).status).toBe(400);
+    // a blank price is allowed (added later) and counts as 0 for now
+    const blank = await post(baseTrip({ price: undefined, clientRef: "AL.BLANK" }));
+    expect(blank.status).toBe(201);
+    expect(blank.body.trip.price).toBe(0);
   });
 
   test("a job reference can't be reused in one company, but another company may use it", async () => {

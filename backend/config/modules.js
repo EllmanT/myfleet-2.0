@@ -36,7 +36,7 @@ const MODULES = [
   {
     key: "crossBorder",
     label: "Cross-border trips",
-    description: "Whole-trip records with route, price, border crossings and trip costs.",
+    description: "Whole-trip records with route, price, border crossings and trip costs, plus purchase orders and delivery notes.",
     available: true,
     newTenantDefault: false,
   },

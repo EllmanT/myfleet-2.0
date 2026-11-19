@@ -13,6 +13,14 @@ const Vehicle = require("../model/vehicle");
 const Driver = require("../model/driver");
 const Customer = require("../model/customer");
 const Deliverer = require("../model/deliverer");
+const Invoice = require("../model/invoice");
+const PurchaseOrder = require("../model/purchaseOrder");
+const { paymentState } = require("../utils/invoiceMath");
+const { streamDeliveryNotePdf } = require("../utils/documentPdf");
+const { companyForPdf } = require("../services/letterhead");
+const { nextNumber } = require("../services/documentNumber");
+const { upload } = require("../multer");
+const { saveFile, deleteFile } = require("../services/fileStorage");
 const router = express.Router();
 
 const guard = [isAuthenticated, requireCompany, requireModule("crossBorder")];
@@ -39,8 +47,8 @@ async function cleanTrip(body, user) {
   const customerName = text(body.customerName, 120);
   if (!customerName) throw new ErrorHandler("Customer is required", 400);
 
-  if (body.price === undefined || body.price === "") throw new ErrorHandler("Price is required", 400);
-  const price = round2(num(body.price, "Price"));
+  // A price can be added later (old ledger trips, orders not yet priced): blank means 0 for now.
+  const price = body.price === undefined || body.price === "" || body.price === null ? 0 : round2(num(body.price, "Price"));
 
   const currency = Trip.CURRENCIES.includes(body.currency) ? body.currency : "USD";
 
@@ -94,6 +102,14 @@ async function cleanTrip(body, user) {
     doc.trailerId = body.trailerId;
   }
 
+  // optional purchase order, must be this company's
+  if (body.purchaseOrderId) {
+    if (!mongoose.isValidObjectId(body.purchaseOrderId) || !(await PurchaseOrder.exists({ _id: body.purchaseOrderId, tenantId }))) {
+      throw new ErrorHandler("Purchase order not found for your company", 404);
+    }
+    doc.purchaseOrderId = body.purchaseOrderId;
+  }
+
   // cost lines
   const rawLines = Array.isArray(body.costLines) ? body.costLines : [];
   if (rawLines.length > 60) throw new ErrorHandler("Too many cost lines", 400);
@@ -145,6 +161,36 @@ const handle = (fn) =>
     }
   });
 
+// Adds what the Trips page shows beside each trip: its purchase order number, whether a signed
+// delivery note is on file, and whether it has been invoiced and paid.
+async function decorate(trips, tenantId) {
+  const invIds = [...new Set(trips.map((t) => t.invoiceId).filter(Boolean).map(String))];
+  const poIds = [...new Set(trips.map((t) => t.purchaseOrderId).filter(Boolean).map(String))];
+  const [invoices, pos] = await Promise.all([
+    invIds.length ? Invoice.find({ _id: { $in: invIds }, tenantId }).select("number status totalCents paidCents creditNotes dueDate").lean() : [],
+    poIds.length ? PurchaseOrder.find({ _id: { $in: poIds }, tenantId }).select("poNumber").lean() : [],
+  ]);
+  const invById = new Map(invoices.map((i) => [String(i._id), i]));
+  const poById = new Map(pos.map((p) => [String(p._id), p]));
+  return trips.map((t) => {
+    const inv = t.invoiceId ? invById.get(String(t.invoiceId)) : null;
+    let payStatus = "not_invoiced";
+    if (inv && inv.status === "draft") payStatus = "draft_invoice";
+    if (inv && inv.status === "issued") {
+      const st = paymentState(inv).paymentStatus;
+      payStatus = st === "paid" ? "paid" : st === "partial" ? "part_paid" : "invoiced";
+    }
+    const po = t.purchaseOrderId ? poById.get(String(t.purchaseOrderId)) : null;
+    return {
+      ...t,
+      hasSignedCopy: Boolean(t.signedCopy),
+      poNumber: po ? po.poNumber || "" : "",
+      invoiceNumber: inv ? inv.number || "" : "",
+      payStatus,
+    };
+  });
+}
+
 router.post(
   "/create-trip",
   ...guard,
@@ -170,6 +216,7 @@ router.get(
     }
     if (status && Trip.STATUSES.includes(status)) q.status = status;
     if (horseId && mongoose.isValidObjectId(horseId)) q.horseId = horseId;
+    if (req.query.purchaseOrderId && mongoose.isValidObjectId(req.query.purchaseOrderId)) q.purchaseOrderId = req.query.purchaseOrderId;
     if (crossBorder === "true") q.isCrossBorder = true;
     if (crossBorder === "false") q.isCrossBorder = false;
     if (search && String(search).trim()) {
@@ -183,7 +230,8 @@ router.get(
       Trip.find(q).sort({ date: -1, _id: -1 }).skip(page * pageSize).limit(pageSize).lean(),
       Trip.countDocuments(q),
     ]);
-    res.status(200).json({ success: true, trips: trips.map(withTotals), total, page, pageSize });
+    const shown = (await decorate(trips.map(withTotals), req.user.companyId)).map(({ signedCopy, ...t }) => ({ ...t, signedCopyKey: signedCopy || "" }));
+    res.status(200).json({ success: true, trips: shown, total, page, pageSize });
   })
 );
 
@@ -265,7 +313,7 @@ router.put(
     const merged = { ...existing.toObject(), ...req.body };
     const doc = await cleanTrip(merged, req.user);
     // fields the form clears must actually clear
-    ["horseId", "trailerId", "driverId", "deliveredAt", "distanceKm", "clientRef"].forEach((k) => {
+    ["horseId", "trailerId", "driverId", "deliveredAt", "distanceKm", "clientRef", "purchaseOrderId"].forEach((k) => {
       if (!(k in doc)) existing[k] = undefined;
     });
     existing.set(doc);
@@ -281,7 +329,89 @@ router.delete(
     if (!mongoose.isValidObjectId(req.params.id)) return next(new ErrorHandler("Invalid id", 400));
     const removed = await Trip.findOneAndDelete({ _id: req.params.id, tenantId: req.user.companyId });
     if (!removed) return next(new ErrorHandler("Trip not found", 404));
+    if (removed.signedCopy) await deleteFile(removed.signedCopy);
     res.status(200).json({ success: true, message: "Trip deleted" });
+  })
+);
+
+const findMine = async (req) => {
+  if (!mongoose.isValidObjectId(req.params.id)) throw new ErrorHandler("Invalid id", 400);
+  const trip = await Trip.findOne({ _id: req.params.id, tenantId: req.user.companyId });
+  if (!trip) throw new ErrorHandler("Trip not found", 404);
+  return trip;
+};
+
+// Gives the trip its delivery note number (once; asking again returns the same one).
+router.post(
+  "/delivery-note/:id",
+  ...guard,
+  handle(async (req, res) => {
+    const trip = await findMine(req);
+    if (!trip.deliveryNoteNo) {
+      trip.deliveryNoteNo = await nextNumber(trip.tenantId, "deliveryNote");
+      trip.deliveryNoteDate = trip.deliveryNoteDate || new Date();
+      await trip.save();
+    }
+    res.status(200).json({ success: true, deliveryNoteNo: trip.deliveryNoteNo });
+  })
+);
+
+router.get(
+  "/delivery-note-pdf/:id",
+  ...guard,
+  handle(async (req, res) => {
+    const trip = await findMine(req);
+    if (!trip.deliveryNoteNo) throw new ErrorHandler("Create the delivery note first", 409);
+    const [truck, trailer, driver, po, company] = await Promise.all([
+      trip.horseId ? Vehicle.findById(trip.horseId).select("regNumber").lean() : null,
+      trip.trailerId ? Trailer.findById(trip.trailerId).select("regNumber").lean() : null,
+      trip.driverId ? Driver.findById(trip.driverId).select("name").lean() : null,
+      trip.purchaseOrderId ? PurchaseOrder.findById(trip.purchaseOrderId).select("poNumber").lean() : null,
+      companyForPdf(req.user.companyId),
+    ]);
+    streamDeliveryNotePdf(res, {
+      trip: trip.toObject(),
+      refs: {
+        truck: truck && truck.regNumber,
+        trailer: trailer && trailer.regNumber,
+        driver: driver && driver.name,
+        purchaseOrder: po && po.poNumber,
+      },
+      company,
+      filename: `${trip.deliveryNoteNo}.pdf`,
+    });
+  })
+);
+
+// The signed delivery note (photo or PDF). Uploading it marks the trip delivered.
+router.post(
+  "/signed-copy/:id",
+  ...guard,
+  upload.single("file"),
+  handle(async (req, res) => {
+    const trip = await findMine(req);
+    if (!req.file) throw new ErrorHandler("Choose a photo or PDF of the signed delivery note", 400);
+    const stored = await saveFile({ tenantId: String(trip.tenantId), kind: "delivery-note", buffer: req.file.buffer });
+    const old = trip.signedCopy;
+    trip.signedCopy = stored.key;
+    if (!["delivered", "closed", "cancelled"].includes(trip.status)) trip.status = "delivered";
+    if (!trip.deliveredAt) trip.deliveredAt = new Date();
+    await trip.save();
+    if (old) await deleteFile(old);
+    res.status(200).json({ success: true, signedCopyKey: stored.key });
+  })
+);
+
+router.delete(
+  "/signed-copy/:id",
+  ...guard,
+  handle(async (req, res) => {
+    const trip = await findMine(req);
+    const old = trip.signedCopy;
+    trip.signedCopy = "";
+    await trip.save();
+    if (old) await deleteFile(old);
+    res.status(200).json({ success: true });
   })
 );
 

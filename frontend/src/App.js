@@ -7,6 +7,8 @@ import ClerkShell from "component/auth/ClerkShell";
 import ModulesPage from "pages/deliverer/ModulesPage";
 import AdminConsolePage from "pages/deliverer/AdminConsolePage";
 import TripsPage from "pages/deliverer/TripsPage";
+import PurchaseOrdersPage from "pages/deliverer/PurchaseOrdersPage";
+import CompanyDetailsPage from "pages/deliverer/CompanyDetailsPage";
 import InvoicesPage from "pages/deliverer/InvoicesPage";
 import MaintenancePage from "pages/deliverer/MaintenancePage";
 import QuotationsPage from "pages/deliverer/QuotationsPage";
@@ -175,6 +177,22 @@ const App = () => {
                 element={
                   <DelProtectedRoutes module="crossBorder">
                     <TripsPage />
+                  </DelProtectedRoutes>
+                }
+              />
+              <Route
+                path="/del-purchase-orders"
+                element={
+                  <DelProtectedRoutes module="crossBorder">
+                    <PurchaseOrdersPage />
+                  </DelProtectedRoutes>
+                }
+              />
+              <Route
+                path="/del-company-details"
+                element={
+                  <DelProtectedRoutes>
+                    <CompanyDetailsPage />
                   </DelProtectedRoutes>
                 }
               />

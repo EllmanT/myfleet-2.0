@@ -18,6 +18,8 @@ import { Logo } from "./Wordmark";
 import {
   AccountBalanceWalletOutlined,
   AdminPanelSettingsOutlined,
+  AssignmentOutlined,
+  BusinessOutlined,
   LocalGasStationOutlined,
   CalendarMonth,
   CalendarMonthOutlined,
@@ -168,6 +170,12 @@ const Sidebar = ({
       module: ["crossBorder", "tractorUnits"],
     },
     {
+      text: "Purchase orders",
+      icon: <AssignmentOutlined />,
+      name: "purchase-orders",
+      module: "crossBorder",
+    },
+    {
       text: "Trips",
       icon: <RouteOutlined />,
       name: "trips",
@@ -213,6 +221,11 @@ const Sidebar = ({
     {
       text: "Settings",
       icon: null,
+    },
+    {
+      text: "Company details",
+      icon: <BusinessOutlined />,
+      name: "company-details",
     },
     {
       text: "Modules",

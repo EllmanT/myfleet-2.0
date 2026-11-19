@@ -10,12 +10,14 @@ const { escapeRegex } = require("../utils/escapeRegex");
 const { toCents, fromCents } = require("../utils/money");
 const { paymentState, ageBucket, startOfUtcDay } = require("../utils/invoiceMath");
 const { streamDocumentPdf } = require("../utils/documentPdf");
+const { companyForPdf } = require("../services/letterhead");
 const { nextNumber } = require("../services/documentNumber");
 const {
   text, toDate, cleanLines, companyVehicleIds, presentInvoice, computeTotals,
 } = require("../services/invoicing");
 const Invoice = require("../model/invoice");
 const Trip = require("../model/trip");
+const PurchaseOrder = require("../model/purchaseOrder");
 const Job = require("../model/job");
 const Contractor = require("../model/contractor");
 const Customer = require("../model/customer");
@@ -307,8 +309,23 @@ router.get(
   ...guard,
   handle(async (req, res) => {
     const inv = await findMine(req);
-    const company = await Deliverer.findById(req.user.companyId).select("companyName address city contact").lean();
-    streamDocumentPdf(res, { kind: "Invoice", doc: presentInvoice(inv), company, filename: `${inv.number || "draft-invoice"}.pdf` });
+    const company = await companyForPdf(req.user.companyId);
+    const doc = presentInvoice(inv);
+    // trip lines also say which purchase order and delivery note they belong to, when there are any
+    const tripIds = doc.lines.map((l) => l.tripId).filter(Boolean);
+    if (tripIds.length) {
+      const trips = await Trip.find({ _id: { $in: tripIds }, tenantId: req.user.companyId }).select("purchaseOrderId deliveryNoteNo").lean();
+      const pos = await PurchaseOrder.find({ _id: { $in: trips.map((t) => t.purchaseOrderId).filter(Boolean) } }).select("poNumber").lean();
+      const poNo = new Map(pos.map((p) => [String(p._id), p.poNumber]));
+      const byTrip = new Map(trips.map((t) => [String(t._id), t]));
+      doc.lines = doc.lines.map((l) => {
+        const t = l.tripId && byTrip.get(String(l.tripId));
+        const refs = t ? [poNo.get(String(t.purchaseOrderId)) && `PO ${poNo.get(String(t.purchaseOrderId))}`, t.deliveryNoteNo && `DN ${t.deliveryNoteNo}`].filter(Boolean) : [];
+        return refs.length ? { ...l, description: `${l.description}
+${refs.join("  |  ")}` } : l;
+      });
+    }
+    streamDocumentPdf(res, { kind: "Invoice", doc, company, filename: `${inv.number || "draft-invoice"}.pdf` });
   })
 );
 

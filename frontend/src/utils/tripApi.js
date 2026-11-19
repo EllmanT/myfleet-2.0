@@ -67,3 +67,38 @@ export const fetchDocs = async (params) => (await axios.get(`${server}/complianc
 export const createDoc = async (body) => (await axios.post(`${server}/compliance/create-doc`, body, opts)).data;
 export const updateDoc = async (id, body) => (await axios.put(`${server}/compliance/update-doc/${id}`, body, opts)).data;
 export const deleteDoc = async (id) => (await axios.delete(`${server}/compliance/delete-doc/${id}`, opts)).data;
+
+// how far along the money is for a trip
+export const PAY_LABELS = {
+  not_invoiced: "Not invoiced",
+  draft_invoice: "Invoice draft",
+  invoiced: "Invoiced, unpaid",
+  part_paid: "Part paid",
+  paid: "Paid",
+};
+
+// purchase orders (received from clients)
+export const fetchPurchaseOrders = async (params) => (await axios.get(`${server}/purchase-order/get-pos`, { ...opts, params })).data;
+export const fetchPurchaseOrder = async (id) => (await axios.get(`${server}/purchase-order/get-po/${id}`, opts)).data;
+export const createPurchaseOrder = async (body) => (await axios.post(`${server}/purchase-order/create-po`, body, opts)).data;
+export const updatePurchaseOrder = async (id, body) => (await axios.put(`${server}/purchase-order/update-po/${id}`, body, opts)).data;
+export const deletePurchaseOrder = async (id) => (await axios.delete(`${server}/purchase-order/delete-po/${id}`, opts)).data;
+export const addPurchaseOrderTrips = async (id, count) => (await axios.post(`${server}/purchase-order/add-trips/${id}`, { count }, opts)).data;
+
+const sendFile = async (url, field, file) => {
+  const form = new FormData();
+  form.append(field, file);
+  return (await axios.post(url, form, opts)).data;
+};
+export const uploadPurchaseOrderDocument = (id, file) => sendFile(`${server}/purchase-order/document/${id}`, "document", file);
+
+// delivery notes
+export const createDeliveryNote = async (tripId) => (await axios.post(`${server}/trip/delivery-note/${tripId}`, {}, opts)).data;
+export const uploadSignedCopy = (tripId, file) => sendFile(`${server}/trip/signed-copy/${tripId}`, "file", file);
+export const removeSignedCopy = async (tripId) => (await axios.delete(`${server}/trip/signed-copy/${tripId}`, opts)).data;
+
+// company letterhead (logo, phone, email, TIN, bank details...)
+export const fetchLetterhead = async () => (await axios.get(`${server}/letterhead`, opts)).data;
+export const saveLetterhead = async (body) => (await axios.put(`${server}/letterhead`, body, opts)).data;
+export const uploadLogo = (file) => sendFile(`${server}/letterhead/logo`, "logo", file);
+export const removeLogo = async () => (await axios.delete(`${server}/letterhead/logo`, opts)).data;

@@ -33,6 +33,7 @@ const KINDS = [
   { name: "invoices", model: "invoice", scope: "tenantId", note: "Invoices" },
   { name: "payments", model: "payment", scope: "tenantId", note: "Payments received" },
   { name: "quotations", model: "quotation", scope: "tenantId", note: "Quotations" },
+  { name: "purchaseOrders", model: "purchaseOrder", scope: "tenantId", note: "Purchase orders" },
   { name: "compliance-documents", model: "complianceDoc", scope: "tenantId", note: "Compliance documents and expiry dates" },
   { name: "maintenance-records", model: "maintenanceRecord", scope: "tenantId", note: "Maintenance records" },
   { name: "service-plans", model: "servicePlan", scope: "tenantId", note: "Service plans" },

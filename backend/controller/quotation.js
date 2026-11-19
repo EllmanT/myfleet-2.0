@@ -8,6 +8,7 @@ const { requireModule } = require("../middleware/moduleAccess");
 const { escapeRegex } = require("../utils/escapeRegex");
 const { fromCents } = require("../utils/money");
 const { streamDocumentPdf } = require("../utils/documentPdf");
+const { companyForPdf } = require("../services/letterhead");
 const { nextNumber } = require("../services/documentNumber");
 const { text, toDate, cleanLines, computeTotals, presentInvoice } = require("../services/invoicing");
 const Quotation = require("../model/quotation");
@@ -169,7 +170,7 @@ router.get(
   ...guard,
   handle(async (req, res) => {
     const q = await findMine(req);
-    const company = await Deliverer.findById(req.user.companyId).select("companyName address city contact").lean();
+    const company = await companyForPdf(req.user.companyId);
     streamDocumentPdf(res, { kind: "Quotation", doc: present(q), company, filename: `${q.number}.pdf` });
   })
 );

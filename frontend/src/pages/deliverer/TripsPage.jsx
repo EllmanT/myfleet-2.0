@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Autocomplete,
   Box,
@@ -23,26 +23,34 @@ import {
   useTheme,
 } from "@mui/material";
 import { Add, DeleteOutline, EditOutlined } from "@mui/icons-material";
+import { openPdf } from "utils/invoiceApi";
+import { openStoredFile } from "utils/openStoredFile";
+import { shrinkForUpload } from "utils/shrinkImage";
 import { toast } from "react-hot-toast";
 import FlexBetween from "component/deliverer/FlexBetween";
 import Header from "component/deliverer/Header";
 import {
   COST_LABELS,
+  PAY_LABELS,
   STATUS_LABELS,
   apiMessage,
+  createDeliveryNote,
   createTrip,
   deleteTrip,
+  fetchPurchaseOrders,
   fetchTripMeta,
   fetchTripSummary,
   fetchTrips,
   money,
   updateTrip,
+  uploadSignedCopy,
 } from "utils/tripApi";
 
 const today = () => new Date().toISOString().slice(0, 10);
 const emptyStop = { place: "", country: "" };
 const emptyForm = () => ({
   clientRef: "",
+  purchaseOrderId: "",
   date: today(),
   status: "",
   customerName: "",
@@ -79,6 +87,9 @@ const TripsPage = () => {
   const [editId, setEditId] = useState(null);
   const [form, setForm] = useState(emptyForm());
   const [saving, setSaving] = useState(false);
+  const [orders, setOrders] = useState([]);
+  const signedTarget = useRef(null);
+  const signedInput = useRef(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -101,6 +112,7 @@ const TripsPage = () => {
 
   useEffect(() => {
     fetchTripMeta().then(setMeta).catch((e) => toast.error(apiMessage(e)));
+    fetchPurchaseOrders({ pageSize: 200 }).then((r) => setOrders(r.purchaseOrders)).catch(() => {});
   }, []);
   useEffect(() => {
     load();
@@ -132,6 +144,7 @@ const TripsPage = () => {
       driverId: t.driverId || "",
       distanceKm: t.distanceKm ?? "",
       clientRef: t.clientRef || "",
+      purchaseOrderId: t.purchaseOrderId || "",
       stops: t.stops?.length ? t.stops : emptyForm().stops,
       costLines: (t.costLines || []).map((l) => ({ ...l, date: dateOnly(l.date) })),
       borderCrossings: (t.borderCrossings || []).map((c) => ({ ...c, arrivedAt: dateOnly(c.arrivedAt), clearedAt: dateOnly(c.clearedAt) })),
@@ -170,6 +183,35 @@ const TripsPage = () => {
       toast.error(apiMessage(e));
     }
   };
+
+  // Opens the delivery note PDF, giving the trip its number the first time.
+  const deliveryNote = async (t) => {
+    try {
+      await createDeliveryNote(t._id);
+      await openPdf(`/trip/delivery-note-pdf/${t._id}`);
+      load();
+    } catch (e) {
+      toast.error(apiMessage(e));
+    }
+  };
+  const chooseSigned = (t) => {
+    signedTarget.current = t._id;
+    if (signedInput.current) signedInput.current.click();
+  };
+  const onSigned = async (e) => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = "";
+    const id = signedTarget.current;
+    if (!file || !id) return;
+    try {
+      await uploadSignedCopy(id, await shrinkForUpload(file));
+      toast.success("Signed delivery note saved. Trip marked delivered.");
+      load();
+    } catch (err) {
+      toast.error(err.response ? apiMessage(err) : err.message);
+    }
+  };
+  const orderLabel = (p) => `${p.poNumber || "No number"} - ${p.customerName} (${dateOnly(p.date)})`;
 
   const usd = summary?.byCurrency?.USD || { revenue: 0, costs: 0 };
   const otherCurrencies = Object.keys(summary?.byCurrency || {}).filter((c) => c !== "USD");
@@ -224,7 +266,7 @@ const TripsPage = () => {
         <Table size="small">
           <TableHead>
             <TableRow>
-              {["Date", "Ref", "Client", "Route", "Cargo", "Truck / Trailer", "Km", "Price", "Costs", "Margin", "Status", ""].map((h) => (
+              {["Date", "Ref", "Client", "PO", "Route", "Cargo", "Truck / Trailer", "Km", "Price", "Costs", "Margin", "Status", "Delivery note", "Paid?", ""].map((h) => (
                 <TableCell key={h} sx={{ fontWeight: "bold" }}>{h}</TableCell>
               ))}
             </TableRow>
@@ -235,6 +277,7 @@ const TripsPage = () => {
                 <TableCell>{dateOnly(t.date)}</TableCell>
                 <TableCell>{t.clientRef}</TableCell>
                 <TableCell>{t.customerName}</TableCell>
+                <TableCell>{t.poNumber}</TableCell>
                 <TableCell>
                   {routeText(t.stops)}{" "}
                   {t.isCrossBorder && <Chip size="small" label="Cross-border" sx={{ ml: 0.5 }} />}
@@ -248,6 +291,19 @@ const TripsPage = () => {
                   {t.margin === null ? <Typography variant="caption">mixed currencies</Typography> : t.costLines?.length ? money(t.margin, t.currency) : ""}
                 </TableCell>
                 <TableCell>{STATUS_LABELS[t.status] || t.status}</TableCell>
+                <TableCell sx={{ whiteSpace: "nowrap" }}>
+                  <Button size="small" onClick={() => deliveryNote(t)}>{t.deliveryNoteNo || "Create"}</Button>
+                  {t.hasSignedCopy ? (
+                    <Button size="small" color="success" onClick={() => openStoredFile(t.signedCopyKey).catch((e) => toast.error(e.message))}>Signed copy</Button>
+                  ) : (
+                    <Button size="small" onClick={() => chooseSigned(t)}>Upload signed</Button>
+                  )}
+                </TableCell>
+                <TableCell>
+                  <Chip size="small" label={PAY_LABELS[t.payStatus] || ""}
+                    color={t.payStatus === "paid" ? "success" : t.payStatus === "part_paid" ? "warning" : t.payStatus === "invoiced" ? "info" : "default"}
+                    variant={t.payStatus === "not_invoiced" ? "outlined" : "filled"} />
+                </TableCell>
                 <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>
                   <IconButton size="small" onClick={() => openEdit(t)} aria-label="Edit"><EditOutlined fontSize="small" /></IconButton>
                   <IconButton size="small" onClick={() => remove(t)} aria-label="Delete"><DeleteOutline fontSize="small" /></IconButton>
@@ -256,13 +312,14 @@ const TripsPage = () => {
             ))}
             {!rows.length && (
               <TableRow>
-                <TableCell colSpan={12} align="center">{loading ? "Loading..." : "No trips for these filters."}</TableCell>
+                <TableCell colSpan={15} align="center">{loading ? "Loading..." : "No trips for these filters."}</TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </Box>
       <Typography variant="caption" sx={{ opacity: 0.7 }}>{total} trips match.</Typography>
+      <input ref={signedInput} type="file" accept="image/*,application/pdf" hidden onChange={onSigned} />
 
       <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="md">
         <DialogTitle>{editId ? "Edit trip" : "Add trip"}</DialogTitle>
@@ -270,6 +327,17 @@ const TripsPage = () => {
           <Box display="grid" gridTemplateColumns="repeat(auto-fit, minmax(190px, 1fr))" gap="1rem">
             <TextField size="small" type="date" label="Trip date" InputLabelProps={{ shrink: true }} value={form.date} onChange={set("date")} />
             <TextField size="small" label="Job reference (e.g. AL.01)" value={form.clientRef} onChange={set("clientRef")} />
+            <FormControl size="small">
+              <InputLabel>Purchase order</InputLabel>
+              <Select label="Purchase order" value={form.purchaseOrderId}
+                onChange={(e) => {
+                  const p = orders.find((o) => o._id === e.target.value);
+                  setForm((f) => ({ ...f, purchaseOrderId: e.target.value, customerName: f.customerName || (p ? p.customerName : "") }));
+                }}>
+                <MenuItem value="">None (word of mouth)</MenuItem>
+                {orders.map((p) => <MenuItem key={p._id} value={p._id}>{orderLabel(p)}</MenuItem>)}
+              </Select>
+            </FormControl>
             <Autocomplete
               freeSolo size="small" options={meta.customers} value={form.customerName}
               onInputChange={(e, v) => setForm((f) => ({ ...f, customerName: v }))}
@@ -321,7 +389,7 @@ const TripsPage = () => {
               </Select>
             </FormControl>
             <TextField size="small" type="number" label="Distance (km)" value={form.distanceKm} onChange={set("distanceKm")} inputProps={{ min: 0 }} />
-            <TextField size="small" type="number" label="Price" value={form.price} onChange={set("price")} inputProps={{ min: 0, step: "0.01" }} />
+            <TextField size="small" type="number" label="Price (can be added later)" value={form.price} onChange={set("price")} inputProps={{ min: 0, step: "0.01" }} />
             <FormControl size="small">
               <InputLabel>Currency</InputLabel>
               <Select label="Currency" value={form.currency} onChange={set("currency")}>
@@ -386,7 +454,7 @@ const TripsPage = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button variant="contained" onClick={save} disabled={saving || form.price === "" || !form.customerName}>
+          <Button variant="contained" onClick={save} disabled={saving || !form.customerName}>
             {saving ? "Saving..." : "Save"}
           </Button>
         </DialogActions>
